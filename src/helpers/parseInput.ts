@@ -1,12 +1,12 @@
-function formatResponse (type, value) {
+function formatResponse (type: string, value: any) {
   return {
     type,
     value
   }
 }
 
-export default function parseInput (input) {
-  // following code is to make a best guess at
+export default function parseInput (input: string) {
+  // following code is to make the best guess at
   // the type for a variable being submitted.
 
   // we are working with a serialized data representation
@@ -21,25 +21,25 @@ export default function parseInput (input) {
       return formatResponse('object', JSON.parse(input))
     } else if (
       input.match(/-?\d+\.\d+/) &&
-            input.match(/-?\d+\.\d+/)[0] === input
+            input.match(/-?\d+\.\d+/)?.[0] === input
     ) {
       // float
       return formatResponse('float', parseFloat(input))
     } else if (
       input.match(/-?\d+e-\d+/) &&
-            input.match(/-?\d+e-\d+/)[0] === input
+            input.match(/-?\d+e-\d+/)?.[0] === input
     ) {
       // scientific float
       return formatResponse('float', Number(input))
     } else if (
       input.match(/-?\d+/) &&
-            input.match(/-?\d+/)[0] === input
+            input.match(/-?\d+/)?.[0] === input
     ) {
       // integer
       return formatResponse('integer', parseInt(input))
     } else if (
       input.match(/-?\d+e\+\d+/) &&
-            input.match(/-?\d+e\+\d+/)[0] === input
+            input.match(/-?\d+e\+\d+/)?.[0] === input
     ) {
       // scientific integer
       return formatResponse('integer', Number(input))
@@ -68,12 +68,11 @@ export default function parseInput (input) {
     }
     default: {
       // check to see if this is a date
-      input = Date.parse(input)
-      if (input) {
+      if (!Number.isNaN(Date.parse(input))) {
         return formatResponse('date', new Date(input))
       }
     }
   }
 
-  return formatResponse(false, null)
+  return formatResponse('false', null)
 }
