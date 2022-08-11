@@ -909,6 +909,7 @@ __metadata:
     "@mui/material": ^5.10.0
     "@textea/dev-kit": ^0.11.2
     "@types/events": ^3.0.0
+    "@types/flux": ^3.1.11
     "@types/node": ^18.6.5
     "@types/react": ^18.0.15
     "@types/react-dom": ^18.0.6
@@ -1026,6 +1027,23 @@ __metadata:
   version: 3.0.0
   resolution: "@types/events@npm:3.0.0"
   checksum: 9a424c2da210957d5636e0763e8c9fc3aaeee35bf411284ddec62a56a6abe31de9c7c2e713dabdd8a76ff98b47db2bd52f61310be6609641d6234cc842ecbbe3
+  languageName: node
+  linkType: hard
+
+"@types/fbemitter@npm:*":
+  version: 2.0.32
+  resolution: "@types/fbemitter@npm:2.0.32"
+  checksum: 9c96a1558d9d8ea8fcf65105e2e77eb139a2057786abf6a7d5d9b6c0279a5078b1ccac6fcab0001acb394c3c554c871ba74182c2ebb603c06ffd205c934e0ae8
+  languageName: node
+  linkType: hard
+
+"@types/flux@npm:^3.1.11":
+  version: 3.1.11
+  resolution: "@types/flux@npm:3.1.11"
+  dependencies:
+    "@types/fbemitter": "*"
+    "@types/react": "*"
+  checksum: e85aa4f4a53b74d4294578583a416effbf4fb92fd25b0bda36e8bb2b493fd0a619479394d49ef0adf8aac6a1438e476cd5660c49e031abf02e16338ee7540069
   languageName: node
   linkType: hard
 
