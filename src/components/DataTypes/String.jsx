@@ -5,7 +5,7 @@ import { toType } from './../../helpers/util'
 import AttributeStore from './../../stores/ObjectAttributes'
 // theme
 import Theme from './../../themes/getStyle'
-import DataTypeLabel from './DataTypeLabel'
+import { DataTypeLabel } from './DataTypeLabel'
 
 export default class extends React.PureComponent {
   constructor (props) {

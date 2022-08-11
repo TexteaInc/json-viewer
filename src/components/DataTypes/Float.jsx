@@ -2,7 +2,7 @@ import React from 'react'
 
 // theme
 import Theme from './../../themes/getStyle'
-import DataTypeLabel from './DataTypeLabel'
+import { DataTypeLabel } from './DataTypeLabel'
 
 export default class extends React.PureComponent {
   render () {
