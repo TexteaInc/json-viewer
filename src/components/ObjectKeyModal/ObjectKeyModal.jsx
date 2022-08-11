@@ -1,93 +1,94 @@
-import React from 'react';
-import dispatcher from './../../helpers/dispatcher';
+import React from 'react'
 
-import { CheckCircle, Add as Cancel } from './../icons';
+import dispatcher from './../../helpers/dispatcher'
+// global theme
+import Theme from './../../themes/getStyle'
+import { Add as Cancel, CheckCircle } from './../icons'
 
-//global theme
-import Theme from './../../themes/getStyle';
-
-//this input appears when adding a new value to an object
+// this input appears when adding a new value to an object
 export default class extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            input: props.input ? props.input : ''
-        };
+  constructor (props) {
+    super(props)
+    this.state = {
+      input: props.input ? props.input : ''
     }
+  }
 
-    render() {
-        const { theme, rjvId, isValid } = this.props;
-        const { input } = this.state;
+  render () {
+    const { theme, rjvId, isValid } = this.props
+    const { input } = this.state
 
-        const valid = isValid(input);
+    const valid = isValid(input)
 
-        return (
+    return (
             <div
-                class="key-modal-request"
+                className='key-modal-request'
                 {...Theme(theme, 'key-modal-request')}
                 onClick={this.closeModal}
             >
                 <div
                     {...Theme(theme, 'key-modal')}
                     onClick={e => {
-                        e.stopPropagation();
+                      e.stopPropagation()
                     }}
                 >
                     <div {...Theme(theme, 'key-modal-label')}>Key Name:</div>
                     <div style={{ position: 'relative' }}>
                         <input
                             {...Theme(theme, 'key-modal-input')}
-                            class="key-modal-input"
+                            className='key-modal-input'
                             ref={el => el && el.focus()}
                             spellCheck={false}
                             value={input}
-                            placeholder="..."
+                            placeholder='...'
                             onChange={e => {
-                                this.setState({
-                                    input: e.target.value
-                                });
+                              this.setState({
+                                input: e.target.value
+                              })
                             }}
                             onKeyPress={e => {
-                                if (valid && e.key === 'Enter') {
-                                    this.submit();
-                                } else if (e.key === 'Escape') {
-                                    this.closeModal();
-                                }
+                              if (valid && e.key === 'Enter') {
+                                this.submit()
+                              } else if (e.key === 'Escape') {
+                                this.closeModal()
+                              }
                             }}
                         />
-                        {valid ? (
+                        {valid
+                          ? (
                             <CheckCircle
                                 {...Theme(theme, 'key-modal-submit')}
-                                class="key-modal-submit"
+                                class='key-modal-submit'
                                 onClick={e => this.submit()}
                             />
-                        ) : null}
+                            )
+                          : null}
                     </div>
                     <span {...Theme(theme, 'key-modal-cancel')}>
                         <Cancel
                             {...Theme(theme, 'key-modal-cancel-icon')}
-                            class="key-modal-cancel"
+                            class='key-modal-cancel'
                             onClick={() => {
-                                dispatcher.dispatch({
-                                    rjvId: rjvId,
-                                    name: 'RESET'
-                                });
+                              dispatcher.dispatch({
+                                rjvId,
+                                name: 'RESET'
+                              })
                             }}
                         />
                     </span>
                 </div>
             </div>
-        );
-    }
+    )
+  }
 
-    closeModal = () => {
-        dispatcher.dispatch({
-            rjvId: this.props.rjvId,
-            name: 'RESET'
-        });
-    };
+  closeModal = () => {
+    dispatcher.dispatch({
+      rjvId: this.props.rjvId,
+      name: 'RESET'
+    })
+  }
 
-    submit = () => {
-        this.props.submit(this.state.input);
-    };
+  submit = () => {
+    this.props.submit(this.state.input)
+  }
 }

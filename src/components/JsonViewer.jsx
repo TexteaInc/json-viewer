@@ -1,24 +1,25 @@
-import React from 'react';
-import JsonObject from './DataTypes/Object';
-import ArrayGroup from './ArrayGroup';
+import React from 'react'
+
+import ArrayGroup from './ArrayGroup'
+import JsonObject from './DataTypes/Object'
 
 export default class extends React.PureComponent {
-    render = () => {
-        const { props } = this;
-        const namespace = [props.name];
-        let ObjectComponent = JsonObject;
+  render = () => {
+    const { props } = this
+    const namespace = [props.name]
+    let ObjectComponent = JsonObject
 
-        if (
-            Array.isArray(props.src) &&
+    if (
+      Array.isArray(props.src) &&
             props.groupArraysAfterLength &&
             props.src.length > props.groupArraysAfterLength
-        ) {
-            ObjectComponent = ArrayGroup;
-        }
+    ) {
+      ObjectComponent = ArrayGroup
+    }
 
-        return (
-            <div class="pretty-json-container object-container">
-                <div class="object-content">
+    return (
+            <div className='pretty-json-container object-container'>
+                <div className='object-content'>
                     <ObjectComponent
                         namespace={namespace}
                         depth={0}
@@ -27,6 +28,6 @@ export default class extends React.PureComponent {
                     />
                 </div>
             </div>
-        );
-    };
+    )
+  }
 }

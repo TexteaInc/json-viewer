@@ -1,12 +1,12 @@
-import type React from 'react'
 import JsonViewer from '@textea/json-viewer'
+import type React from 'react'
 
 const example = {
   string: 'this is a test string',
   integer: 42,
   array: [1, 2, 3, 'test', NaN],
   float: 3.14159,
-  undefined: undefined,
+  undefined,
   object: {
     'first-child': true,
     'second-child': false,

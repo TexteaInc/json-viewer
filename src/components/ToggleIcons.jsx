@@ -1,65 +1,65 @@
-import React from 'react';
-import Theme from './../themes/getStyle';
+import React from 'react'
 
+import Theme from './../themes/getStyle'
 import {
-    CircleMinus,
-    CirclePlus,
-    SquareMinus,
-    SquarePlus,
-    ArrowRight,
-    ArrowDown
-} from './icons';
+  ArrowDown,
+  ArrowRight,
+  CircleMinus,
+  CirclePlus,
+  SquareMinus,
+  SquarePlus
+} from './icons'
 
-export function ExpandedIcon(props) {
-    const { theme, iconStyle } = props;
-    switch (iconStyle) {
-        case 'triangle':
-            return (
+export function ExpandedIcon (props) {
+  const { theme, iconStyle } = props
+  switch (iconStyle) {
+    case 'triangle':
+      return (
                 <ArrowDown
                     {...Theme(theme, 'expanded-icon')}
-                    class="expanded-icon"
+                    class='expanded-icon'
                 />
-            );
-        case 'square':
-            return (
+      )
+    case 'square':
+      return (
                 <SquareMinus
                     {...Theme(theme, 'expanded-icon')}
-                    class="expanded-icon"
+                    class='expanded-icon'
                 />
-            );
-        default:
-            return (
+      )
+    default:
+      return (
                 <CircleMinus
                     {...Theme(theme, 'expanded-icon')}
-                    class="expanded-icon"
+                    class='expanded-icon'
                 />
-            );
-    }
+      )
+  }
 }
 
-export function CollapsedIcon(props) {
-    const { theme, iconStyle } = props;
-    switch (iconStyle) {
-        case 'triangle':
-            return (
+export function CollapsedIcon (props) {
+  const { theme, iconStyle } = props
+  switch (iconStyle) {
+    case 'triangle':
+      return (
                 <ArrowRight
                     {...Theme(theme, 'collapsed-icon')}
-                    class="collapsed-icon"
+                    class='collapsed-icon'
                 />
-            );
-        case 'square':
-            return (
+      )
+    case 'square':
+      return (
                 <SquarePlus
                     {...Theme(theme, 'collapsed-icon')}
-                    class="collapsed-icon"
+                    class='collapsed-icon'
                 />
-            );
-        default:
-            return (
+      )
+    default:
+      return (
                 <CirclePlus
                     {...Theme(theme, 'collapsed-icon')}
-                    class="collapsed-icon"
+                    class='collapsed-icon'
                 />
-            );
-    }
+      )
+  }
 }

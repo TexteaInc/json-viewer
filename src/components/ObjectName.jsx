@@ -1,34 +1,37 @@
-import React from 'react';
-import Theme from './../themes/getStyle';
+import React from 'react'
 
-export default function getObjectName(props) {
-    const {
-        parent_type,
-        namespace,
-        quotesOnKeys,
-        theme,
-        jsvRoot,
-        name,
-        displayArrayKey
-    } = props;
+import Theme from './../themes/getStyle'
 
-    const display_name = props.name ? props.name : '';
+export default function getObjectName (props) {
+  const {
+    parent_type,
+    namespace,
+    quotesOnKeys,
+    theme,
+    jsvRoot,
+    name,
+    displayArrayKey
+  } = props
 
-    if (jsvRoot && (name === false || name === null)) {
-        return <span />;
-    } else if (parent_type == 'array') {
-        return displayArrayKey ? (
+  const display_name = props.name ? props.name : ''
+
+  if (jsvRoot && (name === false || name === null)) {
+    return <span />
+  } else if (parent_type == 'array') {
+    return displayArrayKey
+      ? (
             <span {...Theme(theme, 'array-key')} key={namespace}>
-                <span class="array-key">{display_name}</span>
+                <span className='array-key'>{display_name}</span>
                 <span {...Theme(theme, 'colon')}>:</span>
             </span>
-        ) : (
+        )
+      : (
             <span />
-        );
-    } else {
-        return (
+        )
+  } else {
+    return (
             <span {...Theme(theme, 'object-name')} key={namespace}>
-                <span class="object-key">
+                <span className='object-key'>
                     {quotesOnKeys && (
                         <span style={{ verticalAlign: 'top' }}>"</span>
                     )}
@@ -39,6 +42,6 @@ export default function getObjectName(props) {
                 </span>
                 <span {...Theme(theme, 'colon')}>:</span>
             </span>
-        );
-    }
+    )
+  }
 }

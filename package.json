@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "test": "echo \"no tests for now\"",
+    "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache --fix",
     "build": "tsc && vite build",
     "prepublishOnly": "npm run build"
   },

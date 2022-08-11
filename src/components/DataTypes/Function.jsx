@@ -1,72 +1,71 @@
-import React from 'react';
-import DataTypeLabel from './DataTypeLabel';
+import React from 'react'
 
-//theme
-import Theme from './../../themes/getStyle';
-
-//attribute store for storing collapsed state
-import AttributeStore from './../../stores/ObjectAttributes';
+// attribute store for storing collapsed state
+import AttributeStore from './../../stores/ObjectAttributes'
+// theme
+import Theme from './../../themes/getStyle'
+import DataTypeLabel from './DataTypeLabel'
 
 export default class extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            collapsed: AttributeStore.get(
-                props.rjvId,
-                props.namespace,
-                'collapsed',
-                true
-            )
-        };
+  constructor (props) {
+    super(props)
+    this.state = {
+      collapsed: AttributeStore.get(
+        props.rjvId,
+        props.namespace,
+        'collapsed',
+        true
+      )
     }
+  }
 
-    toggleCollapsed = () => {
-        this.setState(
-            {
-                collapsed: !this.state.collapsed
-            },
-            () => {
-                // will be called after setState takes effect.
-                AttributeStore.set(
-                    this.props.rjvId,
-                    this.props.namespace,
-                    'collapsed',
-                    this.state.collapsed
-                );
-            }
-        );
-    };
+  toggleCollapsed = () => {
+    this.setState(
+      {
+        collapsed: !this.state.collapsed
+      },
+      () => {
+        // will be called after setState takes effect.
+        AttributeStore.set(
+          this.props.rjvId,
+          this.props.namespace,
+          'collapsed',
+          this.state.collapsed
+        )
+      }
+    )
+  }
 
-    render() {
-        const type_name = 'function';
-        const { props } = this;
-        const { collapsed } = this.state;
+  render () {
+    const type_name = 'function'
+    const { props } = this
+    const { collapsed } = this.state
 
-        return (
+    return (
             <div {...Theme(props.theme, 'function')}>
                 <DataTypeLabel type_name={type_name} {...props} />
                 <span
                     {...Theme(props.theme, 'function-value')}
-                    class="rjv-function-container"
+                    className='rjv-function-container'
                     onClick={this.toggleCollapsed}
                 >
                     {this.getFunctionDisplay(collapsed)}
                 </span>
             </div>
-        );
-    }
+    )
+  }
 
-    getFunctionDisplay = collapsed => {
-        const { props } = this;
-        if (collapsed) {
-            return (
+  getFunctionDisplay = collapsed => {
+    const { props } = this
+    if (collapsed) {
+      return (
                 <span>
                     {this.props.value
-                        .toString()
-                        .slice(9, -1)
-                        .replace(/\{[\s\S]+/, '')}
+                      .toString()
+                      .slice(9, -1)
+                      .replace(/\{[\s\S]+/, '')}
                     <span
-                        class="function-collapsed"
+                        className='function-collapsed'
                         style={{ fontWeight: 'bold' }}
                     >
                         <span>{'{'}</span>
@@ -74,9 +73,9 @@ export default class extends React.PureComponent {
                         <span>{'}'}</span>
                     </span>
                 </span>
-            );
-        } else {
-            return this.props.value.toString().slice(9, -1);
-        }
-    };
+      )
+    } else {
+      return this.props.value.toString().slice(9, -1)
+    }
+  }
 }

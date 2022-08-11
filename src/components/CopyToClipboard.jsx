@@ -1,119 +1,117 @@
-import React from 'react';
+import React from 'react'
 
-import { toType } from './../helpers/util';
-
-//clibboard icon
-import { Clippy } from './icons';
-
-//theme
-import Theme from './../themes/getStyle';
+import { toType } from './../helpers/util'
+// theme
+import Theme from './../themes/getStyle'
+// clibboard icon
+import { Clippy } from './icons'
 
 export default class extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            copied: false
-        };
+  constructor (props) {
+    super(props)
+    this.state = {
+      copied: false
     }
+  }
 
-    copiedTimer = null;
+  copiedTimer = null
 
-    componentWillUnmount() {
-        if (this.copiedTimer) {
-            clearTimeout(this.copiedTimer);
-            this.copiedTimer = null;
-        }
+  componentWillUnmount () {
+    if (this.copiedTimer) {
+      clearTimeout(this.copiedTimer)
+      this.copiedTimer = null
     }
+  }
 
-    handleCopy = () => {
-        const container = document.createElement('textarea');
-        const { clickCallback, src, namespace } = this.props;
+  handleCopy = () => {
+    const container = document.createElement('textarea')
+    const { clickCallback, src, namespace } = this.props
 
-        container.innerHTML = JSON.stringify(
-            this.clipboardValue(src),
-            null,
-            '  '
-        );
+    container.innerHTML = JSON.stringify(
+      this.clipboardValue(src),
+      null,
+      '  '
+    )
 
-        document.body.appendChild(container);
-        container.select();
-        document.execCommand('copy');
+    document.body.appendChild(container)
+    container.select()
+    document.execCommand('copy')
 
-        document.body.removeChild(container);
+    document.body.removeChild(container)
 
-        this.copiedTimer = setTimeout(() => {
-            this.setState({
-                copied: false
-            });
-        }, 5500);
+    this.copiedTimer = setTimeout(() => {
+      this.setState({
+        copied: false
+      })
+    }, 5500)
 
-        this.setState({ copied: true }, () => {
-            if (typeof clickCallback !== 'function') {
-                return;
-            }
+    this.setState({ copied: true }, () => {
+      if (typeof clickCallback !== 'function') {
+        return
+      }
 
-            clickCallback({
-                src: src,
-                namespace: namespace,
-                name: namespace[namespace.length - 1]
-            });
-        });
-    };
+      clickCallback({
+        src,
+        namespace,
+        name: namespace[namespace.length - 1]
+      })
+    })
+  }
 
-    getClippyIcon = () => {
-        const { theme } = this.props;
+  getClippyIcon = () => {
+    const { theme } = this.props
 
-        if (this.state.copied) {
-            return (
+    if (this.state.copied) {
+      return (
                 <span>
-                    <Clippy class="copy-icon" {...Theme(theme, 'copy-icon')} />
+                    <Clippy class='copy-icon' {...Theme(theme, 'copy-icon')} />
                     <span {...Theme(theme, 'copy-icon-copied')}>✔</span>
                 </span>
-            );
-        }
+      )
+    }
 
-        return <Clippy class="copy-icon" {...Theme(theme, 'copy-icon')} />;
-    };
+    return <Clippy class='copy-icon' {...Theme(theme, 'copy-icon')} />
+  }
 
-    clipboardValue = value => {
-        const type = toType(value);
-        switch (type) {
-            case 'function':
-            case 'regexp':
-                return value.toString();
-            default:
-                return value;
-        }
-    };
+  clipboardValue = value => {
+    const type = toType(value)
+    switch (type) {
+      case 'function':
+      case 'regexp':
+        return value.toString()
+      default:
+        return value
+    }
+  }
 
-    render() {
-        const { src, theme, hidden, rowHovered } = this.props;
-        let style = Theme(theme, 'copy-to-clipboard').style;
-        let display = 'inline';
+  render () {
+    const { src, theme, hidden, rowHovered } = this.props
+    const style = Theme(theme, 'copy-to-clipboard').style
+    let display = 'inline'
 
-        if (hidden) {
-            display = 'none';
-        }
+    if (hidden) {
+      display = 'none'
+    }
 
-        return (
+    return (
             <span
-                className="copy-to-clipboard-container"
-                title="Copy to clipboard"
+                className='copy-to-clipboard-container'
+                title='Copy to clipboard'
                 style={{
-                    verticalAlign: 'top',
-                    display: rowHovered ? 'inline-block' : 'none'
+                  verticalAlign: 'top',
+                  display: rowHovered ? 'inline-block' : 'none'
                 }}
             >
                 <span
                     style={{
-                        ...style,
-                        display: display
+                      ...style,
+                      display
                     }}
                     onClick={this.handleCopy}
                 >
                     {this.getClippyIcon()}
                 </span>
             </span>
-        );
-    }
+    )
+  }
 }
