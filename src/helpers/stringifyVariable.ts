@@ -1,6 +1,6 @@
 import { toType } from './util'
 
-export default value => {
+const stringifyVariable = (value: any) => {
   const type = toType(value)
   let string_value
   switch (type) {
@@ -27,6 +27,7 @@ export default value => {
       try {
         string_value = JSON.stringify(value, null, '  ')
       } catch (e) {
+        console.error(`cannot stringify value: ${value}`)
         string_value = ''
       }
     }
@@ -34,3 +35,5 @@ export default value => {
 
   return string_value
 }
+
+export default stringifyVariable
