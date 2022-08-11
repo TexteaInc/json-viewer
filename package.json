@@ -20,6 +20,7 @@
     "yarn.lock"
   ],
   "scripts": {
+    "test": "echo \"no tests for now\"",
     "build": "tsc && vite build",
     "prepublishOnly": "npm run build"
   },
