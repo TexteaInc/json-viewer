@@ -1,5 +1,5 @@
 import React from 'react';
-import AutosizeTextarea from 'react-textarea-autosize';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import { toType } from './../helpers/util';
 import dispatcher from './../helpers/dispatcher';
@@ -258,7 +258,7 @@ class VariableEditor extends React.PureComponent {
 
         return (
             <div>
-                <AutosizeTextarea
+                <TextareaAutosize
                     type="text"
                     inputRef={input => input && input.focus()}
                     value={editValue}

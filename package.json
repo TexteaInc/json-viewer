@@ -25,11 +25,13 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/material": "^5.10.0",
     "events": "^3.3.0",
     "flux": "^4.0.3",
     "react-base16-styling": "^0.9.1",
-    "react-lifecycles-compat": "^3.0.4",
-    "react-textarea-autosize": "^8.3.4"
+    "react-lifecycles-compat": "^3.0.4"
   },
   "peerDependencies": {
     "react": "^18.2.0",

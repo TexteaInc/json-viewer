@@ -6,9 +6,7 @@
     "baseUrl": "./src",
     "outDir": "dist",
     "declaration": false,
-    "declarationMap": false,
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "declarationMap": false
   },
   "include": [
     "src/**/*",
