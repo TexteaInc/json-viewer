@@ -63,6 +63,10 @@ const Component = () => (<ReactJson src={json}/>)
     * `Ctrl/Cmd+Click` Edit Mode
     * `Ctrl/Cmd+Enter` Submit
 
+## Acknowledge
+
+This package is originally based on [mac-s-g/react-json-view](https://github.com/mac-s-g/react-json-view)
+
 ## LICENSE
 
 This project is licensed under the terms of the [MIT license](LICENSE).
