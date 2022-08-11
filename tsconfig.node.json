@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    // Interop Constraints
+    "allowSyntheticDefaultImports": true,
+    // Projects
+    "composite": true,
+    // Completeness
+    "skipLibCheck": true
+  },
+  "include": ["vite.config.ts", "package.json"]
+}
