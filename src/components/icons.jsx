@@ -3,6 +3,20 @@ import React from 'react'
 const DEFAULT_WIDTH = 24
 const DEFAULT_HEIGHT = 24
 const DEFAULT_COLOR = '#000000'
+function getIconStyle (style) {
+  if (!style) {
+    style = {}
+  }
+  return {
+    style: {
+      verticalAlign: 'middle',
+      ...style,
+      color: style.color ? style.color : DEFAULT_COLOR,
+      height: '1em',
+      width: '1em'
+    }
+  }
+}
 
 export class CircleMinus extends React.PureComponent {
   render () {
@@ -263,20 +277,5 @@ export class CheckCircle extends React.PureComponent {
                 </svg>
             </span>
     )
-  }
-}
-
-function getIconStyle (style) {
-  if (!style) {
-    style = {}
-  }
-  return {
-    style: {
-      verticalAlign: 'middle',
-      ...style,
-      color: style.color ? style.color : DEFAULT_COLOR,
-      height: '1em',
-      width: '1em'
-    }
   }
 }

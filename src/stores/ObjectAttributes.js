@@ -21,7 +21,7 @@ class ObjectAttributes extends EventEmitter {
     if (
       this.objects[rjvId] === undefined ||
             this.objects[rjvId][name] === undefined ||
-            this.objects[rjvId][name][key] == undefined
+            this.objects[rjvId][name][key] == null
     ) {
       return default_value
     }
@@ -88,7 +88,7 @@ class ObjectAttributes extends EventEmitter {
     }
 
     if (variable_removed) {
-      if (toType(walk) == 'array') {
+      if (toType(walk) === 'array') {
         walk.splice(name, 1)
       } else {
         delete walk[name]
@@ -111,9 +111,9 @@ class ObjectAttributes extends EventEmitter {
     const type = toType(src)
     let result
     const idx = copy_namespace.shift()
-    if (type == 'array') {
+    if (type === 'array') {
       result = [...src]
-    } else if (type == 'object') {
+    } else if (type === 'object') {
       result = { ...src }
     }
     if (idx !== undefined) {

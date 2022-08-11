@@ -1,30 +1,27 @@
+// source: http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable/7390612#7390612
+function getType (obj: any) {
+  return {}.toString.call(obj).match(/\s([a-zA-Z]+)/)?.[1].toLowerCase()
+}
+
 // returns a string "type" of input object
-export function toType (obj) {
+export function toType (obj: any) {
   let type = getType(obj)
   // some extra disambiguation for numbers
   if (type === 'number') {
     if (isNaN(obj)) {
       type = 'nan'
-    } else if ((obj | 0) != obj) {
+    } else if (Number.isInteger(obj)) {
+      type = 'integer'
+    } else {
       // bitwise OR produces integers
       type = 'float'
-    } else {
-      type = 'integer'
     }
   }
   return type
 }
 
-// source: http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable/7390612#7390612
-function getType (obj) {
-  return {}.toString
-    .call(obj)
-    .match(/\s([a-zA-Z]+)/)[1]
-    .toLowerCase()
-}
-
 // validation for base-16 themes
-export function isTheme (theme) {
+export function isTheme (theme: any) {
   const theme_keys = [
     'base00',
     'base01',
