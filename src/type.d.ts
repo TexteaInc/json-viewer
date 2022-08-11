@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 
 export interface ReactJsonViewProps {
   /**
@@ -20,6 +20,13 @@ export interface ReactJsonViewProps {
    * Default: "rjv-default"
    */
   theme?: ThemeKeys | ThemeObject;
+
+  /**
+   * Additional `className` string to append to the `className` of react-json-view's container.
+   *
+   * @default undefined
+   */
+  className?: string
   /**
    * Style attributes for react-json-view container.
    * Explicit style attributes will override attributes provided by a theme.
@@ -285,5 +292,5 @@ export type ThemeKeys =
   | 'tube'
   | 'twilight';
 
-declare const JsonViewer: React.ComponentType<ReactJsonViewProps>;
-export default JsonViewer;
+declare const JsonViewer: React.ComponentType<ReactJsonViewProps>
+export default JsonViewer

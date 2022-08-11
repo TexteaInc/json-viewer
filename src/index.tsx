@@ -1,21 +1,21 @@
 import React from 'react'
 import { polyfill } from 'react-lifecycles-compat'
+
 import JsonViewer from './components/JsonViewer'
 import AddKeyRequest from './components/ObjectKeyModal/AddKeyRequest'
 import ValidationFailure from './components/ValidationFailure'
-import { toType, isTheme } from './helpers/util'
+import { isTheme, toType } from './helpers/util'
 import ObjectAttributes from './stores/ObjectAttributes'
-
-//global theme
+// global theme
 import Theme from './themes/getStyle'
 import type { ReactJsonViewProps } from './type'
 
-//forward src through to JsonObject component
+// forward src through to JsonObject component
 class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
   constructor (props: ReactJsonViewProps) {
     super(props)
     this.state = {
-      //listen to request to add/edit a key to an object
+      // listen to request to add/edit a key to an object
       addKeyRequest: false,
       editKeyRequest: false,
       validationFailure: false,
@@ -31,10 +31,10 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
     }
   }
 
-  //reference id for this instance
+  // reference id for this instance
   rjvId = Date.now().toString()
 
-  //all acceptable props and default values
+  // all acceptable props and default values
   static defaultProps = {
     src: {},
     name: 'root',
@@ -91,7 +91,7 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
       // @ts-ignore
       ObjectAttributes.on(i + '-' + this.rjvId, listeners[i])
     }
-    //reset key request to false once it's observed
+    // reset key request to false once it's observed
     this.setState({
       addKeyRequest: false,
       editKeyRequest: false
@@ -99,7 +99,7 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
   }
 
   override componentDidUpdate (prevProps: any, prevState: any) {
-    //reset key request to false once it's observed
+    // reset key request to false once it's observed
     if (prevState.addKeyRequest !== false) {
       this.setState({
         addKeyRequest: false
@@ -130,10 +130,11 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
       'add-key-request': this.addKeyRequest
     }
   }
-  //make sure props are passed in as expected
+
+  // make sure props are passed in as expected
   static validateState = (state: any) => {
     const validatedState = {}
-    //make sure theme is valid
+    // make sure theme is valid
     if (toType(state.theme) === 'object' && !isTheme(state.theme)) {
       console.error(
         'react-json-view error:',
@@ -143,7 +144,7 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
       // @ts-ignore
       validatedState.theme = 'rjv-default'
     }
-    //make sure `src` prop is valid
+    // make sure `src` prop is valid
     if (toType(state.src) !== 'object' && toType(state.src) !== 'array') {
       console.error(
         'react-json-view error:',
@@ -174,11 +175,11 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
       name
     } = this.state
 
-    const { style, defaultValue } = this.props
+    const { className, style, defaultValue } = this.props
 
     return (
       <div
-        className="react-json-view"
+        className={'react-json-view' + `${className ? ' ' : ''}${className ?? ''}`}
         // @ts-ignore
         style={{ ...Theme(theme, 'app-container').style, ...style }}
       >
@@ -212,7 +213,6 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
       namespace,
       new_value,
       existing_value,
-      variable_removed,
       updated_src,
       type
     } = ObjectAttributes.get(this.rjvId, 'action', 'variable-update')
@@ -224,11 +224,11 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
 
     const on_edit_payload = {
       existing_src: src,
-      new_value: new_value,
-      updated_src: updated_src,
-      name: name,
-      namespace: namespace,
-      existing_value: existing_value
+      new_value,
+      updated_src,
+      name,
+      namespace,
+      existing_value
     }
 
     switch (type) {
