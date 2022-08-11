@@ -20,7 +20,8 @@
     "yarn.lock"
   ],
   "scripts": {
-    "build": "run tsc && run vite build"
+    "build": "run tsc && run vite build",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "events": "^3.3.0",
