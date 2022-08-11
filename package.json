@@ -1,6 +1,5 @@
 {
   "name": "@textea/json-viewer",
-  "packageManager": "yarn@3.2.2",
   "description": "Interactive react component for displaying javascript arrays and JSON objects.",
   "version": "1.23.0-alpha.0",
   "types": "src/type.d.ts",
@@ -66,5 +65,6 @@
     "vite": "^3.0.5",
     "vite-plugin-dts": "^1.4.1",
     "vitest": "^0.21.1"
-  }
+  },
+  "packageManager": "yarn@3.2.2"
 }
