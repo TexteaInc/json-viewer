@@ -1,0 +1,37 @@
+name: Release Please
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    environment: Publish
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: '@textea/json-viewer'
+          token: ${{secrets.GITHUB_TOKEN}}
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
+          draft: false
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          node-version: '18.x'
+          cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created }}
+        run: yarn install
+      - name: Publish to npm
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
