@@ -162,7 +162,7 @@ class VariableEditor extends React.PureComponent {
                 }}
             >
                 <Edit
-                    class='click-to-edit-icon'
+                    className='click-to-edit-icon'
                     {...Theme(theme, 'editVarIcon')}
                     onClick={() => {
                       this.prepopInput(variable)
@@ -199,7 +199,7 @@ class VariableEditor extends React.PureComponent {
                 }}
             >
                 <Remove
-                    class='click-to-remove-icon'
+                    className='click-to-remove-icon'
                     {...Theme(theme, 'removeVarIcon')}
                     onClick={() => {
                       dispatcher.dispatch({
@@ -264,7 +264,7 @@ class VariableEditor extends React.PureComponent {
                     type='text'
                     inputRef={input => input && input.focus()}
                     value={editValue}
-                    class='variable-editor'
+                    className='variable-editor'
                     onChange={event => {
                       const value = event.target.value
                       const detected = parseInput(value)
@@ -300,14 +300,14 @@ class VariableEditor extends React.PureComponent {
                 />
                 <div {...Theme(theme, 'edit-icon-container')}>
                     <Remove
-                        class='edit-cancel'
+                        className='edit-cancel'
                         {...Theme(theme, 'cancel-icon')}
                         onClick={() => {
                           this.setState({ editMode: false, editValue: '' })
                         }}
                     />
                     <CheckCircle
-                        class='edit-check string-value'
+                        className='edit-check string-value'
                         {...Theme(theme, 'check-icon')}
                         onClick={() => {
                           this.submitEdit()
@@ -352,7 +352,7 @@ class VariableEditor extends React.PureComponent {
                     <div {...Theme(theme, 'detected-row')}>
                         {detected}
                         <CheckCircle
-                            class='edit-check detected'
+                            className='edit-check detected'
                             style={{
                               verticalAlign: 'top',
                               paddingLeft: '3px',

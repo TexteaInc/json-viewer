@@ -58,7 +58,7 @@ export default class extends React.PureComponent {
                           ? (
                             <CheckCircle
                                 {...Theme(theme, 'key-modal-submit')}
-                                class='key-modal-submit'
+                                className='key-modal-submit'
                                 onClick={e => this.submit()}
                             />
                             )
@@ -67,7 +67,7 @@ export default class extends React.PureComponent {
                     <span {...Theme(theme, 'key-modal-cancel')}>
                         <Cancel
                             {...Theme(theme, 'key-modal-cancel-icon')}
-                            class='key-modal-cancel'
+                            className='key-modal-cancel'
                             onClick={() => {
                               dispatcher.dispatch({
                                 rjvId,

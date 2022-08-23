@@ -32,7 +32,7 @@ export default class extends React.PureComponent {
                 }}
             >
                 <Add
-                    class='click-to-add-icon'
+                    className='click-to-add-icon'
                     {...Theme(theme, 'addVarIcon')}
                     onClick={() => {
                       const request = {
@@ -82,7 +82,7 @@ export default class extends React.PureComponent {
                 }}
             >
                 <Remove
-                    class='click-to-remove-icon'
+                    className='click-to-remove-icon'
                     {...Theme(theme, 'removeVarIcon')}
                     onClick={() => {
                       dispatcher.dispatch({
