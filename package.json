@@ -1,7 +1,7 @@
 {
   "name": "@textea/json-viewer",
   "description": "Interactive react component for displaying javascript arrays and JSON objects.",
-  "version": "1.24.2",
+  "version": "1.24.3",
   "types": "src/type.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
