@@ -1,7 +1,7 @@
 import React from 'react'
 
+import { toType } from '../helpers/util'
 import dispatcher from './../helpers/dispatcher'
-import { toType } from './../helpers/util'
 // theme
 import Theme from './../themes/getStyle'
 import CopyToClipboard from './CopyToClipboard'
@@ -68,7 +68,7 @@ export default class extends React.PureComponent {
   }
 
   getRemoveObject = rowHovered => {
-    const { theme, hover, namespace, name, src, rjvId } = this.props
+    const { theme, namespace, name, src, rjvId } = this.props
 
     // don't allow deleting of root node
     if (namespace.length === 1) {
