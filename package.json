@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "test": "echo \"no tests for now\"",
+    "prepare": "husky install",
     "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache --fix",
     "build": "tsc && vite build",
     "prepublishOnly": "npm run build"
@@ -38,6 +39,8 @@
     "react-dom": "^17 || ^18"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-angular": "^17.0.3",
     "@textea/dev-kit": "^0.11.8",
     "@types/events": "^3.0.0",
     "@types/flux": "^3.1.11",
@@ -59,6 +62,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
