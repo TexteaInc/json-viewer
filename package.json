@@ -20,7 +20,9 @@
   ],
   "scripts": {
     "test": "echo \"no tests for now\"",
-    "prepare": "husky install",
+    "postinstall": "husky install",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable",
     "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache --fix",
     "build": "tsc && vite build",
     "prepublishOnly": "npm run build"
@@ -68,6 +70,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
+    "pinst": "^3.0.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
