@@ -30,7 +30,7 @@ export default class extends React.PureComponent {
       'new-key-request'
     )
     return (
-      input != '' &&
+      input !== '' &&
             Object.keys(request.existing_value).indexOf(input) === -1
     )
   }
