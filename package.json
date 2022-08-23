@@ -34,6 +34,10 @@
     "react-base16-styling": "^0.9.1",
     "react-lifecycles-compat": "^3.0.4"
   },
+  "lint-staged": {
+    "!*.{ts,tsx,js,jsx}": "prettier --write --ignore-unknown",
+    "*.{ts,tsx,js,jsx}": "npx eslint --cache --fix"
+  },
   "peerDependencies": {
     "react": "^17 || ^18",
     "react-dom": "^17 || ^18"
