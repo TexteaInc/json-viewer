@@ -3,7 +3,7 @@ import React from 'react'
 import dispatcher from './../../helpers/dispatcher'
 import ObjectAttributes from './../../stores/ObjectAttributes'
 // global theme
-import ObjectKeyModal from './ObjectKeyModal'
+import { ObjectKeyModal } from './ObjectKeyModal'
 
 // this input appears when adding a new value to an object
 export default class extends React.PureComponent {
@@ -30,7 +30,7 @@ export default class extends React.PureComponent {
       'new-key-request'
     )
     return (
-      input != '' &&
+      input !== '' &&
             Object.keys(request.existing_value).indexOf(input) === -1
     )
   }
