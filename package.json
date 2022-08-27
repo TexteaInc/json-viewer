@@ -33,8 +33,7 @@
     "@mui/material": "^5.10.0",
     "events": "^3.3.0",
     "flux": "^4.0.3",
-    "react-base16-styling": "^0.9.1",
-    "react-lifecycles-compat": "^3.0.4"
+    "react-base16-styling": "^0.9.1"
   },
   "lint-staged": {
     "!*.{ts,tsx,js,jsx}": "prettier --write --ignore-unknown",
@@ -53,7 +52,6 @@
     "@types/node": "^18.7.11",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
-    "@types/react-lifecycles-compat": "^3.0.1",
     "@types/web": "^0.0.72",
     "@typescript-eslint/eslint-plugin": "^5.34.0",
     "@typescript-eslint/parser": "^5.34.0",

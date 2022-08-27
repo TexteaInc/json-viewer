@@ -1,5 +1,4 @@
 import React from 'react'
-import { polyfill } from 'react-lifecycles-compat'
 
 import { toType } from './../../helpers/util'
 // attribute store
@@ -317,8 +316,6 @@ class JsonVariable {
     this.type = toType(value)
   }
 }
-
-polyfill(RjvObject)
 
 // export component
 export default RjvObject

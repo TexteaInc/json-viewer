@@ -1,5 +1,4 @@
 import React from 'react'
-import { polyfill } from 'react-lifecycles-compat'
 
 import { JsonViewer } from './components/JsonViewer'
 import AddKeyRequest from './components/ObjectKeyModal/AddKeyRequest'
@@ -271,7 +270,5 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
     })
   }
 }
-
-polyfill(ReactJsonView)
 
 export default ReactJsonView

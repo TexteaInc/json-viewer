@@ -1111,7 +1111,6 @@ __metadata:
     "@types/node": ^18.7.11
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6
-    "@types/react-lifecycles-compat": ^3.0.1
     "@types/web": ^0.0.72
     "@typescript-eslint/eslint-plugin": ^5.34.0
     "@typescript-eslint/parser": ^5.34.0
@@ -1135,7 +1134,6 @@ __metadata:
     react: ^18.2.0
     react-base16-styling: ^0.9.1
     react-dom: ^18.2.0
-    react-lifecycles-compat: ^3.0.4
     ts-node: ^10.9.1
     typescript: ^4.7.4
     vite: ^3.0.9
@@ -1333,15 +1331,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 6abb7c47d54f012272650df8a962a28bd82f219291e5ef8b4dfa7fe0bb98ae243b060bf9fbe8ceff6213141794855a006db194b490b00ffd15842ae19d0ce1f0
-  languageName: node
-  linkType: hard
-
-"@types/react-lifecycles-compat@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@types/react-lifecycles-compat@npm:3.0.1"
-  dependencies:
-    "@types/react": "*"
-  checksum: e45450115da6f767217f87c10529d3bd07d5f8aed2f339b440e986cf9a28195249ecd3cd9a372cc3960fdb9c1ad4a0110ee2bce317604e6f0aa47909064bac66
   languageName: node
   linkType: hard
 
@@ -5135,13 +5124,6 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
-  languageName: node
-  linkType: hard
-
-"react-lifecycles-compat@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "react-lifecycles-compat@npm:3.0.4"
-  checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
   languageName: node
   linkType: hard
 
