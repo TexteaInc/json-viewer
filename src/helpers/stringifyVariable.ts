@@ -1,6 +1,6 @@
 import { toType } from './util'
 
-const stringifyVariable = (value: any) => {
+export const stringifyVariable = (value: any) => {
   const type = toType(value)
   let string_value
   switch (type) {
@@ -35,5 +35,3 @@ const stringifyVariable = (value: any) => {
 
   return string_value
 }
-
-export default stringifyVariable

@@ -1,9 +1,9 @@
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import React from 'react'
 
+import { parseInput } from '../helpers/parseInput'
+import { stringifyVariable } from '../helpers/stringifyVariable'
 import dispatcher from './../helpers/dispatcher'
-import parseInput from './../helpers/parseInput'
-import stringifyVariable from './../helpers/stringifyVariable'
 // theme
 import Theme from './../themes/getStyle'
 import CopyToClipboard from './CopyToClipboard'
@@ -68,7 +68,7 @@ class VariableEditor extends React.PureComponent {
                 className='variable-row'
                 key={variable.name}
             >
-                {type == 'array'
+                {type === 'array'
                   ? (
                       displayArrayKey
                         ? (
@@ -90,13 +90,13 @@ class VariableEditor extends React.PureComponent {
                             key={variable.name + '_' + namespace}
                         >
                             {!!quotesOnKeys && (
-                                <span style={{ verticalAlign: 'top' }}>"</span>
+                                <span style={{ verticalAlign: 'top' }}>&quot;</span>
                             )}
                             <span style={{ display: 'inline-block' }}>
                                 {variable.name}
                             </span>
                             {!!quotesOnKeys && (
-                                <span style={{ verticalAlign: 'top' }}>"</span>
+                                <span style={{ verticalAlign: 'top' }}>&quot;</span>
                             )}
                         </span>
                         <span {...Theme(theme, 'colon')}>:</span>
@@ -140,10 +140,10 @@ class VariableEditor extends React.PureComponent {
                     />
                     )
                   : null}
-                {onEdit !== false && editMode == false
+                {onEdit !== false && editMode === false
                   ? this.getEditIcon()
                   : null}
-                {onDelete !== false && editMode == false
+                {onDelete !== false && editMode === false
                   ? this.getRemoveIcon()
                   : null}
             </div>

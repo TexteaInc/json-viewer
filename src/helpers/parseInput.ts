@@ -5,7 +5,7 @@ function formatResponse (type: string, value: any) {
   }
 }
 
-export default function parseInput (input: string) {
+export function parseInput (input: string) {
   // following code is to make the best guess at
   // the type for a variable being submitted.
 
