@@ -1,5 +1,8 @@
 import JsonViewer from '@textea/json-viewer'
 import type React from 'react'
+import { useCallback, useState } from 'react'
+
+import type { InteractionProps } from '../../../src/type'
 
 const example = {
   string: 'this is a test string',
@@ -17,9 +20,13 @@ const example = {
 }
 
 const IndexPage: React.FC = () => {
+  const [src, setSrc] = useState<object>(() => example)
+  const handleEdit = useCallback((update: InteractionProps) => {
+    setSrc(update.updated_src)
+  }, [])
   return (
     <div>
-      <JsonViewer src={example}/>
+      <JsonViewer src={src} onEdit={handleEdit}/>
     </div>
   )
 }
