@@ -1,18 +1,24 @@
 import React from 'react'
 
-import { toType } from './../../helpers/util'
+import { toType } from '../../helpers/util'
+// icons
+import { CollapsedIcon, ExpandedIcon } from '../ToggleIcons'
 // attribute store
 import AttributeStore from './../../stores/ObjectAttributes'
 // theme
 import Theme from './../../themes/getStyle'
 import ArrayGroup from './../ArrayGroup'
 import ObjectName from './../ObjectName'
-// icons
-import { CollapsedIcon, ExpandedIcon } from './../ToggleIcons'
 import VariableEditor from './../VariableEditor'
 import VariableMeta from './../VariableMeta'
 // data type components
 import { JsonObject } from './DataTypes'
+
+const createJsonVariable = (name, value) => ({
+  name,
+  value,
+  type: toType(value)
+})
 
 // increment 1 with each nested object & array
 const DEPTH_INCREMENT = 1
@@ -124,8 +130,7 @@ class RjvObject extends React.PureComponent {
     }
   }
 
-  getObjectMetaData = src => {
-    const { rjvId, theme } = this.props
+  getObjectMetaData = () => {
     const { size, hovered } = this.state
     return (
             <VariableMeta rowHovered={hovered} size={size} {...this.props} />
@@ -141,7 +146,7 @@ class RjvObject extends React.PureComponent {
                     <span {...Theme(theme, 'brace')}>
                         {object_type === 'array' ? '[' : '{'}
                     </span>
-                    {expanded ? this.getObjectMetaData(src) : null}
+                    {expanded ? this.getObjectMetaData() : null}
                 </span>
       )
     }
@@ -167,7 +172,7 @@ class RjvObject extends React.PureComponent {
                         {object_type === 'array' ? '[' : '{'}
                     </span>
                 </span>
-                {expanded ? this.getObjectMetaData(src) : null}
+                {expanded ? this.getObjectMetaData() : null}
             </span>
     )
   }
@@ -226,7 +231,7 @@ class RjvObject extends React.PureComponent {
                     >
                         {object_type === 'array' ? ']' : '}'}
                     </span>
-                    {expanded ? null : this.getObjectMetaData(src)}
+                    {expanded ? null : this.getObjectMetaData()}
                 </span>
             </div>
     )
@@ -249,13 +254,13 @@ class RjvObject extends React.PureComponent {
     }
 
     keys.forEach(name => {
-      variable = new JsonVariable(name, variables[name])
+      variable = createJsonVariable(name, variables[name])
 
       if (parent_type === 'array_group' && index_offset) {
         variable.name = parseInt(variable.name) + index_offset
       }
-      if (!variables.hasOwnProperty(name)) {
-
+      if (!Object.hasOwn(variables, name)) {
+        // do nothing
       } else if (variable.type === 'object') {
         elements.push(
                     <JsonObject
@@ -303,17 +308,7 @@ class RjvObject extends React.PureComponent {
         )
       }
     })
-
     return elements
-  }
-}
-
-// just store name, value and type with a variable
-class JsonVariable {
-  constructor (name, value) {
-    this.name = name
-    this.value = value
-    this.type = toType(value)
   }
 }
 
