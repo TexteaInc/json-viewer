@@ -14,9 +14,9 @@ import {
   JsonFloat,
   JsonFunction,
   JsonInteger,
-  JsonNan,
+  JsonNaN,
   JsonNull,
-  JsonRegexp,
+  JsonRegExp,
   JsonString,
   JsonUndefined
 } from './DataTypes/DataTypes'
@@ -237,13 +237,13 @@ class VariableEditor extends React.PureComponent {
       case 'null':
         return <JsonNull {...props} />
       case 'nan':
-        return <JsonNan {...props} />
+        return <JsonNaN {...props} />
       case 'undefined':
         return <JsonUndefined {...props} />
       case 'date':
         return <JsonDate value={variable.value} {...props} />
       case 'regexp':
-        return <JsonRegexp value={variable.value} {...props} />
+        return <JsonRegExp value={variable.value} {...props} />
       default:
         // catch-all for types that weren't anticipated
         return (
@@ -447,7 +447,7 @@ class VariableEditor extends React.PureComponent {
         case 'null':
           return <JsonNull {...props} />
         case 'nan':
-          return <JsonNan {...props} />
+          return <JsonNaN {...props} />
         case 'undefined':
           return <JsonUndefined {...props} />
         case 'date':

@@ -1,4 +1,26 @@
-export const rjv_default = {
+export type ColorNamespace = {
+  scheme: string
+  author: string
+  // transparent main background
+  base00: string
+  base01: string
+  base02: string
+  base03: string
+  base04: string
+  base05: string
+  base06: string
+  base07: string
+  base08: string
+  base09: string
+  base0A: string
+  base0B: string
+  base0C: string
+  base0D: string
+  base0E: string
+  base0F: string
+}
+
+export const rjv_default: ColorNamespace = {
   scheme: 'rjv-default',
   author: 'mac gainor',
   // transparent main background
@@ -18,9 +40,9 @@ export const rjv_default = {
   base0D: '#586e75',
   base0E: '#2aa198',
   base0F: '#268bd2'
-}
+} as const
 
-export const rjv_grey = {
+export const rjv_grey: ColorNamespace = {
   scheme: 'rjv-grey',
   author: 'mac gainor',
   base00: 'rgba(1, 1, 1, 0)',
@@ -39,4 +61,4 @@ export const rjv_grey = {
   base0D: 'rgba(1, 1, 1, 0.8)',
   base0E: 'rgba(1, 1, 1, 0.8)',
   base0F: 'rgba(1, 1, 1, 0.8)'
-}
+} as const

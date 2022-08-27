@@ -5,11 +5,11 @@ import type { DataTypeProps } from '../../types/data-type'
 import Theme from './../../themes/getStyle'
 import { DataTypeLabel } from './DataTypeLabel'
 
-export const JsonBoolean: React.FC<DataTypeProps<boolean>> = (props) => {
+export const JsonRegExp: React.FC<DataTypeProps<RegExp>> = (props) => {
   return (
-    <div {...Theme(props.theme, 'boolean')}>
-      <DataTypeLabel {...props} type_name='bool'/>
-      {props.value ? 'true' : 'false'}
+    <div {...Theme(props.theme, 'regexp')}>
+      <DataTypeLabel {...props} type_name='regexp'/>
+      {props.value.toString()}
     </div>
   )
 }
