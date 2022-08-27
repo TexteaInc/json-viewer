@@ -1,7 +1,7 @@
 import React from 'react'
 import { polyfill } from 'react-lifecycles-compat'
 
-import JsonViewer from './components/JsonViewer'
+import { JsonViewer } from './components/JsonViewer'
 import AddKeyRequest from './components/ObjectKeyModal/AddKeyRequest'
 import ValidationFailure from './components/ValidationFailure'
 import { isTheme, toType } from './helpers/util'
