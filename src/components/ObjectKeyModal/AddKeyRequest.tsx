@@ -39,6 +39,9 @@ export const AddKeyRequest: React.FC<AddKeyRequestProps> = (props) => {
       data: request
     })
   }, [props.defaultValue, rjvId])
+  if (!props.active) {
+    return null
+  }
 
   return (
     <ObjectKeyModal
