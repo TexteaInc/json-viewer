@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { JsonViewer } from './components/JsonViewer'
-import AddKeyRequest from './components/ObjectKeyModal/AddKeyRequest'
+import { AddKeyRequest } from './components/ObjectKeyModal/AddKeyRequest'
 import ValidationFailure from './components/ValidationFailure'
 import { isTheme, toType } from './helpers/util'
 import ObjectAttributes from './stores/ObjectAttributes'
