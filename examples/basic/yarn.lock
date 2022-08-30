@@ -116,6 +116,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@textea/json-viewer-example-basic@workspace:."
   dependencies:
+    "@types/node": ^18.7.14
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6
     next: ^12.2.4
@@ -125,6 +126,13 @@ __metadata:
     typescript: ^4.7.4
   languageName: unknown
   linkType: soft
+
+"@types/node@npm:^18.7.14":
+  version: 18.7.14
+  resolution: "@types/node@npm:18.7.14"
+  checksum: 99cf28ff854100158de875cca23c7acc3cc01dfee526a52b90b7f36767c821bcbaf2be0a98a70f06f3b78f3c60639168ff949d725b61e2e124f9f71f1fb8043d
+  languageName: node
+  linkType: hard
 
 "@types/prop-types@npm:*":
   version: 15.7.5
