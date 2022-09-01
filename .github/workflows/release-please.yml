@@ -29,6 +29,8 @@ jobs:
       - name: Install dependencies
         if: ${{ steps.release.outputs.release_created }}
         run: yarn install
+      - name: Prepack
+        run: yarn run prepack
       - uses: JS-DevTools/npm-publish@v1
         name: Publish to npm
         if: ${{ steps.release.outputs.release_created }}
