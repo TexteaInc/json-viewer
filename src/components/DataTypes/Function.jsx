@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 
 // attribute store for storing collapsed state
 import AttributeStore from './../../stores/ObjectAttributes'
@@ -6,76 +6,49 @@ import AttributeStore from './../../stores/ObjectAttributes'
 import Theme from './../../themes/getStyle'
 import { DataTypeLabel } from './DataTypeLabel'
 
-export default class extends React.PureComponent {
-  constructor (props) {
-    super(props)
-    this.state = {
-      collapsed: AttributeStore.get(
-        props.rjvId,
-        props.namespace,
-        'collapsed',
-        true
-      )
-    }
-  }
-
-  toggleCollapsed = () => {
-    this.setState(
-      {
-        collapsed: !this.state.collapsed
-      },
-      () => {
-        // will be called after setState takes effect.
-        AttributeStore.set(
-          this.props.rjvId,
-          this.props.namespace,
-          'collapsed',
-          this.state.collapsed
-        )
-      }
+export const JsonFunction = (props) => {
+  const [collapsed, setCollapsed] = useState(() => AttributeStore.get(
+    props.rjvId,
+    props.namespace,
+    'collapsed',
+    true
+  ))
+  const toggleCollapsed = useCallback(() => {
+    setCollapsed(value => !value)
+    AttributeStore.set(
+      props.rjvId,
+      props.namespace,
+      'collapsed',
+      collapsed
     )
-  }
+  }, [collapsed, props.namespace, props.rjvId])
+  const type_name = 'function'
 
-  render () {
-    const type_name = 'function'
-    const { props } = this
-    const { collapsed } = this.state
-
-    return (
-            <div {...Theme(props.theme, 'function')}>
-                <DataTypeLabel type_name={type_name} {...props} />
-                <span
-                    {...Theme(props.theme, 'function-value')}
-                    className='rjv-function-container'
-                    onClick={this.toggleCollapsed}
-                >
-                    {this.getFunctionDisplay(collapsed)}
-                </span>
-            </div>
-    )
-  }
-
-  getFunctionDisplay = collapsed => {
-    const { props } = this
-    if (collapsed) {
-      return (
-                <span>
-                    {this.props.value
-                      .toString()
-                      .slice(9, -1)
-                      .replace(/\{[\s\S]+/, '')}
-                    <span
-                        className='function-collapsed'
-                        style={{ fontWeight: 'bold' }}
-                    >
-                        <span>{'{'}</span>
-                        <span {...Theme(props.theme, 'ellipsis')}>...</span>
-                        <span>{'}'}</span>
-                    </span>
-                </span>
-      )
-    } else {
-      return this.props.value.toString().slice(9, -1)
-    }
-  }
+  return (
+    <div {...Theme(props.theme, 'function')}>
+      <DataTypeLabel type_name={type_name} {...props} />
+      <span
+        {...Theme(props.theme, 'function-value')}
+        className='rjv-function-container'
+        onClick={toggleCollapsed}
+      >
+        {collapsed
+          ? (
+            <span>
+                          {props.value.toString()
+                            .slice(9, -1)
+                            .replace(/\{[\s\S]+/, '')}<span
+                          className='function-collapsed'
+                          style={{ fontWeight: 'bold' }}>
+                             <span>{'{'}</span>
+                             <span {...Theme(props.theme,
+                               'ellipsis')}>...</span>
+                            <span>{'}'}</span>
+                         </span>
+                        </span>
+            )
+          : props.value.toString().slice(9)}
+      </span>
+    </div>
+  )
 }

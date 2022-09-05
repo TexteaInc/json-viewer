@@ -1,7 +1,7 @@
 export { JsonBoolean } from './Boolean'
 export { JsonDate } from './Date'
 export { JsonFloat } from './Float'
-export { default as JsonFunction } from './Function'
+export { JsonFunction } from './Function'
 export { JsonInteger } from './Integer'
 export { JsonNaN } from './NaN'
 export { JsonNull } from './Null'

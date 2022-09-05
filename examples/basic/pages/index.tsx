@@ -4,6 +4,10 @@ import { useCallback, useState } from 'react'
 
 import type { InteractionProps } from '../../../src/type'
 
+function aPlusB (a:number, b: number) {
+  return a + b
+}
+
 const example = {
   string: 'this is a test string',
   integer: 42,
@@ -15,6 +19,7 @@ const example = {
     'second-child': false,
     'last-child': null
   },
+  fn: aPlusB,
   string_number: '1234',
   date: new Date()
 }
