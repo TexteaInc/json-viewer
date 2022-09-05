@@ -1,9 +1,7 @@
 import React from 'react'
 
-const DEFAULT_WIDTH = 24
-const DEFAULT_HEIGHT = 24
 const DEFAULT_COLOR = '#000000'
-function getIconStyle (style) {
+function getIconStyle (style: any) {
   if (!style) {
     style = {}
   }
@@ -18,8 +16,8 @@ function getIconStyle (style) {
   }
 }
 
-export class CircleMinus extends React.PureComponent {
-  render () {
+export class CircleMinus extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -38,8 +36,8 @@ export class CircleMinus extends React.PureComponent {
   }
 }
 
-export class CirclePlus extends React.PureComponent {
-  render () {
+export class CirclePlus extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -58,8 +56,8 @@ export class CirclePlus extends React.PureComponent {
   }
 }
 
-export class SquareMinus extends React.PureComponent {
-  render () {
+export class SquareMinus extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
     const svgStyle = getIconStyle(style).style
@@ -80,8 +78,8 @@ export class SquareMinus extends React.PureComponent {
   }
 }
 
-export class SquarePlus extends React.PureComponent {
-  render () {
+export class SquarePlus extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
     const svgStyle = getIconStyle(style).style
@@ -102,8 +100,8 @@ export class SquarePlus extends React.PureComponent {
   }
 }
 
-export class ArrowRight extends React.PureComponent {
-  render () {
+export class ArrowRight extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -125,8 +123,8 @@ export class ArrowRight extends React.PureComponent {
   }
 }
 
-export class ArrowDown extends React.PureComponent {
-  render () {
+export class ArrowDown extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -148,8 +146,8 @@ export class ArrowDown extends React.PureComponent {
   }
 }
 
-export class Clippy extends React.PureComponent {
-  render () {
+export class Clippy extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -170,8 +168,8 @@ export class Clippy extends React.PureComponent {
   }
 }
 
-export class RemoveCircle extends React.PureComponent {
-  render () {
+export class RemoveCircle extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -192,8 +190,8 @@ export class RemoveCircle extends React.PureComponent {
   }
 }
 
-export class AddCircle extends React.PureComponent {
-  render () {
+export class AddCircle extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -214,8 +212,8 @@ export class AddCircle extends React.PureComponent {
   }
 }
 
-export class Add extends React.PureComponent {
-  render () {
+export class Add extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -236,8 +234,8 @@ export class Add extends React.PureComponent {
   }
 }
 
-export class Edit extends React.PureComponent {
-  render () {
+export class Edit extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 
@@ -258,8 +256,8 @@ export class Edit extends React.PureComponent {
   }
 }
 
-export class CheckCircle extends React.PureComponent {
-  render () {
+export class CheckCircle extends React.PureComponent<any> {
+  override render () {
     const { props } = this
     const { style, ...rest } = props
 

@@ -20,7 +20,7 @@ import {
   JsonString,
   JsonUndefined
 } from './DataTypes/DataTypes'
-// clibboard icon
+// clipboard icon
 import { CheckCircle, Edit, RemoveCircle as Remove } from './icons'
 
 class VariableEditor extends React.PureComponent {
@@ -343,8 +343,7 @@ class VariableEditor extends React.PureComponent {
   }
 
   showDetected = () => {
-    const { theme, variable, namespace, rjvId } = this.props
-    const { type, value } = this.state.parsedInput
+    const { theme } = this.props
     const detected = this.getDetectedInput()
     if (detected) {
       return (
@@ -374,8 +373,8 @@ class VariableEditor extends React.PureComponent {
     const { props } = this
     const { theme } = props
 
-    if (type !== false) {
-      switch (type.toLowerCase()) {
+    if (typeof type === 'string') {
+      switch (type) {
         case 'object':
           return (
                         <span>

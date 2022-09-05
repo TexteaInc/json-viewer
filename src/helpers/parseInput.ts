@@ -13,10 +13,10 @@ export function parseInput (input: string) {
   input = input.trim()
   try {
     input = JSON.stringify(JSON.parse(input))
-    if (input[0] === '[') {
+    if (input.startsWith('[') && input.endsWith(']')) {
       // array
       return formatResponse('array', JSON.parse(input))
-    } else if (input[0] === '{') {
+    } else if (input.startsWith('{') && input.endsWith('}')) {
       // object
       return formatResponse('object', JSON.parse(input))
     } else if (
