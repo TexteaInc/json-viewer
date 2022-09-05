@@ -1,9 +1,10 @@
 import { createStyling } from 'react-base16-styling'
 
+import type { ColorMap } from '../types/theme'
 import { rjv_default, rjv_grey } from './base16/rjv-themes'
 import constants from './styleConstants'
 
-const colorMap = theme => ({
+const colorMap = (theme: any): ColorMap => ({
   backgroundColor: theme.base00,
   ellipsisColor: theme.base09,
   braceColor: theme.base07,
@@ -51,7 +52,7 @@ const colorMap = theme => ({
   }
 })
 
-const getDefaultThemeStyling = theme => {
+const getDefaultThemeStyling = (theme: any): any => {
   const colors = colorMap(theme)
 
   return {
@@ -90,7 +91,7 @@ const getDefaultThemeStyling = theme => {
       color: colors.keyColor,
       verticalAlign: 'top'
     },
-    objectKeyVal: (component, variable_style) => {
+    objectKeyVal: (component: any, variable_style: any) => {
       return {
         style: {
           paddingTop: constants.keyValPaddingTop,
@@ -109,13 +110,10 @@ const getDefaultThemeStyling = theme => {
         }
       }
     },
-    'object-key-val-no-border': {
-      padding: constants.keyValPadding
-    },
     'pushed-content': {
       marginLeft: constants.pushedContentMarginLeft
     },
-    variableValue: (component, variable_style) => {
+    variableValue: (component: any, variable_style: any) => {
       return {
         style: {
           display: 'inline-block',
@@ -390,7 +388,7 @@ const getDefaultThemeStyling = theme => {
   }
 }
 
-const getStyle = theme => {
+const getStyle = (theme: any) => {
   let rjv_theme = rjv_default
   if (theme === false || theme === 'none') {
     rjv_theme = rjv_grey
@@ -401,7 +399,7 @@ const getStyle = theme => {
   )
 }
 
-export default function style (theme, component, args) {
+export default function style (theme: any, component: any, args: any) {
   if (!theme) {
     console.error('theme has not been set')
   }
