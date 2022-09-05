@@ -259,7 +259,7 @@ class RjvObject extends React.PureComponent {
       if (parent_type === 'array_group' && index_offset) {
         variable.name = parseInt(variable.name) + index_offset
       }
-      if (!Object.hasOwn(variables, name)) {
+      if (!Object.prototype.hasOwnProperty.call(variables, name)) {
         // do nothing
       } else if (variable.type === 'object') {
         elements.push(
