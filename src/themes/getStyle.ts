@@ -399,7 +399,7 @@ const getStyle = (theme: any) => {
   )
 }
 
-export default function style (theme: any, component: any, args: any) {
+export default function style (theme: any, component: any, args?: any) {
   if (!theme) {
     console.error('theme has not been set')
   }
