@@ -4,7 +4,7 @@ import { toType } from '../helpers/util'
 import dispatcher from './../helpers/dispatcher'
 // theme
 import Theme from './../themes/getStyle'
-import CopyToClipboard from './CopyToClipboard'
+import { CopyToClipboard } from './CopyToClipboard'
 // icons
 import { AddCircle as Add, RemoveCircle as Remove } from './icons'
 

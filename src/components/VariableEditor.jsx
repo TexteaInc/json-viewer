@@ -6,7 +6,7 @@ import { stringifyVariable } from '../helpers/stringifyVariable'
 import dispatcher from './../helpers/dispatcher'
 // theme
 import Theme from './../themes/getStyle'
-import CopyToClipboard from './CopyToClipboard'
+import { CopyToClipboard } from './CopyToClipboard'
 // data type components
 import {
   dataTypes
@@ -245,6 +245,7 @@ class VariableEditor extends React.PureComponent {
                     onChange={event => {
                       const value = event.target.value
                       const detected = parseInput(value)
+                      console.log(2)
                       this.setState({
                         editValue: value,
                         parsedInput: {
@@ -416,6 +417,7 @@ class VariableEditor extends React.PureComponent {
         }
       }
     }
+    return null
   }
 }
 
