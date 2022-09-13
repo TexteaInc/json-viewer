@@ -74,5 +74,5 @@ export function parseInput (input: string) {
     }
   }
 
-  return formatResponse('false', null)
+  return formatResponse('string', input)
 }
