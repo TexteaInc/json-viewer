@@ -9,16 +9,7 @@ import Theme from './../themes/getStyle'
 import CopyToClipboard from './CopyToClipboard'
 // data type components
 import {
-  JsonBoolean,
-  JsonDate,
-  JsonFloat,
-  JsonFunction,
-  JsonInteger,
-  JsonNaN,
-  JsonNull,
-  JsonRegExp,
-  JsonString,
-  JsonUndefined
+  dataTypes
 } from './DataTypes/DataTypes'
 // clipboard icon
 import { CheckCircle, Edit, RemoveCircle as Remove } from './icons'
@@ -224,33 +215,19 @@ class VariableEditor extends React.PureComponent {
     switch (type) {
       case false:
         return this.getEditInput()
-      case 'string':
-        return <JsonString value={variable.value} {...props} />
-      case 'integer':
-        return <JsonInteger value={variable.value} {...props} />
-      case 'float':
-        return <JsonFloat value={variable.value} {...props} />
-      case 'boolean':
-        return <JsonBoolean value={variable.value} {...props} />
-      case 'function':
-        return <JsonFunction value={variable.value} {...props} />
-      case 'null':
-        return <JsonNull {...props} />
-      case 'nan':
-        return <JsonNaN {...props} />
-      case 'undefined':
-        return <JsonUndefined {...props} />
-      case 'date':
-        return <JsonDate value={variable.value} {...props} />
-      case 'regexp':
-        return <JsonRegExp value={variable.value} {...props} />
-      default:
-        // catch-all for types that weren't anticipated
-        return (
-                    <div className='object-value'>
-                        {JSON.stringify(variable.value)}
-                    </div>
-        )
+      default: {
+        const JsonComponent = dataTypes[type]
+        if (!JsonComponent) {
+          // catch-all for types that weren't anticipated
+          return (
+            <div className='object-value'>
+              {JSON.stringify(variable.value)}
+            </div>
+          )
+        } else {
+          return <JsonComponent {...props} value={variable.value}/>
+        }
+      }
     }
   }
 
@@ -374,6 +351,7 @@ class VariableEditor extends React.PureComponent {
     const { theme } = props
 
     if (typeof type === 'string') {
+      const JsonComponent = dataTypes[type]
       switch (type) {
         case 'object':
           return (
@@ -433,24 +411,9 @@ class VariableEditor extends React.PureComponent {
                             </span>
                         </span>
           )
-        case 'string':
-          return <JsonString value={value} {...props} />
-        case 'integer':
-          return <JsonInteger value={value} {...props} />
-        case 'float':
-          return <JsonFloat value={value} {...props} />
-        case 'boolean':
-          return <JsonBoolean value={value} {...props} />
-        case 'function':
-          return <JsonFunction value={value} {...props} />
-        case 'null':
-          return <JsonNull {...props} />
-        case 'nan':
-          return <JsonNaN {...props} />
-        case 'undefined':
-          return <JsonUndefined {...props} />
-        case 'date':
-          return <JsonDate value={new Date(value)} {...props} />
+        default: {
+          return <JsonComponent {...props} value={value}/>
+        }
       }
     }
   }

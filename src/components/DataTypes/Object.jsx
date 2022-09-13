@@ -11,8 +11,6 @@ import Theme from './../../themes/getStyle'
 import ArrayGroup from './../ArrayGroup'
 import VariableEditor from './../VariableEditor'
 import VariableMeta from './../VariableMeta'
-// data type components
-import { JsonObject } from './DataTypes'
 
 const createJsonVariable = (name, value) => ({
   name,
@@ -263,7 +261,7 @@ class RjvObject extends React.PureComponent {
         // do nothing
       } else if (variable.type === 'object') {
         elements.push(
-                    <JsonObject
+                    <RjvObject
                         key={variable.name}
                         depth={depth + DEPTH_INCREMENT}
                         name={variable.name}
@@ -274,7 +272,7 @@ class RjvObject extends React.PureComponent {
                     />
         )
       } else if (variable.type === 'array') {
-        let ObjectComponent = JsonObject
+        let ObjectComponent = RjvObject
 
         if (
           groupArraysAfterLength &&
