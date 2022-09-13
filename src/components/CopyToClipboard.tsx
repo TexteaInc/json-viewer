@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import copy from 'copy-to-clipboard'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { toType } from '../helpers/util'
 // theme
@@ -10,6 +11,17 @@ export const CopyToClipboard: React.FC<any> = React.memo((props) => {
   const { theme, hidden, rowHovered } = props
 
   const [copied, setCopied] = useState(false)
+  useEffect(() => {
+    if (copied) {
+      const number = setTimeout(() => {
+        setCopied(false)
+      }, 5500)
+      return () => {
+        clearTimeout(number)
+      }
+    }
+    return () => {}
+  }, [copied])
   const handleCopy = useCallback(() => {
     const clipboardValue = (value: any) => {
       const type = toType(value)
@@ -21,24 +33,15 @@ export const CopyToClipboard: React.FC<any> = React.memo((props) => {
           return value
       }
     }
-    const container = document.createElement('textarea')
     const { clickCallback, src, namespace } = props
-
-    container.innerHTML = JSON.stringify(
-      clipboardValue(src),
-      null,
-      '  '
+    copy(
+      JSON.stringify(
+        clipboardValue(src),
+        null,
+        '  '
+      )
     )
-
-    document.body.appendChild(container)
-    container.select()
-    document.execCommand('copy')
-
-    document.body.removeChild(container)
     setCopied(true)
-    setTimeout(() => {
-      setCopied(false)
-    }, 5500)
     if (typeof clickCallback === 'function') {
       clickCallback({
         src,
