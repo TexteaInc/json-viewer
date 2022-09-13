@@ -36,8 +36,7 @@
   },
   "files": [
     "src/**.d.ts",
-    "dist",
-    "yarn.lock"
+    "dist"
   ],
   "scripts": {
     "test": "echo \"no tests for now\"",
@@ -89,5 +88,8 @@
     "vite-plugin-dts": "^1.4.1",
     "vitest": "^0.23.1"
   },
-  "packageManager": "yarn@3.2.2"
+  "packageManager": "yarn@3.2.2",
+  "workspaces": [
+    "examples/*"
+  ]
 }
