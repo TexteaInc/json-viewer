@@ -294,3 +294,6 @@ export type ThemeKeys =
 
 declare const JsonViewer: React.ComponentType<ReactJsonViewProps>
 export default JsonViewer
+
+// unstable components
+export const unstable_JsonViewer: React.FC<ReactJsonViewProps>
