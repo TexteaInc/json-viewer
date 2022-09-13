@@ -2,7 +2,7 @@ import React from 'react'
 
 import { JsonViewer } from './components/JsonViewer'
 import { AddKeyRequest } from './components/ObjectKeyModal/AddKeyRequest'
-import ValidationFailure from './components/ValidationFailure'
+import { ValidationFailure } from './components/ValidationFailure'
 import { isTheme, toType } from './helpers/util'
 import ObjectAttributes from './stores/ObjectAttributes'
 // global theme
@@ -179,7 +179,6 @@ class ReactJsonView extends React.PureComponent<ReactJsonViewProps, any> {
     return (
       <div
         className={'react-json-view' + `${className ? ' ' : ''}${className ?? ''}`}
-        // @ts-ignore
         style={{ ...Theme(theme, 'app-container').style, ...style }}
       >
         <ValidationFailure
