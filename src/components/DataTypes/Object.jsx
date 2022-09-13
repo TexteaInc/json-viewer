@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { toType } from '../../helpers/util'
+import { ObjectName } from '../ObjectName'
 // icons
 import { CollapsedIcon, ExpandedIcon } from '../ToggleIcons'
 // attribute store
@@ -8,7 +9,6 @@ import AttributeStore from './../../stores/ObjectAttributes'
 // theme
 import Theme from './../../themes/getStyle'
 import ArrayGroup from './../ArrayGroup'
-import ObjectName from './../ObjectName'
 import VariableEditor from './../VariableEditor'
 import VariableMeta from './../VariableMeta'
 // data type components

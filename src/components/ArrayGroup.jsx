@@ -2,7 +2,7 @@ import React from 'react'
 
 import Theme from './../themes/getStyle'
 import ObjectComponent from './DataTypes/Object'
-import ObjectName from './ObjectName'
+import { ObjectName } from './ObjectName'
 // icons
 import { CollapsedIcon, ExpandedIcon } from './ToggleIcons'
 import VariableMeta from './VariableMeta'
