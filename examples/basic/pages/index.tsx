@@ -21,7 +21,7 @@ const example = {
   },
   fn: aPlusB,
   string_number: '1234',
-  date: new Date()
+  date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)')
 }
 
 const IndexPage: React.FC = () => {
