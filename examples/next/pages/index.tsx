@@ -1,10 +1,11 @@
+import { TextField } from '@mui/material'
 import { unstable_JsonViewer as JsonViewer } from '@textea/json-viewer'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 
 import type { InteractionProps } from '../../../src/type'
 
-function aPlusB (a:number, b: number) {
+function aPlusB (a: number, b: number) {
   return a + b
 }
 
@@ -25,13 +26,30 @@ const example = {
 }
 
 const IndexPage: React.FC = () => {
+  const [indent, setIndent] = useState(2)
   const [src, setSrc] = useState<object>(() => example)
   const handleEdit = useCallback((update: InteractionProps) => {
     setSrc(update.updated_src)
   }, [])
   return (
     <div>
-      <JsonViewer src={src} onEdit={handleEdit}/>
+      <TextField
+        value={indent}
+        type='number'
+        onChange={
+          event => {
+            const indent = parseInt(event.target.value)
+            if (indent > -1 && indent < 10) {
+              setIndent(indent)
+            }
+          }
+        }
+      />
+      <JsonViewer
+        src={src}
+        indentWidth={indent}
+        onEdit={handleEdit}
+      />
     </div>
   )
 }
