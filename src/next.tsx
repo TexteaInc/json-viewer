@@ -8,6 +8,7 @@ import {
   ThemeProvider
 } from '@mui/material'
 import type { OverridesStyleRules } from '@mui/material/styles/overrides'
+import { DevelopmentError } from '@textea/dev-kit/utils'
 import type React from 'react'
 import { useCallback, useDebugValue, useEffect, useMemo } from 'react'
 
@@ -52,6 +53,68 @@ function getType (value: unknown) {
   return type
 }
 
+const needExpand = (value: unknown): boolean => {
+  const type = getType(value)
+  switch (type) {
+    case 'object':
+    case 'function':
+    case 'array':
+      return true
+    default:
+      return false
+  }
+}
+
+const getEndingClosure = (value: unknown): string => {
+  const type = getType(value)
+  switch (type) {
+    case 'object':
+    case 'function':
+      return '}'
+    case 'array':
+      return ']'
+    default:
+      throw new DevelopmentError()
+  }
+}
+
+function shortPreviewValue (value: unknown): string {
+  const type = getType(value)
+  if (type === 'function') {
+    return (value as Function).toString().slice(9, -1).replace(/\{[\s\S]+/, '')
+  } else if (type === 'array') {
+    return '[...]'
+  } else if (type === 'object') {
+    return '{...}'
+  } else {
+    return `${value}`
+  }
+}
+
+function longPreviewValue (value: unknown): string {
+  const type = getType(value)
+  if (type === 'function') {
+    const functionHead = (value as Function).toString()
+      .slice(9, -1)
+      .replace(/\{[\s\S]+/, '')
+    return `${functionHead} {`
+  } else if (type === 'array') {
+    return ' ['
+  } else if (type === 'object') {
+    return '{'
+  } else {
+    return ''
+  }
+}
+
+function shortPreviewKeyValuePair (key: string, value: unknown): string {
+  return `${key}: ${shortPreviewValue(value)}`
+}
+
+function longPreviewKeyValuePair (key: string, value: unknown): string {
+  return `${key}: ${longPreviewValue(value)}`
+}
+
 const ObjectJson: React.FC<DataProps> = ({
   value,
   isRoot,
@@ -76,25 +139,11 @@ const ObjectJson: React.FC<DataProps> = ({
             onNodeToggle={handleToggle}
           >
             <TreeItem nodeId='data-viewer-root' label='root'>
-              {
-                Object.entries(value as object).map(([key, value]) => {
-                  const path = `${father}${father ? '.' : ''}${key}`
-                  const isExpend = expanded.includes(path)
-                  return (
-                    <TreeItem
-                      nodeId={path}
-                      key={key}
-                      label={isExpend ? path : `${key} : ${value}`}
-                    >
-                      <ObjectJson
-                        father={key}
-                        value={value}
-                        isRoot={false}
-                      />
-                    </TreeItem>
-                  )
-                })
-              }
+              <ObjectJson
+                father='root'
+                value={value}
+                isRoot={false}
+              />
             </TreeItem>
           </TreeView>
         )
@@ -102,25 +151,57 @@ const ObjectJson: React.FC<DataProps> = ({
         return (
           Object.entries(value as object).map(([key, value]) => {
             const path = `${father}${father ? '.' : ''}${key}`
-            return (
-              <TreeItem
-                nodeId={path}
-                key={key}
-                label={`${value}`}
-              >
-                <ObjectJson
-                  father={key}
-                  value={value}
-                  isRoot={false}
+            const isExpend = expanded.includes(path)
+            const shouldExpand = needExpand(value)
+            if (shouldExpand) {
+              return (
+                <TreeItem
+                  nodeId={path}
+                  key={key}
+                  label={isExpend
+                    ? longPreviewKeyValuePair(key, value)
+                    : shortPreviewKeyValuePair(key, value)}
+                >
+                  {
+                    shouldExpand
+                      ? (
+                        <ObjectJson
+                          father={key}
+                          value={value}
+                          isRoot={false}
+                        />
+                        )
+                      : null
+                  }
+                  {shouldExpand && isExpend && (
+                    <TreeItem nodeId={`${path}-ending`}
+                              label={getEndingClosure(value)}/>
+                  )}
+                </TreeItem>
+              )
+            } else {
+              return (
+                <TreeItem
+                  nodeId={path}
+                  key={key}
+                  label={shortPreviewKeyValuePair(key, value)}
                 />
-              </TreeItem>
-            )
+              )
+            }
           })
         )
       }
     } else {
       const path = `${father}${father ? '.' : ''}${value}`
-      return <TreeItem nodeId={path} label={`${value}`}/>
+      const type = getType(value)
+      if (type === 'function') {
+        const entire = (value as Function).toString()
+        const label = entire.slice(entire.indexOf('{') + 1,
+          entire.lastIndexOf('}'))
+        return <TreeItem nodeId={path} label={label}/>
+      } else {
+        return <TreeItem nodeId={path} label={`${value}`}/>
+      }
     }
   }, [expanded, father, handleToggle, isRoot, type, value])
   return <>{elements}</>
