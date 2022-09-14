@@ -1,5 +1,7 @@
 # @textea/json-viewer
 
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/textea-json-viewer?file=pages/index.js)
+
 `@textea/json-viewer` is a React component for displaying and editing JavaScript/TypeScript **arrays** and **JSON
 objects**.
 
