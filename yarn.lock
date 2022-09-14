@@ -1117,6 +1117,51 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mui/icons-material@npm:^5.10.3":
+  version: 5.10.3
+  resolution: "@mui/icons-material@npm:5.10.3"
+  dependencies:
+    "@babel/runtime": ^7.18.9
+  peerDependencies:
+    "@mui/material": ^5.0.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 9c32f3e9fc2be61b6518418818ead346469fb4650852307291fe23e16909fc1c2f4bc3b09a524fb0e90920aa1a26a6a41e91815e0da1d15d7e26ccad4f6915fa
+  languageName: node
+  linkType: hard
+
+"@mui/lab@npm:^5.0.0-alpha.99":
+  version: 5.0.0-alpha.99
+  resolution: "@mui/lab@npm:5.0.0-alpha.99"
+  dependencies:
+    "@babel/runtime": ^7.18.9
+    "@mui/base": 5.0.0-alpha.97
+    "@mui/system": ^5.10.5
+    "@mui/utils": ^5.10.3
+    clsx: ^1.2.1
+    prop-types: ^15.8.1
+    react-is: ^18.2.0
+  peerDependencies:
+    "@emotion/react": ^11.5.0
+    "@emotion/styled": ^11.3.0
+    "@mui/material": ^5.0.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    "@emotion/styled":
+      optional: true
+    "@types/react":
+      optional: true
+  checksum: db54edffbd70bb8956605e67a28cc240edac422800e955f82f6603f53631697440780a83f3945307dd9adcd57823e48838ba73248771ae1095d3009af28c8843
+  languageName: node
+  linkType: hard
+
 "@mui/material@npm:^5.10.5":
   version: 5.10.5
   resolution: "@mui/material@npm:5.10.5"
@@ -1595,6 +1640,8 @@ __metadata:
     "@commitlint/config-angular": ^17.1.0
     "@emotion/react": ^11.10.4
     "@emotion/styled": ^11.10.4
+    "@mui/icons-material": ^5.10.3
+    "@mui/lab": ^5.0.0-alpha.99
     "@mui/material": ^5.10.5
     "@textea/dev-kit": ^0.12.16
     "@types/events": ^3.0.0

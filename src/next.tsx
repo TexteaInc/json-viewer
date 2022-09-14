@@ -1,6 +1,9 @@
-import { Box, createTheme, Stack, ThemeProvider } from '@mui/material'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { TreeItem, TreeView } from '@mui/lab'
+import { Box, createTheme, ThemeProvider } from '@mui/material'
 import type React from 'react'
-import { useDebugValue, useEffect, useMemo } from 'react'
+import { useCallback, useDebugValue, useEffect, useMemo } from 'react'
 
 import {
   createJsonViewerStore,
@@ -9,6 +12,8 @@ import {
 import type { ReactJsonViewProps } from './type'
 
 export type DataProps<Data = unknown> = {
+  father: string
+  isRoot: boolean
   value: Data
   currentIndent: number
 }
@@ -24,6 +29,8 @@ function getType (value: unknown) {
       return 'date'
     } else if (value === null) {
       return 'null'
+    } else if (Array.isArray(value)) {
+      return 'array'
     }
   }
   return type
@@ -31,33 +38,79 @@ function getType (value: unknown) {
 
 const ObjectJson: React.FC<DataProps> = ({
   value,
-  currentIndent
+  currentIndent,
+  isRoot,
+  father
 }) => {
   const type = useMemo(() => getType(value), [value])
   useDebugValue(type, type => `value type: ${type}`)
   const indentWidth = useJsonViewerStore(store => store.indentWidth)
+  const expanded = useJsonViewerStore(store => store.expanded)
+  const setExpanded = useJsonViewerStore(store => store.setExpanded)
+  const handleToggle = useCallback(
+    (event: React.SyntheticEvent, nodeIds: string[]) => {
+      setExpanded(nodeIds)
+    }, [setExpanded])
   const elements = useMemo(() => {
     if (type === 'object') {
-      return Object.entries(value as object).map(([key, value]) => (
-        <Box
-          key={key}
-          sx={{
-            pl: currentIndent
-          }}
-        >
-          <Stack direction='row' spacing={1}>
-            <Box>{key}</Box>
-            <Box component='div'>
-              <ObjectJson value={value}
-                          currentIndent={currentIndent + indentWidth}/>
-            </Box>
-          </Stack>
-        </Box>
-      ))
+      if (isRoot) {
+        return (
+          <TreeView
+            defaultCollapseIcon={<ExpandMoreIcon/>}
+            defaultExpandIcon={<ChevronRightIcon/>}
+            expanded={expanded}
+            onNodeToggle={handleToggle}
+          >
+            <TreeItem nodeId='data-viewer-root' label='root'>
+              {
+                Object.entries(value as object).map(([key, value]) => {
+                  const path = `${father}${father ? '.' : ''}${key}`
+                  const isExpend = expanded.includes(path)
+                  return (
+                    <TreeItem
+                      nodeId={path}
+                      key={key}
+                      label={isExpend ? path : `${key} : ${value}`}
+                    >
+                      <ObjectJson
+                        father={key}
+                        value={value}
+                        currentIndent={currentIndent + indentWidth}
+                        isRoot={false}
+                      />
+                    </TreeItem>
+                  )
+                })
+              }
+            </TreeItem>
+          </TreeView>
+        )
+      } else {
+        return (
+          Object.entries(value as object).map(([key, value]) => {
+            const path = `${father}${father ? '.' : ''}${key}`
+            return (
+              <TreeItem
+                nodeId={path}
+                key={key}
+                label={`${value}`}
+              >
+                <ObjectJson
+                  father={key}
+                  value={value}
+                  currentIndent={currentIndent + indentWidth}
+                  isRoot={false}
+                />
+              </TreeItem>
+            )
+          })
+        )
+      }
     } else {
-      return `${value}`
+      const path = `${father}${father ? '.' : ''}${value}`
+      return <TreeItem nodeId={path} label={`${value}`}/>
     }
-  }, [currentIndent, indentWidth, type, value])
+  }, [currentIndent, expanded, father, handleToggle, indentWidth, isRoot, type, value])
   return <>{elements}</>
 }
 
@@ -73,7 +126,12 @@ const JsonViewerInner: React.FC<ReactJsonViewProps> = (props) => {
   // todo: still working on it
   return (
     <Box>
-      <ObjectJson value={props.src} currentIndent={0}/>
+      <ObjectJson
+        value={props.src}
+        currentIndent={0}
+        isRoot
+        father=''
+      />
     </Box>
   )
 }

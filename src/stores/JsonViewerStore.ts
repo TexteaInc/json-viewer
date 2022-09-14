@@ -6,11 +6,15 @@ export const DEFAULT_INDENT_WIDTH = 4
 
 // todo
 export const createJsonViewerStore = () => create(combine({
-  src: {},
-  indentWidth: DEFAULT_INDENT_WIDTH
-}, () => ({
-  get: () => {},
-  set: () => {}
+  expanded: [] as string[],
+  src: {} as any,
+  indentWidth: DEFAULT_INDENT_WIDTH as number
+}, (set) => ({
+  setExpanded: (expanded: string[]) => {
+    set({
+      expanded
+    })
+  }
 })))
 export type JsonViewerStore = ReturnType<typeof createJsonViewerStore>
 
