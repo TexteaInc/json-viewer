@@ -1,5 +1,15 @@
 import * as React from 'react'
 
+export interface DataItemProps<ValueType = unknown> {
+  path: string[]
+  value: ValueType
+}
+
+export type DataType<ValueType = unknown> = [
+  is: (value: unknown) => value is ValueType,
+  Component: React.ComponentType<DataItemProps<ValueType>>
+]
+
 export interface ReactJsonViewProps {
   /**
    * This property contains your input JSON.
