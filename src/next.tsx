@@ -12,10 +12,12 @@ import { DevelopmentError } from '@textea/dev-kit/utils'
 import type React from 'react'
 import { useCallback, useDebugValue, useEffect, useMemo } from 'react'
 
+import { DataKeyPair } from './components/next/DataKeyPair'
 import {
   createJsonViewerStore, DEFAULT_INDENT_WIDTH,
   JsonViewerProvider, useJsonViewerStore, useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
+import { matchType } from './stores/typeRegistry'
 import type { ReactJsonViewProps } from './type'
 
 declare module '@mui/material/styles' {
@@ -181,10 +183,11 @@ const ObjectJson: React.FC<DataProps> = ({
               )
             } else {
               return (
-                <TreeItem
-                  nodeId={path}
+                <ObjectJson
                   key={key}
-                  label={shortPreviewKeyValuePair(key, value)}
+                  isRoot={false}
+                  father={key}
+                  value={value}
                 />
               )
             }
@@ -192,15 +195,20 @@ const ObjectJson: React.FC<DataProps> = ({
         )
       }
     } else {
-      const path = `${father}${father ? '.' : ''}${value}`
-      const type = getType(value)
-      if (type === 'function') {
-        const entire = (value as Function).toString()
-        const label = entire.slice(entire.indexOf('{') + 1,
-          entire.lastIndexOf('}'))
-        return <TreeItem nodeId={path} label={label}/>
+      const DataType = matchType(value)
+      if (DataType === undefined) {
+        const path = `${father}${father ? '.' : ''}${value}`
+        const type = getType(value)
+        if (type === 'function') {
+          const entire = (value as Function).toString()
+          const label = entire.slice(entire.indexOf('{') + 1,
+            entire.lastIndexOf('}'))
+          return <TreeItem nodeId={path} label={label}/>
+        } else {
+          return <TreeItem nodeId={path} label={`${value}`}/>
+        }
       } else {
-        return <TreeItem nodeId={path} label={`${value}`}/>
+        return <DataKeyPair key={father} dataKey={father} value={value}/>
       }
     }
   }, [expanded, father, handleToggle, isRoot, type, value])

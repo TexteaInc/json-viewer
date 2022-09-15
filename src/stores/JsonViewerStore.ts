@@ -2,9 +2,13 @@ import create from 'zustand'
 import createContext from 'zustand/context'
 import { combine } from 'zustand/middleware'
 
+import type { ColorNamespace } from '../themes/base16/rjv-themes'
+import { defaultColorNamespace } from '../themes/base16/rjv-themes'
+
 export const DEFAULT_INDENT_WIDTH = 4
 
 export type JsonViewerState = {
+  colorNamespace: ColorNamespace
   expanded: string[]
   src: unknown
 }
@@ -23,6 +27,7 @@ export const createJsonViewerStore = () =>
   create(
     combine<JsonViewerState, JsonViewerActions>(
       {
+        colorNamespace: defaultColorNamespace,
         expanded: [],
         src: {}
       },

@@ -20,7 +20,7 @@ export type ColorNamespace = {
   base0F: string
 }
 
-export const rjv_default: ColorNamespace = {
+export const defaultColorNamespace: ColorNamespace = {
   scheme: 'rjv-default',
   author: 'mac gainor',
   // transparent main background
@@ -42,7 +42,7 @@ export const rjv_default: ColorNamespace = {
   base0F: '#268bd2'
 } as const
 
-export const rjv_grey: ColorNamespace = {
+export const darkNamespace: ColorNamespace = {
   scheme: 'rjv-grey',
   author: 'mac gainor',
   base00: 'rgba(1, 1, 1, 0)',

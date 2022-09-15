@@ -1,20 +1,33 @@
-import React from 'react'
 
-import type { DataItemProps, DataType } from '../type'
+import { BooleanType } from '../components/next/DataTypes/Boolean'
+import { DateType } from '../components/next/DataTypes/Date'
+import type { DataType } from '../type'
 
 const typeRegistry: DataType<any>[] = []
 
-function registerType (type: DataType) {
+export function registerType <Value> (type: DataType<Value>) {
   typeRegistry.push(type)
 }
 
-function matchType<Value> (value: Value): DataType<Value>[1] {
+export function matchType<Value> (value: Value): DataType<Value>[1] | undefined {
   for (const [is, C] of typeRegistry) {
     if (is(value)) {
       return C
     }
   }
-  return function MatchTypeFallback (props: DataItemProps) {
-    return <>{JSON.stringify(props.value)}</>
-  }
+  return undefined
 }
+
+registerType(
+  [
+    (value): value is boolean => typeof value === 'boolean',
+    BooleanType
+  ]
+)
+
+registerType(
+  [
+    (value): value is Date => value instanceof Date,
+    DateType
+  ]
+)

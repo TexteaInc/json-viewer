@@ -1,4 +1,5 @@
 import JsonViewer from '@textea/json-viewer'
+import type { NextPage } from 'next'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 
@@ -24,7 +25,7 @@ const example = {
   date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)')
 }
 
-const IndexPage: React.FC = () => {
+const IndexPage: NextPage = () => {
   const [src, setSrc] = useState<object>(() => example)
   const handleEdit = useCallback((update: InteractionProps) => {
     setSrc(update.updated_src)

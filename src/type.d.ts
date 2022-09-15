@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 export interface DataItemProps<ValueType = unknown> {
-  path: string[]
   value: ValueType
 }
 

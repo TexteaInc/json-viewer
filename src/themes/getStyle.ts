@@ -1,7 +1,7 @@
 import { createStyling } from 'react-base16-styling'
 
 import type { ColorMap } from '../types/theme'
-import { rjv_default, rjv_grey } from './base16/rjv-themes'
+import { darkNamespace, defaultColorNamespace } from './base16/rjv-themes'
 import constants from './styleConstants'
 
 const colorMap = (theme: any): ColorMap => ({
@@ -389,9 +389,9 @@ const getDefaultThemeStyling = (theme: any): any => {
 }
 
 const getStyle = (theme: any) => {
-  let rjv_theme = rjv_default
+  let rjv_theme = defaultColorNamespace
   if (theme === false || theme === 'none') {
-    rjv_theme = rjv_grey
+    rjv_theme = darkNamespace
   }
 
   return createStyling(getDefaultThemeStyling, { defaultBase16: rjv_theme })(
