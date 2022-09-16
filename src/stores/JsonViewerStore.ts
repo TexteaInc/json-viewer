@@ -2,6 +2,7 @@ import create from 'zustand'
 import createContext from 'zustand/context'
 import { combine } from 'zustand/middleware'
 
+import type { JsonViewerOnChange } from '../next'
 import type { ColorNamespace } from '../themes/base16/rjv-themes'
 import { defaultColorNamespace } from '../themes/base16/rjv-themes'
 
@@ -14,6 +15,7 @@ export type JsonViewerState = {
   expanded: string[]
   rootName: string
   value: unknown
+  onChange: JsonViewerOnChange
 }
 
 export type JsonViewerActions = {
@@ -30,7 +32,8 @@ export const createJsonViewerStore = () =>
         defaultCollapsed: false,
         colorNamespace: defaultColorNamespace,
         expanded: ['data-viewer-root'],
-        value: {}
+        value: {},
+        onChange: () => {}
       },
       (set) => ({
         setHover: (path) => {

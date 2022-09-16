@@ -20,6 +20,19 @@ export function registerType<Value> (type: DataType<Value>) {
   typeRegistry.push(type)
 }
 
+export function getIsCheck<Value> (value: Value): DataType<Value>[0] | null {
+  for (const [is] of typeRegistry) {
+    if (is(value)) {
+      return is
+    }
+  }
+  return null
+}
+
+export function useIsCheck (value: unknown) {
+  useMemo(() => getIsCheck(value), [value])
+}
+
 export function matchTypeComponents<Value> (value: Value): [DataType<Value>[1], DataType<Value>[2], DataType<Value>[3]] | [] {
   for (const [is, C, Pre, Post] of typeRegistry) {
     if (is(value)) {

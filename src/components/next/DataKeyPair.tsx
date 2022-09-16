@@ -1,5 +1,8 @@
+import CheckIcon from '@mui/icons-material/Check'
+import CloseIcon from '@mui/icons-material/Close'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import { Box } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import { Box, InputBase, InputBaseProps, styled } from '@mui/material'
 import copy from 'copy-to-clipboard'
 import type React from 'react'
 import { useCallback, useMemo, useState } from 'react'
@@ -15,10 +18,41 @@ export type DataKeyPairProps = {
   path: string[]
 }
 
-export const DataKeyPair: React.FC<DataKeyPairProps> = ({
+const IconBox = styled(props => <Box {...props} component='span'/>)`
+  cursor: pointer;
+  padding-left: 0.7rem;
+` as typeof Box
+
+type EditPanelProps = Pick<InputBaseProps, 'value' | 'onChange'>
+
+export const EditPanel: React.FC<EditPanelProps> = ({
   value,
-  path
+  onChange
 }) => {
+  const color = useJsonViewerStore(store => store.colorNamespace.base0A)
+  return (
+    <InputBase
+      value={value}
+      onChange={onChange}
+      size='small'
+      multiline
+      sx={{
+        color,
+        padding: 0.5,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderWidth: 1,
+        fontSize: '0.8rem',
+        fontFamily: 'monospace',
+        display: 'inline-flex'
+      }}
+    />
+  )
+}
+
+export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
+  const { value, path } = props
+  const [tempValue, setTempValue] = useState(value)
   const key = path[path.length - 1]
   const hoverPath = useJsonViewerStore(store => store.hoverPath)
   const isHover = useMemo(() => {
@@ -27,6 +61,13 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
   const setHover = useJsonViewerStore(store => store.setHover)
   const [inspect, setInspect] = useState(
     !useJsonViewerStore(store => store.defaultCollapsed)
+  )
+  const [editing, setEditing] = useState(false)
+  const handleChange = useCallback<React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>(
+    (event) => {
+      setTempValue(event.target.value)
+    },
+    []
   )
   const keyColor = useTextColor()
   const numberKeyColor = useJsonViewerStore(
@@ -42,33 +83,77 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
     setInspect,
     value
   }
-  const copyIcon = useMemo(() => {
+  const actionIcons = useMemo(() => {
+    const isObjectLike = typeof value === 'object'
+    if (editing) {
+      return (
+        <>
+          <IconBox>
+            <CloseIcon
+              sx={{
+                fontSize: '.8rem'
+              }}
+              onClick={() => {
+                // abort editing
+                setEditing(false)
+                setTempValue(value)
+              }}
+            />
+          </IconBox>
+          <IconBox>
+            <CheckIcon
+              sx={{
+                fontSize: '.8rem'
+              }}
+              onClick={() => {
+                // finish editing, save data
+                setEditing(false)
+              }}
+            />
+          </IconBox>
+        </>
+      )
+    }
     return (
-      <Box
-        component='span'
-        sx={{
-          cursor: 'pointer',
-          pl: 0.7
-        }}
-        onClick={event => {
-          copy(
-            JSON.stringify(
-              value,
-              null,
-              '  '
+      <>
+        <IconBox
+          onClick={event => {
+            copy(
+              JSON.stringify(
+                value,
+                null,
+                '  '
+              )
             )
-          )
-          event.preventDefault()
-        }}
-      >
-        <ContentCopyIcon
-          sx={{
-            fontSize: '.8rem'
+            event.preventDefault()
           }}
-        />
-      </Box>
+        >
+          <ContentCopyIcon
+            sx={{
+              fontSize: '.8rem'
+            }}
+          />
+        </IconBox>
+        {/* todo: support edit object */}
+        {!isObjectLike &&
+          (
+            <IconBox
+              onClick={event => {
+                event.preventDefault()
+                setEditing(true)
+              }}
+            >
+              <EditIcon
+                sx={{
+                  fontSize: '.8rem'
+                }}
+              />
+            </IconBox>
+          )
+        }
+      </>
     )
-  }, [value])
+  }, [editing, value])
 
   const components = useTypeComponents(value)
   const expandable = components[1] && components[2]
@@ -104,17 +189,18 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
         }
         <DataBox sx={{ mx: 0.5 }}>:</DataBox>
         {PreComponent && <PreComponent {...downstreamProps}/>}
-        {(isHover && expandable && inspect) && copyIcon}
+        {(isHover && expandable && inspect) && actionIcons}
       </DataBox>
-      {
-        Component
+      {editing
+        ? <EditPanel value={tempValue} onChange={handleChange}/>
+        : Component
           ? <Component {...downstreamProps}/>
           : <Box component='span'
                  className='data-value-fallback'>{JSON.stringify(value)}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps}/>}
-      {(isHover && expandable && !inspect) && copyIcon}
-      {(isHover && !expandable) && copyIcon}
+      {(isHover && expandable && !inspect) && actionIcons}
+      {(isHover && !expandable) && actionIcons}
     </Box>
   )
 }

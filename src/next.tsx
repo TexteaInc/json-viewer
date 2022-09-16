@@ -13,10 +13,12 @@ import {
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
 
-export type JsonViewerProps<Value = unknown> = {
-  value: Value
+export type JsonViewerOnChange = <T = unknown, U = unknown>(path: string[], oldValue: U, newValue: U, source: T) => void
+
+export type JsonViewerProps<T = unknown> = {
+  value: T
   indentWidth?: number
-  onChange?: (...args: any[]) => void
+  onChange?: <U>(path: string[], oldValue: U, newValue: U, source: T) => void
   defaultCollapsed?: boolean | number
 }
 
@@ -25,7 +27,8 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   api.setState(() => ({
     value: props.value,
     indentWidth: props.indentWidth,
-    defaultCollapsed: props.defaultCollapsed
+    defaultCollapsed: props.defaultCollapsed,
+    onChange: props.onChange
   }))
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)
