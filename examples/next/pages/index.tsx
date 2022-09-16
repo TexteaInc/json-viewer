@@ -1,5 +1,5 @@
-import { TextField } from '@mui/material'
-import { unstable_JsonViewer as JsonViewer } from '@textea/json-viewer'
+import { TextField, Typography } from '@mui/material'
+import JsonViewer, { unstable_JsonViewer as NextJsonViewer } from '@textea/json-viewer'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 
@@ -45,6 +45,13 @@ const IndexPage: React.FC = () => {
           }
         }
       />
+      <Typography>New</Typography>
+      <NextJsonViewer
+        src={src}
+        indentWidth={indent}
+        onEdit={handleEdit}
+      />
+      <Typography>Old</Typography>
       <JsonViewer
         src={src}
         indentWidth={indent}

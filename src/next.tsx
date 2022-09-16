@@ -1,6 +1,4 @@
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { TreeItem, TreeItemClassKey, TreeView } from '@mui/lab'
+import type { TreeItemClassKey } from '@mui/lab'
 import type { TreeViewClassKey } from '@mui/lab/TreeView/treeViewClasses'
 import {
   Box,
@@ -8,16 +6,15 @@ import {
   ThemeProvider
 } from '@mui/material'
 import type { OverridesStyleRules } from '@mui/material/styles/overrides'
-import { DevelopmentError } from '@textea/dev-kit/utils'
+import { DevelopmentError, NotImplementedError } from '@textea/dev-kit/utils'
 import type React from 'react'
-import { useCallback, useDebugValue, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
-import { DataKeyPair } from './components/next/DataKeyPair'
+import { DataTypeMap } from './components/next/DataTypeMap'
 import {
   createJsonViewerStore, DEFAULT_INDENT_WIDTH,
-  JsonViewerProvider, useJsonViewerStore, useJsonViewerStoreApi
+  JsonViewerProvider, useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
-import { matchType } from './stores/typeRegistry'
 import type { ReactJsonViewProps } from './type'
 
 declare module '@mui/material/styles' {
@@ -117,102 +114,16 @@ function longPreviewKeyValuePair (key: string, value: unknown): string {
   return `${key}: ${longPreviewValue(value)}`
 }
 
-const ObjectJson: React.FC<DataProps> = ({
+const RootObjectJson: React.FC<DataProps> = ({
   value,
   isRoot,
   father
 }) => {
-  const type = useMemo(() => getType(value), [value])
-  useDebugValue(type, type => `value type: ${type}`)
-  const expanded = useJsonViewerStore(store => store.expanded)
-  const setExpanded = useJsonViewerStore(store => store.setExpanded)
-  const handleToggle = useCallback(
-    (event: React.SyntheticEvent, nodeIds: string[]) => {
-      setExpanded(nodeIds)
-    }, [setExpanded])
-  const elements = useMemo(() => {
-    if (type === 'object') {
-      if (isRoot) {
-        return (
-          <TreeView
-            defaultCollapseIcon={<ExpandMoreIcon/>}
-            defaultExpandIcon={<ChevronRightIcon/>}
-            expanded={expanded}
-            onNodeToggle={handleToggle}
-          >
-            <TreeItem nodeId='data-viewer-root' label='root'>
-              <ObjectJson
-                father='root'
-                value={value}
-                isRoot={false}
-              />
-            </TreeItem>
-          </TreeView>
-        )
-      } else {
-        return (
-          Object.entries(value as object).map(([key, value]) => {
-            const path = `${father}${father ? '.' : ''}${key}`
-            const isExpend = expanded.includes(path)
-            const shouldExpand = needExpand(value)
-            if (shouldExpand) {
-              return (
-                <TreeItem
-                  nodeId={path}
-                  key={key}
-                  label={isExpend
-                    ? longPreviewKeyValuePair(key, value)
-                    : shortPreviewKeyValuePair(key, value)}
-                >
-                  {
-                    shouldExpand
-                      ? (
-                        <ObjectJson
-                          father={key}
-                          value={value}
-                          isRoot={false}
-                        />
-                        )
-                      : null
-                  }
-                  {shouldExpand && isExpend && (
-                    <TreeItem nodeId={`${path}-ending`}
-                              label={getEndingClosure(value)}/>
-                  )}
-                </TreeItem>
-              )
-            } else {
-              return (
-                <ObjectJson
-                  key={key}
-                  isRoot={false}
-                  father={key}
-                  value={value}
-                />
-              )
-            }
-          })
-        )
-      }
-    } else {
-      const DataType = matchType(value)
-      if (DataType === undefined) {
-        const path = `${father}${father ? '.' : ''}${value}`
-        const type = getType(value)
-        if (type === 'function') {
-          const entire = (value as Function).toString()
-          const label = entire.slice(entire.indexOf('{') + 1,
-            entire.lastIndexOf('}'))
-          return <TreeItem nodeId={path} label={label}/>
-        } else {
-          return <TreeItem nodeId={path} label={`${value}`}/>
-        }
-      } else {
-        return <DataKeyPair key={father} dataKey={father} value={value}/>
-      }
-    }
-  }, [expanded, father, handleToggle, isRoot, type, value])
-  return <>{elements}</>
+  if (typeof value === 'object') {
+    return <DataTypeMap value={value as object}/>
+  } else {
+    throw new NotImplementedError()
+  }
 }
 
 const JsonViewerInner: React.FC<ReactJsonViewProps> = (props) => {
@@ -227,7 +138,7 @@ const JsonViewerInner: React.FC<ReactJsonViewProps> = (props) => {
   // todo: still working on it
   return (
     <Box>
-      <ObjectJson
+      <RootObjectJson
         value={props.src}
         isRoot
         father=''

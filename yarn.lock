@@ -1654,6 +1654,7 @@ __metadata:
     copy-to-clipboard: ^3.3.2
     events: ^3.3.0
     flux: ^4.0.3
+    html-entities: ^2.3.3
     husky: ^8.0.1
     lint-staged: ^13.0.3
     pinst: ^3.0.0
@@ -4684,6 +4685,13 @@ __metadata:
   dependencies:
     lru-cache: ^6.0.0
   checksum: c3f87b3c2f7eb8c2748c8f49c0c2517c9a95f35d26f4bf54b2a8cba05d2e668f3753548b6ea366b18ec8dadb4e12066e19fa382a01496b0ffa0497eb23cbe461
+  languageName: node
+  linkType: hard
+
+"html-entities@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "html-entities@npm:2.3.3"
+  checksum: 92521501da8aa5f66fee27f0f022d6e9ceae62667dae93aa6a2f636afa71ad530b7fb24a18d4d6c124c9885970cac5f8a52dbf1731741161002816ae43f98196
   languageName: node
   linkType: hard
 

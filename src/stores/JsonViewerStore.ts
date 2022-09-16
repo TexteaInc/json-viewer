@@ -28,7 +28,7 @@ export const createJsonViewerStore = () =>
     combine<JsonViewerState, JsonViewerActions>(
       {
         colorNamespace: defaultColorNamespace,
-        expanded: [],
+        expanded: ['data-viewer-root'],
         src: {}
       },
       (set) => ({
