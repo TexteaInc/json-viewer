@@ -12,8 +12,10 @@ import { useEffect, useMemo } from 'react'
 
 import { DataTypeMap } from './components/next/DataTypeMap'
 import {
-  createJsonViewerStore, DEFAULT_INDENT_WIDTH,
-  JsonViewerProvider, useJsonViewerStoreApi
+  createJsonViewerStore,
+  DEFAULT_INDENT_WIDTH,
+  JsonViewerProvider,
+  useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
 import type { ReactJsonViewProps } from './type'
 
@@ -29,8 +31,6 @@ declare module '@mui/material/styles' {
 }
 
 export type DataProps<Data = unknown> = {
-  father: string
-  isRoot: boolean
   value: Data
 }
 
@@ -115,12 +115,10 @@ function longPreviewKeyValuePair (key: string, value: unknown): string {
 }
 
 const RootObjectJson: React.FC<DataProps> = ({
-  value,
-  isRoot,
-  father
+  value
 }) => {
   if (typeof value === 'object') {
-    return <DataTypeMap value={value as object}/>
+    return <DataTypeMap value={value as object} inspect/>
   } else {
     throw new NotImplementedError()
   }
@@ -140,8 +138,6 @@ const JsonViewerInner: React.FC<ReactJsonViewProps> = (props) => {
     <Box>
       <RootObjectJson
         value={props.src}
-        isRoot
-        father=''
       />
     </Box>
   )

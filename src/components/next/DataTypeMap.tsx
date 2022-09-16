@@ -5,11 +5,11 @@ import {
 } from '../../stores/typeRegistry'
 import type { DataItemProps } from '../../type'
 
-export const DataTypeMap: React.FC<DataItemProps> = ({ value }) => {
-  const [Component] = useTypeComponents(value)
+export const DataTypeMap: React.FC<DataItemProps> = (props) => {
+  const [Component] = useTypeComponents(props.value)
   return (
     Component
-      ? <Component value={value}/>
-      : <>{JSON.stringify(value)}</>
+      ? <Component {...props}/>
+      : <>{JSON.stringify(props.value)}</>
   )
 }
