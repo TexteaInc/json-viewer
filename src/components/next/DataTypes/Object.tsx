@@ -27,6 +27,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
       <Box
         component='span'
         sx={{
+          pl: 0.5,
           fontStyle: 'italic',
           color: metadataColor
         }}

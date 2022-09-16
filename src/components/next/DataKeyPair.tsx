@@ -17,7 +17,9 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
   const src = useJsonViewerStore(store => store.src)
   const [inspect, setInspect] = useState(Object.is(src, value))
   const keyColor = useTextColor()
+  const numberKeyColor = useJsonViewerStore(store => store.colorNamespace.base0C)
   const [Component, PreComponent, PostComponent] = useTypeComponents(value)
+  const isNumberKey = Number.isInteger(Number(dataKey))
   const downstreamProps: DataItemProps = {
     inspect,
     setInspect,
@@ -38,14 +40,17 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
           setInspect(state => !state)
         }, [])}
       >
-        &quot;{dataKey}&quot;
+        {isNumberKey
+          ? <Box component='span' style={{ color: numberKeyColor }}>{dataKey}</Box>
+          : <>&quot;{dataKey}&quot;</>
+        }
         <DataBox sx={{ mx: 0.5 }}>:</DataBox>
         {PreComponent && <PreComponent {...downstreamProps}/>}
       </DataBox>
       {
         Component
           ? <Component {...downstreamProps}/>
-          : <>{JSON.stringify(value)}</>
+          : <Box component='span' className='data-value-fallback'>{JSON.stringify(value)}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps}/>}
     </Box>

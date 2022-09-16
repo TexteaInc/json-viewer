@@ -19,6 +19,7 @@ export const DataTypeLabel: React.FC<DataLabelProps> = ({
       className='data-type-label'
       sx={{
         mx: 0.5,
+        fontSize: '0.7rem',
         opacity: 0.8
       }}
     >{dataType}</DataBox>
