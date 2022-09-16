@@ -3,6 +3,7 @@ import type React from 'react'
 import { useCallback, useState } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
+import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import { useTypeComponents } from '../../stores/typeRegistry'
 import type { DataItemProps } from '../../type'
 import { DataBox } from './mui/DataBox'
@@ -13,11 +14,13 @@ export type DataKeyPairProps = {
 }
 
 export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
-  const [shouldInspect, setShouldInspect] = useState(false)
+  const src = useJsonViewerStore(store => store.src)
+  const [inspect, setInspect] = useState(Object.is(src, value))
   const keyColor = useTextColor()
   const [Component, PreComponent, PostComponent] = useTypeComponents(value)
   const downstreamProps: DataItemProps = {
-    inspect: shouldInspect,
+    inspect,
+    setInspect,
     value
   }
   return (
@@ -31,7 +34,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
           opacity: 0.8
         }}
         onClick={useCallback(() => {
-          setShouldInspect(state => !state)
+          setInspect(state => !state)
         }, [])}
       >
         &quot;{dataKey}&quot;

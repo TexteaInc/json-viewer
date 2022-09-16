@@ -6,9 +6,8 @@ import {
   ThemeProvider
 } from '@mui/material'
 import type { OverridesStyleRules } from '@mui/material/styles/overrides'
-import { NotImplementedError } from '@textea/dev-kit/utils'
 import type React from 'react'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { DataKeyPair } from './components/next/DataKeyPair'
 import {
@@ -30,35 +29,16 @@ declare module '@mui/material/styles' {
   }
 }
 
-export type DataProps<Data = unknown> = {
-  value: Data
-}
-
-const RootObjectJson: React.FC<DataProps> = ({
-  value
-}) => {
-  if (typeof value === 'object') {
-    return <DataKeyPair dataKey='root' value={value as object}/>
-  } else {
-    throw new NotImplementedError()
-  }
-}
-
 const JsonViewerInner: React.FC<ReactJsonViewProps> = (props) => {
   const api = useJsonViewerStoreApi()
-  useEffect(() => {
-    api.setState(state => ({
-      ...state,
-      src: props.src,
-      indentWidth: props.indentWidth
-    }))
-  }, [api, props.src, props.indentWidth])
+  api.setState(() => ({
+    src: props.src,
+    indentWidth: props.indentWidth
+  }))
   // todo: still working on it
   return (
     <Box>
-      <RootObjectJson
-        value={props.src}
-      />
+      <DataKeyPair dataKey='root' value={props.src}/>
     </Box>
   )
 }

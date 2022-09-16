@@ -1,7 +1,9 @@
+import type { Dispatch, SetStateAction } from 'react'
 import * as React from 'react'
 
 export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
+  setInspect: Dispatch<SetStateAction<boolean>>
   value: ValueType
 }
 

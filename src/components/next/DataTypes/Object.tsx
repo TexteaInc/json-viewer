@@ -10,6 +10,10 @@ const lb = '{'
 const rb = '}'
 
 export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
+  const sizeOfValue = useMemo(
+    () => props.inspect ? `${Object.keys(props.value).length} Items` : '',
+    [props.inspect, props.value]
+  )
   return (
     <Box
       component='span' className='data-object-start'
@@ -17,21 +21,24 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
         letterSpacing: 0.5
       }}
     >
-      {lb}
+      {lb} {sizeOfValue}
     </Box>
   )
 }
 
 export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
+  const sizeOfValue = useMemo(
+    () => !props.inspect ? `${Object.keys(props.value).length} Items` : '',
+    [props.inspect, props.value]
+  )
   return (
     <Box component='span' className='data-object-end'>
-      {rb}
+      {rb} {sizeOfValue}
     </Box>
   )
 }
 
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
-  // todo: move expanded into props.inspect
   const keyColor = useTextColor()
   const elements = useMemo(() => {
     return Object.entries(props.value).map(([key, value]) => {

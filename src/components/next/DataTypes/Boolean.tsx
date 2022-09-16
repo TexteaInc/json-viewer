@@ -15,7 +15,7 @@ export const BooleanType: React.FC<DataItemProps<boolean>> = (props) => {
         color
       }}
     >
-      <DataTypeLabel dataType='boolean'/>
+      <DataTypeLabel dataType='bool'/>
       <DataBox className='boolean-value'>
         {value}
       </DataBox>
