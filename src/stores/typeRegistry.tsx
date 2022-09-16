@@ -3,7 +3,11 @@ import { useMemo } from 'react'
 import { BooleanType } from '../components/next/DataTypes/Boolean'
 import { DateType } from '../components/next/DataTypes/Date'
 import { NullType } from '../components/next/DataTypes/Null'
-import { ObjectType } from '../components/next/DataTypes/Object'
+import {
+  ObjectType,
+  PostObjectType,
+  PreObjectType
+} from '../components/next/DataTypes/Object'
 import type { DataType } from '../type'
 
 const typeRegistry: DataType<any>[] = []
@@ -50,6 +54,8 @@ registerType(
 registerType(
   [
     (value): value is object => typeof value === 'object',
-    ObjectType
+    ObjectType,
+    PreObjectType,
+    PostObjectType
   ]
 )

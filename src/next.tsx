@@ -6,11 +6,11 @@ import {
   ThemeProvider
 } from '@mui/material'
 import type { OverridesStyleRules } from '@mui/material/styles/overrides'
-import { DevelopmentError, NotImplementedError } from '@textea/dev-kit/utils'
+import { NotImplementedError } from '@textea/dev-kit/utils'
 import type React from 'react'
 import { useEffect, useMemo } from 'react'
 
-import { DataTypeMap } from './components/next/DataTypeMap'
+import { DataKeyPair } from './components/next/DataKeyPair'
 import {
   createJsonViewerStore,
   DEFAULT_INDENT_WIDTH,
@@ -34,91 +34,11 @@ export type DataProps<Data = unknown> = {
   value: Data
 }
 
-function getType (value: unknown) {
-  // todo: enhance this
-  const type = typeof value
-
-  if (type === 'object') {
-    if (value instanceof RegExp) {
-      return 'regexp'
-    } else if (value instanceof Date) {
-      return 'date'
-    } else if (value === null) {
-      return 'null'
-    } else if (Array.isArray(value)) {
-      return 'array'
-    }
-  }
-  return type
-}
-
-const needExpand = (value: unknown): boolean => {
-  const type = getType(value)
-  switch (type) {
-    case 'object':
-    case 'function':
-    case 'array':
-      return true
-    default:
-      return false
-  }
-}
-
-const getEndingClosure = (value: unknown): string => {
-  const type = getType(value)
-  switch (type) {
-    case 'object':
-    case 'function':
-      return '}'
-    case 'array':
-      return ']'
-    default:
-      throw new DevelopmentError()
-  }
-}
-
-function shortPreviewValue (value: unknown): string {
-  const type = getType(value)
-  if (type === 'function') {
-    return (value as Function).toString().slice(9, -1).replace(/\{[\s\S]+/, '')
-  } else if (type === 'array') {
-    return '[...]'
-  } else if (type === 'object') {
-    return '{...}'
-  } else {
-    return `${value}`
-  }
-}
-
-function longPreviewValue (value: unknown): string {
-  const type = getType(value)
-  if (type === 'function') {
-    const functionHead = (value as Function).toString()
-      .slice(9, -1)
-      .replace(/\{[\s\S]+/, '')
-    return `${functionHead} {`
-  } else if (type === 'array') {
-    return ' ['
-  } else if (type === 'object') {
-    return '{'
-  } else {
-    return ''
-  }
-}
-
-function shortPreviewKeyValuePair (key: string, value: unknown): string {
-  return `${key}: ${shortPreviewValue(value)}`
-}
-
-function longPreviewKeyValuePair (key: string, value: unknown): string {
-  return `${key}: ${longPreviewValue(value)}`
-}
-
 const RootObjectJson: React.FC<DataProps> = ({
   value
 }) => {
   if (typeof value === 'object') {
-    return <DataTypeMap value={value as object} inspect/>
+    return <DataKeyPair dataKey='root' value={value as object}/>
   } else {
     throw new NotImplementedError()
   }
