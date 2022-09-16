@@ -47,9 +47,9 @@ const IndexPage: React.FC = () => {
       />
       <Typography>New</Typography>
       <NextJsonViewer
-        src={src}
+        value={src}
         indentWidth={indent}
-        onEdit={handleEdit}
+        onChange={handleEdit}
       />
       <Typography>Old</Typography>
       <JsonViewer

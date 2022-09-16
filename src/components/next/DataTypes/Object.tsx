@@ -65,9 +65,10 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
   const elements = useMemo(() => {
     return Object.entries(props.value).map(([key, value]) => {
-      return <DataKeyPair key={key} dataKey={key} value={value}/>
+      const path = [...props.path, key]
+      return <DataKeyPair key={key} path={path} value={value}/>
     })
-  }, [props.value])
+  }, [props.path, props.value])
   return (
     <Box
       className='data-object'

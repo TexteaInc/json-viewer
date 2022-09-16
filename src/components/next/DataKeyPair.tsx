@@ -9,18 +9,28 @@ import type { DataItemProps } from '../../type'
 import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {
-  dataKey: string
   value: unknown
+  path: string[]
 }
 
-export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
-  const src = useJsonViewerStore(store => store.src)
-  const [inspect, setInspect] = useState(Object.is(src, value))
+export const DataKeyPair: React.FC<DataKeyPairProps> = ({
+  value,
+  path
+}) => {
+  const key = path[path.length - 1]
+  const [inspect, setInspect] = useState(
+    !useJsonViewerStore(store => store.defaultCollapsed)
+  )
   const keyColor = useTextColor()
-  const numberKeyColor = useJsonViewerStore(store => store.colorNamespace.base0C)
+  const numberKeyColor = useJsonViewerStore(
+    store => store.colorNamespace.base0C)
   const [Component, PreComponent, PostComponent] = useTypeComponents(value)
-  const isNumberKey = Number.isInteger(Number(dataKey))
+  const rootName = useJsonViewerStore(store => store.rootName)
+  const isRoot = useJsonViewerStore(store => store.value) === value
+  const isNumberKey = Number.isInteger(Number(key))
+  const displayKey = isRoot ? rootName : key
   const downstreamProps: DataItemProps = {
+    path,
     inspect,
     setInspect,
     value
@@ -36,13 +46,16 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
           letterSpacing: 0.5,
           opacity: 0.8
         }}
-        onClick={useCallback(() => {
-          setInspect(state => !state)
-        }, [])}
+        onClick={
+          useCallback(() => {
+            setInspect(state => !state)
+          }, [])
+        }
       >
         {isNumberKey
-          ? <Box component='span' style={{ color: numberKeyColor }}>{dataKey}</Box>
-          : <>&quot;{dataKey}&quot;</>
+          ? <Box component='span'
+                 style={{ color: numberKeyColor }}>{displayKey}</Box>
+          : <>&quot;{displayKey}&quot;</>
         }
         <DataBox sx={{ mx: 0.5 }}>:</DataBox>
         {PreComponent && <PreComponent {...downstreamProps}/>}
@@ -50,7 +63,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
       {
         Component
           ? <Component {...downstreamProps}/>
-          : <Box component='span' className='data-value-fallback'>{JSON.stringify(value)}</Box>
+          : <Box component='span'
+                 className='data-value-fallback'>{JSON.stringify(value)}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps}/>}
     </Box>

@@ -5,6 +5,7 @@ export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
   setInspect: Dispatch<SetStateAction<boolean>>
   value: ValueType
+  path: string[]
 }
 
 export type DataType<ValueType = unknown> = [

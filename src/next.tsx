@@ -9,28 +9,39 @@ import { useMemo } from 'react'
 import { DataKeyPair } from './components/next/DataKeyPair'
 import {
   createJsonViewerStore,
-  JsonViewerProvider,
+  JsonViewerProvider, useJsonViewerStore,
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
-import type { ReactJsonViewProps } from './type'
 
-const JsonViewerInner: React.FC<ReactJsonViewProps> = (props) => {
+export type JsonViewerProps<Value = unknown> = {
+  value: Value
+  indentWidth?: number
+  onChange?: (...args: any[]) => void
+  defaultCollapsed?: boolean | number
+}
+
+const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const api = useJsonViewerStoreApi()
   api.setState(() => ({
-    src: props.src,
-    indentWidth: props.indentWidth
+    value: props.value,
+    indentWidth: props.indentWidth,
+    defaultCollapsed: props.defaultCollapsed
   }))
+  const value = useJsonViewerStore(store => store.value)
   return (
     <Box sx={{
       fontFamily: 'monospace',
       userSelect: 'none'
     }}>
-      <DataKeyPair dataKey='root' value={props.src}/>
+      <DataKeyPair
+        value={value}
+        path={useMemo(() => [], [])}
+      />
     </Box>
   )
 }
 
-export const JsonViewer: React.FC<ReactJsonViewProps> = (props) => {
+export const JsonViewer: React.FC<JsonViewerProps> = (props) => {
   const theme = useMemo(() => createTheme({
     // todo: inject theme based on base16
   }), [])
