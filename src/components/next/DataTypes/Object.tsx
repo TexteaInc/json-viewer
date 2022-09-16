@@ -39,13 +39,24 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
 }
 
 export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
+  const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
   const sizeOfValue = useMemo(
     () => !props.inspect ? `${Object.keys(props.value).length} Items` : '',
     [props.inspect, props.value]
   )
   return (
     <Box component='span' className='data-object-end'>
-      {rb} {sizeOfValue}
+      {rb}
+      <Box
+        component='span'
+        sx={{
+          pl: 0.5,
+          fontStyle: 'italic',
+          color: metadataColor
+        }}
+      >
+        {sizeOfValue}
+      </Box>
     </Box>
   )
 }

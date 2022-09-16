@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { useJsonViewerStore } from '../../../stores/JsonViewerStore'
 import type { ColorNamespace } from '../../../themes/base16/rjv-themes'
@@ -8,21 +8,25 @@ import { DataBox } from '../mui/DataBox'
 
 export function createEasyType <Value> (
   type: string,
-  renderValue: (value: Value) => string,
-  colorKey: keyof ColorNamespace
+  renderValue: React.ComponentType<Pick<DataItemProps<Value>, 'value'>>,
+  config: {
+    colorKey: keyof ColorNamespace
+    displayTypeLabel?: boolean
+  }
 ): React.FC<DataItemProps<Value>> {
+  const displayTypeLabel = config.displayTypeLabel ?? true
+  const Render = React.memo(renderValue)
   const EasyType: React.FC<DataItemProps<Value>> = (props) => {
-    const color = useJsonViewerStore(store => store.colorNamespace[colorKey])
-    const value = useMemo(() => renderValue(props.value), [props.value])
+    const color = useJsonViewerStore(store => store.colorNamespace[config.colorKey])
     return (
       <DataBox
         sx={{
           color
         }}
       >
-        <DataTypeLabel dataType={type} />
+        {displayTypeLabel && <DataTypeLabel dataType={type} />}
         <DataBox className={`${type}-value`}>
-          {value}
+          <Render value={props.value}/>
         </DataBox>
       </DataBox>
     )

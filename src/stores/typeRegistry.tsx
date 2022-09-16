@@ -1,15 +1,18 @@
-import { useMemo } from 'react'
+import { Box } from '@mui/material'
+import React, { useMemo } from 'react'
 
 import { createEasyType } from '../components/next/DataTypes/createEasyType'
-import { FloatType } from '../components/next/DataTypes/Float'
-import { IntegerType } from '../components/next/DataTypes/Integer'
-import { NullType } from '../components/next/DataTypes/Null'
+import {
+  FunctionType, PostFunctionType,
+  PreFunctionType
+} from '../components/next/DataTypes/Function'
 import {
   ObjectType,
   PostObjectType,
   PreObjectType
 } from '../components/next/DataTypes/Object'
 import type { DataType } from '../type'
+import { useJsonViewerStore } from './JsonViewerStore'
 
 const typeRegistry: DataType<any>[] = []
 
@@ -35,8 +38,8 @@ registerType<boolean>(
     (value): value is boolean => typeof value === 'boolean',
     createEasyType(
       'bool',
-      (value) => value ? 'true' : 'false',
-      'base0E'
+      ({ value }) => <>{value ? 'true' : 'false'}</>,
+      { colorKey: 'base0E' }
     )
   ]
 )
@@ -55,32 +58,136 @@ registerType<Date>(
     (value): value is Date => value instanceof Date,
     createEasyType(
       'date',
-      (value) => value.toLocaleTimeString('en-us', displayOptions),
-      'base0D'
+      ({ value }) => <>{value.toLocaleTimeString('en-us', displayOptions)}</>,
+      { colorKey: 'base0D' }
     )
   ]
 )
 
-registerType(
+registerType<null>(
   [
     (value): value is null => value === null,
-    NullType
+    createEasyType(
+      'null',
+      () => {
+        const backgroundColor = useJsonViewerStore(
+          store => store.colorNamespace.base02)
+        return (
+          <Box sx={{
+            fontSize: '0.8rem',
+            backgroundColor,
+            fontWeight: 'bold',
+            borderRadius: '3px'
+          }}>
+            NULL
+          </Box>
+        )
+      },
+      { colorKey: 'base08', displayTypeLabel: false }
+    )
+  ]
+)
+
+registerType<undefined>(
+  [
+    (value): value is undefined => value === undefined,
+    createEasyType(
+      'undefined',
+      () => {
+        const backgroundColor = useJsonViewerStore(
+          store => store.colorNamespace.base02)
+        return (
+          <Box sx={{
+            fontSize: '0.7rem',
+            backgroundColor,
+            borderRadius: '3px'
+          }}>
+            undefined
+          </Box>
+        )
+      },
+      {
+        colorKey: 'base05',
+        displayTypeLabel: false
+      }
+    )
+  ]
+)
+
+registerType<string>(
+  [
+    (value): value is string => typeof value === 'string',
+    createEasyType(
+      'string',
+      ({ value }) => <>{`${value}`}</>,
+      {
+        colorKey: 'base09'
+      }
+    )
+  ]
+)
+
+registerType<Function>(
+  [
+    (value): value is Function => typeof value === 'function',
+    FunctionType,
+    PreFunctionType,
+    PostFunctionType
   ]
 )
 
 const isInt = (n: number) => n % 1 === 0
 
-registerType(
+registerType<number>(
   [
-    (value): value is number => typeof value === 'number' && isInt(value),
-    IntegerType
+    (value): value is number => typeof value === 'number' && isNaN(value),
+    createEasyType(
+      'NaN',
+      () => {
+        const backgroundColor = useJsonViewerStore(
+          store => store.colorNamespace.base02)
+        return (
+          <Box sx={{
+            backgroundColor,
+            fontSize: '0.8rem',
+            fontWeight: 'bold',
+            borderRadius: '3px'
+          }}>
+            NaN
+          </Box>
+        )
+      },
+      {
+        colorKey: 'base08',
+        displayTypeLabel: false
+      }
+    )
   ]
 )
 
-registerType(
+registerType<number>(
   [
     (value): value is number => typeof value === 'number' && !isInt(value),
-    FloatType
+    createEasyType(
+      'float',
+      ({ value }) => <>{`${value}`}</>,
+      {
+        colorKey: 'base0B'
+      }
+    )
+  ]
+)
+
+registerType<number>(
+  [
+    (value): value is number => typeof value === 'number' && isInt(value),
+    createEasyType(
+      'int',
+      ({ value }) => <>{`${value}`}</>,
+      {
+        colorKey: 'base0F'
+      }
+    )
   ]
 )
 
