@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { BooleanType } from '../components/next/DataTypes/Boolean'
 import { DateType } from '../components/next/DataTypes/Date'
 import { NullType } from '../components/next/DataTypes/Null'
@@ -10,13 +12,17 @@ export function registerType<Value> (type: DataType<Value>) {
   typeRegistry.push(type)
 }
 
-export function matchType<Value> (value: Value): DataType<Value>[1] | undefined {
-  for (const [is, C] of typeRegistry) {
+export function matchTypeComponents<Value> (value: Value): [DataType<Value>[1], DataType<Value>[2], DataType<Value>[3]] | [] {
+  for (const [is, C, Pre, Post] of typeRegistry) {
     if (is(value)) {
-      return C
+      return [C, Pre, Post]
     }
   }
-  return undefined
+  return []
+}
+
+export function useTypeComponents (value: unknown) {
+  return useMemo(() => matchTypeComponents(value), [value])
 }
 
 registerType(

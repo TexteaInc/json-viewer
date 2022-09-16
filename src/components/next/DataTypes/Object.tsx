@@ -10,7 +10,12 @@ import { DataKeyPair } from '../DataKeyPair'
 const lb = '{'
 const rb = '}'
 
+export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
+  return null
+}
+
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
+  // todo: move expanded into props.inspect
   const [expanded, setExpand] = useState(false)
   const src = useJsonViewerStore(store => store.src)
   const isRoot = src === props.value

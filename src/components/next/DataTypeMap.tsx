@@ -1,14 +1,15 @@
 import type React from 'react'
-import { useMemo } from 'react'
 
-import { matchType } from '../../stores/typeRegistry'
+import {
+  useTypeComponents
+} from '../../stores/typeRegistry'
 import type { DataItemProps } from '../../type'
 
 export const DataTypeMap: React.FC<DataItemProps> = ({ value }) => {
-  const CellType = useMemo(() => matchType(value), [value])
+  const [Component] = useTypeComponents(value)
   return (
-    CellType
-      ? <CellType value={value}/>
+    Component
+      ? <Component value={value}/>
       : <>{JSON.stringify(value)}</>
   )
 }
