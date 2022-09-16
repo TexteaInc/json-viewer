@@ -119,7 +119,7 @@ registerType<string>(
     (value): value is string => typeof value === 'string',
     createEasyType(
       'string',
-      ({ value }) => <>{`${value}`}</>,
+      ({ value }) => <>&quot;{`${value}`}&quot;</>,
       {
         colorKey: 'base09'
       }
