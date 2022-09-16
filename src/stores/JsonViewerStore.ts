@@ -8,6 +8,7 @@ import { defaultColorNamespace } from '../themes/base16/rjv-themes'
 export const DEFAULT_INDENT_WIDTH = 4
 
 export type JsonViewerState = {
+  hoverPath: string[] | null
   defaultCollapsed: number | boolean
   colorNamespace: ColorNamespace
   expanded: string[]
@@ -16,12 +17,7 @@ export type JsonViewerState = {
 }
 
 export type JsonViewerActions = {
-  handleExpand: (path: string) => void
-  handleShrink: (path: string) => void
-  /**
-   * @deprecated
-   */
-  setExpanded: (expanded: string[]) => void
+  setHover: (path: string[] | null) => void
 }
 
 // todo
@@ -29,6 +25,7 @@ export const createJsonViewerStore = () =>
   create(
     combine<JsonViewerState, JsonViewerActions>(
       {
+        hoverPath: null,
         rootName: 'root',
         defaultCollapsed: false,
         colorNamespace: defaultColorNamespace,
@@ -36,11 +33,9 @@ export const createJsonViewerStore = () =>
         value: {}
       },
       (set) => ({
-        handleExpand: () => {},
-        handleShrink: () => {},
-        setExpanded: (expanded) => {
+        setHover: (path) => {
           set({
-            expanded
+            hoverPath: path
           })
         }
       })

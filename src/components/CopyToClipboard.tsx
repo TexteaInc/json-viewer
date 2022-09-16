@@ -50,9 +50,8 @@ export const CopyToClipboard: React.FC<any> = React.memo((props) => {
       })
     }
   }, [props])
-  const style = useMemo(() => Theme(theme, 'copy-to-clipboard').style, [])
+  const style = useMemo(() => Theme(theme, 'copy-to-clipboard').style, [theme])
   const display = hidden ? 'none' : 'inline'
-  copied && console.log(copied)
   return (
     <span
       className='copy-to-clipboard-container'

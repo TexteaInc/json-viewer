@@ -4,7 +4,7 @@ import {
   ThemeProvider
 } from '@mui/material'
 import type React from 'react'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { DataKeyPair } from './components/next/DataKeyPair'
 import {
@@ -28,11 +28,19 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
     defaultCollapsed: props.defaultCollapsed
   }))
   const value = useJsonViewerStore(store => store.value)
+  const setHover = useJsonViewerStore(store => store.setHover)
   return (
-    <Box sx={{
-      fontFamily: 'monospace',
-      userSelect: 'none'
-    }}>
+    <Box
+      sx={{
+        fontFamily: 'monospace',
+        userSelect: 'none'
+      }}
+      onMouseLeave={
+        useCallback(() => {
+          setHover(null)
+        }, [setHover])
+      }
+    >
       <DataKeyPair
         value={value}
         path={useMemo(() => [], [])}

@@ -1,6 +1,8 @@
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { Box } from '@mui/material'
+import copy from 'copy-to-clipboard'
 import type React from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
@@ -18,6 +20,11 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
   path
 }) => {
   const key = path[path.length - 1]
+  const hoverPath = useJsonViewerStore(store => store.hoverPath)
+  const isHover = useMemo(() => {
+    return hoverPath && path.every((value, index) => value === hoverPath[index])
+  }, [hoverPath, path])
+  const setHover = useJsonViewerStore(store => store.setHover)
   const [inspect, setInspect] = useState(
     !useJsonViewerStore(store => store.defaultCollapsed)
   )
@@ -35,8 +42,43 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
     setInspect,
     value
   }
+  const copyIcon = useMemo(() => {
+    return (
+      <Box
+        component='span'
+        sx={{
+          cursor: 'pointer',
+          pl: 0.7
+        }}
+        onClick={event => {
+          copy(
+            JSON.stringify(
+              value,
+              null,
+              '  '
+            )
+          )
+          event.preventDefault()
+        }}
+      >
+        <ContentCopyIcon
+          sx={{
+            fontSize: '.8rem'
+          }}
+        />
+      </Box>
+    )
+  }, [value])
+
+  const components = useTypeComponents(value)
+  const expandable = components[1] && components[2]
+
   return (
-    <Box className='data-key-pair'>
+    <Box className='data-key-pair'
+         onMouseEnter={
+           useCallback(() => setHover(path), [setHover, path])
+         }
+    >
       <DataBox
         component='span'
         className='data-key'
@@ -47,7 +89,10 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
           opacity: 0.8
         }}
         onClick={
-          useCallback(() => {
+          useCallback((event: React.MouseEvent<HTMLSpanElement>) => {
+            if (event.isDefaultPrevented()) {
+              return
+            }
             setInspect(state => !state)
           }, [])
         }
@@ -59,6 +104,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
         }
         <DataBox sx={{ mx: 0.5 }}>:</DataBox>
         {PreComponent && <PreComponent {...downstreamProps}/>}
+        {(isHover && expandable && inspect) && copyIcon}
       </DataBox>
       {
         Component
@@ -67,6 +113,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({
                  className='data-value-fallback'>{JSON.stringify(value)}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps}/>}
+      {(isHover && expandable && !inspect) && copyIcon}
+      {(isHover && !expandable) && copyIcon}
     </Box>
   )
 }
