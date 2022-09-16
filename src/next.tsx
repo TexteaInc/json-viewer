@@ -35,9 +35,10 @@ const JsonViewerInner: React.FC<ReactJsonViewProps> = (props) => {
     src: props.src,
     indentWidth: props.indentWidth
   }))
-  // todo: still working on it
   return (
-    <Box>
+    <Box sx={{
+      fontFamily: 'monospace'
+    }}>
       <DataKeyPair dataKey='root' value={props.src}/>
     </Box>
   )

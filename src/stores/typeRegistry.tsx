@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 
-import { BooleanType } from '../components/next/DataTypes/Boolean'
-import { DateType } from '../components/next/DataTypes/Date'
+import { createEasyType } from '../components/next/DataTypes/createEasyType'
+import { FloatType } from '../components/next/DataTypes/Float'
+import { IntegerType } from '../components/next/DataTypes/Integer'
 import { NullType } from '../components/next/DataTypes/Null'
 import {
   ObjectType,
@@ -29,17 +30,34 @@ export function useTypeComponents (value: unknown) {
   return useMemo(() => matchTypeComponents(value), [value])
 }
 
-registerType(
+registerType<boolean>(
   [
     (value): value is boolean => typeof value === 'boolean',
-    BooleanType
+    createEasyType(
+      'bool',
+      (value) => value ? 'true' : 'false',
+      'base0E'
+    )
   ]
 )
 
-registerType(
+const displayOptions: Intl.DateTimeFormatOptions = {
+  weekday: 'short',
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit'
+}
+
+registerType<Date>(
   [
     (value): value is Date => value instanceof Date,
-    DateType
+    createEasyType(
+      'date',
+      (value) => value.toLocaleTimeString('en-us', displayOptions),
+      'base0D'
+    )
   ]
 )
 
@@ -47,6 +65,22 @@ registerType(
   [
     (value): value is null => value === null,
     NullType
+  ]
+)
+
+const isInt = (n: number) => n % 1 === 0
+
+registerType(
+  [
+    (value): value is number => typeof value === 'number' && isInt(value),
+    IntegerType
+  ]
+)
+
+registerType(
+  [
+    (value): value is number => typeof value === 'number' && !isInt(value),
+    FloatType
   ]
 )
 

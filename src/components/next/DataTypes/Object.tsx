@@ -3,6 +3,7 @@ import type React from 'react'
 import { useMemo } from 'react'
 
 import { useTextColor } from '../../../hooks/useColor'
+import { useJsonViewerStore } from '../../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../../type'
 import { DataKeyPair } from '../DataKeyPair'
 
@@ -10,6 +11,7 @@ const lb = '{'
 const rb = '}'
 
 export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
+  const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
   const sizeOfValue = useMemo(
     () => props.inspect ? `${Object.keys(props.value).length} Items` : '',
     [props.inspect, props.value]
@@ -21,7 +23,16 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
         letterSpacing: 0.5
       }}
     >
-      {lb} {sizeOfValue}
+      {lb}
+      <Box
+        component='span'
+        sx={{
+          fontStyle: 'italic',
+          color: metadataColor
+        }}
+      >
+        {sizeOfValue}
+      </Box>
     </Box>
   )
 }

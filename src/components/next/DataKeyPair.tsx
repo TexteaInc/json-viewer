@@ -29,6 +29,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = ({ dataKey, value }) => {
         component='span'
         className='data-key'
         sx={{
+          lineHeight: 1.5,
           color: keyColor,
           letterSpacing: 0.5,
           opacity: 0.8
