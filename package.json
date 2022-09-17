@@ -53,10 +53,6 @@
     "@mui/lab": "^5.0.0-alpha.99",
     "@mui/material": "^5.10.5",
     "copy-to-clipboard": "^3.3.2",
-    "events": "^3.3.0",
-    "flux": "^4.0.3",
-    "react-base16-styling": "^0.9.1",
-    "uuid": "^9.0.0",
     "zustand": "^4.1.1"
   },
   "lint-staged": {

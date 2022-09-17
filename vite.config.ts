@@ -3,7 +3,9 @@ import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import { defineConfig } from 'vitest/config'
 
-import { peerDependencies } from './package.json'
+import { dependencies, peerDependencies } from './package.json'
+
+const externals = Object.assign(peerDependencies, dependencies)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,9 +18,9 @@ export default defineConfig({
       fileName: 'index'
     },
     rollupOptions: {
-      external: Object.keys(peerDependencies),
+      external: Object.keys(externals),
       output: {
-        globals: Object.keys(peerDependencies).reduce(
+        globals: Object.keys(externals).reduce(
           (result, value) => Object.assign(result, { [value]: value }),
           {}
         )
