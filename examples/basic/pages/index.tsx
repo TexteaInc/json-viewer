@@ -5,17 +5,17 @@ import {
   JsonViewerOnChange
 } from '@textea/json-viewer'
 import type React from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 function aPlusB (a: number, b: number) {
   return a + b
 }
 
 const example = {
-  string: 'this is a test string',
+  string: 'this is a string',
   integer: 42,
-  array: [1, 2, 3, 'test', NaN],
-  float: 3.14159,
+  array: [19, 19, 810, 'test', NaN],
+  float: 114.514,
   undefined,
   object: {
     'first-child': true,
@@ -24,12 +24,25 @@ const example = {
   },
   fn: aPlusB,
   string_number: '1234',
+  timer: 0,
   date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)')
 }
 
 const IndexPage: React.FC = () => {
   const [indent, setIndent] = useState(2)
-  const [src, setSrc] = useState<object>(() => example)
+  const [src, setSrc] = useState(() => example)
+  useEffect(() => {
+    const loop = () => {
+      setSrc(src => ({
+        ...src,
+        timer: src.timer + 1
+      }))
+    }
+    const id = setInterval(loop, 1000)
+    return () => {
+      clearInterval(id)
+    }
+  }, [])
   return (
     <div>
       <TextField

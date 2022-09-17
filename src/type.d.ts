@@ -22,9 +22,26 @@ export type DataType<ValueType = unknown> = {
 }
 
 export type JsonViewerProps<T = unknown> = {
+  /**
+   * any value
+   */
   value: T
+  /**
+   * indent width for nested objects
+   */
   indentWidth?: number
+  /**
+   *
+   * @param path path to the target value
+   * @param oldValue
+   * @param newValue
+   */
   onChange?: <U>(path: string[], oldValue: U, newValue: U) => void
+  /**
+   * collapsed depth, true for all collapsed, false for all expanded.
+   *  number for depth that default expanded.
+   * @default false
+   */
   defaultCollapsed?: boolean | number
   className?: string
   style?: React.CSSProperties
