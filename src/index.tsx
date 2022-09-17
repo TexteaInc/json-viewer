@@ -12,20 +12,12 @@ import {
   JsonViewerProvider, useJsonViewerStore,
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
+import type { JsonViewerProps } from './type'
 import { applyValue } from './utils'
 
 export { applyValue }
 
 export type JsonViewerOnChange = <U = unknown>(path: string[], oldValue: U, newValue: U) => void
-
-export type JsonViewerProps<T = unknown> = {
-  value: T
-  indentWidth?: number
-  onChange?: <U>(path: string[], oldValue: U, newValue: U) => void
-  defaultCollapsed?: boolean | number
-  className?: string
-  style?: React.CSSProperties
-}
 
 const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const api = useJsonViewerStoreApi()

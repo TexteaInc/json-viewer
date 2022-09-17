@@ -21,6 +21,15 @@ export type DataType<ValueType = unknown> = {
   PostComponent?: React.ComponentType<DataItemProps<ValueType>>
 }
 
+export type JsonViewerProps<T = unknown> = {
+  value: T
+  indentWidth?: number
+  onChange?: <U>(path: string[], oldValue: U, newValue: U) => void
+  defaultCollapsed?: boolean | number
+  className?: string
+  style?: React.CSSProperties
+}
+
 export interface OldReactJsonViewProps {
   /**
    * This property contains your input JSON.
