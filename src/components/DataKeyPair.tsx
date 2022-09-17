@@ -13,6 +13,7 @@ import { useTextColor } from '../hooks/useColor'
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
+import { isCycleReference } from '../utils'
 import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {
@@ -35,8 +36,14 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     return hoverPath && path.every((value, index) => value === hoverPath[index])
   }, [hoverPath, path])
   const setHover = useJsonViewerStore(store => store.setHover)
+  const root = useJsonViewerStore(store => store.value)
+  const isTrap = useMemo(() => isCycleReference(root, path, value), [path, root, value])
+  const defaultCollapsed = useJsonViewerStore(store => store.defaultCollapsed)
+  // do not inspect when it is a cycle reference, otherwise there will have a loop
   const [inspect, setInspect] = useState(
-    !useJsonViewerStore(store => store.defaultCollapsed)
+    isTrap
+      ? false
+      : !defaultCollapsed
   )
   const [editing, setEditing] = useState(false)
   const onChange = useJsonViewerStore(store => store.onChange)
@@ -46,7 +53,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(
     value)
   const rootName = useJsonViewerStore(store => store.rootName)
-  const isRoot = useJsonViewerStore(store => store.value) === value
+  const isRoot = root === value
   const isNumberKey = Number.isInteger(Number(key))
   const displayKey = isRoot ? rootName : key
   const downstreamProps: DataItemProps = useMemo(() => ({
@@ -169,11 +176,12 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         {PreComponent && <PreComponent {...downstreamProps}/>}
         {(isHover && expandable && inspect) && actionIcons}
       </DataBox>
-      {editing
-        ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
-        : Component
-          ? <Component {...downstreamProps}/>
-          : <Box component='span'
+      {
+        editing
+          ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
+          : (Component)
+              ? <Component {...downstreamProps}/>
+              : <Box component='span'
                  className='data-value-fallback'>{JSON.stringify(value)}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps}/>}

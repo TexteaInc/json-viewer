@@ -15,3 +15,31 @@ export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   }
   return obj
 }
+
+export const isCycleReference = (root: any, path: (string | number)[], value: unknown): boolean => {
+  if (root === null || value === null) {
+    return false
+  }
+  if (typeof root !== 'object') {
+    return false
+  }
+  if (typeof value !== 'object') {
+    return false
+  }
+  if (Object.is(root, value) && path.length !== 0) {
+    return true
+  }
+  const arr = [...path]
+  let currentRoot = root
+  while (currentRoot !== value || arr.length !== 0) {
+    if (typeof currentRoot !== 'object' || currentRoot === null) {
+      return false
+    }
+    const target = arr.shift()!
+    if (Object.is(currentRoot, value)) {
+      return true
+    }
+    currentRoot = currentRoot[target]
+  }
+  return false
+}
