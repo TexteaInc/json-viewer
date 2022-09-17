@@ -76,7 +76,6 @@ export type JsonViewerActions = {
   setHover: (path: (string | number)[] | null) => void
 }
 
-// todo
 export const createJsonViewerStore = () =>
   create(
     combine<JsonViewerState, JsonViewerActions>(

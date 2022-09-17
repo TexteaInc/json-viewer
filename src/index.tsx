@@ -9,7 +9,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { DataKeyPair } from './components/DataKeyPair'
 import {
   createJsonViewerStore,
-  JsonViewerProvider, useJsonViewerStore,
+  JsonViewerProvider, JsonViewerState, useJsonViewerStore,
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
 import type { JsonViewerProps } from './type'
@@ -21,15 +21,22 @@ export type JsonViewerOnChange = <U = unknown>(path: (string | number)[], oldVal
 
 const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const api = useJsonViewerStoreApi()
+  const setIfNotUndefined = useCallback(function setIfNotUndefined <Key extends keyof JsonViewerState> (key: Key, value: JsonViewerState[Key] | undefined) {
+    if (value !== undefined) {
+      api.setState({
+        [key]: value
+      })
+    }
+  }, [api])
   useEffect(() => {
-    api.setState(() => ({
-      value: props.value,
-      indentWidth: props.indentWidth,
-      defaultCollapsed: props.defaultCollapsed,
-      onChange: props.onChange,
-      groupArraysAfterLength: props.groupArraysAfterLength
-    }))
-  }, [api, props.defaultCollapsed, props.groupArraysAfterLength, props.indentWidth, props.onChange, props.value])
+    setIfNotUndefined('value', props.value)
+  }, [props.value, setIfNotUndefined])
+  useEffect(() => {
+    // setIfNotUndefined('indentWidth', props.indentWidth)
+    setIfNotUndefined('defaultCollapsed', props.defaultCollapsed)
+    setIfNotUndefined('onChange', props.onChange)
+    setIfNotUndefined('groupArraysAfterLength', props.groupArraysAfterLength)
+  }, [api, props.defaultCollapsed, props.groupArraysAfterLength, props.onChange, props.value, setIfNotUndefined])
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)

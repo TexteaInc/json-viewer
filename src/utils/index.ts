@@ -1,8 +1,8 @@
-export const applyValue = (obj: any, path: string[], value: any) => {
+export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   if (typeof obj !== 'object' || obj === null) {
     return value
   }
-  const arr: string[] = [...path]
+  const arr: (string | number)[] = [...path]
   let key
   if (path.length > 0) {
     key = arr[0]

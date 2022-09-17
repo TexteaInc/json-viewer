@@ -81,7 +81,6 @@ export const ArrayType: React.FC<DataItemProps<unknown[]>> = (props) => {
       }
       return array
     }, [])
-    console.log('value', value)
 
     return value.map((list, index) => {
       const path = [...props.path]
