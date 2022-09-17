@@ -11,7 +11,22 @@ function aPlusB (a: number, b: number) {
   return a + b
 }
 
+const loopObject = {
+  foo: 1,
+  goo: 'string'
+} as Record<string, any>
+
+loopObject.self = loopObject
+
+const loopArray = [
+  loopObject
+]
+
+loopArray[1] = loopArray
+
 const example = {
+  loopObject,
+  loopArray,
   string: 'this is a string',
   integer: 42,
   array: [19, 19, 810, 'test', NaN],
