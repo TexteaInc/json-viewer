@@ -43,6 +43,12 @@ export type JsonViewerProps<T = unknown> = {
    * @default false
    */
   defaultCollapsed?: boolean | number
+  /**
+   * When an integer value is assigned, arrays will be displayed in groups by count of the value.
+   * Groups are displayed with bracket notation and can be expanded and collapsed by clicking on the brackets.
+   * @default 100
+   */
+  groupArraysAfterLength?: number
   className?: string
   style?: React.CSSProperties
 }

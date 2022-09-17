@@ -26,9 +26,10 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
       value: props.value,
       indentWidth: props.indentWidth,
       defaultCollapsed: props.defaultCollapsed,
-      onChange: props.onChange
+      onChange: props.onChange,
+      groupArraysAfterLength: props.groupArraysAfterLength
     }))
-  }, [api, props.defaultCollapsed, props.indentWidth, props.onChange, props.value])
+  }, [api, props.defaultCollapsed, props.groupArraysAfterLength, props.indentWidth, props.onChange, props.value])
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)

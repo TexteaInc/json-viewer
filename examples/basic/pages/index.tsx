@@ -30,6 +30,7 @@ const example = {
 
 const IndexPage: React.FC = () => {
   const [indent, setIndent] = useState(2)
+  const [groupArraysAfterLength, setGroupArraysAfterLength] = useState(100)
   const [src, setSrc] = useState(() => example)
   useEffect(() => {
     const loop = () => {
@@ -57,9 +58,22 @@ const IndexPage: React.FC = () => {
           }
         }
       />
+      <TextField
+        value={groupArraysAfterLength}
+        type='number'
+        onChange={
+          event => {
+            const groupArraysAfterLength = parseInt(event.target.value)
+            if (groupArraysAfterLength > -1 && groupArraysAfterLength < 500) {
+              setGroupArraysAfterLength(groupArraysAfterLength)
+            }
+          }
+        }
+      />
       <JsonViewer
         value={src}
         indentWidth={indent}
+        groupArraysAfterLength={groupArraysAfterLength}
         onChange={
           useCallback<JsonViewerOnChange>(
             (path, oldValue, newValue) => {

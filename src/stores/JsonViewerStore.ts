@@ -63,6 +63,7 @@ export const darkNamespace: ColorNamespace = {
 
 export type JsonViewerState = {
   hoverPath: string[] | null
+  groupArraysAfterLength: number
   defaultCollapsed: number | boolean
   colorNamespace: ColorNamespace
   expanded: string[]
@@ -81,6 +82,7 @@ export const createJsonViewerStore = () =>
     combine<JsonViewerState, JsonViewerActions>(
       {
         hoverPath: null,
+        groupArraysAfterLength: 100,
         rootName: 'root',
         defaultCollapsed: false,
         colorNamespace: defaultColorNamespace,
