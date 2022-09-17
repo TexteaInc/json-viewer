@@ -1,20 +1,11 @@
 {
   "extends": "./node_modules/@textea/dev-kit/config/tsconfig.root.json",
   "compilerOptions": {
-    "allowJs": true,
-    "rootDir": "src",
-    "baseUrl": "./src",
-    "outDir": "dist",
-    "declaration": false,
-    "declarationMap": false
+    "outDir": "./dist/out/",
+    "rootDir": "./src/"
   },
   "include": [
-    "src/**/*",
-    "index.d.ts"
+    "src/**/*.ts",
   ],
-  "references": [
-    {
-      "path": "tsconfig.node.json"
-    }
-  ]
+  "exclude": ["node_modules"]
 }
