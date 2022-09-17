@@ -4,10 +4,12 @@
     "outDir": "./dist/out/",
     "rootDir": "./src/",
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react"
+    "jsxImportSource": "@emotion/react",
+    "incremental": false,
+    "declaration": true
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

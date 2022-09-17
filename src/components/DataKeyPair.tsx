@@ -1,7 +1,9 @@
-import CheckIcon from '@mui/icons-material/Check'
-import CloseIcon from '@mui/icons-material/Close'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import EditIcon from '@mui/icons-material/Edit'
+import {
+  Check as CheckIcon,
+  Close as CloseIcon,
+  ContentCopy as ContentCopyIcon,
+  Edit as EditIcon
+} from '@mui/icons-material'
 import { Box, styled } from '@mui/material'
 import copy from 'copy-to-clipboard'
 import type React from 'react'
