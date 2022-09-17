@@ -1,50 +1,70 @@
-import React, { useCallback, useState } from 'react'
+import { Box } from '@mui/material'
+import type React from 'react'
 
-import type { DataTypeProps } from '../../types/data-type'
-// attribute store for storing collapsed state
-import AttributeStore from './../../stores/ObjectAttributes'
-// theme
-import Theme from './../../themes/getStyle'
-import { DataTypeLabel } from './DataTypeLabel'
+import { useJsonViewerStore } from '../../stores/JsonViewerStore'
+import type { DataItemProps } from '../../type'
+import { DataTypeLabel } from '../DataTypeLabel'
 
-export const JsonFunction: React.FC<DataTypeProps<Function>> = (props) => {
-  const [collapsed, setCollapsed] = useState<boolean>(() => AttributeStore.get(
-    props.rjvId,
-    props.namespace,
-    'collapsed',
-    true
-  ))
-  const toggleCollapsed = useCallback(() => {
-    setCollapsed(value => !value)
-    AttributeStore.set(
-      props.rjvId,
-      props.namespace,
-      'collapsed',
-      collapsed
-    )
-  }, [collapsed, props.namespace, props.rjvId])
+const functionBody = (func: Function) => {
+  const funcString = func.toString()
 
+  return funcString.substring(
+    funcString.indexOf('{', funcString.indexOf(')')) + 1,
+    funcString.lastIndexOf('}')
+  )
+}
+
+const functionName = (func: Function) => {
+  return func.toString()
+    .slice(9, -1)
+    .replace(/\{[\s\S]+/, '')
+}
+
+const lb = '{'
+const rb = '}'
+
+export const PreFunctionType: React.FC<DataItemProps<Function>> = (props) => {
   return (
-    <div {...Theme(props.theme, 'function')}>
-      <DataTypeLabel {...props} type_name='function'/>
-      <span
-        {...Theme(props.theme, 'function-value')}
-        className='rjv-function-container'
-        onClick={toggleCollapsed}
-      >
-        {collapsed
-          ? (
-            <span>
-              {props.value.toString()
-                .slice(9, -1)
-                .replace(/\{[\s\S]+/, '')}<span
-              className='function-collapsed'
-              style={{ fontWeight: 'bold' }}><span>{'{'}</span><span {...Theme(
-                props.theme,
-                'ellipsis')}>...</span><span>{'}'}</span></span></span>
-            )
-          : props.value.toString().slice(9)}
-      </span>
-    </div>
+    <Box
+      component='span' className='data-object-start'
+      sx={{
+        letterSpacing: 0.5
+      }}
+    >
+      <DataTypeLabel dataType='function'/>
+      {functionName(props.value)}
+      {lb}
+    </Box>
+  )
+}
+
+export const PostFunctionType: React.FC<DataItemProps<Function>> = () => {
+  return (
+    <Box component='span' className='data-object-end'>
+      {rb}
+    </Box>
+  )
+}
+
+export const FunctionType: React.FC<DataItemProps<Function>> = (props) => {
+  const functionColor = useJsonViewerStore(store => store.colorNamespace.base05)
+  return (
+    <Box
+      className='data-function'
+      sx={{
+        display: props.inspect ? 'block' : 'inline-block',
+        pl: props.inspect ? 2 : 0,
+        color: functionColor
+      }}
+    >
+      {props.inspect
+        ? functionBody(props.value)
+        : (
+          <Box component='span' className='data-object-body'>
+            ...
+          </Box>
+          )
+      }
+    </Box>
   )
 }

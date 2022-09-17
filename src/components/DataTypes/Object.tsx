@@ -2,9 +2,9 @@ import { Box } from '@mui/material'
 import type React from 'react'
 import { useMemo } from 'react'
 
-import { useTextColor } from '../../../hooks/useColor'
-import { useJsonViewerStore } from '../../../stores/JsonViewerStore'
-import type { DataItemProps } from '../../../type'
+import { useTextColor } from '../../hooks/useColor'
+import { useJsonViewerStore } from '../../stores/JsonViewerStore'
+import type { DataItemProps } from '../../type'
 import { DataKeyPair } from '../DataKeyPair'
 
 const lb = '{'
@@ -63,12 +63,6 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
 
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
-  const elements = useMemo(() => {
-    return Object.entries(props.value).map(([key, value]) => {
-      const path = [...props.path, key]
-      return <DataKeyPair key={key} path={path} value={value}/>
-    })
-  }, [props.path, props.value])
   return (
     <Box
       className='data-object'
@@ -80,7 +74,12 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     >
       {
         props.inspect
-          ? elements
+          ? (
+              Object.entries(props.value).map(([key, value]) => {
+                const path = [...props.path, key]
+                return <DataKeyPair key={key} path={path} value={value}/>
+              })
+            )
           : (
             <Box component='span' className='data-object-body'>
               ...

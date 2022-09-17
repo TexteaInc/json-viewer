@@ -23,7 +23,7 @@
     "tree-view",
     "treeview"
   ],
-  "types": "src/type.d.ts",
+  "types": "dist/src/index.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "exports": {
@@ -35,7 +35,6 @@
     }
   },
   "files": [
-    "src/**.d.ts",
     "dist"
   ],
   "scripts": {

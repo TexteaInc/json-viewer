@@ -1615,23 +1615,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@textea/json-viewer-example-next@workspace:examples/next":
-  version: 0.0.0-use.local
-  resolution: "@textea/json-viewer-example-next@workspace:examples/next"
-  dependencies:
-    "@textea/dev-kit": ^0.12.16
-    "@textea/json-viewer": "workspace:^"
-    "@types/node": ^18.7.17
-    "@types/react": ^18.0.19
-    "@types/react-dom": ^18.0.6
-    next: ^12.3.0
-    next-transpile-modules: ^9.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.8.3
-  languageName: unknown
-  linkType: soft
-
 "@textea/json-viewer@workspace:., @textea/json-viewer@workspace:^":
   version: 0.0.0-use.local
   resolution: "@textea/json-viewer@workspace:."

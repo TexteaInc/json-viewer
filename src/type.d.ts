@@ -8,14 +8,20 @@ export interface DataItemProps<ValueType = unknown> {
   path: string[]
 }
 
-export type DataType<ValueType = unknown> = [
-  is: (value: unknown) => value is ValueType,
-  Component: React.ComponentType<DataItemProps<ValueType>>,
-  PreComponent?: React.ComponentType<DataItemProps<ValueType>>,
-  PostComponent?: React.ComponentType<DataItemProps<ValueType>>
-]
+export type EditorProps<ValueType = unknown> = {
+  value: ValueType
+  setValue: React.Dispatch<ValueType>
+}
 
-export interface ReactJsonViewProps {
+export type DataType<ValueType = unknown> = {
+  is: (value: unknown) => value is ValueType
+  Component: React.ComponentType<DataItemProps<ValueType>>
+  Editor?: React.ComponentType<EditorProps<ValueType>>
+  PreComponent?: React.ComponentType<DataItemProps<ValueType>>
+  PostComponent?: React.ComponentType<DataItemProps<ValueType>>
+}
+
+export interface OldReactJsonViewProps {
   /**
    * This property contains your input JSON.
    *
@@ -179,136 +185,3 @@ export interface OnCopyProps {
    */
   name: string | null
 }
-
-export interface CollapsedFieldProps {
-  /**
-   * The name of the entry.
-   */
-  name: string | null
-  /**
-   * The corresponding JSON subtree.
-   */
-  src: object
-  /**
-   * The type of src. Can only be "array" or "object".
-   */
-  type: 'array' | 'object'
-  /**
-   * The scopes above the current entry.
-   */
-  namespace: Array<string | null>
-}
-
-export interface InteractionProps {
-  /**
-   * The updated subtree of the JSON tree.
-   */
-  updated_src: object
-  /**
-   * The existing subtree of the JSON tree.
-   */
-  existing_src: object
-  /**
-   * The key of the entry that is interacted with.
-   */
-  name: string | null
-  /**
-   * List of keys.
-   */
-  namespace: Array<string | null>
-  /**
-   * The original value of the entry that is interacted with.
-   */
-  existing_value: object | string | number | boolean | null
-  /**
-   * The updated value of the entry that is interacted with.
-   */
-  new_value?: object | string | number | boolean | null
-}
-
-export interface OnSelectProps {
-  /**
-   * The name of the currently selected entry.
-   */
-  name: string | null
-  /**
-   * The value of the currently selected entry.
-   */
-  value: object | string | number | boolean | null
-  /**
-   * The type of the value. For "number" type, it will be replaced with the more
-   * accurate types: "float", "integer", or "nan".
-   */
-  type: string
-  /**
-   * List of keys representing the scopes above the selected entry.
-   */
-  namespace: Array<string | null>
-
-}
-
-export type TypeDefaultValue = string | number | boolean | object;
-
-export interface ThemeObject {
-  base00: string
-  base01: string
-  base02: string
-  base03: string
-  base04: string
-  base05: string
-  base06: string
-  base07: string
-  base08: string
-  base09: string
-  base0A: string
-  base0B: string
-  base0C: string
-  base0D: string
-  base0E: string
-  base0F: string
-}
-
-export type ThemeKeys =
-  | 'apathy'
-  | 'apathy:inverted'
-  | 'ashes'
-  | 'bespin'
-  | 'brewer'
-  | 'bright:inverted'
-  | 'bright'
-  | 'chalk'
-  | 'codeschool'
-  | 'colors'
-  | 'eighties'
-  | 'embers'
-  | 'flat'
-  | 'google'
-  | 'grayscale'
-  | 'grayscale:inverted'
-  | 'greenscreen'
-  | 'harmonic'
-  | 'hopscotch'
-  | 'isotope'
-  | 'marrakesh'
-  | 'mocha'
-  | 'monokai'
-  | 'ocean'
-  | 'paraiso'
-  | 'pop'
-  | 'railscasts'
-  | 'rjv-default'
-  | 'shapeshifter'
-  | 'shapeshifter:inverted'
-  | 'solarized'
-  | 'summerfruit'
-  | 'summerfruit:inverted'
-  | 'threezerotwofour'
-  | 'tomorrow'
-  | 'tube'
-  | 'twilight';
-
-declare const JsonViewer: React.ComponentType<ReactJsonViewProps>
-export default JsonViewer
-
-// unstable components
-export const unstable_JsonViewer: React.FC<ReactJsonViewProps>

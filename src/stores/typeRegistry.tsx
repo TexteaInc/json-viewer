@@ -1,16 +1,17 @@
 import { Box } from '@mui/material'
+import { DevelopmentError } from '@textea/dev-kit/utils'
 import React, { useMemo } from 'react'
 
-import { createEasyType } from '../components/next/DataTypes/createEasyType'
+import { createEasyType } from '../components/DataTypes/createEasyType'
 import {
   FunctionType, PostFunctionType,
   PreFunctionType
-} from '../components/next/DataTypes/Function'
+} from '../components/DataTypes/Function'
 import {
   ObjectType,
   PostObjectType,
   PreObjectType
-} from '../components/next/DataTypes/Object'
+} from '../components/DataTypes/Object'
 import type { DataType } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
@@ -20,26 +21,13 @@ export function registerType<Value> (type: DataType<Value>) {
   typeRegistry.push(type)
 }
 
-export function getIsCheck<Value> (value: Value): DataType<Value>[0] | null {
-  for (const [is] of typeRegistry) {
-    if (is(value)) {
-      return is
+export function matchTypeComponents<Value> (value: Value): DataType<Value> {
+  for (const T of typeRegistry) {
+    if (T.is(value)) {
+      return T
     }
   }
-  return null
-}
-
-export function useIsCheck (value: unknown) {
-  useMemo(() => getIsCheck(value), [value])
-}
-
-export function matchTypeComponents<Value> (value: Value): [DataType<Value>[1], DataType<Value>[2], DataType<Value>[3]] | [] {
-  for (const [is, C, Pre, Post] of typeRegistry) {
-    if (is(value)) {
-      return [C, Pre, Post]
-    }
-  }
-  return []
+  throw new DevelopmentError('this is not possible')
 }
 
 export function useTypeComponents (value: unknown) {
@@ -47,14 +35,17 @@ export function useTypeComponents (value: unknown) {
 }
 
 registerType<boolean>(
-  [
-    (value): value is boolean => typeof value === 'boolean',
-    createEasyType(
+  {
+    is: (value): value is boolean => typeof value === 'boolean',
+    ...createEasyType(
       'bool',
       ({ value }) => <>{value ? 'true' : 'false'}</>,
-      { colorKey: 'base0E' }
+      {
+        colorKey: 'base0E',
+        fromString: value => Boolean(value)
+      }
     )
-  ]
+  }
 )
 
 const displayOptions: Intl.DateTimeFormatOptions = {
@@ -67,20 +58,22 @@ const displayOptions: Intl.DateTimeFormatOptions = {
 }
 
 registerType<Date>(
-  [
-    (value): value is Date => value instanceof Date,
-    createEasyType(
+  {
+    is: (value): value is Date => value instanceof Date,
+    ...createEasyType(
       'date',
       ({ value }) => <>{value.toLocaleTimeString('en-us', displayOptions)}</>,
-      { colorKey: 'base0D' }
+      {
+        colorKey: 'base0D'
+      }
     )
-  ]
+  }
 )
 
 registerType<null>(
-  [
-    (value): value is null => value === null,
-    createEasyType(
+  {
+    is: (value): value is null => value === null,
+    ...createEasyType(
       'null',
       () => {
         const backgroundColor = useJsonViewerStore(
@@ -98,13 +91,13 @@ registerType<null>(
       },
       { colorKey: 'base08', displayTypeLabel: false }
     )
-  ]
+  }
 )
 
 registerType<undefined>(
-  [
-    (value): value is undefined => value === undefined,
-    createEasyType(
+  {
+    is: (value): value is undefined => value === undefined,
+    ...createEasyType(
       'undefined',
       () => {
         const backgroundColor = useJsonViewerStore(
@@ -124,37 +117,38 @@ registerType<undefined>(
         displayTypeLabel: false
       }
     )
-  ]
+  }
 )
 
 registerType<string>(
-  [
-    (value): value is string => typeof value === 'string',
-    createEasyType(
+  {
+    is: (value): value is string => typeof value === 'string',
+    ...createEasyType(
       'string',
       ({ value }) => <>&quot;{`${value}`}&quot;</>,
       {
-        colorKey: 'base09'
+        colorKey: 'base09',
+        fromString: value => value
       }
     )
-  ]
+  }
 )
 
 registerType<Function>(
-  [
-    (value): value is Function => typeof value === 'function',
-    FunctionType,
-    PreFunctionType,
-    PostFunctionType
-  ]
+  {
+    is: (value): value is Function => typeof value === 'function',
+    Component: FunctionType,
+    PreComponent: PreFunctionType,
+    PostComponent: PostFunctionType
+  }
 )
 
 const isInt = (n: number) => n % 1 === 0
 
 registerType<number>(
-  [
-    (value): value is number => typeof value === 'number' && isNaN(value),
-    createEasyType(
+  {
+    is: (value): value is number => typeof value === 'number' && isNaN(value),
+    ...createEasyType(
       'NaN',
       () => {
         const backgroundColor = useJsonViewerStore(
@@ -175,41 +169,43 @@ registerType<number>(
         displayTypeLabel: false
       }
     )
-  ]
+  }
 )
 
 registerType<number>(
-  [
-    (value): value is number => typeof value === 'number' && !isInt(value),
-    createEasyType(
+  {
+    is: (value): value is number => typeof value === 'number' && !isInt(value),
+    ...createEasyType(
       'float',
       ({ value }) => <>{`${value}`}</>,
       {
-        colorKey: 'base0B'
+        colorKey: 'base0B',
+        fromString: value => parseFloat(value)
       }
     )
-  ]
+  }
 )
 
 registerType<number>(
-  [
-    (value): value is number => typeof value === 'number' && isInt(value),
-    createEasyType(
+  {
+    is: (value): value is number => typeof value === 'number' && isInt(value),
+    ...createEasyType(
       'int',
       ({ value }) => <>{`${value}`}</>,
       {
-        colorKey: 'base0F'
+        colorKey: 'base0F',
+        fromString: value => parseInt(value)
       }
     )
-  ]
+  }
 )
 
 // fallback for all data like 'object'
-registerType(
-  [
-    (value): value is object => typeof value === 'object',
-    ObjectType,
-    PreObjectType,
-    PostObjectType
-  ]
+registerType<object>(
+  {
+    is: (value): value is object => typeof value === 'object',
+    Component: ObjectType,
+    PreComponent: PreObjectType,
+    PostComponent: PostObjectType
+  }
 )
