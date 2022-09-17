@@ -5,7 +5,7 @@ export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
   setInspect: Dispatch<SetStateAction<boolean>>
   value: ValueType
-  path: string[]
+  path: (string | number)[]
 }
 
 export type EditorProps<ValueType = unknown> = {
@@ -36,13 +36,19 @@ export type JsonViewerProps<T = unknown> = {
    * @param oldValue
    * @param newValue
    */
-  onChange?: <U>(path: string[], oldValue: U, newValue: U) => void
+  onChange?: <U>(path: (string | number)[], oldValue: U, newValue: U) => void
   /**
    * collapsed depth, true for all collapsed, false for all expanded.
    *  number for depth that default expanded.
    * @default false
    */
   defaultCollapsed?: boolean | number
+  /**
+   * When an integer value is assigned, arrays will be displayed in groups by count of the value.
+   * Groups are displayed with bracket notation and can be expanded and collapsed by clicking on the brackets.
+   * @default 100
+   */
+  groupArraysAfterLength?: number
   className?: string
   style?: React.CSSProperties
 }

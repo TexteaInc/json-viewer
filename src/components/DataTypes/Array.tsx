@@ -6,26 +6,23 @@ import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
 import { DataKeyPair } from '../DataKeyPair'
 
-const objectLb = '{'
 const arrayLb = '['
-const objectRb = '}'
 const arrayRb = ']'
 
-export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
+export const PreArrayType: React.FC<DataItemProps<unknown[]>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
-  const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const sizeOfValue = useMemo(
     () => props.inspect ? `${Object.keys(props.value).length} Items` : '',
     [props.inspect, props.value]
   )
   return (
     <Box
-      component='span' className='data-object-start'
+      component='span' className='data-array-start'
       sx={{
         letterSpacing: 0.5
       }}
     >
-      {isArray ? arrayLb : objectLb}
+      {arrayLb}
       <Box
         component='span'
         sx={{
@@ -40,16 +37,15 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
   )
 }
 
-export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
+export const PostArrayType: React.FC<DataItemProps<unknown[]>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
-  const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const sizeOfValue = useMemo(
     () => !props.inspect ? `${Object.keys(props.value).length} Items` : '',
     [props.inspect, props.value]
   )
   return (
-    <Box component='span' className='data-object-end'>
-      {isArray ? arrayRb : objectRb}
+    <Box component='span' className='data-array-end'>
+      {arrayRb}
       <Box
         component='span'
         sx={{
@@ -64,19 +60,39 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   )
 }
 
-export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
+export const ArrayType: React.FC<DataItemProps<unknown[]>> = (props) => {
   const keyColor = useTextColor()
-  const elements = useMemo(() => (
-    Object.entries(props.value).map(([key, value]) => {
-      const path = [...props.path, key]
+  const groupArraysAfterLength = useJsonViewerStore(store => store.groupArraysAfterLength)
+  const elements = useMemo(() => {
+    if (props.value.length <= groupArraysAfterLength) {
+      return props.value.map((value, index) => {
+        const path = [...props.path, index]
+        return (
+          <DataKeyPair key={index} path={path} value={value}/>
+        )
+      })
+    }
+    const value = props.value.reduce<unknown[][]>((array, value, index) => {
+      const target = Math.floor(index / groupArraysAfterLength)
+      if (array[target]) {
+        array[target].push(value)
+      } else {
+        array[target] = [value]
+      }
+      return array
+    }, [])
+    console.log('value', value)
+
+    return value.map((list, index) => {
+      const path = [...props.path]
       return (
-        <DataKeyPair key={key} path={path} value={value}/>
+        <DataKeyPair key={index} path={path} value={list} nested/>
       )
     })
-  ), [props.path, props.value])
+  }, [props.path, props.value, groupArraysAfterLength])
   return (
     <Box
-      className='data-object'
+      className='data-array'
       sx={{
         display: props.inspect ? 'block' : 'inline-block',
         pl: props.inspect ? 2 : 0,
@@ -87,7 +103,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
         props.inspect
           ? elements
           : (
-            <Box component='span' className='data-object-body'>
+            <Box component='span' className='data-array-body'>
               ...
             </Box>
             )

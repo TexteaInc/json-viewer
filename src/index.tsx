@@ -17,7 +17,7 @@ import { applyValue } from './utils'
 
 export { applyValue }
 
-export type JsonViewerOnChange = <U = unknown>(path: string[], oldValue: U, newValue: U) => void
+export type JsonViewerOnChange = <U = unknown>(path: (string | number)[], oldValue: U, newValue: U) => void
 
 const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const api = useJsonViewerStoreApi()
@@ -26,9 +26,10 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
       value: props.value,
       indentWidth: props.indentWidth,
       defaultCollapsed: props.defaultCollapsed,
-      onChange: props.onChange
+      onChange: props.onChange,
+      groupArraysAfterLength: props.groupArraysAfterLength
     }))
-  }, [api, props.defaultCollapsed, props.indentWidth, props.onChange, props.value])
+  }, [api, props.defaultCollapsed, props.groupArraysAfterLength, props.indentWidth, props.onChange, props.value])
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)

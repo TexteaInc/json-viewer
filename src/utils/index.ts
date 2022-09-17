@@ -1,11 +1,10 @@
 export const applyValue = (obj: any, path: string[], value: any) => {
-  let arr
-  let key
-  if (!obj || typeof obj !== 'object') {
-    obj = {}
+  if (typeof obj !== 'object' || obj === null) {
+    return value
   }
+  const arr: string[] = [...path]
+  let key
   if (path.length > 0) {
-    arr = path
     key = arr[0]
     if (arr.length > 1) {
       arr.shift()
