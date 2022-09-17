@@ -2,7 +2,9 @@
   "extends": "./node_modules/@textea/dev-kit/config/tsconfig.root.json",
   "compilerOptions": {
     "outDir": "./dist/out/",
-    "rootDir": "./src/"
+    "rootDir": "./src/",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react"
   },
   "include": [
     "src/**/*.ts",

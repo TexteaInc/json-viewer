@@ -46,7 +46,7 @@ const outputMatrix = (
 }
 
 const buildMatrix = (input: string, output: string): RollupOptions => {
-  dtsOutput.add([input.replaceAll('.jsx', '.d.ts'), output])
+  dtsOutput.add([input.replaceAll('.js', '.d.ts'), output])
   return {
     input,
     output: outputMatrix(output),
@@ -79,7 +79,7 @@ const dtsMatrix = (): RollupOptions[] => {
 }
 
 const build: RollupOptions[] = [
-  buildMatrix('./dist/out/index.jsx', 'index'),
+  buildMatrix('./dist/out/index.js', 'index'),
   ...dtsMatrix()
 ]
 

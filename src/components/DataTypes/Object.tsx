@@ -1,11 +1,9 @@
 import { Box } from '@mui/material'
-import type React from 'react'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
-import { DataKeyPair } from '../DataKeyPair'
 
 const lb = '{'
 const rb = '}'
@@ -61,6 +59,9 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   )
 }
 
+const KeyPair = React.lazy(() => import('../DataKeyPair').then(
+  ({ DataKeyPair }) => ({ default: DataKeyPair })))
+
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
   return (
@@ -77,7 +78,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
           ? (
               Object.entries(props.value).map(([key, value]) => {
                 const path = [...props.path, key]
-                return <DataKeyPair key={key} path={path} value={value}/>
+                return <KeyPair key={key} path={path} value={value}/>
               })
             )
           : (
