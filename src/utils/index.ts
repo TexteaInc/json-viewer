@@ -1,9 +1,9 @@
 export const applyValue = (obj: any, path: string[], value: any) => {
+  if (typeof obj !== 'object' || obj === null) {
+    return value
+  }
   let arr
   let key
-  if (!obj || typeof obj !== 'object') {
-    obj = {}
-  }
   if (path.length > 0) {
     arr = path
     key = arr[0]
@@ -14,5 +14,5 @@ export const applyValue = (obj: any, path: string[], value: any) => {
       obj[key] = value
     }
   }
-  return obj
+  return { ...obj }
 }
