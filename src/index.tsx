@@ -12,9 +12,9 @@ import {
   JsonViewerProvider, useJsonViewerStore,
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
-import { setPath } from './utils'
+import { applyValue } from './utils'
 
-export { setPath }
+export { applyValue }
 
 export type JsonViewerOnChange = <U = unknown>(path: string[], oldValue: U, newValue: U) => void
 

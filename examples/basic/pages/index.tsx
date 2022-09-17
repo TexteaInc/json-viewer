@@ -1,8 +1,8 @@
 import { TextField } from '@mui/material'
 import {
+  applyValue,
   JsonViewer,
-  JsonViewerOnChange,
-  setPath
+  JsonViewerOnChange
 } from '@textea/json-viewer'
 import type React from 'react'
 import { useCallback, useState } from 'react'
@@ -50,7 +50,7 @@ const IndexPage: React.FC = () => {
         onChange={
           useCallback<JsonViewerOnChange>(
             (path, oldValue, newValue) => {
-              setSrc(src => setPath(src, path, newValue))
+              setSrc(src => applyValue(src, path, newValue))
             }, []
           )
         }

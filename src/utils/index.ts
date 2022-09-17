@@ -1,4 +1,4 @@
-export const setPath = (obj: any, path: string[], value: any) => {
+export const applyValue = (obj: any, path: string[], value: any) => {
   let arr
   let key
   if (!obj || typeof obj !== 'object') {
@@ -9,7 +9,7 @@ export const setPath = (obj: any, path: string[], value: any) => {
     key = arr[0]
     if (arr.length > 1) {
       arr.shift()
-      obj[key] = setPath(obj[key], arr, value)
+      obj[key] = applyValue(obj[key], arr, value)
     } else {
       obj[key] = value
     }
