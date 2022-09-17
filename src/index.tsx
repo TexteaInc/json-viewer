@@ -23,6 +23,8 @@ export type JsonViewerProps<T = unknown> = {
   indentWidth?: number
   onChange?: <U>(path: string[], oldValue: U, newValue: U) => void
   defaultCollapsed?: boolean | number
+  className?: string
+  style?: React.CSSProperties
 }
 
 const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
@@ -37,6 +39,8 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const setHover = useJsonViewerStore(store => store.setHover)
   return (
     <Box
+      className={props.className}
+      style={props.style}
       sx={{
         fontFamily: 'monospace',
         userSelect: 'none'
