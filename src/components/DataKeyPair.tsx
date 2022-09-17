@@ -17,7 +17,8 @@ import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {
   value: unknown
-  path: string[]
+  nested?: boolean
+  path: (string | number)[]
 }
 
 const IconBox = styled(props => <Box {...props} component='span'/>)`
@@ -42,17 +43,18 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const keyColor = useTextColor()
   const numberKeyColor = useJsonViewerStore(
     store => store.colorNamespace.base0C)
-  const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(value)
+  const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(
+    value)
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = useJsonViewerStore(store => store.value) === value
   const isNumberKey = Number.isInteger(Number(key))
   const displayKey = isRoot ? rootName : key
-  const downstreamProps: DataItemProps = {
+  const downstreamProps: DataItemProps = useMemo(() => ({
     path,
     inspect,
     setInspect,
     value
-  }
+  }), [inspect, path, value])
   const actionIcons = useMemo(() => {
     if (editing) {
       return (
@@ -151,12 +153,19 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           }, [])
         }
       >
-        {isNumberKey
-          ? <Box component='span'
-                 style={{ color: numberKeyColor }}>{displayKey}</Box>
-          : <>&quot;{displayKey}&quot;</>
+        {
+          !props.nested && (
+            isNumberKey
+              ? <Box component='span'
+                   style={{ color: numberKeyColor }}>{displayKey}</Box>
+              : <>&quot;{displayKey}&quot;</>
+          )
         }
-        <DataBox sx={{ mx: 0.5 }}>:</DataBox>
+        {
+          !props.nested && (
+            <DataBox sx={{ mx: 0.5 }}>:</DataBox>
+          )
+        }
         {PreComponent && <PreComponent {...downstreamProps}/>}
         {(isHover && expandable && inspect) && actionIcons}
       </DataBox>

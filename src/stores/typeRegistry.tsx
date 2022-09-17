@@ -2,6 +2,11 @@ import { Box } from '@mui/material'
 import { DevelopmentError } from '@textea/dev-kit/utils'
 import React, { useMemo } from 'react'
 
+import {
+  ArrayType,
+  PostArrayType,
+  PreArrayType
+} from '../components/DataTypes/Array'
 import { createEasyType } from '../components/DataTypes/createEasyType'
 import {
   FunctionType, PostFunctionType,
@@ -197,6 +202,15 @@ registerType<number>(
         fromString: value => parseInt(value)
       }
     )
+  }
+)
+
+registerType<unknown[]>(
+  {
+    is: (value): value is unknown[] => Array.isArray(value),
+    Component: ArrayType,
+    PreComponent: PreArrayType,
+    PostComponent: PostArrayType
   }
 )
 

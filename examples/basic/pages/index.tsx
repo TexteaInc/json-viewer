@@ -15,6 +15,10 @@ const example = {
   string: 'this is a string',
   integer: 42,
   array: [19, 19, 810, 'test', NaN],
+  nestedArray: [
+    [1, 2],
+    [3, 4]
+  ],
   float: 114.514,
   undefined,
   object: {
@@ -77,7 +81,11 @@ const IndexPage: React.FC = () => {
         onChange={
           useCallback<JsonViewerOnChange>(
             (path, oldValue, newValue) => {
-              setSrc(src => applyValue(src, path, newValue))
+              setSrc(src => {
+                const newSrc = applyValue(src, path, newValue)
+                console.log(newSrc, newSrc === src)
+                return src
+              })
             }, []
           )
         }
