@@ -5,11 +5,11 @@ import {
   Edit as EditIcon
 } from '@mui/icons-material'
 import { Box, styled } from '@mui/material'
-import copy from 'copy-to-clipboard'
 import type React from 'react'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useTextColor } from '../hooks/useColor'
+import { useClipboard } from '../hooks/useCopyToClipboard'
 import { useInspect } from '../hooks/useInspect'
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
@@ -22,7 +22,7 @@ export type DataKeyPairProps = {
   path: (string | number)[]
 }
 
-const IconBox = styled(props => <Box {...props} component='span'/>)`
+const IconBox = styled(props => <Box {...props} component='span' />)`
   cursor: pointer;
   padding-left: 0.7rem;
 ` as typeof Box
@@ -56,6 +56,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     setInspect,
     value
   }), [inspect, path, setInspect, value])
+  const { copy, copied } = useClipboard()
+
   const actionIcons = useMemo(() => {
     if (editing) {
       return (
@@ -101,11 +103,23 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
             event.preventDefault()
           }}
         >
-          <ContentCopyIcon
-            sx={{
-              fontSize: '.8rem'
-            }}
-          />
+          {
+            copied
+              ? (
+                  <CheckIcon
+                    sx={{
+                      fontSize: '.8rem'
+                    }}
+                  />
+                )
+              : (
+                  <ContentCopyIcon
+                    sx={{
+                      fontSize: '.8rem'
+                    }}
+                  />
+                )
+          }
         </IconBox>
         {/* todo: support edit object */}
         {Editor &&
@@ -126,15 +140,15 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         }
       </>
     )
-  }, [Editor, editing, onChange, path, tempValue, value])
+  }, [Editor, copied, copy, editing, onChange, path, tempValue, value])
 
   const expandable = PreComponent && PostComponent
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   return (
     <Box className='data-key-pair'
-         onMouseEnter={
-           useCallback(() => setHover(path), [setHover, path])
-         }
+      onMouseEnter={
+        useCallback(() => setHover(path), [setHover, path])
+      }
     >
       <DataBox
         component='span'
@@ -156,11 +170,11 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
       >
         {
           KeyRenderer.when(downstreamProps)
-            ? <KeyRenderer {...downstreamProps}/>
+            ? <KeyRenderer {...downstreamProps} />
             : !props.nested && (
                 isNumberKey
                   ? <Box component='span'
-                     style={{ color: numberKeyColor }}>{displayKey}</Box>
+                  style={{ color: numberKeyColor }}>{displayKey}</Box>
                   : <>&quot;{displayKey}&quot;</>
               )
         }
@@ -169,18 +183,18 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
             <DataBox sx={{ mx: 0.5 }}>:</DataBox>
           )
         }
-        {PreComponent && <PreComponent {...downstreamProps}/>}
+        {PreComponent && <PreComponent {...downstreamProps} />}
         {(isHover && expandable && inspect) && actionIcons}
       </DataBox>
       {
         editing
-          ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
+          ? (Editor && <Editor value={tempValue} setValue={setTempValue} />)
           : (Component)
-              ? <Component {...downstreamProps}/>
+              ? <Component {...downstreamProps} />
               : <Box component='span'
-                   className='data-value-fallback'>{`fallback: ${value}`}</Box>
+              className='data-value-fallback'>{`fallback: ${value}`}</Box>
       }
-      {PostComponent && <PostComponent {...downstreamProps}/>}
+      {PostComponent && <PostComponent {...downstreamProps} />}
       {(isHover && expandable && !inspect) && actionIcons}
       {(isHover && !expandable) && actionIcons}
     </Box>
