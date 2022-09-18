@@ -2,6 +2,7 @@ import { TextField } from '@mui/material'
 import {
   applyValue,
   JsonViewer,
+  JsonViewerKeyRenderer,
   JsonViewerOnChange
 } from '@textea/json-viewer'
 import type React from 'react'
@@ -46,6 +47,11 @@ const example = {
   timer: 0,
   date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)')
 }
+
+const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
+  return <del aria-label='I dont like this number'>&quot;{path.slice(-1)}&quot;</del>
+}
+KeyRenderer.when = (props) => props.value === 114.514
 
 const IndexPage: React.FC = () => {
   const [indent, setIndent] = useState(2)
@@ -93,6 +99,7 @@ const IndexPage: React.FC = () => {
         value={src}
         indentWidth={indent}
         groupArraysAfterLength={groupArraysAfterLength}
+        keyRenderer={KeyRenderer}
         onChange={
           useCallback<JsonViewerOnChange>(
             (path, oldValue, newValue) => {

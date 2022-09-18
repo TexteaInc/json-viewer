@@ -129,7 +129,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   }, [Editor, editing, onChange, path, tempValue, value])
 
   const expandable = PreComponent && PostComponent
-
+  const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   return (
     <Box className='data-key-pair'
          onMouseEnter={
@@ -155,12 +155,14 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         }
       >
         {
-          !props.nested && (
-            isNumberKey
-              ? <Box component='span'
-                   style={{ color: numberKeyColor }}>{displayKey}</Box>
-              : <>&quot;{displayKey}&quot;</>
-          )
+          KeyRenderer.when(downstreamProps)
+            ? <KeyRenderer {...downstreamProps}/>
+            : !props.nested && (
+                isNumberKey
+                  ? <Box component='span'
+                     style={{ color: numberKeyColor }}>{displayKey}</Box>
+                  : <>&quot;{displayKey}&quot;</>
+              )
         }
         {
           !props.nested && (
@@ -176,7 +178,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           : (Component)
               ? <Component {...downstreamProps}/>
               : <Box component='span'
-                 className='data-value-fallback'>{`fallback: ${value}`}</Box>
+                   className='data-value-fallback'>{`fallback: ${value}`}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps}/>}
       {(isHover && expandable && !inspect) && actionIcons}

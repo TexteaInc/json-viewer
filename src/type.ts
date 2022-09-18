@@ -1,11 +1,13 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type React from 'react'
 
+type Path = (string | number)[]
+
 export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
   setInspect: Dispatch<SetStateAction<boolean>>
   value: ValueType
-  path: (string | number)[]
+  path: Path
 }
 
 export type EditorProps<ValueType = unknown> = {
@@ -21,6 +23,10 @@ export type DataType<ValueType = unknown> = {
   PostComponent?: React.ComponentType<DataItemProps<ValueType>>
 }
 
+export interface JsonViewerKeyRenderer extends React.FC<DataItemProps> {
+  when(props: DataItemProps): boolean
+}
+
 export type JsonViewerProps<T = unknown> = {
   /**
    * any value
@@ -31,12 +37,17 @@ export type JsonViewerProps<T = unknown> = {
    */
   indentWidth?: number
   /**
+   * Customize a key, if `keyRenderer.when` returns `true`.
+   */
+  keyRenderer?: JsonViewerKeyRenderer
+  valueTypes?: DataType<any>[]
+  /**
    *
    * @param path path to the target value
    * @param oldValue
    * @param newValue
    */
-  onChange?: <U>(path: (string | number)[], oldValue: U, newValue: U) => void
+  onChange?: <U>(path: Path, oldValue: U, newValue: U) => void
   /**
    * Inspect depth by default.
    * Do not set the number too large, otherwise there will have performance issue

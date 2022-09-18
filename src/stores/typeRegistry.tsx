@@ -7,11 +7,6 @@ import {
   FunctionType, PostFunctionType,
   PreFunctionType
 } from '../components/DataTypes/Function'
-import {
-  ObjectType,
-  PostObjectType,
-  PreObjectType
-} from '../components/DataTypes/Object'
 import type { DataType } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
@@ -197,15 +192,5 @@ registerType<number>(
         fromString: value => parseInt(value)
       }
     )
-  }
-)
-
-// fallback for all data like 'object'
-registerType<object>(
-  {
-    is: (value): value is object => typeof value === 'object',
-    Component: ObjectType,
-    PreComponent: PreObjectType,
-    PostComponent: PostObjectType
   }
 )
