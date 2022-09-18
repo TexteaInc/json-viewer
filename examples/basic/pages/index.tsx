@@ -1,9 +1,16 @@
-import { TextField } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField
+} from '@mui/material'
 import {
   applyValue,
   JsonViewer,
   JsonViewerKeyRenderer,
-  JsonViewerOnChange
+  JsonViewerOnChange,
+  JsonViewerTheme
 } from '@textea/json-viewer'
 import type React from 'react'
 import { useCallback, useEffect, useState } from 'react'
@@ -60,6 +67,7 @@ KeyRenderer.when = (props) => props.value === 114.514
 const IndexPage: React.FC = () => {
   const [indent, setIndent] = useState(2)
   const [groupArraysAfterLength, setGroupArraysAfterLength] = useState(100)
+  const [theme, setTheme] = useState<JsonViewerTheme>('light')
   const [src, setSrc] = useState(() => example)
   useEffect(() => {
     const loop = () => {
@@ -99,9 +107,24 @@ const IndexPage: React.FC = () => {
           }
         }
       />
+      <FormControl fullWidth>
+        <InputLabel>Theme</InputLabel>
+        <Select
+          value={theme}
+          label='Theme'
+          onChange={(event) => {
+            setTheme(event.target.value as any)
+          }}
+        >
+          <MenuItem value='auto'>auto</MenuItem>
+          <MenuItem value='light'>light</MenuItem>
+          <MenuItem value='dark'>dark</MenuItem>
+        </Select>
+      </FormControl>
       <JsonViewer
         value={src}
         indentWidth={indent}
+        theme={theme}
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[

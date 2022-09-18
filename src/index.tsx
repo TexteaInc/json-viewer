@@ -1,6 +1,5 @@
 import {
-  Box,
-  createTheme,
+  createTheme, Paper,
   ThemeProvider
 } from '@mui/material'
 import type React from 'react'
@@ -12,6 +11,7 @@ import {
   PostObjectType,
   PreObjectType
 } from './components/DataTypes/Object'
+import { useThemeDetector } from './hooks/useThemeDetector'
 import {
   createJsonViewerStore,
   JsonViewerProvider,
@@ -20,22 +20,27 @@ import {
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
 import { registerType } from './stores/typeRegistry'
+import { darkNamespace, lightColorNamespace } from './theme/base16'
 import type { JsonViewerProps } from './type'
 import { applyValue } from './utils'
 
 export { applyValue }
 
-export type JsonViewerOnChange = <U = unknown>(path: (string | number)[], oldValue: U, newValue: U /*, type: ChangeType */) => void
+export type JsonViewerOnChange = <U = unknown>(
+  path: (string | number)[], oldValue: U,
+  newValue: U /*, type: ChangeType */) => void
 
 const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const api = useJsonViewerStoreApi()
-  const setIfNotUndefined = useCallback(function setIfNotUndefined <Key extends keyof JsonViewerState> (key: Key, value: JsonViewerState[Key] | undefined) {
-    if (value !== undefined) {
-      api.setState({
-        [key]: value
-      })
-    }
-  }, [api])
+  const setIfNotUndefined = useCallback(
+    function setIfNotUndefined<Key extends keyof JsonViewerState> (key: Key,
+      value: JsonViewerState[Key] | undefined) {
+      if (value !== undefined) {
+        api.setState({
+          [key]: value
+        })
+      }
+    }, [api])
   useEffect(() => {
     setIfNotUndefined('value', props.value)
   }, [props.value, setIfNotUndefined])
@@ -45,12 +50,31 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
     setIfNotUndefined('onChange', props.onChange)
     setIfNotUndefined('groupArraysAfterLength', props.groupArraysAfterLength)
     setIfNotUndefined('keyRenderer', props.keyRenderer)
-  }, [api, props.defaultInspectDepth, props.groupArraysAfterLength, props.keyRenderer, props.onChange, props.value, setIfNotUndefined])
+  }, [
+    api,
+    props.defaultInspectDepth,
+    props.groupArraysAfterLength,
+    props.keyRenderer,
+    props.onChange,
+    props.value,
+    setIfNotUndefined])
+
+  useEffect(() => {
+    if (props.theme === 'light') {
+      api.setState({
+        colorNamespace: lightColorNamespace
+      })
+    } else if (props.theme === 'dark') {
+      api.setState({
+        colorNamespace: darkNamespace
+      })
+    }
+  }, [api, props.theme])
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)
   return (
-    <Box
+    <Paper
       className={props.className}
       style={props.style}
       sx={{
@@ -67,14 +91,25 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
         value={value}
         path={useMemo(() => [], [])}
       />
-    </Box>
+    </Paper>
   )
 }
 
-export const JsonViewer: React.FC<JsonViewerProps> = (props) => {
+export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Value>): React.ReactElement {
+  const isAutoDarkTheme = useThemeDetector()
+  const themeType = useMemo(() => props.theme === 'auto'
+    ? (isAutoDarkTheme ? 'light' : 'dark')
+    : props.theme ?? 'light', [isAutoDarkTheme, props.theme])
   const theme = useMemo(() => createTheme({
-    // todo: inject theme based on base16
-  }), [])
+    palette: {
+      mode: themeType === 'dark' ? 'dark' : 'light',
+      background: {
+        default: themeType === 'dark'
+          ? darkNamespace.base00
+          : lightColorNamespace.base00
+      }
+    }
+  }), [themeType])
   const onceRef = useRef(true)
   // DO NOT try to dynamic add value types, that is costly. Trust me.
   if (onceRef.current) {
@@ -92,10 +127,11 @@ export const JsonViewer: React.FC<JsonViewerProps> = (props) => {
     )
     onceRef.current = false
   }
+  const mixedProps = { ...props, theme: themeType }
   return (
     <ThemeProvider theme={theme}>
       <JsonViewerProvider createStore={createJsonViewerStore}>
-        <JsonViewerInner {...props}/>
+        <JsonViewerInner {...mixedProps}/>
       </JsonViewerProvider>
     </ThemeProvider>
   )

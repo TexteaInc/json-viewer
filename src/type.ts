@@ -27,6 +27,8 @@ export interface JsonViewerKeyRenderer extends React.FC<DataItemProps> {
   when(props: DataItemProps): boolean
 }
 
+export type JsonViewerTheme = 'light' | 'dark' | 'auto'
+
 export type JsonViewerProps<T = unknown> = {
   /**
    * any value
@@ -62,4 +64,9 @@ export type JsonViewerProps<T = unknown> = {
   groupArraysAfterLength?: number
   className?: string
   style?: React.CSSProperties
+  /**
+   *
+   * @default 'light'
+   */
+  theme?: JsonViewerTheme
 }
