@@ -17,12 +17,19 @@ export function registerType<Value> (type: DataType<Value>) {
 }
 
 export function matchTypeComponents<Value> (value: Value): DataType<Value> {
+  let potential: DataType<Value> | undefined
   for (const T of typeRegistry) {
     if (T.is(value)) {
+      potential = T
+    }
+    if (typeof value === 'object' && value === null) {
       return T
     }
   }
-  throw new DevelopmentError('this is not possible')
+  if (potential === undefined) {
+    throw new DevelopmentError('this is not possible')
+  }
+  return potential
 }
 
 export function useTypeComponents (value: unknown) {
