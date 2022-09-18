@@ -96,11 +96,7 @@ const IndexPage: React.FC = () => {
         onChange={
           useCallback<JsonViewerOnChange>(
             (path, oldValue, newValue) => {
-              setSrc(src => {
-                const newSrc = applyValue(src, path, newValue)
-                console.log(newSrc, newSrc === src)
-                return src
-              })
+              setSrc(src => applyValue(src, path, newValue))
             }, []
           )
         }

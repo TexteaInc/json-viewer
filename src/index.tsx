@@ -33,10 +33,10 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   }, [props.value, setIfNotUndefined])
   useEffect(() => {
     // setIfNotUndefined('indentWidth', props.indentWidth)
-    setIfNotUndefined('defaultCollapsed', props.defaultCollapsed)
+    setIfNotUndefined('defaultInspectDepth', props.defaultInspectDepth)
     setIfNotUndefined('onChange', props.onChange)
     setIfNotUndefined('groupArraysAfterLength', props.groupArraysAfterLength)
-  }, [api, props.defaultCollapsed, props.groupArraysAfterLength, props.onChange, props.value, setIfNotUndefined])
+  }, [api, props.defaultInspectDepth, props.groupArraysAfterLength, props.onChange, props.value, setIfNotUndefined])
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)

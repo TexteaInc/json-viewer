@@ -2,9 +2,9 @@ import { Box } from '@mui/material'
 import React, { useMemo } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
+import { useIsCycleReference } from '../../hooks/useIsCycleReference'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
-import { isCycleReference } from '../../utils'
 import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../icons/CircularArrowsIcon'
 
@@ -21,10 +21,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
     () => props.inspect ? `${Object.keys(props.value).length} Items` : '',
     [props.inspect, props.value]
   )
-  const rootValue = useJsonViewerStore(store => store.value)
-  const isTrap = useMemo(
-    () => isCycleReference(rootValue, props.path, props.value),
-    [props.path, props.value, rootValue])
+  const isTrap = useIsCycleReference(props.path, props.value)
   return (
     <Box
       component='span' className='data-object-start'
@@ -43,9 +40,17 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
       >
         {sizeOfValue}
       </Box>
-      {isTrap
-        ? <CircularArrowsIcon
-          sx={{ fontSize: 12, color: textColor, pl: sizeOfValue ? 0.5 : 0 }}/>
+      {isTrap && !props.inspect
+        ? (
+          <>
+            <CircularArrowsIcon sx={{
+              fontSize: 12,
+              color: textColor,
+              mx: sizeOfValue ? 0.5 : 0
+            }}/>
+            {isTrap}
+          </>
+          )
         : null}
     </Box>
   )
@@ -79,12 +84,11 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
   const groupArraysAfterLength = useJsonViewerStore(
     store => store.groupArraysAfterLength)
-  const rootValue = useJsonViewerStore(store => store.value)
-  const isTrap = useMemo(
-    () => isCycleReference(rootValue, props.path, props.value),
-    [props.path, props.value, rootValue]
-  )
+  const isTrap = useIsCycleReference(props.path, props.value)
   const elements = useMemo(() => {
+    if (!props.inspect) {
+      return null
+    }
     if (Array.isArray(props.value)) {
       if (props.value.length <= groupArraysAfterLength) {
         return props.value.map((value, index) => {
@@ -118,7 +122,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
         )
       })
     }
-  }, [props.value, props.path, groupArraysAfterLength])
+  }, [props.inspect, props.value, props.path, groupArraysAfterLength])
   return (
     <Box
       className='data-object'

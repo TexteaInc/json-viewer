@@ -10,10 +10,10 @@ import type React from 'react'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useTextColor } from '../hooks/useColor'
+import { useInspect } from '../hooks/useInspect'
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
-import { isCycleReference } from '../utils'
 import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {
@@ -30,21 +30,15 @@ const IconBox = styled(props => <Box {...props} component='span'/>)`
 export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const { value, path } = props
   const [tempValue, setTempValue] = useState(value)
-  const key = path[path.length - 1]
+  const depth = path.length
+  const key = path[depth - 1]
   const hoverPath = useJsonViewerStore(store => store.hoverPath)
   const isHover = useMemo(() => {
     return hoverPath && path.every((value, index) => value === hoverPath[index])
   }, [hoverPath, path])
   const setHover = useJsonViewerStore(store => store.setHover)
   const root = useJsonViewerStore(store => store.value)
-  const isTrap = useMemo(() => isCycleReference(root, path, value), [path, root, value])
-  const defaultCollapsed = useJsonViewerStore(store => store.defaultCollapsed)
-  // do not inspect when it is a cycle reference, otherwise there will have a loop
-  const [inspect, setInspect] = useState(
-    isTrap
-      ? false
-      : !defaultCollapsed
-  )
+  const [inspect, setInspect] = useInspect(path, value)
   const [editing, setEditing] = useState(false)
   const onChange = useJsonViewerStore(store => store.onChange)
   const keyColor = useTextColor()
@@ -61,7 +55,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     inspect,
     setInspect,
     value
-  }), [inspect, path, value])
+  }), [inspect, path, setInspect, value])
   const actionIcons = useMemo(() => {
     if (editing) {
       return (
@@ -157,7 +151,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
               return
             }
             setInspect(state => !state)
-          }, [])
+          }, [setInspect])
         }
       >
         {
@@ -182,7 +176,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           : (Component)
               ? <Component {...downstreamProps}/>
               : <Box component='span'
-                 className='data-value-fallback'>{JSON.stringify(value)}</Box>
+                 className='data-value-fallback'>{`fallback: ${value}`}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps}/>}
       {(isHover && expandable && !inspect) && actionIcons}

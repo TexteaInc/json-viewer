@@ -38,11 +38,11 @@ export type JsonViewerProps<T = unknown> = {
    */
   onChange?: <U>(path: (string | number)[], oldValue: U, newValue: U) => void
   /**
-   * collapsed depth, true for all collapsed, false for all expanded.
-   *  number for depth that default expanded.
-   * @default false
+   * Inspect depth by default.
+   * Do not set the number too large, otherwise there will have performance issue
+   * @default 50
    */
-  defaultCollapsed?: boolean | number
+  defaultInspectDepth?: number
   /**
    * When an integer value is assigned, arrays will be displayed in groups by count of the value.
    * Groups are displayed with bracket notation and can be expanded and collapsed by clicking on the brackets.

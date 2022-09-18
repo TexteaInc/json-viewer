@@ -16,7 +16,7 @@ export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   return obj
 }
 
-export const isCycleReference = (root: any, path: (string | number)[], value: unknown): boolean => {
+export const isCycleReference = (root: any, path: (string | number)[], value: unknown): false | string => {
   if (root === null || value === null) {
     return false
   }
@@ -27,18 +27,25 @@ export const isCycleReference = (root: any, path: (string | number)[], value: un
     return false
   }
   if (Object.is(root, value) && path.length !== 0) {
-    return true
+    return ''
   }
+  const currentPath = []
   const arr = [...path]
   let currentRoot = root
   while (currentRoot !== value || arr.length !== 0) {
     if (typeof currentRoot !== 'object' || currentRoot === null) {
       return false
+    } else if (Object.is(currentRoot, value)) {
+      return currentPath.reduce<string>((path, value, currentIndex) => {
+        if (typeof value === 'number') {
+          return path + `[${value}]`
+        } else {
+          return path + `${currentIndex === 0 ? '' : '.'}${value}`
+        }
+      }, '')
     }
     const target = arr.shift()!
-    if (Object.is(currentRoot, value)) {
-      return true
-    }
+    currentPath.push(target)
     currentRoot = currentRoot[target]
   }
   return false
