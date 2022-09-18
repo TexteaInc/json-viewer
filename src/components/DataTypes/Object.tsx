@@ -111,7 +111,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
       return value.map((list, index) => {
         const path = [...props.path]
         return (
-          <DataKeyPair key={index} path={path} value={list} nested/>
+          <DataKeyPair key={index} path={path} value={list} nestedIndex={index}/>
         )
       })
     } else {

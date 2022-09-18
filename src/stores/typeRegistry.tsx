@@ -21,9 +21,10 @@ export function matchTypeComponents<Value> (value: Value): DataType<Value> {
   for (const T of typeRegistry) {
     if (T.is(value)) {
       potential = T
-    }
-    if (typeof value === 'object' && value === null) {
-      return T
+      if (typeof value === 'object') {
+        // early return for case like `null`
+        return T
+      }
     }
   }
   if (potential === undefined) {

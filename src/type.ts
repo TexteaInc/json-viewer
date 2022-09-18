@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type React from 'react'
 
-type Path = (string | number)[]
+export type Path = (string | number)[]
 
 export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
