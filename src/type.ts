@@ -53,7 +53,7 @@ export type JsonViewerProps<T = unknown> = {
   /**
    * Inspect depth by default.
    * Do not set the number too large, otherwise there will have performance issue
-   * @default 2
+   * @default 5
    */
   defaultInspectDepth?: number
   /**

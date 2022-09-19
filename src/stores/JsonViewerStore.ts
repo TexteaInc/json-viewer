@@ -41,7 +41,7 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
         maxDisplayLength: props.maxDisplayLength ?? 30,
         rootName: 'root',
-        defaultInspectDepth: 10,
+        defaultInspectDepth: 5,
         colorNamespace: lightColorNamespace,
         expanded: ['data-viewer-root'],
         value: props.value,
