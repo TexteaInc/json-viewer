@@ -35,9 +35,12 @@ const loopArray = [
 
 loopArray[1] = loopArray
 
+const longArray = Array.from({ length: 1000 }).map((_, i) => i)
+
 const example = {
   loopObject,
   loopArray,
+  longArray,
   string: 'this is a string',
   integer: 42,
   array: [19, 19, 810, 'test', NaN],

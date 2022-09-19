@@ -18,27 +18,29 @@ import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {
   value: unknown
-  nested?: boolean
+  nestedIndex?: number
   path: (string | number)[]
 }
 
-const IconBox = styled(props => <Box {...props} component='span' />)`
+const IconBox = styled(props => <Box {...props} component='span'/>)`
   cursor: pointer;
   padding-left: 0.7rem;
 ` as typeof Box
 
 export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
-  const { value, path } = props
+  const { value, path, nestedIndex } = props
   const [tempValue, setTempValue] = useState(value)
   const depth = path.length
   const key = path[depth - 1]
   const hoverPath = useJsonViewerStore(store => store.hoverPath)
   const isHover = useMemo(() => {
-    return hoverPath && path.every((value, index) => value === hoverPath[index])
-  }, [hoverPath, path])
+    return hoverPath && path.every(
+      (value, index) => value === hoverPath.path[index] && nestedIndex ===
+        hoverPath.nestedIndex)
+  }, [hoverPath, path, nestedIndex])
   const setHover = useJsonViewerStore(store => store.setHover)
   const root = useJsonViewerStore(store => store.value)
-  const [inspect, setInspect] = useInspect(path, value)
+  const [inspect, setInspect] = useInspect(path, value, nestedIndex)
   const [editing, setEditing] = useState(false)
   const onChange = useJsonViewerStore(store => store.onChange)
   const keyColor = useTextColor()
@@ -106,18 +108,18 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           {
             copied
               ? (
-                  <CheckIcon
-                    sx={{
-                      fontSize: '.8rem'
-                    }}
-                  />
+                <CheckIcon
+                  sx={{
+                    fontSize: '.8rem'
+                  }}
+                />
                 )
               : (
-                  <ContentCopyIcon
-                    sx={{
-                      fontSize: '.8rem'
-                    }}
-                  />
+                <ContentCopyIcon
+                  sx={{
+                    fontSize: '.8rem'
+                  }}
+                />
                 )
           }
         </IconBox>
@@ -146,9 +148,9 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   return (
     <Box className='data-key-pair'
-      onMouseEnter={
-        useCallback(() => setHover(path), [setHover, path])
-      }
+         onMouseEnter={
+           useCallback(() => setHover(path, nestedIndex), [setHover, path, nestedIndex])
+         }
     >
       <DataBox
         component='span'
@@ -171,15 +173,15 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         {
           KeyRenderer.when(downstreamProps)
             ? <KeyRenderer {...downstreamProps} />
-            : !props.nested && (
-                isNumberKey
-                  ? <Box component='span'
-                  style={{ color: numberKeyColor }}>{displayKey}</Box>
-                  : <>&quot;{displayKey}&quot;</>
-              )
+            : nestedIndex === undefined && (
+              isNumberKey
+                ? <Box component='span'
+                     style={{ color: numberKeyColor }}>{displayKey}</Box>
+                : <>&quot;{displayKey}&quot;</>
+            )
         }
         {
-          !props.nested && (
+          nestedIndex === undefined && (
             <DataBox sx={{ mx: 0.5 }}>:</DataBox>
           )
         }
@@ -188,11 +190,11 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
       </DataBox>
       {
         editing
-          ? (Editor && <Editor value={tempValue} setValue={setTempValue} />)
+          ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
           : (Component)
               ? <Component {...downstreamProps} />
               : <Box component='span'
-              className='data-value-fallback'>{`fallback: ${value}`}</Box>
+                   className='data-value-fallback'>{`fallback: ${value}`}</Box>
       }
       {PostComponent && <PostComponent {...downstreamProps} />}
       {(isHover && expandable && !inspect) && actionIcons}

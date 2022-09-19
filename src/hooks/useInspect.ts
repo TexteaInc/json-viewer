@@ -11,7 +11,7 @@ import {
 } from '../stores/JsonViewerStore'
 import { useIsCycleReference } from './useIsCycleReference'
 
-export function useInspect (path: (string | number)[], value: any) {
+export function useInspect (path: (string | number)[], value: any, nestedIndex?: number) {
   const depth = path.length
   const isTrap = useIsCycleReference(path, value)
   const getInspectCache = useJsonViewerStore(store => store.getInspectCache)
@@ -19,25 +19,25 @@ export function useInspect (path: (string | number)[], value: any) {
   const defaultInspectDepth = useJsonViewerStore(
     store => store.defaultInspectDepth)
   useEffect(() => {
-    const inspect = getInspectCache(path)
+    const inspect = getInspectCache(path, nestedIndex)
     if (inspect === undefined) {
-      // do not inspect when it is a cycle reference, otherwise there will have a loop
-      const inspect = isTrap
-        ? false
-        : depth < defaultInspectDepth
-      setInspectCache(path, inspect)
+      if (nestedIndex !== undefined) {
+        setInspectCache(path, false, nestedIndex)
+      } else {
+        // do not inspect when it is a cycle reference, otherwise there will have a loop
+        const inspect = isTrap
+          ? false
+          : depth < defaultInspectDepth
+        setInspectCache(path, inspect)
+      }
     }
-  }, [
-    defaultInspectDepth,
-    depth,
-    getInspectCache,
-    isTrap,
-    path,
-    setInspectCache
-  ])
+  }, [defaultInspectDepth, depth, getInspectCache, isTrap, nestedIndex, path, setInspectCache])
   const [inspect, set] = useState<boolean>(() => {
-    const shouldInspect = getInspectCache(path)
+    const shouldInspect = getInspectCache(path, nestedIndex)
     if (shouldInspect === undefined) {
+      if (nestedIndex !== undefined) {
+        return false
+      }
       return isTrap
         ? false
         : depth < defaultInspectDepth
@@ -47,9 +47,9 @@ export function useInspect (path: (string | number)[], value: any) {
   const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
     set((oldState) => {
       const newState = typeof apply === 'boolean' ? apply : apply(oldState)
-      setInspectCache(path, newState)
+      setInspectCache(path, newState, nestedIndex)
       return newState
     })
-  }, [path, setInspectCache])
+  }, [nestedIndex, path, setInspectCache])
   return [inspect, setInspect] as const
 }

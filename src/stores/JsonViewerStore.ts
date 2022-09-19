@@ -3,7 +3,7 @@ import create from 'zustand'
 import createContext from 'zustand/context'
 import { combine } from 'zustand/middleware'
 
-import type { JsonViewerOnChange } from '..'
+import type { JsonViewerOnChange, Path } from '..'
 import type { ColorNamespace } from '../theme/base16'
 import { lightColorNamespace } from '../theme/base16'
 import type { JsonViewerKeyRenderer } from '../type'
@@ -13,7 +13,7 @@ DefaultKeyRenderer.when = () => false
 
 export type JsonViewerState = {
   inspectCache: Record<string, boolean>
-  hoverPath: (string | number)[] | null
+  hoverPath: { path: Path; nestedIndex?: number } | null
   groupArraysAfterLength: number
   defaultInspectDepth: number
   colorNamespace: ColorNamespace
@@ -25,9 +25,10 @@ export type JsonViewerState = {
 }
 
 export type JsonViewerActions = {
-  getInspectCache: (path: (string | number)[]) => boolean
-  setInspectCache: (path: (string | number)[], action: SetStateAction<boolean>) => void
-  setHover: (path: (string | number)[] | null) => void
+  getInspectCache: (path: Path, nestedIndex?: number) => boolean
+  setInspectCache: (
+    path: Path, action: SetStateAction<boolean>, nestedIndex?: number) => void
+  setHover: (path: Path | null, nestedIndex?: number) => void
 }
 
 export const createJsonViewerStore = () =>
@@ -46,21 +47,36 @@ export const createJsonViewerStore = () =>
         keyRenderer: DefaultKeyRenderer
       },
       (set, get) => ({
-        getInspectCache: (path) => {
-          return get().inspectCache[path.join('.')]
+        getInspectCache: (path, nestedIndex) => {
+          const target = nestedIndex !== undefined
+            ? path.join('.') +
+            `[${nestedIndex}]nt`
+            : path.join('.')
+          return get().inspectCache[target]
         },
-        setInspectCache: (path, action) => {
-          const target = path.join('.')
+        setInspectCache: (path, action, nestedIndex) => {
+          const target = nestedIndex !== undefined
+            ? path.join('.') +
+            `[${nestedIndex}]nt`
+            : path.join('.')
           set(state => ({
             inspectCache: {
               ...state.inspectCache,
-              [target]: typeof action === 'function' ? action(state.inspectCache[target]) : action
+              [target]: typeof action === 'function'
+                ? action(
+                  state.inspectCache[target])
+                : action
             }
           }))
         },
-        setHover: (path) => {
+        setHover: (path, nestedIndex) => {
           set({
             hoverPath: path
+              ? ({
+                  path,
+                  nestedIndex
+                })
+              : null
           })
         }
       })
