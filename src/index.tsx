@@ -6,11 +6,6 @@ import type React from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { DataKeyPair } from './components/DataKeyPair'
-import {
-  ObjectType,
-  PostObjectType,
-  PreObjectType
-} from './components/DataTypes/Object'
 import { useThemeDetector } from './hooks/useThemeDetector'
 import {
   createJsonViewerStore,
@@ -46,18 +41,19 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   }, [props.value, setIfNotUndefined])
   useEffect(() => {
     // setIfNotUndefined('indentWidth', props.indentWidth)
-    setIfNotUndefined('defaultInspectDepth', props.defaultInspectDepth)
     setIfNotUndefined('onChange', props.onChange)
     setIfNotUndefined('groupArraysAfterLength', props.groupArraysAfterLength)
     setIfNotUndefined('keyRenderer', props.keyRenderer)
+    setIfNotUndefined('maxDisplayLength', props.maxDisplayLength)
   }, [
     api,
-    props.defaultInspectDepth,
     props.groupArraysAfterLength,
     props.keyRenderer,
     props.onChange,
     props.value,
-    setIfNotUndefined])
+    props.maxDisplayLength,
+    setIfNotUndefined
+  ])
 
   useEffect(() => {
     if (props.theme === 'light') {
@@ -79,7 +75,8 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
       style={props.style}
       sx={{
         fontFamily: 'monospace',
-        userSelect: 'none'
+        userSelect: 'none',
+        contentVisibility: 'auto'
       }}
       onMouseLeave={
         useCallback(() => {
@@ -116,21 +113,12 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
     props.valueTypes?.forEach(type => {
       registerType(type)
     })
-    // Always last one, fallback for all data like 'object'
-    registerType<object>(
-      {
-        is: (value): value is object => typeof value === 'object',
-        Component: ObjectType,
-        PreComponent: PreObjectType,
-        PostComponent: PostObjectType
-      }
-    )
     onceRef.current = false
   }
   const mixedProps = { ...props, theme: themeType }
   return (
     <ThemeProvider theme={theme}>
-      <JsonViewerProvider createStore={createJsonViewerStore}>
+      <JsonViewerProvider createStore={() => createJsonViewerStore(props)}>
         <JsonViewerInner {...mixedProps}/>
       </JsonViewerProvider>
     </ThemeProvider>

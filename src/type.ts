@@ -53,9 +53,17 @@ export type JsonViewerProps<T = unknown> = {
   /**
    * Inspect depth by default.
    * Do not set the number too large, otherwise there will have performance issue
-   * @default 50
+   * @default 5
    */
   defaultInspectDepth?: number
+  /**
+   * Hide items after reaching the count.
+   * Array and object will be affected.
+   *
+   * If `Object.keys(value).length` is large also, this will cause a performance issue.
+   * @default 30
+   */
+  maxDisplayLength?: number
   /**
    * When an integer value is assigned, arrays will be displayed in groups by count of the value.
    * Groups are displayed with bracket notation and can be expanded and collapsed by clicking on the brackets.

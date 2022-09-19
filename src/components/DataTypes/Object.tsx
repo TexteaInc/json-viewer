@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
 import { useIsCycleReference } from '../../hooks/useIsCycleReference'
@@ -7,6 +7,7 @@ import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
 import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../icons/CircularArrowsIcon'
+import { DataBox } from '../mui/DataBox'
 
 const objectLb = '{'
 const arrayLb = '['
@@ -85,20 +86,44 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const groupArraysAfterLength = useJsonViewerStore(
     store => store.groupArraysAfterLength)
   const isTrap = useIsCycleReference(props.path, props.value)
+  const [displayLength, setDisplayLength] = useState(
+    useJsonViewerStore(store => store.maxDisplayLength)
+  )
   const elements = useMemo(() => {
     if (!props.inspect) {
       return null
     }
-    if (Array.isArray(props.value)) {
-      if (props.value.length <= groupArraysAfterLength) {
-        return props.value.map((value, index) => {
+    const value: unknown[] | object = props.value
+    if (Array.isArray(value)) {
+      // unknown[]
+      if (value.length <= groupArraysAfterLength) {
+        const elements = value.slice(0, displayLength).map((value, index) => {
           const path = [...props.path, index]
           return (
             <DataKeyPair key={index} path={path} value={value}/>
           )
         })
+        if (value.length > displayLength) {
+          const rest = value.length - displayLength
+          elements.push(
+            <DataBox
+              sx={{
+                cursor: 'pointer',
+                lineHeight: 1.5,
+                color: keyColor,
+                letterSpacing: 0.5,
+                opacity: 0.8
+              }}
+              key='last'
+              onClick={() => setDisplayLength(length => length * 2)}
+            >
+              hidden {rest} items...
+            </DataBox>
+          )
+        }
+        return elements
       }
-      const value = props.value.reduce<unknown[][]>((array, value, index) => {
+      const elements = value.reduce<unknown[][]>((array, value, index) => {
         const target = Math.floor(index / groupArraysAfterLength)
         if (array[target]) {
           array[target].push(value)
@@ -108,21 +133,43 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
         return array
       }, [])
 
-      return value.map((list, index) => {
+      return elements.map((list, index) => {
         const path = [...props.path]
         return (
-          <DataKeyPair key={index} path={path} value={list} nestedIndex={index}/>
+          <DataKeyPair key={index} path={path} value={list}
+                       nestedIndex={index}/>
         )
       })
     } else {
-      return Object.entries(props.value).map(([key, value]) => {
+      // object
+      const entries = Object.entries(value)
+      const elements = entries.slice(0, displayLength).map(([key, value]) => {
         const path = [...props.path, key]
         return (
           <DataKeyPair key={key} path={path} value={value}/>
         )
       })
+      if (entries.length > displayLength) {
+        const rest = entries.length - displayLength
+        elements.push(
+          <DataBox
+            sx={{
+              cursor: 'pointer',
+              lineHeight: 1.5,
+              color: keyColor,
+              letterSpacing: 0.5,
+              opacity: 0.8
+            }}
+            key='last'
+            onClick={() => setDisplayLength(length => length * 2)}
+          >
+            hidden {rest} items...
+          </DataBox>
+        )
+      }
+      return elements
     }
-  }, [props.inspect, props.value, props.path, groupArraysAfterLength])
+  }, [props.inspect, props.value, props.path, groupArraysAfterLength, displayLength, keyColor])
   return (
     <Box
       className='data-object'
