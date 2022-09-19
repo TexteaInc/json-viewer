@@ -40,20 +40,12 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
     setIfNotUndefined('value', props.value)
   }, [props.value, setIfNotUndefined])
   useEffect(() => {
-    // setIfNotUndefined('indentWidth', props.indentWidth)
+    setIfNotUndefined('indentWidth', props.indentWidth)
     setIfNotUndefined('onChange', props.onChange)
     setIfNotUndefined('groupArraysAfterLength', props.groupArraysAfterLength)
     setIfNotUndefined('keyRenderer', props.keyRenderer)
     setIfNotUndefined('maxDisplayLength', props.maxDisplayLength)
-  }, [
-    api,
-    props.groupArraysAfterLength,
-    props.keyRenderer,
-    props.onChange,
-    props.value,
-    props.maxDisplayLength,
-    setIfNotUndefined
-  ])
+  }, [api, props.groupArraysAfterLength, props.keyRenderer, props.onChange, props.value, props.maxDisplayLength, setIfNotUndefined, props.indentWidth])
 
   useEffect(() => {
     if (props.theme === 'light') {
