@@ -14,6 +14,7 @@ DefaultKeyRenderer.when = () => false
 export type JsonViewerState<T = unknown> = {
   inspectCache: Record<string, boolean>
   hoverPath: { path: Path; nestedIndex?: number } | null
+  indentWidth: number
   groupArraysAfterLength: number
   maxDisplayLength: number
   defaultInspectDepth: number
@@ -38,6 +39,7 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
       {
         inspectCache: {},
         hoverPath: null,
+        indentWidth: props.indentWidth ?? 2,
         groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
         maxDisplayLength: props.maxDisplayLength ?? 30,
         rootName: 'root',

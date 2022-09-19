@@ -223,12 +223,13 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     groupArraysAfterLength,
     displayLength,
     keyColor])
+  const indentWidth = useJsonViewerStore(store => store.indentWidth)
   return (
     <Box
       className='data-object'
       sx={{
         display: props.inspect ? 'block' : 'inline-block',
-        pl: props.inspect ? 2 : 0,
+        pl: props.inspect ? indentWidth : 0,
         color: keyColor
       }}
     >
