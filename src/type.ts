@@ -57,7 +57,8 @@ export type JsonViewerProps<T = unknown> = {
    */
   defaultInspectDepth?: number
   /**
-   * Hide item after reach the count, array and object will be both affected.
+   * Hide items after reaching the count.
+   * Array and object will be affected.
    *
    * If `Object.keys(value).length` is large also, this will cause a performance issue.
    * @default 30
