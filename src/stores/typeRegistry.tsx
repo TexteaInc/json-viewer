@@ -4,9 +4,15 @@ import React, { useMemo } from 'react'
 
 import { createEasyType } from '../components/DataTypes/createEasyType'
 import {
-  FunctionType, PostFunctionType,
+  FunctionType,
+  PostFunctionType,
   PreFunctionType
 } from '../components/DataTypes/Function'
+import {
+  ObjectType,
+  PostObjectType,
+  PreObjectType
+} from '../components/DataTypes/Object'
 import type { DataType } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
@@ -14,6 +20,13 @@ const typeRegistry: DataType<any>[] = []
 
 export function registerType<Value> (type: DataType<Value>) {
   typeRegistry.push(type)
+}
+
+const objectType: DataType<object> = {
+  is: (value): value is object => typeof value === 'object',
+  Component: ObjectType,
+  PreComponent: PreObjectType,
+  PostComponent: PostObjectType
 }
 
 export function matchTypeComponents<Value> (value: Value): DataType<Value> {
@@ -27,10 +40,14 @@ export function matchTypeComponents<Value> (value: Value): DataType<Value> {
       }
     }
   }
-  if (potential === undefined) {
-    throw new DevelopmentError('this is not possible')
+  if (potential === undefined && typeof value === 'object') {
+    return objectType as unknown as DataType<Value>
+  } else {
+    if (potential === undefined) {
+      throw new DevelopmentError('this is not possible')
+    }
+    return potential
   }
-  return potential
 }
 
 export function useTypeComponents (value: unknown) {
