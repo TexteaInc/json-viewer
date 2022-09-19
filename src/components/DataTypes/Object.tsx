@@ -14,12 +14,29 @@ const arrayLb = '['
 const objectRb = '}'
 const arrayRb = ']'
 
+function inspectMetadata (value: object) {
+  let length
+  let name = ''
+  if (Array.isArray(value)) {
+    length = value.length
+  } else if (value instanceof Map || value instanceof Set) {
+    name = value[Symbol.toStringTag]
+    length = value.size
+  } else {
+    length = Object.keys(value).length
+  }
+  if (Object.prototype.hasOwnProperty.call(value, Symbol.toStringTag)) {
+    name = (value as any)[Symbol.toStringTag]
+  }
+  return `${length} Items${name ? ` (${name})` : ''}`
+}
+
 export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const sizeOfValue = useMemo(
-    () => props.inspect ? `${Object.keys(props.value).length} Items` : '',
+    () => props.inspect ? inspectMetadata(props.value) : '',
     [props.inspect, props.value]
   )
   const isTrap = useIsCycleReference(props.path, props.value)
@@ -61,7 +78,7 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const sizeOfValue = useMemo(
-    () => !props.inspect ? `${Object.keys(props.value).length} Items` : '',
+    () => !props.inspect ? inspectMetadata(props.value) : '',
     [props.inspect, props.value]
   )
   return (
@@ -81,6 +98,10 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   )
 }
 
+function getIterator (value: any): value is Iterable<unknown> {
+  return typeof value?.[Symbol.iterator] === 'function'
+}
+
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
   const groupArraysAfterLength = useJsonViewerStore(
@@ -94,6 +115,32 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
       return null
     }
     const value: unknown[] | object = props.value
+    const iterator = getIterator(value)
+    // Array also has iterator, we skip it and treat it as an array as normal.
+    if (iterator && !Array.isArray(value)) {
+      const elements = []
+      if (value instanceof Map) {
+        let _count = 0
+        for (const item of value) {
+          const [key, value] = item
+          elements.push(
+            <DataKeyPair key={key} path={[...props.path, key]} value={value}
+                         editable={false}/>
+          )
+          _count++
+        }
+      } else {
+        let count = 0
+        for (const item of value) {
+          elements.push(
+            <DataKeyPair key={count} path={[...props.path, `iterator:${count}`]}
+                         value={item} nestedIndex={count} editable={false}/>
+          )
+          count++
+        }
+      }
+      return elements
+    }
     if (Array.isArray(value)) {
       // unknown[]
       if (value.length <= groupArraysAfterLength) {
@@ -169,7 +216,13 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
       }
       return elements
     }
-  }, [props.inspect, props.value, props.path, groupArraysAfterLength, displayLength, keyColor])
+  }, [
+    props.inspect,
+    props.value,
+    props.path,
+    groupArraysAfterLength,
+    displayLength,
+    keyColor])
   return (
     <Box
       className='data-object'

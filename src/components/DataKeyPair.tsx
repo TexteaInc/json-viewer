@@ -19,6 +19,7 @@ import { DataBox } from './mui/DataBox'
 export type DataKeyPairProps = {
   value: unknown
   nestedIndex?: number
+  editable?: boolean
   path: (string | number)[]
 }
 
@@ -28,7 +29,7 @@ const IconBox = styled(props => <Box {...props} component='span'/>)`
 ` as typeof Box
 
 export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
-  const { value, path, nestedIndex } = props
+  const { value, path, nestedIndex, editable = true } = props
   const [tempValue, setTempValue] = useState(value)
   const depth = path.length
   const key = path[depth - 1]
@@ -124,7 +125,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           }
         </IconBox>
         {/* todo: support edit object */}
-        {Editor &&
+        {(Editor && editable) &&
           (
             <IconBox
               onClick={event => {
@@ -142,14 +143,15 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         }
       </>
     )
-  }, [Editor, copied, copy, editing, onChange, path, tempValue, value])
+  }, [Editor, copied, copy, editable, editing, onChange, path, tempValue, value])
 
   const expandable = PreComponent && PostComponent
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   return (
     <Box className='data-key-pair'
          onMouseEnter={
-           useCallback(() => setHover(path, nestedIndex), [setHover, path, nestedIndex])
+           useCallback(() => setHover(path, nestedIndex),
+             [setHover, path, nestedIndex])
          }
     >
       <DataBox
@@ -189,7 +191,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         {(isHover && expandable && inspect) && actionIcons}
       </DataBox>
       {
-        editing
+        (editing && editable)
           ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
           : (Component)
               ? <Component {...downstreamProps} />
