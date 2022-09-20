@@ -1,7 +1,7 @@
 # @textea/json-viewer
 
-[![npm](https://img.shields.io/npm/v/@textea/json-viewer.svg)](https://www.npmjs.com/package/@textea/json-viewer)
-[![npm](https://img.shields.io/npm/l/@textea/json-viewer.svg)](https://github.com/TexteaInc/json-viewer/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@textea/json-viewer)](https://www.npmjs.com/package/@textea/json-viewer)
+[![npm](https://img.shields.io/npm/l/@textea/json-viewer)](https://github.com/TexteaInc/json-viewer/blob/main/LICENSE)
 
 This is a React component for JSON viewer, but not only a JSON viewer.
 
