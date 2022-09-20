@@ -10,9 +10,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          release-type: node
-          package-name: '@textea/json-viewer'
-          last-release-sha: '419cf32454d972d1a0802974bb5d8b9bf9c5704e'
+          command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
       - name: Checkout repository
         uses: actions/checkout@v3
