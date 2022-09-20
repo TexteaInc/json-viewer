@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.1.0...json-viewer-v2.2.0) (2022-09-20)
+
+
+### Features
+
+* support `bigint` type ([#35](https://github.com/TexteaInc/json-viewer/issues/35)) ([eaa2239](https://github.com/TexteaInc/json-viewer/commit/eaa2239aae740d8a5cdc8e835e2af1d2e41348e3))
+
+
+### Bug Fixes
+
+* add license in package.json ([3c35865](https://github.com/TexteaInc/json-viewer/commit/3c358655f01115bed23e861509c629ecb509f67e))
+
 ## [2.1.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.0.0...json-viewer-v2.1.0) (2022-09-20)
 
 
