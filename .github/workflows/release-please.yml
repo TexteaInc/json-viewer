@@ -17,6 +17,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - name: Use Node.js LTS
         uses: actions/setup-node@v3
+        if: ${{ steps.release.outputs.release_created }}
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
