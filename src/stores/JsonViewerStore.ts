@@ -16,11 +16,11 @@ export type JsonViewerState<T = unknown> = {
   hoverPath: { path: Path; nestedIndex?: number } | null
   indentWidth: number
   groupArraysAfterLength: number
+  enableClipboard: boolean
   maxDisplayLength: number
   defaultInspectDepth: number
   collapseStringsAfterLength: number
   colorNamespace: ColorNamespace
-  expanded: string[]
   editable: boolean | (<U>(path: Path, currentValue: U) => boolean)
   rootName: false | string
   value: T
@@ -39,20 +39,22 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
   create(
     combine<JsonViewerState<T>, JsonViewerActions>(
       {
-        inspectCache: {},
-        hoverPath: null,
+        // provided by user
+        enableClipboard: props.enableClipboard ?? true,
         indentWidth: props.indentWidth ?? 3,
         groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
         collapseStringsAfterLength: props.collapseStringsAfterLength ?? 50,
         maxDisplayLength: props.maxDisplayLength ?? 30,
         rootName: props.rootName ?? 'root',
+        onChange: props.onChange ?? (() => {}),
+        keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
+        editable: props.editable ?? true,
+        // internal state
+        inspectCache: {},
+        hoverPath: null,
         defaultInspectDepth: 5,
         colorNamespace: lightColorNamespace,
-        editable: props.editable ?? true,
-        expanded: ['data-viewer-root'],
-        value: props.value,
-        onChange: props.onChange ?? (() => {}),
-        keyRenderer: props.keyRenderer ?? DefaultKeyRenderer
+        value: props.value
       },
       (set, get) => ({
         getInspectCache: (path, nestedIndex) => {

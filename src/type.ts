@@ -62,6 +62,12 @@ export type JsonViewerProps<T = unknown> = {
    */
   onChange?: <U>(path: Path, oldValue: U, newValue: U) => void
   /**
+   * Whether enable clipboard feature.
+   *
+   * @default true
+   */
+  enableClipboard?: boolean
+  /**
    * Whether this value can be edited.
    *
    * Pass `false` to turn off the edit feature.

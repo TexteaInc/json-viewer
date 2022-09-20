@@ -68,12 +68,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = root === value
   const isNumberKey = Number.isInteger(Number(key))
-  const downstreamProps: DataItemProps = useMemo(() => ({
-    path,
-    inspect,
-    setInspect,
-    value
-  }), [inspect, path, setInspect, value])
+
+  const enableClipboard = useJsonViewerStore(store => store.enableClipboard)
   const { copy, copied } = useClipboard()
 
   const actionIcons = useMemo(() => {
@@ -109,36 +105,45 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     }
     return (
         <>
-          <IconBox
-            onClick={event => {
-              copy(
-                JSON.stringify(
-                  value,
-                  null,
-                  '  '
-                )
-              )
-              event.preventDefault()
-            }}
-          >
-            {
-              copied
-                ? (
-                  <CheckIcon
-                    sx={{
-                      fontSize: '.8rem'
-                    }}
-                  />
+          {enableClipboard && (
+            <IconBox
+              onClick={event => {
+                event.preventDefault()
+                try {
+                  copy(
+                    JSON.stringify(
+                      value,
+                      null,
+                      '  '
+                    )
                   )
-                : (
-                  <ContentCopyIcon
-                    sx={{
-                      fontSize: '.8rem'
-                    }}
-                  />
-                  )
-            }
-          </IconBox>
+                } catch (e) {
+                  // in some case, this will throw error
+                  // for example: circular structure
+                  // fixme: `useAlert` hook
+                  console.error(e)
+                }
+              }}
+            >
+              {
+                copied
+                  ? (
+                    <CheckIcon
+                      sx={{
+                        fontSize: '.8rem'
+                      }}
+                    />
+                    )
+                  : (
+                    <ContentCopyIcon
+                      sx={{
+                        fontSize: '.8rem'
+                      }}
+                    />
+                    )
+              }
+            </IconBox>
+          )}
           {/* todo: support edit object */}
           {(Editor && editable) &&
             (
@@ -159,10 +164,16 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         </>
     )
   },
-  [Editor, copied, copy, editable, editing, onChange, path, tempValue, value])
+  [Editor, copied, copy, editable, editing, enableClipboard, onChange, path, tempValue, value])
 
   const expandable = !!(PreComponent && PostComponent)
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
+  const downstreamProps: DataItemProps = useMemo(() => ({
+    path,
+    inspect,
+    setInspect,
+    value
+  }), [inspect, path, setInspect, value])
   return (
     <Box className='data-key-pair'
          onMouseEnter={
