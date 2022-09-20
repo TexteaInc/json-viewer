@@ -46,7 +46,7 @@ export function createEasyType<Value> (
       store => store.colorspace[config.colorKey])
     return (
       <InputBase
-        value={value}
+        value={`${value}`}
         onChange={
           useCallback<React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>(
             (event) => {
