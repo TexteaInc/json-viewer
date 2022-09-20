@@ -32,7 +32,7 @@ function inspectMetadata (value: object) {
 }
 
 export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
-  const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
+  const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const sizeOfValue = useMemo(
@@ -75,7 +75,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
 }
 
 export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
-  const metadataColor = useJsonViewerStore(store => store.colorNamespace.base04)
+  const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const sizeOfValue = useMemo(
     () => !props.inspect ? inspectMetadata(props.value) : '',
@@ -104,7 +104,7 @@ function getIterator (value: any): value is Iterable<unknown> {
 
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
-  const borderColor = useJsonViewerStore(store => store.colorNamespace.base02)
+  const borderColor = useJsonViewerStore(store => store.colorspace.base02)
   const groupArraysAfterLength = useJsonViewerStore(
     store => store.groupArraysAfterLength)
   const isTrap = useIsCycleReference(props.path, props.value)

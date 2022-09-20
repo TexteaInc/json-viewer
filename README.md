@@ -77,7 +77,7 @@ const Component = () => (
 - [X] Customizable
   - [X] `keyRenderer` for customize key renderer
   - [X] `valueTypes` for customize any value types you want
-  - [ ] `light | dark | base16` Theme support
+  - [X] `light | dark | base16` Theme support
   - [ ] custom metadata
 - [X] Support `Next.js` SSR
 - [X] `onChange` props allow users to edit value

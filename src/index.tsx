@@ -14,7 +14,7 @@ import {
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
 import { registerType } from './stores/typeRegistry'
-import { darkNamespace, lightColorNamespace } from './theme/base16'
+import { darkColorspace, lightColorspace } from './theme/base16'
 import type { JsonViewerProps } from './type'
 import { applyValue } from './utils'
 
@@ -53,11 +53,15 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   useEffect(() => {
     if (props.theme === 'light') {
       api.setState({
-        colorNamespace: lightColorNamespace
+        colorspace: lightColorspace
       })
     } else if (props.theme === 'dark') {
       api.setState({
-        colorNamespace: darkNamespace
+        colorspace: darkColorspace
+      })
+    } else if (typeof props.theme === 'object') {
+      api.setState({
+        colorspace: props.theme
       })
     }
   }, [api, props.theme])
@@ -93,16 +97,30 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
   const themeType = useMemo(() => props.theme === 'auto'
     ? (isAutoDarkTheme ? 'light' : 'dark')
     : props.theme ?? 'light', [isAutoDarkTheme, props.theme])
-  const theme = useMemo(() => createTheme({
-    palette: {
-      mode: themeType === 'dark' ? 'dark' : 'light',
-      background: {
-        default: themeType === 'dark'
-          ? darkNamespace.base00
-          : lightColorNamespace.base00
+  const theme = useMemo(() => {
+    const backgroundColor = typeof themeType === 'object'
+      ? themeType.base00
+      : themeType === 'dark'
+        ? darkColorspace.base00
+        : lightColorspace.base00
+    return createTheme({
+      components: {
+        MuiPaper: {
+          styleOverrides: {
+            root: {
+              backgroundColor
+            }
+          }
+        }
+      },
+      palette: {
+        mode: themeType === 'dark' ? 'dark' : 'light',
+        background: {
+          default: backgroundColor
+        }
       }
-    }
-  }), [themeType])
+    })
+  }, [themeType])
   const onceRef = useRef(true)
   // DO NOT try to dynamic add value types, that is costly. Trust me.
   if (onceRef.current) {
@@ -121,4 +139,5 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
   )
 }
 
+export * from './theme/base16'
 export * from './type'

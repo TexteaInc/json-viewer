@@ -4,8 +4,8 @@ import createContext from 'zustand/context'
 import { combine } from 'zustand/middleware'
 
 import type { JsonViewerOnChange, JsonViewerProps, Path } from '..'
-import type { ColorNamespace } from '../theme/base16'
-import { lightColorNamespace } from '../theme/base16'
+import type { Colorspace } from '../theme/base16'
+import { lightColorspace } from '../theme/base16'
 import type { JsonViewerKeyRenderer } from '../type'
 
 const DefaultKeyRenderer: JsonViewerKeyRenderer = () => null
@@ -20,7 +20,7 @@ export type JsonViewerState<T = unknown> = {
   maxDisplayLength: number
   defaultInspectDepth: number
   collapseStringsAfterLength: number
-  colorNamespace: ColorNamespace
+  colorspace: Colorspace
   editable: boolean | (<U>(path: Path, currentValue: U) => boolean)
   rootName: false | string
   value: T
@@ -53,7 +53,7 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         inspectCache: {},
         hoverPath: null,
         defaultInspectDepth: 5,
-        colorNamespace: lightColorNamespace,
+        colorspace: lightColorspace,
         value: props.value
       },
       (set, get) => ({

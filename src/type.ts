@@ -1,6 +1,8 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type React from 'react'
 
+import type { Colorspace } from './theme/base16'
+
 export type Path = (string | number)[]
 
 export type JsonViewerOnChange = <U = unknown>(
@@ -31,7 +33,7 @@ export interface JsonViewerKeyRenderer extends React.FC<DataItemProps> {
   when(props: DataItemProps): boolean
 }
 
-export type JsonViewerTheme = 'light' | 'dark' | 'auto'
+export type JsonViewerTheme = 'light' | 'dark' | 'auto' | Colorspace
 
 export type JsonViewerProps<T = unknown> = {
   /**

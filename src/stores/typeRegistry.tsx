@@ -97,7 +97,7 @@ registerType<null>(
       'null',
       () => {
         const backgroundColor = useJsonViewerStore(
-          store => store.colorNamespace.base02)
+          store => store.colorspace.base02)
         return (
           <Box sx={{
             fontSize: '0.8rem',
@@ -121,7 +121,7 @@ registerType<undefined>(
       'undefined',
       () => {
         const backgroundColor = useJsonViewerStore(
-          store => store.colorNamespace.base02)
+          store => store.colorspace.base02)
         return (
           <Box sx={{
             fontSize: '0.7rem',
@@ -195,7 +195,7 @@ registerType<number>(
       'NaN',
       () => {
         const backgroundColor = useJsonViewerStore(
-          store => store.colorNamespace.base02)
+          store => store.colorspace.base02)
         return (
           <Box sx={{
             backgroundColor,

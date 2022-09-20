@@ -47,7 +47,7 @@ export const PostFunctionType: React.FC<DataItemProps<Function>> = () => {
 }
 
 export const FunctionType: React.FC<DataItemProps<Function>> = (props) => {
-  const functionColor = useJsonViewerStore(store => store.colorNamespace.base05)
+  const functionColor = useJsonViewerStore(store => store.colorspace.base05)
   return (
     <Box
       className='data-function'

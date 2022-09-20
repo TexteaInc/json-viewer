@@ -15,6 +15,8 @@ import {
 import type React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
+import { ocean } from '../shared'
+
 // this url is copied from: https://beta.reactjs.org/learn/passing-props-to-a-component
 const avatar = 'https://i.imgur.com/1bX5QH6.jpg'
 
@@ -81,6 +83,7 @@ KeyRenderer.when = (props) => props.value === 114.514
 const IndexPage: React.FC = () => {
   const [indent, setIndent] = useState(3)
   const [groupArraysAfterLength, setGroupArraysAfterLength] = useState(100)
+  const [themeKey, setThemeKey] = useState<string>('light')
   const [theme, setTheme] = useState<JsonViewerTheme>('light')
   const [src, setSrc] = useState(() => example)
   useEffect(() => {
@@ -124,15 +127,22 @@ const IndexPage: React.FC = () => {
       <FormControl>
         <InputLabel>Theme</InputLabel>
         <Select
-          value={theme}
+          value={themeKey}
           label='Theme'
           onChange={(event) => {
-            setTheme(event.target.value as any)
+            if (event.target.value === 'ocean') {
+              setTheme(ocean)
+              setThemeKey('ocean')
+            } else {
+              setTheme(event.target.value as any)
+              setThemeKey(event.target.value as any)
+            }
           }}
         >
           <MenuItem value='auto'>auto</MenuItem>
           <MenuItem value='light'>light</MenuItem>
           <MenuItem value='dark'>dark</MenuItem>
+          <MenuItem value='ocean'>ocean</MenuItem>
         </Select>
       </FormControl>
       <JsonViewer
