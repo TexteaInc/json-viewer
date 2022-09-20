@@ -3,6 +3,10 @@ import type React from 'react'
 
 export type Path = (string | number)[]
 
+export type JsonViewerOnChange = <U = unknown>(
+  path: (string | number)[], oldValue: U,
+  newValue: U /*, type: ChangeType */) => void
+
 export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
   setInspect: Dispatch<SetStateAction<boolean>>
@@ -57,6 +61,15 @@ export type JsonViewerProps<T = unknown> = {
    * @param newValue
    */
   onChange?: <U>(path: Path, oldValue: U, newValue: U) => void
+  /**
+   * Whether this value can be edited.
+   *
+   * Pass `false` to turn off the edit feature.
+   * Pass a function to customize the result.
+   *
+   * @default true
+   */
+  editable?: boolean | (<U = unknown>(path: Path, currentValue: U) => boolean)
   /**
    * Inspect depth by default.
    * Do not set the number too large, otherwise there will have performance issue

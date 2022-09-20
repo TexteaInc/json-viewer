@@ -21,6 +21,7 @@ export type JsonViewerState<T = unknown> = {
   collapseStringsAfterLength: number
   colorNamespace: ColorNamespace
   expanded: string[]
+  editable: boolean | (<U>(path: Path, currentValue: U) => boolean)
   rootName: false | string
   value: T
   onChange: JsonViewerOnChange
@@ -47,6 +48,7 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         rootName: props.rootName ?? 'root',
         defaultInspectDepth: 5,
         colorNamespace: lightColorNamespace,
+        editable: props.editable ?? true,
         expanded: ['data-viewer-root'],
         value: props.value,
         onChange: props.onChange ?? (() => {}),

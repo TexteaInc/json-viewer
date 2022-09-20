@@ -10,7 +10,6 @@ import { useThemeDetector } from './hooks/useThemeDetector'
 import {
   createJsonViewerStore,
   JsonViewerProvider,
-  JsonViewerState,
   useJsonViewerStore,
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
@@ -21,32 +20,35 @@ import { applyValue } from './utils'
 
 export { applyValue }
 
-export type JsonViewerOnChange = <U = unknown>(
-  path: (string | number)[], oldValue: U,
-  newValue: U /*, type: ChangeType */) => void
+/**
+ * @internal
+ */
+function useSetIfNotUndefinedEffect <Key extends keyof JsonViewerProps> (
+  key: Key,
+  value: JsonViewerProps[Key] | undefined
+) {
+  const api = useJsonViewerStoreApi()
+  useEffect(() => {
+    if (value !== undefined) {
+      api.setState({
+        [key]: value
+      })
+    }
+  }, [key, value, api])
+}
 
+/**
+ * @internal
+ */
 const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const api = useJsonViewerStoreApi()
-  const setIfNotUndefined = useCallback(
-    function setIfNotUndefined<Key extends keyof JsonViewerState> (key: Key,
-      value: JsonViewerState[Key] | undefined) {
-      if (value !== undefined) {
-        api.setState({
-          [key]: value
-        })
-      }
-    }, [api])
-  useEffect(() => {
-    setIfNotUndefined('value', props.value)
-  }, [props.value, setIfNotUndefined])
-  useEffect(() => {
-    setIfNotUndefined('indentWidth', props.indentWidth)
-    setIfNotUndefined('onChange', props.onChange)
-    setIfNotUndefined('groupArraysAfterLength', props.groupArraysAfterLength)
-    setIfNotUndefined('keyRenderer', props.keyRenderer)
-    setIfNotUndefined('maxDisplayLength', props.maxDisplayLength)
-  }, [api, props.groupArraysAfterLength, props.keyRenderer, props.onChange, props.value, props.maxDisplayLength, setIfNotUndefined, props.indentWidth])
-
+  useSetIfNotUndefinedEffect('value', props.value)
+  useSetIfNotUndefinedEffect('editable', props.editable)
+  useSetIfNotUndefinedEffect('indentWidth', props.indentWidth)
+  useSetIfNotUndefinedEffect('onChange', props.onChange)
+  useSetIfNotUndefinedEffect('groupArraysAfterLength', props.groupArraysAfterLength)
+  useSetIfNotUndefinedEffect('keyRenderer', props.keyRenderer)
+  useSetIfNotUndefinedEffect('maxDisplayLength', props.maxDisplayLength)
   useEffect(() => {
     if (props.theme === 'light') {
       api.setState({
