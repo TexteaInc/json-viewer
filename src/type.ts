@@ -31,11 +31,17 @@ export type JsonViewerTheme = 'light' | 'dark' | 'auto'
 
 export type JsonViewerProps<T = unknown> = {
   /**
-   * any value
+   * Name of the root value
+   *
+   * @default "root"
+   */
+  rootName?: false | string
+  /**
+   * Any value, `object`, `Array`, primitive type, even `Map` or `Set`.
    */
   value: T
   /**
-   * indent width for nested objects
+   * Indent width for nested objects
    * @default 2
    */
   indentWidth?: number
@@ -71,6 +77,15 @@ export type JsonViewerProps<T = unknown> = {
    * @default 100
    */
   groupArraysAfterLength?: number
+  /**
+   * When an integer value is assigned, strings will be cut off at that length.
+   * Collapsed strings are followed by an ellipsis.
+   *
+   * String content can be expanded and collapsed by clicking on the string value.
+   *
+   * @default 100
+   */
+  collapseStringsAfterLength?: number
   className?: string
   style?: React.CSSProperties
   /**

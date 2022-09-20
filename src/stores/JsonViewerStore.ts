@@ -18,9 +18,10 @@ export type JsonViewerState<T = unknown> = {
   groupArraysAfterLength: number
   maxDisplayLength: number
   defaultInspectDepth: number
+  collapseStringsAfterLength: number
   colorNamespace: ColorNamespace
   expanded: string[]
-  rootName: string
+  rootName: false | string
   value: T
   onChange: JsonViewerOnChange
   keyRenderer: JsonViewerKeyRenderer
@@ -41,8 +42,9 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         hoverPath: null,
         indentWidth: props.indentWidth ?? 2,
         groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
+        collapseStringsAfterLength: props.collapseStringsAfterLength ?? 50,
         maxDisplayLength: props.maxDisplayLength ?? 30,
-        rootName: 'root',
+        rootName: props.rootName ?? 'root',
         defaultInspectDepth: 5,
         colorNamespace: lightColorNamespace,
         expanded: ['data-viewer-root'],

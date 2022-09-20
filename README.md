@@ -81,7 +81,7 @@ const Component = () => (
   - [ ] custom metadata
 - [X] Support `Next.js` SSR
 - [X] `onChange` props allow users to edit value
-- [X] Object, array, string and function values can be collapsed and expanded
+- [X] Inspect `object`, `Array`, primitive type, even `Map` and `Set` by default.
 - [X] Metadata preview, like total items, length of string...
 - [X] `Copy to Clipboard` on Click
 - [ ] Editor for basic types

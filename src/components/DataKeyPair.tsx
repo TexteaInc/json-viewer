@@ -52,7 +52,6 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = root === value
   const isNumberKey = Number.isInteger(Number(key))
-  const displayKey = isRoot ? rootName : key
   const downstreamProps: DataItemProps = useMemo(() => ({
     path,
     inspect,
@@ -64,86 +63,87 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const actionIcons = useMemo(() => {
     if (editing) {
       return (
-        <>
-          <IconBox>
-            <CloseIcon
-              sx={{
-                fontSize: '.8rem'
-              }}
-              onClick={() => {
-                // abort editing
-                setEditing(false)
-                setTempValue(value)
-              }}
-            />
-          </IconBox>
-          <IconBox>
-            <CheckIcon
-              sx={{
-                fontSize: '.8rem'
-              }}
-              onClick={() => {
-                // finish editing, save data
-                setEditing(false)
-                onChange(path, value, tempValue)
-              }}
-            />
-          </IconBox>
-        </>
-      )
-    }
-    return (
-      <>
-        <IconBox
-          onClick={event => {
-            copy(
-              JSON.stringify(
-                value,
-                null,
-                '  '
-              )
-            )
-            event.preventDefault()
-          }}
-        >
-          {
-            copied
-              ? (
-                <CheckIcon
-                  sx={{
-                    fontSize: '.8rem'
-                  }}
-                />
-                )
-              : (
-                <ContentCopyIcon
-                  sx={{
-                    fontSize: '.8rem'
-                  }}
-                />
-                )
-          }
-        </IconBox>
-        {/* todo: support edit object */}
-        {(Editor && editable) &&
-          (
-            <IconBox
-              onClick={event => {
-                event.preventDefault()
-                setEditing(true)
-              }}
-            >
-              <EditIcon
+          <>
+            <IconBox>
+              <CloseIcon
                 sx={{
                   fontSize: '.8rem'
                 }}
+                onClick={() => {
+                  // abort editing
+                  setEditing(false)
+                  setTempValue(value)
+                }}
               />
             </IconBox>
-          )
-        }
-      </>
+            <IconBox>
+              <CheckIcon
+                sx={{
+                  fontSize: '.8rem'
+                }}
+                onClick={() => {
+                  // finish editing, save data
+                  setEditing(false)
+                  onChange(path, value, tempValue)
+                }}
+              />
+            </IconBox>
+          </>
+      )
+    }
+    return (
+        <>
+          <IconBox
+            onClick={event => {
+              copy(
+                JSON.stringify(
+                  value,
+                  null,
+                  '  '
+                )
+              )
+              event.preventDefault()
+            }}
+          >
+            {
+              copied
+                ? (
+                  <CheckIcon
+                    sx={{
+                      fontSize: '.8rem'
+                    }}
+                  />
+                  )
+                : (
+                  <ContentCopyIcon
+                    sx={{
+                      fontSize: '.8rem'
+                    }}
+                  />
+                  )
+            }
+          </IconBox>
+          {/* todo: support edit object */}
+          {(Editor && editable) &&
+            (
+              <IconBox
+                onClick={event => {
+                  event.preventDefault()
+                  setEditing(true)
+                }}
+              >
+                <EditIcon
+                  sx={{
+                    fontSize: '.8rem'
+                  }}
+                />
+              </IconBox>
+            )
+          }
+        </>
     )
-  }, [Editor, copied, copy, editable, editing, onChange, path, tempValue, value])
+  },
+  [Editor, copied, copy, editable, editing, onChange, path, tempValue, value])
 
   const expandable = PreComponent && PostComponent
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
@@ -173,14 +173,16 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         }
       >
         {
-          KeyRenderer.when(downstreamProps)
-            ? <KeyRenderer {...downstreamProps} />
-            : nestedIndex === undefined && (
-              isNumberKey
-                ? <Box component='span'
-                     style={{ color: numberKeyColor }}>{displayKey}</Box>
-                : <>&quot;{displayKey}&quot;</>
-            )
+          (isRoot && rootName !== false)
+            ? <>&quot;{rootName}&quot;</>
+            : !isRoot && KeyRenderer.when(downstreamProps)
+                ? <KeyRenderer {...downstreamProps} />
+                : nestedIndex === undefined && (
+                  isNumberKey
+                    ? <Box component='span'
+                       style={{ color: numberKeyColor }}>{key}</Box>
+                    : <>&quot;{key}&quot;</>
+                )
         }
         {
           nestedIndex === undefined && (

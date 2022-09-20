@@ -1,8 +1,8 @@
 import { InputBase } from '@mui/material'
 import React, { useCallback } from 'react'
 
-import type { ColorNamespace } from '../../stores/JsonViewerStore'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
+import type { ColorNamespace } from '../../theme/base16'
 import type { DataItemProps, DataType, EditorProps } from '../../type'
 import { DataTypeLabel } from '../DataTypeLabel'
 import { DataBox } from '../mui/DataBox'

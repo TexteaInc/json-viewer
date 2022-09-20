@@ -42,6 +42,8 @@ map.set('goo', 'hello')
 
 const set = new Set([1, 2, 3])
 
+const superLongString = '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+
 const example = {
   loopObject,
   loopArray,
@@ -57,6 +59,7 @@ const example = {
   set,
   float: 114.514,
   undefined,
+  superLongString,
   object: {
     'first-child': true,
     'second-child': false,
@@ -70,7 +73,8 @@ const example = {
 }
 
 const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
-  return <del aria-label='I dont like this number'>&quot;{path.slice(-1)}&quot;</del>
+  return <del aria-label='I dont like this number'>&quot;{path.slice(
+    -1)}&quot;</del>
 }
 KeyRenderer.when = (props) => props.value === 114.514
 
@@ -139,7 +143,8 @@ const IndexPage: React.FC = () => {
         keyRenderer={KeyRenderer}
         valueTypes={[
           {
-            is: (value): value is string => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
+            is: (value): value is string => typeof value === 'string' &&
+              value.startsWith('https://i.imgur.com'),
             Component: (props) => {
               return <img height='50px' src={props.value} alt={props.value}/>
             }

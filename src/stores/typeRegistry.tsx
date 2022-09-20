@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { DevelopmentError } from '@textea/dev-kit/utils'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { createEasyType } from '../components/DataTypes/createEasyType'
 import {
@@ -145,7 +145,30 @@ registerType<string>(
     is: (value): value is string => typeof value === 'string',
     ...createEasyType(
       'string',
-      ({ value }) => <>&quot;{`${value}`}&quot;</>,
+      (props) => {
+        const [showRest, setShowRest] = useState(false)
+        const collapseStringsAfterLength = useJsonViewerStore(
+          store => store.collapseStringsAfterLength)
+        const value = showRest ? props.value : props.value.slice(0, collapseStringsAfterLength)
+        const hasRest = props.value.length > collapseStringsAfterLength
+        return (
+          <Box
+            component='span'
+            sx={{
+              overflowWrap: 'break-word',
+              cursor: hasRest ? 'pointer' : 'inherit'
+            }}
+            onClick={() => {
+              setShowRest(value => !value)
+            }}
+          >
+            &quot;
+            {value}
+            {hasRest && <span>...</span>}
+            &quot;
+          </Box>
+        )
+      },
       {
         colorKey: 'base09',
         fromString: value => value
