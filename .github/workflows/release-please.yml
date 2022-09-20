@@ -15,11 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         if: ${{ steps.release.outputs.release_created }}
-      - name: Use Node.js 18.x
+      - name: Use Node.js LTS
         uses: actions/setup-node@v3
-        if: ${{ steps.release.outputs.release_created }}
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
