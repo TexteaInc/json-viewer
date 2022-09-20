@@ -42,7 +42,7 @@ export type JsonViewerProps<T = unknown> = {
   value: T
   /**
    * Indent width for nested objects
-   * @default 2
+   * @default 3
    */
   indentWidth?: number
   /**

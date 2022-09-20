@@ -79,7 +79,7 @@ const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
 KeyRenderer.when = (props) => props.value === 114.514
 
 const IndexPage: React.FC = () => {
-  const [indent, setIndent] = useState(2)
+  const [indent, setIndent] = useState(3)
   const [groupArraysAfterLength, setGroupArraysAfterLength] = useState(100)
   const [theme, setTheme] = useState<JsonViewerTheme>('light')
   const [src, setSrc] = useState(() => example)
@@ -121,7 +121,7 @@ const IndexPage: React.FC = () => {
           }
         }
       />
-      <FormControl fullWidth>
+      <FormControl>
         <InputLabel>Theme</InputLabel>
         <Select
           value={theme}

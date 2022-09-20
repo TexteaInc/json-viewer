@@ -63,6 +63,7 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const setHover = useJsonViewerStore(store => store.setHover)
   return (
     <Paper
+      elevation={0}
       className={props.className}
       style={props.style}
       sx={{

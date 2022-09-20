@@ -1,8 +1,10 @@
 import {
   Check as CheckIcon,
+  ChevronRight as ChevronRightIcon,
   Close as CloseIcon,
   ContentCopy as ContentCopyIcon,
-  Edit as EditIcon
+  Edit as EditIcon,
+  ExpandMore as ExpandMoreIcon
 } from '@mui/icons-material'
 import { Box, styled } from '@mui/material'
 import type React from 'react'
@@ -145,7 +147,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   },
   [Editor, copied, copy, editable, editing, onChange, path, tempValue, value])
 
-  const expandable = PreComponent && PostComponent
+  const expandable = !!(PreComponent && PostComponent)
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   return (
     <Box className='data-key-pair'
@@ -172,6 +174,18 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           }, [setInspect])
         }
       >
+        {
+          expandable
+            ? (inspect
+                ? <ExpandMoreIcon sx={{
+                  fontSize: '.8rem'
+                }}/>
+                : <ChevronRightIcon sx={{
+                  fontSize: '.8rem'
+                }}/>
+              )
+            : null
+        }
         {
           (isRoot && rootName !== false)
             ? <>&quot;{rootName}&quot;</>

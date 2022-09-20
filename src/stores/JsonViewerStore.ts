@@ -40,7 +40,7 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
       {
         inspectCache: {},
         hoverPath: null,
-        indentWidth: props.indentWidth ?? 2,
+        indentWidth: props.indentWidth ?? 3,
         groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
         collapseStringsAfterLength: props.collapseStringsAfterLength ?? 50,
         maxDisplayLength: props.maxDisplayLength ?? 30,

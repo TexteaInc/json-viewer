@@ -104,6 +104,7 @@ function getIterator (value: any): value is Iterable<unknown> {
 
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
+  const borderColor = useJsonViewerStore(store => store.colorNamespace.base02)
   const groupArraysAfterLength = useJsonViewerStore(
     store => store.groupArraysAfterLength)
   const isTrap = useIsCycleReference(props.path, props.value)
@@ -223,14 +224,18 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     groupArraysAfterLength,
     displayLength,
     keyColor])
-  const indentWidth = useJsonViewerStore(store => store.indentWidth)
+  const marginLeft = props.inspect ? 0.6 : 0
+  const width = useJsonViewerStore(store => store.indentWidth)
+  const indentWidth = props.inspect ? width - marginLeft : width
   return (
     <Box
       className='data-object'
       sx={{
         display: props.inspect ? 'block' : 'inline-block',
-        pl: props.inspect ? indentWidth : 0,
-        color: keyColor
+        pl: props.inspect ? indentWidth - 0.6 : 0,
+        marginLeft,
+        color: keyColor,
+        borderLeft: props.inspect ? `1px solid ${borderColor}` : 'none'
       }}
     >
       {
