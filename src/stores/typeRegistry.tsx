@@ -251,7 +251,7 @@ registerType<bigint>(
       ({ value }) => <>{`${value}n`}</>,
       {
         colorKey: 'base0F',
-        fromString: value => BigInt(value)
+        fromString: value => BigInt(value.replace(/\D/g, ''))
       }
     )
   }
