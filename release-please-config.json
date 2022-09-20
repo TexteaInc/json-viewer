@@ -1,7 +1,6 @@
 {
   "bootstrap-sha": "419cf32454d972d1a0802974bb5d8b9bf9c5704e",
   "release_type": "node",
-  "release-as": "2.0.0",
   "group-pull-request-title-pattern": "chore: release ${version}",
   "packages": {
     ".": {}
