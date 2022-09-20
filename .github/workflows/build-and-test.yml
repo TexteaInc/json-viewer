@@ -10,11 +10,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js 18.x
+      - name: Use Node.js LTS
         uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
-          cache: "yarn"
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -29,5 +29,8 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
-      - name: Test
-        run: yarn test
+      - name: Test with Coverage
+        run: yarn coverage
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
