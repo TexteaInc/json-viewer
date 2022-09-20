@@ -12,10 +12,8 @@ jobs:
         with:
           release-type: node
           package-name: '@textea/json-viewer'
+          last-release-sha: '419cf32454d972d1a0802974bb5d8b9bf9c5704e'
           token: ${{secrets.GITHUB_TOKEN}}
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
-          draft: false
       - name: Checkout repository
         uses: actions/checkout@v3
         if: ${{ steps.release.outputs.release_created }}
