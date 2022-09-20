@@ -71,7 +71,8 @@ const example = {
   string_number: '1234',
   timer: 0,
   avatar,
-  date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)')
+  date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)'),
+  bigint: 110101195306153019n
 }
 
 const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {

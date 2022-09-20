@@ -242,3 +242,17 @@ registerType<number>(
     )
   }
 )
+
+registerType<bigint>(
+  {
+    is: (value): value is bigint => typeof value === 'bigint',
+    ...createEasyType(
+      'bigint',
+      ({ value }) => <>{`${value}n`}</>,
+      {
+        colorKey: 'base0F',
+        fromString: value => BigInt(value)
+      }
+    )
+  }
+)
