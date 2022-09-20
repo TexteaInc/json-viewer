@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.0.0...json-viewer-v2.1.0) (2022-09-20)
+
+
+### Features
+
+* support base16 on `props.theme` ([1c7e127](https://github.com/TexteaInc/json-viewer/commit/1c7e1276abdb52ab92260ac3f0bbfd71afc674df))
+
 ## [2.0.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v1.24.5...json-viewer-v2.0.0) (2022-09-20)
 
 
