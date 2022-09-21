@@ -107,6 +107,23 @@ export type JsonViewerProps<T = unknown> = {
    * @default 100
    */
   collapseStringsAfterLength?: number
+
+  /**
+   * Whether sort keys through `String.prototype.localeCompare()`
+   *
+   * @default false
+   */
+  objectSortKeys?: boolean | ((a: string, b: string) => number)
+
+  /**
+   * set `false` to remove quotes from keys
+   *
+   * true for `"name"`, false for `name`
+   *
+   * @default true
+   */
+  quotesOnKeys?: boolean
+
   className?: string
   style?: React.CSSProperties
   /**

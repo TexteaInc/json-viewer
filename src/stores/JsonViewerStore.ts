@@ -20,6 +20,8 @@ export type JsonViewerState<T = unknown> = {
   maxDisplayLength: number
   defaultInspectDepth: number
   collapseStringsAfterLength: number
+  objectSortKeys: boolean | ((a: string, b: string) => number)
+  quotesOnKeys: boolean
   colorspace: Colorspace
   editable: boolean | (<U>(path: Path, currentValue: U) => boolean)
   rootName: false | string
@@ -50,6 +52,8 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
         editable: props.editable ?? true,
         defaultInspectDepth: props.defaultInspectDepth ?? 5,
+        objectSortKeys: props.objectSortKeys ?? false,
+        quotesOnKeys: props.quotesOnKeys ?? true,
         // internal state
         inspectCache: {},
         hoverPath: null,
