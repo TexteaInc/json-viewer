@@ -52,7 +52,7 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         // internal state
         inspectCache: {},
         hoverPath: null,
-        defaultInspectDepth: 5,
+        defaultInspectDepth: props.defaultInspectDepth ?? 5,
         colorspace: lightColorspace,
         value: props.value
       },
