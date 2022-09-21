@@ -20,11 +20,11 @@ This is a React component for JSON viewer, but not only a JSON viewer.
 
 ```shell
 # npm
-npm install @textea/json-viewer@beta
+npm install @textea/json-viewer
 # yarn
-yarn add @textea/json-viewer@beta
+yarn add @textea/json-viewer
 # pnpm
-pnpm add @textea/json-viewer@beta
+pnpm add @textea/json-viewer
 ```
 
 ### Type Declaration
