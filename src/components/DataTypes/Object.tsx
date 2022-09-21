@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import { group } from 'group-items'
 import React, { useMemo, useState } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
@@ -171,15 +172,10 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
         }
         return elements
       }
-      const elements = value.reduce<unknown[][]>((array, value, index) => {
-        const target = Math.floor(index / groupArraysAfterLength)
-        if (array[target]) {
-          array[target].push(value)
-        } else {
-          array[target] = [value]
-        }
-        return array
-      }, [])
+
+      const elements: unknown[][] = group<unknown>(value)
+        .by((_, index) => Math.floor(index / groupArraysAfterLength))
+        .asArrays()
 
       return elements.map((list, index) => {
         const path = [...props.path]
