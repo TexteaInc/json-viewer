@@ -124,7 +124,9 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
       if (value instanceof Map) {
         let _count = 0
         for (const item of value) {
-          const [key, value] = item
+          // fixme: key might be a object, array, or any value for the `Map<any, any>`
+          const [k, value] = item
+          const key = `${k}`
           elements.push(
             <DataKeyPair key={key} path={[...props.path, key]} value={value}
                          editable={false}/>
