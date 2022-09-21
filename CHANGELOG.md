@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.4](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.3...json-viewer-v2.2.4) (2022-09-21)
+
+
+### Bug Fixes
+
+* ignore error when key of Map is an object ([4af9609](https://github.com/TexteaInc/json-viewer/commit/4af96095d36ff68ccaf90a6c5713780b612003a4))
+
 ## [2.2.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.2...json-viewer-v2.2.3) (2022-09-21)
 
 
