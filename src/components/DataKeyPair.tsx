@@ -65,6 +65,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     store => store.colorspace.base0C)
   const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(
     value)
+  const quotesOnKeys = useJsonViewerStore(store => store.quotesOnKeys)
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = root === value
   const isNumberKey = Number.isInteger(Number(key))
@@ -164,7 +165,18 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         </>
     )
   },
-  [Editor, copied, copy, editable, editing, enableClipboard, onChange, path, tempValue, value])
+  [
+    Editor,
+    copied,
+    copy,
+    editable,
+    editing,
+    enableClipboard,
+    onChange,
+    path,
+    tempValue,
+    value
+  ])
 
   const expandable = !!(PreComponent && PostComponent)
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
@@ -220,7 +232,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
                   isNumberKey
                     ? <Box component='span'
                        style={{ color: numberKeyColor }}>{key}</Box>
-                    : <>&quot;{key}&quot;</>
+                    : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
                 )
         }
         {

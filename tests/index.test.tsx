@@ -4,6 +4,61 @@ import { describe, it } from 'vitest'
 
 import { JsonViewer } from '../src'
 
+function aPlusB (a: number, b: number) {
+  return a + b
+}
+
+const loopObject = {
+  foo: 1,
+  goo: 'string'
+} as Record<string, any>
+
+loopObject.self = loopObject
+
+const loopArray = [
+  loopObject
+]
+
+loopArray[1] = loopArray
+
+const longArray = Array.from({ length: 1000 }).map((_, i) => i)
+const map = new Map<any, any>()
+map.set('foo', 1)
+map.set('goo', 'hello')
+map.set({}, 'world')
+
+const set = new Set([1, 2, 3])
+
+const superLongString = '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+
+const full = {
+  loopObject,
+  loopArray,
+  longArray,
+  string: 'this is a string',
+  integer: 42,
+  array: [19, 19, 810, 'test', NaN],
+  nestedArray: [
+    [1, 2],
+    [3, 4]
+  ],
+  map,
+  set,
+  float: 114.514,
+  undefined,
+  superLongString,
+  object: {
+    'first-child': true,
+    'second-child': false,
+    'last-child': null
+  },
+  fn: aPlusB,
+  string_number: '1234',
+  timer: 0,
+  date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)'),
+  bigint: 110101195306153019n
+}
+
 describe('render <JsonViewer/>', () => {
   it('render undefined', () => {
     render(<JsonViewer value={undefined}/>)
@@ -70,5 +125,25 @@ describe('render <JsonViewer/>', () => {
       return a + b
     }}/>)
     render(<JsonViewer value={(a: number, b: number) => a + b}/>)
+  })
+
+  it('render full', () => {
+    render(<JsonViewer value={full}/>)
+  })
+})
+
+describe('render <JsonViewer/> with props', () => {
+  it('render with quotesOnKeys', () => {
+    const selection = [true, false]
+    selection.forEach(quotesOnKeys => {
+      render(<JsonViewer value={full} quotesOnKeys={quotesOnKeys}/>)
+    })
+  })
+
+  it('render with objectSortKeys', () => {
+    const selection = [true, false, (a: string, b: string) => a.localeCompare(b)]
+    selection.forEach(objectSortKeys => {
+      render(<JsonViewer value={full} objectSortKeys={objectSortKeys}/>)
+    })
   })
 })

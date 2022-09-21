@@ -112,6 +112,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const [displayLength, setDisplayLength] = useState(
     useJsonViewerStore(store => store.maxDisplayLength)
   )
+  const objectSortKeys = useJsonViewerStore(store => store.objectSortKeys)
   const elements = useMemo(() => {
     if (!props.inspect) {
       return null
@@ -188,7 +189,16 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
       })
     } else {
       // object
-      const entries = Object.entries(value)
+      let entries: [key: string, value: unknown][] = Object.entries(value)
+      if (objectSortKeys) {
+        entries = entries.sort(([a], [b]) => {
+          if (objectSortKeys === true) {
+            return a.localeCompare(b)
+          } else {
+            return objectSortKeys(a, b)
+          }
+        })
+      }
       const elements = entries.slice(0, displayLength).map(([key, value]) => {
         const path = [...props.path, key]
         return (
@@ -221,7 +231,9 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     props.path,
     groupArraysAfterLength,
     displayLength,
-    keyColor])
+    keyColor,
+    objectSortKeys
+  ])
   const marginLeft = props.inspect ? 0.6 : 0
   const width = useJsonViewerStore(store => store.indentWidth)
   const indentWidth = props.inspect ? width - marginLeft : width
