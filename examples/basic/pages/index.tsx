@@ -39,9 +39,10 @@ const loopArray = [
 loopArray[1] = loopArray
 
 const longArray = Array.from({ length: 1000 }).map((_, i) => i)
-const map = new Map<string, any>()
+const map = new Map<any, any>()
 map.set('foo', 1)
 map.set('goo', 'hello')
+map.set({}, 'world')
 
 const set = new Set([1, 2, 3])
 

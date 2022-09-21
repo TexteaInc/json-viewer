@@ -43,6 +43,17 @@ describe('render <JsonViewer/>', () => {
     render(<JsonViewer value={new Set([1, '2', 3.0, Infinity])}/>)
   })
 
+  it('render Map', () => {
+    render(
+      <JsonViewer
+        value={new Map<string, number>([['foo', 1], ['goo', 2]])}/>
+    )
+    render(
+      <JsonViewer
+        value={new Map<any, number>([[[], 1], [{}, 2]])}/>
+    )
+  })
+
   it('render object', () => {
     render(<JsonViewer value={{}}/>)
     render(<JsonViewer value={{
@@ -52,5 +63,12 @@ describe('render <JsonViewer/>', () => {
         foo: [1, 2, 3]
       }
     }}/>)
+  })
+
+  it('render function', () => {
+    render(<JsonViewer value={function aPlusB (a: number, b: number) {
+      return a + b
+    }}/>)
+    render(<JsonViewer value={(a: number, b: number) => a + b}/>)
   })
 })
