@@ -12,6 +12,7 @@ import {
   JsonViewerOnChange,
   JsonViewerTheme
 } from '@textea/json-viewer'
+import Image from 'next/image'
 import type React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -102,6 +103,7 @@ const IndexPage: React.FC = () => {
   return (
     <div>
       <TextField
+        label='indentWidth'
         value={indent}
         type='number'
         onChange={
@@ -114,6 +116,7 @@ const IndexPage: React.FC = () => {
         }
       />
       <TextField
+        label='groupArraysAfterLength'
         value={groupArraysAfterLength}
         type='number'
         onChange={
@@ -157,7 +160,7 @@ const IndexPage: React.FC = () => {
             is: (value): value is string => typeof value === 'string' &&
               value.startsWith('https://i.imgur.com'),
             Component: (props) => {
-              return <img height='50px' src={props.value} alt={props.value}/>
+              return <Image height={50} width={50} src={props.value} alt={props.value}/>
             }
           }
         ]}

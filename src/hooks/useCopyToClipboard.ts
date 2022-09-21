@@ -12,10 +12,11 @@ export function useClipboard ({ timeout = 2000 } = {}) {
   const copyTimeout = useRef<number | null>(null)
 
   const handleCopyResult = useCallback((value: boolean) => {
-    if (copyTimeout.current) {
-      clearTimeout(copyTimeout.current)
+    const current = copyTimeout.current
+    if (current) {
+      window.clearTimeout(current)
     }
-    copyTimeout.current = setTimeout(() => setCopied(false), timeout)
+    copyTimeout.current = window.setTimeout(() => setCopied(false), timeout)
     setCopied(value)
   }, [timeout])
 
