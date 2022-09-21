@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.1...json-viewer-v2.2.2) (2022-09-21)
+
+
+### Bug Fixes
+
+* missing `props.defaultInspectDepth` ([#40](https://github.com/TexteaInc/json-viewer/issues/40)) ([0b04cd7](https://github.com/TexteaInc/json-viewer/commit/0b04cd7ce6fc341e0c346907c35a816967083b3a))
+
 ## [2.2.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.0...json-viewer-v2.2.1) (2022-09-21)
 
 
