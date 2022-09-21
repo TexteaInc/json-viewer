@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.0...json-viewer-v2.2.1) (2022-09-21)
+
+
+### Documentation
+
+* fix install step  ([9153091](https://github.com/TexteaInc/json-viewer/commit/91530915e3a045cbe2948a15d403a70e047bfcdd))
+
 ## [2.2.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.1.0...json-viewer-v2.2.0) (2022-09-20)
 
 
