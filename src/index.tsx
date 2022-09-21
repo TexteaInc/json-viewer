@@ -132,7 +132,11 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
   const mixedProps = { ...props, theme: themeType }
   return (
     <ThemeProvider theme={theme}>
-      <JsonViewerProvider createStore={() => createJsonViewerStore(props)}>
+      <JsonViewerProvider createStore={() => {
+        // This function only runs once, so we don't need a memo for this.
+        //  Refs: https://github.com/pmndrs/zustand/blob/77d14b17bc33a6f10f072802fac56aa78510710e/src/context.ts#L36-L38
+        return createJsonViewerStore(props)
+      }}>
         <JsonViewerInner {...mixedProps}/>
       </JsonViewerProvider>
     </ThemeProvider>
