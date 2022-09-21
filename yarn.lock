@@ -1707,6 +1707,7 @@ __metadata:
     "@types/web": ^0.0.73
     "@vitest/coverage-c8": ^0.23.4
     copy-to-clipboard: ^3.3.2
+    group-items: ^2.2.0
     husky: ^8.0.1
     jsdom: ^20.0.0
     lint-staged: ^13.0.3
@@ -3054,6 +3055,15 @@ __metadata:
   dependencies:
     type-detect: ^4.0.0
   checksum: 4f4c9fb79eb994fb6e81d4aa8b063adc40c00f831588aa65e20857d5d52f15fb23034a6576ecf886f7ff6222d5ae42e71e9b7d57113e0715b1df7ea1e812b125
+  languageName: node
+  linkType: hard
+
+"deep-eql@npm:^4.0.0":
+  version: 4.1.1
+  resolution: "deep-eql@npm:4.1.1"
+  dependencies:
+    type-detect: ^4.0.0
+  checksum: e14ec4065a38d89e48dee9c79c43c45c48bb0932e2be01898874517892ea15e20619d9c570019d6086ed74ea5557cc03ba4fab11878d20922d548221979b8d94
   languageName: node
   linkType: hard
 
@@ -4523,6 +4533,15 @@ __metadata:
   version: 1.0.4
   resolution: "grapheme-splitter@npm:1.0.4"
   checksum: 0c22ec54dee1b05cd480f78cf14f732cb5b108edc073572c4ec205df4cd63f30f8db8025afc5debc8835a8ddeacf648a1c7992fe3dcd6ad38f9a476d84906620
+  languageName: node
+  linkType: hard
+
+"group-items@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "group-items@npm:2.2.0"
+  dependencies:
+    deep-eql: ^4.0.0
+  checksum: 920d4b231712205cf169631053414b3e870c481f7042d14d79f601f21d29dc720686f8a3f1e65bc019ffaf9dd9c4e83f4a5520cdcb009eb29bb980052874d8db
   languageName: node
   linkType: hard
 
