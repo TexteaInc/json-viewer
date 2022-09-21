@@ -36,6 +36,7 @@ describe('render <JsonViewer/>', () => {
 
   it('render array', () => {
     render(<JsonViewer value={[1, '2', 3.0, Infinity]}/>)
+    render(<JsonViewer value={new Array(1e5).fill(1)}/>)
   })
 
   it('render Set', () => {
