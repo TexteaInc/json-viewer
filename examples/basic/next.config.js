@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   optimizeFonts: true,
+  images: {
+    domains: ['i.imgur.com']
+  },
   experimental: {
     externalDir: true
   }
