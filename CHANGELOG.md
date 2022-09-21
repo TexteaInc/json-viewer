@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.4...json-viewer-v2.3.0) (2022-09-21)
+
+
+### Features
+
+* backport support for `props.quotesOnKeys` and `props.sortKeys` ([#48](https://github.com/TexteaInc/json-viewer/issues/48)) ([6b2eb14](https://github.com/TexteaInc/json-viewer/commit/6b2eb1475e117a421482fda592f7f51db9111b08))
+
 ## [2.2.4](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.3...json-viewer-v2.2.4) (2022-09-21)
 
 
