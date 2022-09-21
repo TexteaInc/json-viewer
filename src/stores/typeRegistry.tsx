@@ -13,6 +13,7 @@ import {
   PostObjectType,
   PreObjectType
 } from '../components/DataTypes/Object'
+import { TypedArray, TypedArrayType } from '../components/DataTypes/TypedArray'
 import type { DataType } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
@@ -149,7 +150,10 @@ registerType<string>(
         const [showRest, setShowRest] = useState(false)
         const collapseStringsAfterLength = useJsonViewerStore(
           store => store.collapseStringsAfterLength)
-        const value = showRest ? props.value : props.value.slice(0, collapseStringsAfterLength)
+        const value = showRest
+          ? props.value
+          : props.value.slice(0,
+            collapseStringsAfterLength)
         const hasRest = props.value.length > collapseStringsAfterLength
         return (
           <Box
@@ -254,5 +258,12 @@ registerType<bigint>(
         fromString: value => BigInt(value.replace(/\D/g, ''))
       }
     )
+  }
+)
+
+registerType<TypedArray>(
+  {
+    is: (value): value is TypedArray => ArrayBuffer.isView(value),
+    Component: TypedArrayType
   }
 )
