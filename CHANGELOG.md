@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.2...json-viewer-v2.2.3) (2022-09-21)
+
+
+### Bug Fixes
+
+* basic example ([9dd10cd](https://github.com/TexteaInc/json-viewer/commit/9dd10cdcd03c6301eb27aa2362590361caccc520))
+
 ## [2.2.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.1...json-viewer-v2.2.2) (2022-09-21)
 
 
