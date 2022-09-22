@@ -188,6 +188,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   }), [inspect, path, setInspect, value])
   return (
     <Box className='data-key-pair'
+         data-testid={'data-key-pair' + path.join('.')}
          onMouseEnter={
            useCallback(() => setHover(path, nestedIndex),
              [setHover, path, nestedIndex])
@@ -226,17 +227,19 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
         {
           (isRoot && rootName !== false)
             ? <>&quot;{rootName}&quot;</>
-            : !isRoot && KeyRenderer.when(downstreamProps)
-                ? <KeyRenderer {...downstreamProps} />
-                : nestedIndex === undefined && (
-                  isNumberKey
-                    ? <Box component='span'
-                       style={{ color: numberKeyColor }}>{key}</Box>
-                    : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
-                )
+            : isRoot && rootName === false
+              ? <></>
+              : !isRoot && KeyRenderer.when(downstreamProps)
+                  ? <KeyRenderer {...downstreamProps} />
+                  : nestedIndex === undefined && (
+                    isNumberKey
+                      ? <Box component='span'
+                         style={{ color: numberKeyColor }}>{key}</Box>
+                      : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
+                  )
         }
         {
-          nestedIndex === undefined && (
+          (nestedIndex === undefined && isRoot && rootName !== false) && (
             <DataBox sx={{ mx: 0.5 }}>:</DataBox>
           )
         }
