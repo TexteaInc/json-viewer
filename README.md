@@ -19,12 +19,16 @@ This is a React component for JSON viewer, but not only a JSON viewer.
 
 ## Usage
 
+### NPM
 ```shell
-# npm
 npm install @textea/json-viewer
-# yarn
+```
+### Yarn
+```shell
 yarn add @textea/json-viewer
-# pnpm
+```
+### PNPM
+```shell
 pnpm add @textea/json-viewer
 ```
 
@@ -35,7 +39,7 @@ see [src/type.ts](src/type.ts)
 ### Basic Example
 
 ```tsx
-import JsonViewer from '@textea/json-viewer'
+import { JsonViewer } from '@textea/json-viewer'
 
 const object = { /* my json object */ }
 const Component = () => (<JsonViewer value={object}/>)
