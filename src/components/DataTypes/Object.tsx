@@ -252,9 +252,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
               <Box component='span' className='data-object-body'
                  onClick={() => props.setInspect(true)}
                  sx={{
-                   "&:hover": {
-                     cursor: "pointer"
-                   }
+                   "&:hover": {cursor: "pointer"}
                  }}
               >
                 ...
