@@ -107,6 +107,22 @@ const Component = () => (
 
 ![Ocean Theme Preview](docs/public/ocean-theme.png)
 
+### Browser
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div id="json-viewer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer"></script>
+<script>
+  new JsonViewer({
+    value: { /* ... */ }
+  }).render()
+</script>
+</body>
+</html>
+```
 
 ## Features
 
