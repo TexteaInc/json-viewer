@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.1...json-viewer-v2.5.2) (2022-09-22)
+
+
+### Bug Fixes
+
+* set editable to false by default ([#69](https://github.com/TexteaInc/json-viewer/issues/69)) ([66c8d68](https://github.com/TexteaInc/json-viewer/commit/66c8d68e08364a75d66fc4588edf963f1b62c4e4))
+
 ## [2.5.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.0...json-viewer-v2.5.1) (2022-09-22)
 
 
