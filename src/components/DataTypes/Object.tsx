@@ -249,7 +249,14 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
           ? elements
           : !isTrap
               ? (
-              <Box component='span' className='data-object-body' onClick={() => props.setInspect(true)}>
+              <Box component='span' className='data-object-body'
+                 onClick={() => props.setInspect(true)}
+                 sx={{
+                   "&:hover": {
+                     cursor: "pointer"
+                   }
+                 }}
+              >
                 ...
               </Box>
                 )
