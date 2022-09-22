@@ -132,6 +132,41 @@ describe('render <JsonViewer/>', () => {
     render(<JsonViewer value={full}/>)
   })
 })
+describe('render <JsonViewer/> with multiple instances', () => {
+  it('render', () => {
+    const { container } = render(
+      <>
+        <JsonViewer
+          rootName={false}
+          value={undefined}
+          valueTypes={[
+            {
+              is: (() => true) as any,
+              Component: () => {
+                return <>first viewer</>
+              }
+            }
+          ]}
+        />
+        <JsonViewer
+          rootName={false}
+          value={undefined}
+          valueTypes={[
+            {
+              is: (() => true) as any,
+              Component: () => {
+                return <>second viewer</>
+              }
+            }
+          ]}
+        />
+      </>
+    )
+    expect(container.children.length).eq(2)
+    expect(container.children.item(0)!.textContent).eq('first viewer')
+    expect(container.children.item(1)!.textContent).eq('second viewer')
+  })
+})
 
 describe('render <JsonViewer/> with props', () => {
   it('render with quotesOnKeys', () => {
