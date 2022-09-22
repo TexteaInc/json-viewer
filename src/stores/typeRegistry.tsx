@@ -16,7 +16,7 @@ import {
   PostObjectType,
   PreObjectType
 } from '../components/DataTypes/Object'
-import type { DataType } from '../type'
+import type { DataItemProps, DataType } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
 type TypeRegistryState = {
@@ -89,24 +89,22 @@ export function predefined (): DataType<any>[] {
   const types: DataType<any>[] = []
 
   function registerType<Type> (dataType: DataType<Type>): void {
-    dataType.Component = memo(
-      dataType.Component,
-      (prevProps, nextProps) => {
-        return (
-          Object.is(prevProps.value, nextProps.value) &&
-          prevProps.inspect && nextProps.inspect &&
-          prevProps.path?.join('.') === nextProps.path?.join('.')
-        )
-      }
-    )
+    function compare (prevProps: Readonly<DataItemProps<Type>>, nextProps: Readonly<DataItemProps<Type>>) {
+      return (
+        Object.is(prevProps.value, nextProps.value) &&
+        prevProps.inspect && nextProps.inspect &&
+        prevProps.path?.join('.') === nextProps.path?.join('.')
+      )
+    }
+    dataType.Component = memo(dataType.Component, compare)
     if (dataType.Editor) {
       dataType.Editor = memo(dataType.Editor)
     }
     if (dataType.PreComponent) {
-      dataType.PreComponent = memo(dataType.PreComponent)
+      dataType.PreComponent = memo(dataType.PreComponent, compare)
     }
     if (dataType.PostComponent) {
-      dataType.PostComponent = memo(dataType.PostComponent)
+      dataType.PostComponent = memo(dataType.PostComponent, compare)
     }
     types.push(dataType)
   }
