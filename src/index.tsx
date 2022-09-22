@@ -71,15 +71,23 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
     }
   }, [api, props.theme])
   const onceRef = useRef(true)
-  const registerType = useTypeRegistryStore(store => store.registerType)
-  // DO NOT try to dynamic add value types, that is costly. Trust me.
+  const predefinedTypes = useMemo(() => predefined(), [])
+  const registerTypes = useTypeRegistryStore(store => store.registerTypes)
   if (onceRef.current) {
-    predefined(registerType)
+    const allTypes = [...predefinedTypes]
     props.valueTypes?.forEach(type => {
-      registerType(type)
+      allTypes.push(type)
     })
+    registerTypes(allTypes)
     onceRef.current = false
   }
+  useEffect(() => {
+    const allTypes = [...predefinedTypes]
+    props.valueTypes?.forEach(type => {
+      allTypes.push(type)
+    })
+    registerTypes(allTypes)
+  }, [predefinedTypes, props.valueTypes, registerTypes])
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)

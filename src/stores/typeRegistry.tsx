@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { DevelopmentError } from '@textea/dev-kit/utils'
-import React, { useMemo, useState } from 'react'
+import React, { memo, SetStateAction, useMemo, useState } from 'react'
 import create from 'zustand'
 import createStore from 'zustand/context'
 import { combine } from 'zustand/middleware'
@@ -16,7 +16,7 @@ import {
   PostObjectType,
   PreObjectType
 } from '../components/DataTypes/Object'
-import type { DataType } from '../type'
+import type { DataItemProps, DataType } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
 type TypeRegistryState = {
@@ -24,7 +24,7 @@ type TypeRegistryState = {
 }
 
 type TypeRegistryActions = {
-  registerType: <Type>(dataType: DataType<Type>) => void
+  registerTypes: (setState: SetStateAction<DataType<any>[]>) => void
 }
 
 export const createTypeRegistryStore = () => create(
@@ -33,9 +33,12 @@ export const createTypeRegistryStore = () => create(
       registry: []
     },
     (set) => ({
-      registerType: (type) => {
+      registerTypes: (setState) => {
         set(state => ({
-          registry: [...state.registry, type]
+          registry:
+            typeof setState === 'function'
+              ? setState(state.registry)
+              : setState
         }))
       }
     })
@@ -55,7 +58,8 @@ const objectType: DataType<object> = {
   PostComponent: PostObjectType
 }
 
-export function matchTypeComponents<Value> (value: Value, registry: TypeRegistryState['registry']): DataType<Value> {
+export function matchTypeComponents<Value> (
+  value: Value, registry: TypeRegistryState['registry']): DataType<Value> {
   let potential: DataType<Value> | undefined
   for (const T of registry) {
     if (T.is(value)) {
@@ -81,7 +85,30 @@ export function useTypeComponents (value: unknown) {
   return useMemo(() => matchTypeComponents(value, registry), [value, registry])
 }
 
-export function predefined (registerType: TypeRegistryActions['registerType']) {
+export function predefined (): DataType<any>[] {
+  const types: DataType<any>[] = []
+
+  function registerType<Type> (dataType: DataType<Type>): void {
+    function compare (prevProps: Readonly<DataItemProps<Type>>, nextProps: Readonly<DataItemProps<Type>>) {
+      return (
+        Object.is(prevProps.value, nextProps.value) &&
+        prevProps.inspect && nextProps.inspect &&
+        prevProps.path?.join('.') === nextProps.path?.join('.')
+      )
+    }
+    dataType.Component = memo(dataType.Component, compare)
+    if (dataType.Editor) {
+      dataType.Editor = memo(dataType.Editor)
+    }
+    if (dataType.PreComponent) {
+      dataType.PreComponent = memo(dataType.PreComponent, compare)
+    }
+    if (dataType.PostComponent) {
+      dataType.PostComponent = memo(dataType.PostComponent, compare)
+    }
+    types.push(dataType)
+  }
+
   registerType<boolean>(
     {
       is: (value): value is boolean => typeof value === 'boolean',
@@ -250,7 +277,8 @@ export function predefined (registerType: TypeRegistryActions['registerType']) {
 
   registerType<number>(
     {
-      is: (value): value is number => typeof value === 'number' && !isInt(value),
+      is: (value): value is number => typeof value === 'number' &&
+        !isInt(value),
       ...createEasyType(
         'float',
         ({ value }) => <>{`${value}`}</>,
@@ -289,4 +317,6 @@ export function predefined (registerType: TypeRegistryActions['registerType']) {
       )
     }
   )
+
+  return types
 }
