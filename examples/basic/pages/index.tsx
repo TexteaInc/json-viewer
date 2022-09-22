@@ -1,9 +1,10 @@
 import {
+  AppBar,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  TextField
+  TextField, Toolbar, Typography
 } from '@mui/material'
 import {
   applyValue,
@@ -103,6 +104,27 @@ const IndexPage: React.FC = () => {
   }, [])
   return (
     <div>
+      <AppBar>
+        <Toolbar>
+          <Typography
+            variant='h6'
+            noWrap
+            component='div'
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            JSON viewer
+          </Typography>
+          <a href='https://www.netlify.com' target='_blank' rel='noreferrer'>
+            <Image
+              width={114}
+              height={51}
+              src='https://www.netlify.com/v3/img/components/netlify-color-accent.svg'
+              alt='Deploys by Netlify'
+            />
+          </a>
+        </Toolbar>
+      </AppBar>
+      <Toolbar/>
       <TextField
         label='indentWidth'
         value={indent}
@@ -161,7 +183,8 @@ const IndexPage: React.FC = () => {
             is: (value): value is string => typeof value === 'string' &&
               value.startsWith('https://i.imgur.com'),
             Component: (props) => {
-              return <Image height={50} width={50} src={props.value} alt={props.value}/>
+              return <Image height={50} width={50} src={props.value}
+                            alt={props.value}/>
             }
           }
         ]}
