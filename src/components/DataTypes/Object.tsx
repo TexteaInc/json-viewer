@@ -191,13 +191,10 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     // object
     let entries: [key: string, value: unknown][] = Object.entries(value)
     if (objectSortKeys) {
-      entries = entries.sort(([a], [b]) => {
-        if (objectSortKeys === true) {
-          return a.localeCompare(b)
-        } else {
-          return objectSortKeys(a, b)
-        }
-      })
+      entries = entries.sort(([a], [b]) => objectSortKeys === true
+          ? a.localeCompare(b)
+          : objectSortKeys(a, b)
+      )
     }
     const elements = entries.slice(0, displayLength).map(([key, value]) => {
       const path = [...props.path, key]

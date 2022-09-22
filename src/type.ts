@@ -78,7 +78,7 @@ export type JsonViewerProps<T = unknown> = {
    * Pass `false` to turn off the edit feature.
    * Pass a function to customize the result.
    *
-   * @default true
+   * @default false
    */
   editable?: boolean | (<U = unknown>(path: Path, currentValue: U) => boolean)
   /**
