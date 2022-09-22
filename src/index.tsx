@@ -13,7 +13,10 @@ import {
   useJsonViewerStore,
   useJsonViewerStoreApi
 } from './stores/JsonViewerStore'
-import { registerType } from './stores/typeRegistry'
+import {
+  createTypeRegistryStore, predefined,
+  TypeRegistryProvider, useTypeRegistryStore
+} from './stores/typeRegistry'
 import { darkColorspace, lightColorspace } from './theme/base16'
 import type { JsonViewerProps } from './type'
 import { applyValue, createDataType, isCycleReference } from './utils'
@@ -23,7 +26,7 @@ export { applyValue, createDataType, isCycleReference }
 /**
  * @internal
  */
-function useSetIfNotUndefinedEffect <Key extends keyof JsonViewerProps> (
+function useSetIfNotUndefinedEffect<Key extends keyof JsonViewerProps> (
   key: Key,
   value: JsonViewerProps[Key] | undefined
 ) {
@@ -66,6 +69,16 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
       })
     }
   }, [api, props.theme])
+  const onceRef = useRef(true)
+  const registerType = useTypeRegistryStore(store => store.registerType)
+  // DO NOT try to dynamic add value types, that is costly. Trust me.
+  if (onceRef.current) {
+    predefined(registerType)
+    props.valueTypes?.forEach(type => {
+      registerType(type)
+    })
+    onceRef.current = false
+  }
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)
@@ -122,24 +135,18 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
       }
     })
   }, [themeType])
-  const onceRef = useRef(true)
-  // DO NOT try to dynamic add value types, that is costly. Trust me.
-  if (onceRef.current) {
-    props.valueTypes?.forEach(type => {
-      registerType(type)
-    })
-    onceRef.current = false
-  }
   const mixedProps = { ...props, theme: themeType }
   return (
     <ThemeProvider theme={theme}>
-      <JsonViewerProvider createStore={() => {
-        // This function only runs once, so we don't need a memo for this.
-        //  Refs: https://github.com/pmndrs/zustand/blob/77d14b17bc33a6f10f072802fac56aa78510710e/src/context.ts#L36-L38
-        return createJsonViewerStore(props)
-      }}>
-        <JsonViewerInner {...mixedProps}/>
-      </JsonViewerProvider>
+      <TypeRegistryProvider createStore={createTypeRegistryStore}>
+        <JsonViewerProvider createStore={() => {
+          // This function only runs once, so we don't need a memo for this.
+          //  Refs: https://github.com/pmndrs/zustand/blob/77d14b17bc33a6f10f072802fac56aa78510710e/src/context.ts#L36-L38
+          return createJsonViewerStore(props)
+        }}>
+          <JsonViewerInner {...mixedProps}/>
+        </JsonViewerProvider>
+      </TypeRegistryProvider>
     </ThemeProvider>
   )
 }
