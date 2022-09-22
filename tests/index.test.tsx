@@ -146,4 +146,8 @@ describe('render <JsonViewer/> with props', () => {
       render(<JsonViewer value={full} objectSortKeys={objectSortKeys}/>)
     })
   })
+
+  it('render with rootName false', async () => {
+    render(<JsonViewer value={undefined} rootName={false}/>)
+  })
 })
