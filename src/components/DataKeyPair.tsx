@@ -32,7 +32,7 @@ const IconBox = styled(props => <Box {...props} component='span'/>)`
 
 export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const { value, path, nestedIndex } = props
-  const propsEditable = props.editable ?? true
+  const propsEditable = props.editable ?? false
   const storeEditable = useJsonViewerStore(store => store.editable)
   const editable = useMemo(() => {
     if (storeEditable === false) {
