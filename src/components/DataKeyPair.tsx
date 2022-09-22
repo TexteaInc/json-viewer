@@ -37,14 +37,15 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const editable = useMemo(() => {
     if (storeEditable === false) {
       return false
-    } else if (!propsEditable) {
+    }
+    if (!propsEditable) {
       // props.editable is false which means we cannot provide the suitable way to edit it
       return false
-    } else if (typeof storeEditable === 'function') {
-      return !!storeEditable(path, value)
-    } else {
-      return propsEditable
     }
+    if (typeof storeEditable === 'function') {
+      return !!storeEditable(path, value)
+    }
+    return propsEditable
   }, [path, propsEditable, storeEditable, value])
   const [tempValue, setTempValue] = useState(value)
   const depth = path.length
