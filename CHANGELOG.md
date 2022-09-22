@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.3.0...json-viewer-v2.3.1) (2022-09-22)
+
+
+### Bug Fixes
+
+* style add padding to `null` and `undefined` ([#50](https://github.com/TexteaInc/json-viewer/issues/50)) ([5f5884f](https://github.com/TexteaInc/json-viewer/commit/5f5884f359e74ba6d89cca76410d0e7619f71109))
+
 ## [2.3.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.2.4...json-viewer-v2.3.0) (2022-09-21)
 
 
