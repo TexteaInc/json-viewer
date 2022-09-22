@@ -65,7 +65,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
             <CircularArrowsIcon sx={{
               fontSize: 12,
               color: textColor,
-              mx: sizeOfValue ? 0.5 : 0
+              mx: 1
             }}/>
             {isTrap}
           </>
