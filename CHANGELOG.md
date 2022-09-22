@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.0...json-viewer-v2.5.1) (2022-09-22)
+
+
+### Bug Fixes
+
+* type registry runs multiple times ([#67](https://github.com/TexteaInc/json-viewer/issues/67)) ([03761ed](https://github.com/TexteaInc/json-viewer/commit/03761ed234c1a4e5d91a3169bc53caa3967df933))
+
 ## [2.5.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.4.1...json-viewer-v2.5.0) (2022-09-22)
 
 
