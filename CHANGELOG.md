@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.4.0...json-viewer-v2.4.1) (2022-09-22)
+
+
+### Bug Fixes
+
+* ignore rootName when its false ([#57](https://github.com/TexteaInc/json-viewer/issues/57)) ([7661de0](https://github.com/TexteaInc/json-viewer/commit/7661de0dc503c2a0f004bf08e30f9806a29321ee))
+
 ## [2.4.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.3.1...json-viewer-v2.4.0) (2022-09-22)
 
 
