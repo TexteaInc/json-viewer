@@ -103,7 +103,8 @@ registerType<null>(
             fontSize: '0.8rem',
             backgroundColor,
             fontWeight: 'bold',
-            borderRadius: '3px'
+            borderRadius: '3px',
+            padding: '0.5px 2px'
           }}>
             NULL
           </Box>
@@ -126,7 +127,8 @@ registerType<undefined>(
           <Box sx={{
             fontSize: '0.7rem',
             backgroundColor,
-            borderRadius: '3px'
+            borderRadius: '3px',
+            padding: '0.5px 2px'
           }}>
             undefined
           </Box>
