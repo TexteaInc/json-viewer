@@ -1,0 +1,42 @@
+---
+title: Introduction
+---
+import { JsonViewerPreview } from '../components/JsonViewerPreview'
+
+# @textea/json-viewer
+
+### NPM
+```shell
+npm install @textea/json-viewer
+```
+### Yarn
+```shell
+yarn add @textea/json-viewer
+```
+### PNPM
+```shell
+pnpm add @textea/json-viewer
+```
+
+### Basic Example
+
+```tsx
+import { JsonViewer } from '@textea/json-viewer'
+
+const object = { /* my json object */ }
+const Component = () => (<JsonViewer value={object}/>)
+```
+
+<JsonViewerPreview
+  value={{
+    string: 'this is a string',
+    number: 1,
+    float: 114.514,
+    bigint: 10086n,
+    object: {
+      value: new Date('December 17, 1995 03:24:00')
+    }
+  }}
+/>
+
+---
