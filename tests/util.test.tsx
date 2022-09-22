@@ -3,7 +3,83 @@ import type React from 'react'
 import { describe, expect, test } from 'vitest'
 
 import type { DataItemProps } from '../src'
-import { createDataType } from '../src/utils'
+import { applyValue, createDataType, isCycleReference } from '../src'
+
+describe('function applyValue', () => {
+  const patches: any[] = [{}, undefined, 1, '2', 3n, 0.4]
+  test('incorrect arguments', () => {
+    expect(() => {
+      applyValue({}, ['not', 'exist'], 1)
+    }).toThrow()
+    expect(() => {
+      applyValue(1, ['not', 'exist'], 1)
+    }).toThrow()
+  })
+
+  test('undefined', () => {
+    patches.forEach(patch => {
+      const newValue = applyValue(undefined, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('null', () => {
+    patches.forEach(patch => {
+      const newValue = applyValue(null, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('number', () => {
+    patches.forEach(patch => {
+      const newValue = applyValue(1, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+    patches.forEach(patch => {
+      const newValue = applyValue(114514, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('string', () => {
+    patches.forEach(patch => {
+      const newValue = applyValue('', [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('object', () => {
+    const original = {
+      foo: 1
+    }
+    const newValue = applyValue(original, ['foo'], 2)
+    expect(newValue).is.deep.eq({
+      foo: 2
+    })
+  })
+})
+
+describe('function isCycleReference', () => {
+  test('root is leaf', () => {
+    const root = {
+      leaf: {}
+    }
+    root.leaf = root
+    expect(isCycleReference(root, ['leaf'], root.leaf)).to.eq('')
+  })
+
+  test('branch is leaf', () => {
+    const root = {
+      a: {
+        b: {
+          c: {}
+        }
+      }
+    }
+    root.a.b.c = root.a.b
+    expect(isCycleReference(root, ['a', 'b', 'c'], root.a.b.c)).to.eq('a.b')
+  })
+})
 
 describe('function createDataType', () => {
   test('case 1', () => {
