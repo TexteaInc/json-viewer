@@ -124,9 +124,21 @@ const Component = () => (
 - [ ] Editor for basic types
 - [ ] Fully Test Coverage
 
+## Contributors
+
+<a href="https://github.com/TexteaInc/json-viewer/graphs/contributors"><img src="https://opencollective.com/json-viewer/contributors.svg?width=890&button=false" /></a>
+
 ## Acknowledge
 
-This package is originally based on [mac-s-g/react-json-view](https://github.com/mac-s-g/react-json-view)
+This package is originally based on [mac-s-g/react-json-view](https://github.com/mac-s-g/react-json-view).
+
+Also thanks open source projects that make this possible.
+
+## Sponsoring services
+
+![Netlify](https://www.netlify.com/v3/img/components/full-logo-light.svg)
+
+[Netlify](https://www.netlify.com/) lets us distribute the [site](https://viewer.textea.io).
 
 ## LICENSE
 
