@@ -34,15 +34,16 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
   }, [defaultInspectDepth, depth, getInspectCache, isTrap, nestedIndex, path, setInspectCache])
   const [inspect, set] = useState<boolean>(() => {
     const shouldInspect = getInspectCache(path, nestedIndex)
-    if (shouldInspect === undefined) {
-      if (nestedIndex !== undefined) {
-        return false
-      }
-      return isTrap
-        ? false
-        : depth < defaultInspectDepth
+    if (shouldInspect !== undefined) {
+      return shouldInspect
     }
-    return shouldInspect
+    if (nestedIndex !== undefined) {
+      return false
+    }
+    return isTrap
+      ? false
+      : depth < defaultInspectDepth
+
   })
   const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
     set((oldState) => {
