@@ -44,7 +44,7 @@ const Component = () => (<JsonViewer value={object}/>)
 ### Customizable data type
 
 ```tsx
-import JsonViewer from '@textea/json-viewer'
+import { JsonViewer, createDataType } from '@textea/json-viewer'
 
 const object = {
   // what if I want to inspect a image?
@@ -56,14 +56,14 @@ const Component = () => (
     value={object}
     // just define it
     valueTypes={[
-      {
-        is: (value) =>
-          typeof value === 'string' &&
+      createDataType(
+        (value) => typeof value === 'string' &&
           value.startsWith('https://i.imgur.com'),
-        Component: (props) => {
-          return <img height="50px" src={props.value} alt={props.value}/>;
-        },
-      },
+        (props) => {
+          return <Image height={50} width={50} src={props.value}
+                        alt={props.value}/>
+        }
+      )
     ]}
   />
 )
@@ -128,10 +128,10 @@ const Component = () => (
 
 - [X] 100% TypeScript
 - [X] Customizable
-  - [X] `keyRenderer` for customize key renderer
-  - [X] `valueTypes` for customize any value types you want
-  - [X] `light | dark | base16` Theme support
-  - [ ] custom metadata
+    - [X] `keyRenderer` for customize key renderer
+    - [X] `valueTypes` for customize any value types you want
+    - [X] `light | dark | base16` Theme support
+    - [ ] custom metadata
 - [X] Support `Next.js` SSR
 - [X] `onChange` props allow users to edit value
 - [X] Inspect `object`, `Array`, primitive type, even `Map` and `Set` by default.

@@ -1,3 +1,7 @@
+import type React from 'react'
+
+import type { DataItemProps, EditorProps } from '../type'
+
 export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   if (typeof obj !== 'object' || obj === null) {
     return value
@@ -16,7 +20,70 @@ export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   return obj
 }
 
-export const isCycleReference = (root: any, path: (string | number)[], value: unknown): false | string => {
+// case 1: you only render with a single component
+export function createDataType<ValueType = unknown> (
+  is: (value: unknown) => boolean,
+  Component: React.ComponentType<DataItemProps<ValueType>>
+): {
+  is: (value: unknown) => value is ValueType
+  Component: React.ComponentType<DataItemProps<ValueType>>
+}
+// case 2: you only render with a single component with editor
+export function createDataType<ValueType = unknown> (
+  is: (value: unknown) => boolean,
+  Component: React.ComponentType<DataItemProps<ValueType>>,
+  Editor: React.ComponentType<EditorProps<ValueType>>
+): {
+  is: (value: unknown) => value is ValueType
+  Component: React.ComponentType<DataItemProps<ValueType>>
+  Editor: React.ComponentType<DataItemProps<ValueType>>
+}
+// case 3: you only render with a component with pre and post.
+export function createDataType<ValueType = unknown> (
+  is: (value: unknown) => boolean,
+  Component: React.ComponentType<DataItemProps<ValueType>>,
+  Editor: undefined,
+  PreComponent: React.ComponentType<DataItemProps<ValueType>>,
+  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+): {
+  is: (value: unknown) => value is ValueType
+  Component: React.ComponentType<DataItemProps<ValueType>>
+  PreComponent: React.ComponentType<DataItemProps<ValueType>>
+  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+}
+// case 4: need all of these
+export function createDataType<ValueType = unknown> (
+  is: (value: unknown) => boolean,
+  Component: React.ComponentType<DataItemProps<ValueType>>,
+  Editor: React.ComponentType<EditorProps<ValueType>>,
+  PreComponent: React.ComponentType<DataItemProps<ValueType>>,
+  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+): {
+  is: (value: unknown) => value is ValueType
+  Component: React.ComponentType<DataItemProps<ValueType>>
+  Editor: React.ComponentType<DataItemProps<ValueType>>
+  PreComponent: React.ComponentType<DataItemProps<ValueType>>
+  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+}
+
+export function createDataType<ValueType = unknown> (
+  is: (value: unknown) => boolean,
+  Component: React.ComponentType<DataItemProps<ValueType>>,
+  Editor?: React.ComponentType<EditorProps<ValueType>> | undefined,
+  PreComponent?: React.ComponentType<DataItemProps<ValueType>> | undefined,
+  PostComponent?: React.ComponentType<DataItemProps<ValueType>> | undefined
+): any {
+  return {
+    is,
+    Component,
+    Editor,
+    PreComponent,
+    PostComponent
+  }
+}
+
+export const isCycleReference = (
+  root: any, path: (string | number)[], value: unknown): false | string => {
   if (root === null || value === null) {
     return false
   }
