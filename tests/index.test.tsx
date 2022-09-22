@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
-import { describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { JsonViewer } from '../src'
 
@@ -149,5 +149,6 @@ describe('render <JsonViewer/> with props', () => {
 
   it('render with rootName false', async () => {
     render(<JsonViewer value={undefined} rootName={false}/>)
+    expect((await screen.findByTestId('data-key-pair')).innerText).toEqual(undefined)
   })
 })
