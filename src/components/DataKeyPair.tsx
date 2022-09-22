@@ -239,8 +239,14 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
                   )
         }
         {
-          (nestedIndex === undefined && isRoot && rootName !== false) && (
-            <DataBox sx={{ mx: 0.5 }}>:</DataBox>
+          (
+            isRoot
+              ? (rootName !== false
+                  ? <DataBox sx={{ mx: 0.5 }}>:</DataBox>
+                  : null)
+              : nestedIndex === undefined && (
+               <DataBox sx={{ mx: 0.5 }}>:</DataBox>
+              )
           )
         }
         {PreComponent && <PreComponent {...downstreamProps} />}
