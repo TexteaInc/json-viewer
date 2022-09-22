@@ -70,14 +70,13 @@ export function matchTypeComponents<Value> (
       }
     }
   }
-  if (potential === undefined && typeof value === 'object') {
-    return objectType as unknown as DataType<Value>
-  } else {
-    if (potential === undefined) {
-      throw new DevelopmentError('this is not possible')
+  if (potential === undefined) {
+    if (typeof value === 'object') {
+      return objectType as unknown as DataType<Value>
     }
-    return potential
+    throw new DevelopmentError('this is not possible')
   }
+  return potential
 }
 
 export function useTypeComponents (value: unknown) {
