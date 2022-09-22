@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.3.1...json-viewer-v2.4.0) (2022-09-22)
+
+
+### Features
+
+* support browser ([#53](https://github.com/TexteaInc/json-viewer/issues/53)) ([819fdf8](https://github.com/TexteaInc/json-viewer/commit/819fdf84145e94e72c78350eb2a6e0e97e86971e))
+
+
+### Bug Fixes
+
+* **example:** add netlify badge ([60d1cc7](https://github.com/TexteaInc/json-viewer/commit/60d1cc778723cf27476833df5daf883cc92690bc))
+
 ## [2.3.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.3.0...json-viewer-v2.3.1) (2022-09-22)
 
 
