@@ -4,6 +4,9 @@ import type { DataItemProps, EditorProps } from '../type'
 
 export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   if (typeof obj !== 'object' || obj === null) {
+    if (path.length !== 0) {
+      throw new Error('path is incorrect')
+    }
     return value
   }
   const arr: (string | number)[] = [...path]
