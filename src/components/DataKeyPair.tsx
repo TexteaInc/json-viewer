@@ -226,18 +226,20 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
             : null
         }
         {
-          (isRoot && rootName !== false)
-            ? <>&quot;{rootName}&quot;</>
-            : isRoot && rootName === false
-              ? <></>
-              : !isRoot && KeyRenderer.when(downstreamProps)
+          (isRoot
+              ? (
+                  rootName !== false
+                  ? (quotesOnKeys ? <>&quot;{rootName}&quot;</> : <>{rootName}</>)
+                  : null
+              )
+              : KeyRenderer.when(downstreamProps)
                   ? <KeyRenderer {...downstreamProps} />
                   : nestedIndex === undefined && (
                     isNumberKey
-                      ? <Box component='span'
-                         style={{ color: numberKeyColor }}>{key}</Box>
+                      ? <Box component='span' style={{ color: numberKeyColor }}>{key}</Box>
                       : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
                   )
+          )
         }
         {
           (
