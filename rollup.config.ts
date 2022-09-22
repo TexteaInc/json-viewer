@@ -4,6 +4,7 @@ import { basename, resolve } from 'node:path'
 import alias from '@rollup/plugin-alias'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import replace from '@rollup/plugin-replace'
 import type {
   ModuleFormat,
   OutputOptions,
@@ -34,7 +35,7 @@ const external = [
   'react-dom'
 ]
 const outputMatrix = (
-  name: string, format: ModuleFormat[] = ['es', 'umd']): OutputOptions[] => {
+  name: string, format: ModuleFormat[]): OutputOptions[] => {
   const baseName = basename(name)
   return format.flatMap(format => ({
     file: resolve(outputDir, `${baseName}.${format === 'es' ? 'm' : ''}js`),
@@ -49,20 +50,39 @@ const outputMatrix = (
   }))
 }
 
-const buildMatrix = (input: string, output: string): RollupOptions => {
-  dtsOutput.add([input.replaceAll('.tsx', '.tsx'), output])
+const buildMatrix = (input: string, output: string, config: {
+  format: ModuleFormat[]
+  browser: boolean
+  dts: boolean
+}): RollupOptions => {
+  if (config.dts) {
+    dtsOutput.add([input.replaceAll('.tsx', '.tsx'), output])
+  }
   return {
     input,
-    output: outputMatrix(output),
+    output: outputMatrix(output, config.format),
     cache,
-    external,
+    external: config.browser ? [] : external,
     plugins: [
       alias({
-        entries: [
-          { find: 'react', replacement: '@emotion/react' },
-          { find: 'react/jsx-dev-runtime', replacement: '@emotion/react/jsx-dev-runtime' },
-          { find: 'react/jsx-runtime', replacement: '@emotion/react/jsx-runtime' }
-        ]
+        entries: config.browser
+          ? []
+          : [
+              { find: 'react', replacement: '@emotion/react' },
+              {
+                find: 'react/jsx-dev-runtime',
+                replacement: '@emotion/react/jsx-dev-runtime'
+              },
+              {
+                find: 'react/jsx-runtime',
+                replacement: '@emotion/react/jsx-runtime'
+              }
+            ]
+      }),
+      config.browser && replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('production'),
+        'typeof window': JSON.stringify('object')
       }),
       commonjs(),
       nodeResolve(),
@@ -100,7 +120,16 @@ const dtsMatrix = (): RollupOptions[] => {
 }
 
 const build: RollupOptions[] = [
-  buildMatrix('./src/index.tsx', 'index'),
+  buildMatrix('./src/index.tsx', 'index', {
+    format: ['es', 'umd'],
+    browser: false,
+    dts: true
+  }),
+  buildMatrix('./src/browser.tsx', 'browser', {
+    format: ['es', 'umd'],
+    browser: true,
+    dts: true
+  }),
   ...dtsMatrix()
 ]
 
