@@ -105,13 +105,13 @@ export const isCycleReference = (
   while (currentRoot !== value || arr.length !== 0) {
     if (typeof currentRoot !== 'object' || currentRoot === null) {
       return false
-    } else if (Object.is(currentRoot, value)) {
+    }
+    if (Object.is(currentRoot, value)) {
       return currentPath.reduce<string>((path, value, currentIndex) => {
         if (typeof value === 'number') {
           return path + `[${value}]`
-        } else {
-          return path + `${currentIndex === 0 ? '' : '.'}${value}`
         }
+        return path + `${currentIndex === 0 ? '' : '.'}${value}`
       }, '')
     }
     const target = arr.shift()!
