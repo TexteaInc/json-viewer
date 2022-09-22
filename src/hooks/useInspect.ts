@@ -20,16 +20,17 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
     store => store.defaultInspectDepth)
   useEffect(() => {
     const inspect = getInspectCache(path, nestedIndex)
-    if (inspect === undefined) {
-      if (nestedIndex !== undefined) {
-        setInspectCache(path, false, nestedIndex)
-      } else {
-        // do not inspect when it is a cycle reference, otherwise there will have a loop
-        const inspect = isTrap
-          ? false
-          : depth < defaultInspectDepth
-        setInspectCache(path, inspect)
-      }
+    if (inspect !== undefined) {
+      return
+    }
+    if (nestedIndex !== undefined) {
+      setInspectCache(path, false, nestedIndex)
+    } else {
+      // do not inspect when it is a cycle reference, otherwise there will have a loop
+      const inspect = isTrap
+        ? false
+        : depth < defaultInspectDepth
+      setInspectCache(path, inspect)
     }
   }, [defaultInspectDepth, depth, getInspectCache, isTrap, nestedIndex, path, setInspectCache])
   const [inspect, set] = useState<boolean>(() => {
