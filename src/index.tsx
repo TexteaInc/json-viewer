@@ -16,9 +16,9 @@ import {
 import { registerType } from './stores/typeRegistry'
 import { darkColorspace, lightColorspace } from './theme/base16'
 import type { JsonViewerProps } from './type'
-import { applyValue } from './utils'
+import { applyValue, createDataType, isCycleReference } from './utils'
 
-export { applyValue }
+export { applyValue, createDataType, isCycleReference }
 
 /**
  * @internal

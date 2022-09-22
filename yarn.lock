@@ -1728,6 +1728,7 @@ __metadata:
     "@vitest/coverage-c8": ^0.23.4
     "@vitest/ui": ^0.23.4
     copy-to-clipboard: ^3.3.2
+    expect-type: ^0.14.2
     group-items: ^2.2.0
     husky: ^8.0.1
     jsdom: ^20.0.0
@@ -4061,6 +4062,13 @@ __metadata:
     signal-exit: ^3.0.7
     strip-final-newline: ^3.0.0
   checksum: 1a4af799839134f5c72eb63d525b87304c1114a63aa71676c91d57ccef2e26f2f53e14c11384ab11c4ec479be1efa83d11c8190e00040355c2c5c3364327fa8e
+  languageName: node
+  linkType: hard
+
+"expect-type@npm:^0.14.2":
+  version: 0.14.2
+  resolution: "expect-type@npm:0.14.2"
+  checksum: b8dba1f67d6562d203359d5f5e7ee9c2066c091a7bf3c8744858cbe801fb6becab760961fa206ad5bfd2c532b2a01f835f8f1a4f86f2ad8e6881c0930b48aca5
   languageName: node
   linkType: hard
 
