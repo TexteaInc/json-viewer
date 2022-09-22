@@ -25,7 +25,7 @@ export type DataType<ValueType = unknown> = {
   /**
    * Whether the value belongs to the data type
    */
-  is: (value: unknown) => boolean
+  is: (value: ValueType) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
   Editor?: React.ComponentType<EditorProps<ValueType>>
   PreComponent?: React.ComponentType<DataItemProps<ValueType>>
