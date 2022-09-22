@@ -127,6 +127,13 @@ export type JsonViewerProps<T = unknown> = {
    */
   quotesOnKeys?: boolean
 
+  /**
+   * Whether display data type labels
+   *
+   * @default true
+   */
+  displayDataTypes?: boolean
+
   className?: string
   style?: React.CSSProperties
   /**

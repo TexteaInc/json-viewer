@@ -1,9 +1,9 @@
 import {
   AppBar,
-  FormControl,
+  FormControl, FormControlLabel,
   InputLabel,
   MenuItem,
-  Select,
+  Select, Switch,
   TextField, Toolbar, Typography
 } from '@mui/material'
 import {
@@ -91,6 +91,7 @@ const IndexPage: React.FC = () => {
   const [themeKey, setThemeKey] = useState<string>('light')
   const [theme, setTheme] = useState<JsonViewerTheme>('light')
   const [src, setSrc] = useState(() => example)
+  const [displayDataTypes, setDisplayDataTypes] = useState(true)
   useEffect(() => {
     const loop = () => {
       setSrc(src => ({
@@ -126,6 +127,13 @@ const IndexPage: React.FC = () => {
         </Toolbar>
       </AppBar>
       <Toolbar/>
+      <FormControlLabel
+        control={<Switch
+          value={displayDataTypes}
+          onChange={event => setDisplayDataTypes(event.target.checked)}
+        />}
+        label='DisplayDataTypes'
+      />
       <TextField
         label='indentWidth'
         value={indent}
@@ -177,6 +185,7 @@ const IndexPage: React.FC = () => {
         value={src}
         indentWidth={indent}
         theme={theme}
+        displayDataTypes={displayDataTypes}
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[

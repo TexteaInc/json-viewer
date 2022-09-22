@@ -157,6 +157,13 @@ describe('render <JsonViewer/> with props', () => {
       .toEqual(undefined)
   })
 
+  it('render with displayDataTypes', async () => {
+    const selection = [true, false]
+    selection.forEach(displayDataTypes => {
+      render(<JsonViewer value={undefined} displayDataTypes={displayDataTypes}/>)
+    })
+  })
+
   it('render with dataTypes', async () => {
     render(<JsonViewer value={undefined} valueTypes={[]}/>)
     render(<JsonViewer value={undefined} valueTypes={[
