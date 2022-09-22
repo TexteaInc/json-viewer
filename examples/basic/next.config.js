@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   optimizeFonts: true,
   images: {
-    domains: ['i.imgur.com']
+    domains: ['i.imgur.com', 'www.netlify.com']
   },
   experimental: {
     externalDir: true
