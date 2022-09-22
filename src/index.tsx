@@ -51,6 +51,7 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   useSetIfNotUndefinedEffect('maxDisplayLength', props.maxDisplayLength)
   useSetIfNotUndefinedEffect('enableClipboard', props.enableClipboard)
   useSetIfNotUndefinedEffect('rootName', props.rootName)
+  useSetIfNotUndefinedEffect('displayDataTypes', props.displayDataTypes)
   useEffect(() => {
     if (props.theme === 'light') {
       api.setState({

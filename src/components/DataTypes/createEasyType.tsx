@@ -19,6 +19,7 @@ export function createEasyType<Value> (
   const displayTypeLabel = config.displayTypeLabel ?? true
   const Render = React.memo(renderValue)
   const EasyType: React.FC<DataItemProps<Value>> = (props) => {
+    const storeDisplayDataTypes = useJsonViewerStore(store => store.displayDataTypes)
     const color = useJsonViewerStore(
       store => store.colorspace[config.colorKey])
     return (
@@ -27,7 +28,7 @@ export function createEasyType<Value> (
           color
         }}
       >
-        {displayTypeLabel && <DataTypeLabel dataType={type}/>}
+        {(displayTypeLabel && storeDisplayDataTypes) && <DataTypeLabel dataType={type}/>}
         <DataBox className={`${type}-value`}>
           <Render value={props.value}/>
         </DataBox>
