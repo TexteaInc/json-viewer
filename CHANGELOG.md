@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.4.1...json-viewer-v2.5.0) (2022-09-22)
+
+
+### Features
+
+* add helper function `createDataType` ([#60](https://github.com/TexteaInc/json-viewer/issues/60)) ([8c626cf](https://github.com/TexteaInc/json-viewer/commit/8c626cf5ee39b1f87dd6c9349a2c06b6e69e4412))
+* backport support for `props.displayDataTypes` ([#63](https://github.com/TexteaInc/json-viewer/issues/63)) ([fa10c9e](https://github.com/TexteaInc/json-viewer/commit/fa10c9ea993b194cff8cc28e3a9a87db89207fab))
+
+
+### Bug Fixes
+
+* move type registry into component state ([#64](https://github.com/TexteaInc/json-viewer/issues/64)) ([3e0fdd6](https://github.com/TexteaInc/json-viewer/commit/3e0fdd6a82d0870b0e3c3fca11a80e4cf91d9085))
+
 ## [2.4.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.4.0...json-viewer-v2.4.1) (2022-09-22)
 
 
