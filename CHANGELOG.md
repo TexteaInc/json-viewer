@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.2...json-viewer-v2.5.3) (2022-09-22)
+
+
+### Bug Fixes
+
+* simplify if conditions ([#70](https://github.com/TexteaInc/json-viewer/issues/70)) ([b2ea339](https://github.com/TexteaInc/json-viewer/commit/b2ea3392bead324dce514964dcba1c82c0dc6433))
+
 ## [2.5.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.1...json-viewer-v2.5.2) (2022-09-22)
 
 
