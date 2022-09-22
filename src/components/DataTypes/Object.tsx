@@ -187,44 +187,43 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
                        nestedIndex={index}/>
         )
       })
-    } else {
-      // object
-      let entries: [key: string, value: unknown][] = Object.entries(value)
-      if (objectSortKeys) {
-        entries = entries.sort(([a], [b]) => {
-          if (objectSortKeys === true) {
-            return a.localeCompare(b)
-          } else {
-            return objectSortKeys(a, b)
-          }
-        })
-      }
-      const elements = entries.slice(0, displayLength).map(([key, value]) => {
-        const path = [...props.path, key]
-        return (
-          <DataKeyPair key={key} path={path} value={value}/>
-        )
-      })
-      if (entries.length > displayLength) {
-        const rest = entries.length - displayLength
-        elements.push(
-          <DataBox
-            sx={{
-              cursor: 'pointer',
-              lineHeight: 1.5,
-              color: keyColor,
-              letterSpacing: 0.5,
-              opacity: 0.8
-            }}
-            key='last'
-            onClick={() => setDisplayLength(length => length * 2)}
-          >
-            hidden {rest} items...
-          </DataBox>
-        )
-      }
-      return elements
     }
+    // object
+    let entries: [key: string, value: unknown][] = Object.entries(value)
+    if (objectSortKeys) {
+      entries = entries.sort(([a], [b]) => {
+        if (objectSortKeys === true) {
+          return a.localeCompare(b)
+        } else {
+          return objectSortKeys(a, b)
+        }
+      })
+    }
+    const elements = entries.slice(0, displayLength).map(([key, value]) => {
+      const path = [...props.path, key]
+      return (
+        <DataKeyPair key={key} path={path} value={value}/>
+      )
+    })
+    if (entries.length > displayLength) {
+      const rest = entries.length - displayLength
+      elements.push(
+        <DataBox
+          sx={{
+            cursor: 'pointer',
+            lineHeight: 1.5,
+            color: keyColor,
+            letterSpacing: 0.5,
+            opacity: 0.8
+          }}
+          key='last'
+          onClick={() => setDisplayLength(length => length * 2)}
+        >
+          hidden {rest} items...
+        </DataBox>
+      )
+    }
+    return elements
   }, [
     props.inspect,
     props.value,
@@ -253,7 +252,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
           ? elements
           : !isTrap
               ? (
-              <Box component='span' className='data-object-body'>
+              <Box component='span' className='data-object-body' onClick={() => props.setInspect(true)}>
                 ...
               </Box>
                 )
