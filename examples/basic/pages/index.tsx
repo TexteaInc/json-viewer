@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import {
   applyValue,
+  createDataType,
   JsonViewer,
   JsonViewerKeyRenderer,
   JsonViewerOnChange,
@@ -179,14 +180,14 @@ const IndexPage: React.FC = () => {
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[
-          {
-            is: (value): value is string => typeof value === 'string' &&
+          createDataType(
+            (value) => typeof value === 'string' &&
               value.startsWith('https://i.imgur.com'),
-            Component: (props) => {
+            (props) => {
               return <Image height={50} width={50} src={props.value}
                             alt={props.value}/>
             }
-          }
+          )
         ]}
         onChange={
           useCallback<JsonViewerOnChange>(

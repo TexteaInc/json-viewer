@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react'
+import { expectTypeOf } from 'expect-type'
 import React from 'react'
 import { describe, expect, it } from 'vitest'
 
-import { JsonViewer } from '../src'
+import { createDataType, JsonViewer } from '../src'
 
 function aPlusB (a: number, b: number) {
   return a + b
@@ -141,7 +142,10 @@ describe('render <JsonViewer/> with props', () => {
   })
 
   it('render with objectSortKeys', () => {
-    const selection = [true, false, (a: string, b: string) => a.localeCompare(b)]
+    const selection = [
+      true,
+      false,
+      (a: string, b: string) => a.localeCompare(b)]
     selection.forEach(objectSortKeys => {
       render(<JsonViewer value={full} objectSortKeys={objectSortKeys}/>)
     })
@@ -149,6 +153,27 @@ describe('render <JsonViewer/> with props', () => {
 
   it('render with rootName false', async () => {
     render(<JsonViewer value={undefined} rootName={false}/>)
-    expect((await screen.findByTestId('data-key-pair')).innerText).toEqual(undefined)
+    expect((await screen.findByTestId('data-key-pair')).innerText)
+      .toEqual(undefined)
+  })
+
+  it('render with dataTypes', async () => {
+    render(<JsonViewer value={undefined} valueTypes={[]}/>)
+    render(<JsonViewer value={undefined} valueTypes={[
+      {
+        is: (value: unknown): value is string => typeof value === 'string',
+        Component: (props) => {
+          expectTypeOf(props.value).toMatchTypeOf<unknown>()
+          return null
+        }
+      },
+      createDataType<string>(
+        (value) => typeof value === 'string',
+        (props) => {
+          expectTypeOf(props.value).toMatchTypeOf<string>()
+          return null
+        }
+      )
+    ]}/>)
   })
 })
