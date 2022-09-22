@@ -51,7 +51,7 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         rootName: props.rootName ?? 'root',
         onChange: props.onChange ?? (() => {}),
         keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
-        editable: props.editable ?? true,
+        editable: props.editable ?? false,
         defaultInspectDepth: props.defaultInspectDepth ?? 5,
         objectSortKeys: props.objectSortKeys ?? false,
         quotesOnKeys: props.quotesOnKeys ?? true,
