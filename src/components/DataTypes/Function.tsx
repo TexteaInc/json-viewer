@@ -1,9 +1,9 @@
-import {Box} from '@mui/material'
+import { Box } from '@mui/material'
 import type React from 'react'
 
-import {useJsonViewerStore} from '../../stores/JsonViewerStore'
-import type {DataItemProps} from '../../type'
-import {DataTypeLabel} from '../DataTypeLabel'
+import { useJsonViewerStore } from '../../stores/JsonViewerStore'
+import type { DataItemProps } from '../../type'
+import { DataTypeLabel } from '../DataTypeLabel'
 
 const functionBody = (func: Function) => {
   const funcString = func.toString()
