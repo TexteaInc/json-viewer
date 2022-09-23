@@ -217,10 +217,12 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           expandable
             ? (inspect
                 ? <ExpandMoreIcon sx={{
-                  fontSize: '.8rem'
+                  fontSize: '.8rem',
+                  '&:hover': {cursor: 'pointer'},
                 }}/>
                 : <ChevronRightIcon sx={{
-                  fontSize: '.8rem'
+                  fontSize: '.8rem',
+                  '&:hover': {cursor: 'pointer'},
                 }}/>
               )
             : null
