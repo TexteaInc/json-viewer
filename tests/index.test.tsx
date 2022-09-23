@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import {fireEvent, render, screen} from '@testing-library/react'
 import { expectTypeOf } from 'expect-type'
 import React from 'react'
 import { describe, expect, it } from 'vitest'
@@ -324,4 +324,36 @@ describe('test functions', () => {
       expect(functionBody[0].textContent).eq(iteration[2])
     });
   }
+})
+
+describe('Expand function by click on dots', () => {
+  it('render', () => {
+    const {container, rerender} = render(
+      <JsonViewer
+        rootName={false}
+        value={(e:any) => console.log('it works')}
+        defaultInspectDepth={0}
+      />
+    )
+
+    let elements = container.getElementsByClassName('data-function-body');
+    expect(elements.length).eq(1)
+    expect(elements[0].textContent).eq('...')
+    fireEvent.click(elements[0])
+
+    rerender(
+      <JsonViewer
+        rootName={false}
+        value={(e:any) => console.log('it works')}
+        defaultInspectDepth={0}
+      />
+    )
+    elements = container.getElementsByClassName('data-function-body');
+    expect(elements.length).eq(0)
+
+    elements = container.getElementsByClassName('data-function');
+    expect(elements.length).eq(1)
+    expect(elements[0].children.length).eq(0)
+    expect(elements[0].textContent).not.eq('...')
+  })
 })
