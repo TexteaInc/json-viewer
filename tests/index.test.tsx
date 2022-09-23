@@ -379,6 +379,14 @@ describe('test functions', () => {
       return "777";
     }`
     ],
+    [
+      // @ts-ignore
+      (function(e,n){return e+n}),
+      `(e, n) {`,
+      `
+      return e + n;
+    `
+    ],
   ]
   for (let iteration of dataProvider) {
     it('render', () => {
