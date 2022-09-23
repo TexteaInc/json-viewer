@@ -28,7 +28,7 @@ export function createDataType<ValueType = unknown> (
   is: (value: unknown) => boolean,
   Component: React.ComponentType<DataItemProps<ValueType>>
 ): {
-  is: (value: unknown) => value is ValueType
+  is: (value: unknown) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
 }
 // case 2: you only render with a single component with editor
@@ -37,7 +37,7 @@ export function createDataType<ValueType = unknown> (
   Component: React.ComponentType<DataItemProps<ValueType>>,
   Editor: React.ComponentType<EditorProps<ValueType>>
 ): {
-  is: (value: unknown) => value is ValueType
+  is: (value: unknown) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
   Editor: React.ComponentType<DataItemProps<ValueType>>
 }
@@ -49,7 +49,7 @@ export function createDataType<ValueType = unknown> (
   PreComponent: React.ComponentType<DataItemProps<ValueType>>,
   PostComponent: React.ComponentType<DataItemProps<ValueType>>
 ): {
-  is: (value: unknown) => value is ValueType
+  is: (value: unknown) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
   PreComponent: React.ComponentType<DataItemProps<ValueType>>
   PostComponent: React.ComponentType<DataItemProps<ValueType>>
@@ -62,7 +62,7 @@ export function createDataType<ValueType = unknown> (
   PreComponent: React.ComponentType<DataItemProps<ValueType>>,
   PostComponent: React.ComponentType<DataItemProps<ValueType>>
 ): {
-  is: (value: unknown) => value is ValueType
+  is: (value: unknown) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
   Editor: React.ComponentType<DataItemProps<ValueType>>
   PreComponent: React.ComponentType<DataItemProps<ValueType>>

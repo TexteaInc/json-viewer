@@ -52,7 +52,7 @@ export const {
 } = createStore<ReturnType<typeof createTypeRegistryStore>>()
 
 const objectType: DataType<object> = {
-  is: (value): value is object => typeof value === 'object',
+  is: (value) => typeof value === 'object',
   Component: ObjectType,
   PreComponent: PreObjectType,
   PostComponent: PostObjectType
@@ -110,7 +110,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<boolean>(
     {
-      is: (value): value is boolean => typeof value === 'boolean',
+      is: (value) => typeof value === 'boolean',
       ...createEasyType(
         'bool',
         ({ value }) => <>{value ? 'true' : 'false'}</>,
@@ -133,7 +133,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<Date>(
     {
-      is: (value): value is Date => value instanceof Date,
+      is: (value) => value instanceof Date,
       ...createEasyType(
         'date',
         ({ value }) => <>{value.toLocaleTimeString('en-us', displayOptions)}</>,
@@ -146,7 +146,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<null>(
     {
-      is: (value): value is null => value === null,
+      is: (value) => value === null,
       ...createEasyType(
         'null',
         () => {
@@ -171,7 +171,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<undefined>(
     {
-      is: (value): value is undefined => value === undefined,
+      is: (value) => value === undefined,
       ...createEasyType(
         'undefined',
         () => {
@@ -198,7 +198,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<string>(
     {
-      is: (value): value is string => typeof value === 'string',
+      is: (value) => typeof value === 'string',
       ...createEasyType(
         'string',
         (props) => {
@@ -238,7 +238,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<Function>(
     {
-      is: (value): value is Function => typeof value === 'function',
+      is: (value) => typeof value === 'function',
       Component: FunctionType,
       PreComponent: PreFunctionType,
       PostComponent: PostFunctionType
@@ -249,7 +249,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<number>(
     {
-      is: (value): value is number => typeof value === 'number' && isNaN(value),
+      is: (value) => typeof value === 'number' && isNaN(value),
       ...createEasyType(
         'NaN',
         () => {
@@ -276,7 +276,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<number>(
     {
-      is: (value): value is number => typeof value === 'number' &&
+      is: (value) => typeof value === 'number' &&
         !isInt(value),
       ...createEasyType(
         'float',
@@ -291,7 +291,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<number>(
     {
-      is: (value): value is number => typeof value === 'number' && isInt(value),
+      is: (value) => typeof value === 'number' && isInt(value),
       ...createEasyType(
         'int',
         ({ value }) => <>{`${value}`}</>,
@@ -305,7 +305,7 @@ export function predefined (): DataType<any>[] {
 
   registerType<bigint>(
     {
-      is: (value): value is bigint => typeof value === 'bigint',
+      is: (value) => typeof value === 'bigint',
       ...createEasyType(
         'bigint',
         ({ value }) => <>{`${value}n`}</>,

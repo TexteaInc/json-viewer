@@ -65,7 +65,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
             <CircularArrowsIcon sx={{
               fontSize: 12,
               color: textColor,
-              mx: sizeOfValue ? 0.5 : 0
+              mx: 0.5,
             }}/>
             {isTrap}
           </>
@@ -123,7 +123,6 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     if (iterator && !Array.isArray(value)) {
       const elements = []
       if (value instanceof Map) {
-        let _count = 0
         for (const item of value) {
           // fixme: key might be a object, array, or any value for the `Map<any, any>`
           const [k, value] = item
@@ -132,7 +131,6 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
             <DataKeyPair key={key} path={[...props.path, key]} value={value}
                          editable={false}/>
           )
-          _count++
         }
       } else {
         let count = 0
