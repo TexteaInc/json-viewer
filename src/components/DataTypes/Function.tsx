@@ -28,7 +28,7 @@ const functionName = (func: Function) => {
   let funcString = func.toString();
   const isUsualFunction = funcString.indexOf('function') !== -1
   if (isUsualFunction) {
-    return funcString.substring(8, funcString.indexOf('{') - 1).trim();
+    return funcString.substring(8, funcString.indexOf('{')).trim();
   }
 
   return funcString.substring(0, funcString.indexOf('=>') + 2).trim()
