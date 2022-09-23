@@ -1,4 +1,4 @@
-import {fireEvent, render, screen} from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { expectTypeOf } from 'expect-type'
 import React from 'react'
 import { describe, expect, it } from 'vitest'
@@ -281,3 +281,161 @@ describe('Expand elements by click on dots', () => {
   })
 })
 
+
+describe('test functions', () => {
+  const func1 = function (...args: any[]) {
+    console.log(args)
+    return '111';
+  }
+
+  function func2(...args: any[]) {
+    console.log(args)
+    return '222';
+  }
+
+  const dataProvider = [
+    [
+      function (...args: any) {
+        console.log(args)
+        return '333';
+      },
+      `(...args) {`,
+      `
+    console.log(args);
+    return "333";
+  `
+    ],
+    [
+      func1,
+      `(...args) {`,
+      `
+    console.log(args);
+    return "111";
+  `
+    ],
+    [
+      func2,
+      `func2(...args) {`,
+      `
+    console.log(args);
+    return "222";
+  `
+    ],
+    [
+      (...args:any) => console.log('555'),
+      `(...args) => {`,
+      ` console.log("555")`
+    ],
+    [
+      (...args:any) => {
+        console.log(args)
+        return '666'
+      },
+      `(...args) => {`,
+      ` {
+    console.log(args);
+    return "666";
+  }`
+    ],
+    [
+      function (a: number, b: number) {
+        throw Error('Be careful to use the function just as value in useState() hook')
+      }
+      ,
+      `(a, b) {`,
+      `
+    throw Error("Be careful to use the function just as value in useState() hook");
+  `
+    ],
+    [
+      ({prop1, prop2, ...other}:any) => {
+        console.log(prop1, prop2, other)
+        return '777'
+      },
+      `({
+    prop1,
+    prop2,
+    ...other
+  }) => {`,
+      ` {
+    console.log(prop1, prop2, other);
+    return "777";
+  }`
+    ],
+    [
+      {
+        func: ({prop1, prop2, ...other}:any) => {
+          console.log(prop1, prop2, other)
+          return '777'
+        }
+      },
+      `({
+      prop1,
+      prop2,
+      ...other
+    }) => {`,
+      ` {
+      console.log(prop1, prop2, other);
+      return "777";
+    }`
+    ],
+    [
+      // @ts-ignore
+      (function(e,n){return e+n}),
+      `(e, n) {`,
+      `
+      return e + n;
+    `
+    ],
+  ]
+  for (let iteration of dataProvider) {
+    it('render', () => {
+      const {container} = render(
+        <JsonViewer
+          rootName={false}
+          value={iteration[0]}
+        />
+      )
+      expect(container.children.length).eq(1)
+      const functionName = container.getElementsByClassName('data-function-start')
+      expect(functionName.length).eq(1)
+      expect(functionName[0].textContent).eq(iteration[1])
+
+      const functionBody = container.getElementsByClassName('data-function')
+      expect(functionBody.length).eq(1)
+      expect(functionBody[0].textContent).eq(iteration[2])
+    });
+  }
+})
+
+describe('Expand function by click on dots', () => {
+  it('render', () => {
+    const {container, rerender} = render(
+      <JsonViewer
+        rootName={false}
+        value={(e:any) => console.log('it works')}
+        defaultInspectDepth={0}
+      />
+    )
+
+    let elements = container.getElementsByClassName('data-function-body');
+    expect(elements.length).eq(1)
+    expect(elements[0].textContent).eq('...')
+    fireEvent.click(elements[0])
+
+    rerender(
+      <JsonViewer
+        rootName={false}
+        value={(e:any) => console.log('it works')}
+        defaultInspectDepth={0}
+      />
+    )
+    elements = container.getElementsByClassName('data-function-body');
+    expect(elements.length).eq(0)
+
+    elements = container.getElementsByClassName('data-function');
+    expect(elements.length).eq(1)
+    expect(elements[0].children.length).eq(0)
+    expect(elements[0].textContent).not.eq('...')
+  })
+})
