@@ -33,7 +33,9 @@
   ],
   "types": "dist/index.d.ts",
   "jsdelivr": "dist/browser.js",
-  "browser": "dist/browser.js",
+  "browser": {
+    "vanilla": "dist/browser.js"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "exports": {
