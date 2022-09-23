@@ -56,7 +56,7 @@ const buildMatrix = (input: string, output: string, config: {
   dts: boolean
 }): RollupOptions => {
   if (config.dts) {
-    dtsOutput.add([input.replaceAll('.tsx', '.tsx'), output])
+    dtsOutput.add([input, output])
   }
   return {
     input,
