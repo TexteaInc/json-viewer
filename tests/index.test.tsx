@@ -141,7 +141,7 @@ describe('render <JsonViewer/> with multiple instances', () => {
           value={undefined}
           valueTypes={[
             {
-              is: (() => true) as any,
+              is: () => true,
               Component: () => {
                 return <>first viewer</>
               }
@@ -153,7 +153,7 @@ describe('render <JsonViewer/> with multiple instances', () => {
           value={undefined}
           valueTypes={[
             {
-              is: (() => true) as any,
+              is: () => true,
               Component: () => {
                 return <>second viewer</>
               }
@@ -233,7 +233,7 @@ describe('render <JsonViewer/> with props', () => {
     render(<JsonViewer value={undefined} valueTypes={[]}/>)
     render(<JsonViewer value={undefined} valueTypes={[
       {
-        is: (value: unknown): value is string => typeof value === 'string',
+        is: (value) => typeof value === 'string',
         Component: (props) => {
           expectTypeOf(props.value).toMatchTypeOf<unknown>()
           return null
@@ -249,6 +249,38 @@ describe('render <JsonViewer/> with props', () => {
     ]}/>)
   })
 })
+
+describe('Expand elements by click on dots', () => {
+  it('render', () => {
+    const {container, rerender} = render(
+        <JsonViewer
+            rootName={false}
+            value={['string1', 'string2']}
+            defaultInspectDepth={0}
+        />
+    )
+
+    let elements = container.getElementsByClassName('data-object-body');
+    expect(elements.length).eq(1)
+    expect(elements[0].textContent).eq('...')
+    fireEvent.click(elements[0])
+
+    rerender(
+        <JsonViewer
+            rootName={false}
+            value={['string1', 'string2']}
+            defaultInspectDepth={0}
+        />
+    )
+    elements = container.getElementsByClassName('data-object-body');
+    expect(elements.length).eq(0)
+
+    elements = container.getElementsByClassName('data-object');
+    expect(elements.length).eq(1)
+    expect(elements[0].children.length).eq(2)
+  })
+})
+
 
 describe('test functions', () => {
   const func1 = function (...args: any[]) {

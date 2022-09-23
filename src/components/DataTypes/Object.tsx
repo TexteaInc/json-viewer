@@ -65,7 +65,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
             <CircularArrowsIcon sx={{
               fontSize: 12,
               color: textColor,
-              mx: sizeOfValue ? 0.5 : 0
+              mx: 0.5,
             }}/>
             {isTrap}
           </>
@@ -123,7 +123,6 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     if (iterator && !Array.isArray(value)) {
       const elements = []
       if (value instanceof Map) {
-        let _count = 0
         for (const item of value) {
           // fixme: key might be a object, array, or any value for the `Map<any, any>`
           const [k, value] = item
@@ -132,7 +131,6 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
             <DataKeyPair key={key} path={[...props.path, key]} value={value}
                          editable={false}/>
           )
-          _count++
         }
       } else {
         let count = 0
@@ -187,41 +185,40 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
                        nestedIndex={index}/>
         )
       })
-    } else {
-      // object
-      let entries: [key: string, value: unknown][] = Object.entries(value)
-      if (objectSortKeys) {
-        entries = entries.sort(([a], [b]) => objectSortKeys === true
-            ? a.localeCompare(b)
-            : objectSortKeys(a, b)
-        )
-      }
-      const elements = entries.slice(0, displayLength).map(([key, value]) => {
-        const path = [...props.path, key]
-        return (
-          <DataKeyPair key={key} path={path} value={value}/>
-        )
-      })
-      if (entries.length > displayLength) {
-        const rest = entries.length - displayLength
-        elements.push(
-          <DataBox
-            sx={{
-              cursor: 'pointer',
-              lineHeight: 1.5,
-              color: keyColor,
-              letterSpacing: 0.5,
-              opacity: 0.8
-            }}
-            key='last'
-            onClick={() => setDisplayLength(length => length * 2)}
-          >
-            hidden {rest} items...
-          </DataBox>
-        )
-      }
-      return elements
     }
+    // object
+    let entries: [key: string, value: unknown][] = Object.entries(value)
+    if (objectSortKeys) {
+      entries = entries.sort(([a], [b]) => objectSortKeys === true
+          ? a.localeCompare(b)
+          : objectSortKeys(a, b)
+      )
+    }
+    const elements = entries.slice(0, displayLength).map(([key, value]) => {
+      const path = [...props.path, key]
+      return (
+        <DataKeyPair key={key} path={path} value={value}/>
+      )
+    })
+    if (entries.length > displayLength) {
+      const rest = entries.length - displayLength
+      elements.push(
+        <DataBox
+          sx={{
+            cursor: 'pointer',
+            lineHeight: 1.5,
+            color: keyColor,
+            letterSpacing: 0.5,
+            opacity: 0.8
+          }}
+          key='last'
+          onClick={() => setDisplayLength(length => length * 2)}
+        >
+          hidden {rest} items...
+        </DataBox>
+      )
+    }
+    return elements
   }, [
     props.inspect,
     props.value,
@@ -250,7 +247,12 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
           ? elements
           : !isTrap
               ? (
-              <Box component='span' className='data-object-body'>
+              <Box component='span' className='data-object-body'
+                 onClick={() => props.setInspect(true)}
+                 sx={{
+                   "&:hover": {cursor: "pointer"}
+                 }}
+              >
                 ...
               </Box>
                 )

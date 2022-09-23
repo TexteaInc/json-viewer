@@ -60,13 +60,14 @@ const Component = () => (
     value={object}
     // just define it
     valueTypes={[
+      {
+        is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
+        Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value}/>,
+      },
+      // or
       createDataType(
-        (value) => typeof value === 'string' &&
-          value.startsWith('https://i.imgur.com'),
-        (props) => {
-          return <Image height={50} width={50} src={props.value}
-                        alt={props.value}/>
-        }
+        (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
+        (props) => <Image height={50} width={50} src={props.value} alt={props.value}/>,
       )
     ]}
   />
