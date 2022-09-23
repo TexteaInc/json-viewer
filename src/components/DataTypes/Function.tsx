@@ -76,7 +76,12 @@ export const FunctionType: React.FC<DataItemProps<Function>> = (props) => {
       {props.inspect
         ? functionBody(props.value)
         : (
-          <Box component='span' className='data-function-body'>
+          <Box component='span' className='data-function-body'
+               onClick={() => props.setInspect(true)}
+               sx={{
+                 '&:hover': {cursor: 'pointer'}
+               }}
+          >
             ...
           </Box>
         )
