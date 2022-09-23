@@ -141,7 +141,7 @@ describe('render <JsonViewer/> with multiple instances', () => {
           value={undefined}
           valueTypes={[
             {
-              is: (() => true) as any,
+              is: () => true,
               Component: () => {
                 return <>first viewer</>
               }
@@ -153,7 +153,7 @@ describe('render <JsonViewer/> with multiple instances', () => {
           value={undefined}
           valueTypes={[
             {
-              is: (() => true) as any,
+              is: () => true,
               Component: () => {
                 return <>second viewer</>
               }
@@ -233,7 +233,7 @@ describe('render <JsonViewer/> with props', () => {
     render(<JsonViewer value={undefined} valueTypes={[]}/>)
     render(<JsonViewer value={undefined} valueTypes={[
       {
-        is: (value: unknown): value is string => typeof value === 'string',
+        is: (value) => typeof value === 'string',
         Component: (props) => {
           expectTypeOf(props.value).toMatchTypeOf<unknown>()
           return null
