@@ -307,17 +307,33 @@ describe('test functions', () => {
     ],
     [
       function (a: number, b: number) {
-        return a + b
+        throw Error('Be careful to use the function just as value in useState() hook')
       }
       ,
       `(a, b) {`,
       `
-    return a + b;
+    throw Error("Be careful to use the function just as value in useState() hook");
   `
+    ],
+    [
+      ({prop1, prop2, ...other}:any) => {
+        console.log(prop1, prop2, other)
+        return '777'
+      },
+      `({
+    prop1,
+    prop2,
+    ...other
+  }) => {`,
+      ` {
+    console.log(prop1, prop2, other);
+    return "777";
+  }`
     ],
   ]
   for (let iteration of dataProvider) {
     it('render', () => {
+      console.log('rrrr',iteration[0])
       const {container} = render(
         <JsonViewer
           rootName={false}
