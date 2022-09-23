@@ -305,6 +305,16 @@ describe('test functions', () => {
     return "666";
   }`
     ],
+    [
+      function (a: number, b: number) {
+        return a + b
+      }
+      ,
+      `(a, b) {`,
+      `
+    return a + b;
+  `
+    ],
   ]
   for (let iteration of dataProvider) {
     it('render', () => {
