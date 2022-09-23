@@ -1,23 +1,37 @@
-import { Box } from '@mui/material'
+import {Box} from '@mui/material'
 import type React from 'react'
 
-import { useJsonViewerStore } from '../../stores/JsonViewerStore'
-import type { DataItemProps } from '../../type'
-import { DataTypeLabel } from '../DataTypeLabel'
+import {useJsonViewerStore} from '../../stores/JsonViewerStore'
+import type {DataItemProps} from '../../type'
+import {DataTypeLabel} from '../DataTypeLabel'
 
 const functionBody = (func: Function) => {
   const funcString = func.toString()
 
-  return funcString.substring(
-    funcString.indexOf('{', funcString.indexOf(')')) + 1,
-    funcString.lastIndexOf('}')
-  )
+  let isUsualFunction = true;
+  let parenthesisPos = funcString.indexOf(')');
+  let arrowPos = funcString.indexOf('=>');
+  if (arrowPos !== -1 && arrowPos > parenthesisPos) {
+    isUsualFunction = false
+  }
+  if (isUsualFunction) {
+    return funcString.substring(
+      funcString.indexOf('{', parenthesisPos) + 1,
+      funcString.lastIndexOf('}')
+    )
+  }
+
+  return funcString.substring(funcString.indexOf('=>') + 2)
 }
 
 const functionName = (func: Function) => {
-  return func.toString()
-    .slice(9, -1)
-    .replace(/\{[\s\S]+/, '')
+  let funcString = func.toString();
+  const isUsualFunction = funcString.indexOf('function') !== -1
+  if (isUsualFunction) {
+    return funcString.substring(8, funcString.indexOf('{') - 1).trim();
+  }
+
+  return funcString.substring(0, funcString.indexOf('=>') + 2).trim()
 }
 
 const lb = '{'
@@ -25,22 +39,24 @@ const rb = '}'
 
 export const PreFunctionType: React.FC<DataItemProps<Function>> = (props) => {
   return (
-    <Box
-      component='span' className='data-object-start'
-      sx={{
-        letterSpacing: 0.5
-      }}
-    >
+    <>
       <DataTypeLabel dataType='function'/>
-      {functionName(props.value)}
-      {lb}
-    </Box>
+      <Box
+        component='span' className='data-function-start'
+        sx={{
+          letterSpacing: 0.5,
+        }}
+      >
+        {functionName(props.value)}
+        {' '}{lb}
+      </Box>
+    </>
   )
 }
 
 export const PostFunctionType: React.FC<DataItemProps<Function>> = () => {
   return (
-    <Box component='span' className='data-object-end'>
+    <Box component='span' className='data-function-end'>
       {rb}
     </Box>
   )
@@ -60,10 +76,10 @@ export const FunctionType: React.FC<DataItemProps<Function>> = (props) => {
       {props.inspect
         ? functionBody(props.value)
         : (
-          <Box component='span' className='data-object-body'>
+          <Box component='span' className='data-function-body'>
             ...
           </Box>
-          )
+        )
       }
     </Box>
   )

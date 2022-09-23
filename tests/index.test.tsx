@@ -249,3 +249,79 @@ describe('render <JsonViewer/> with props', () => {
     ]}/>)
   })
 })
+
+describe('test functions', () => {
+  const func1 = function (...args: any[]) {
+    console.log(args)
+    return '111';
+  }
+
+  function func2(...args: any[]) {
+    console.log(args)
+    return '222';
+  }
+
+  const dataProvider = [
+    [
+      function (...args: any) {
+        console.log(args)
+        return '333';
+      },
+      `(...args) {`,
+      `
+    console.log(args);
+    return "333";
+  `
+    ],
+    [
+      func1,
+      `(...args) {`,
+      `
+    console.log(args);
+    return "111";
+  `
+    ],
+    [
+      func2,
+      `func2(...args) {`,
+      `
+    console.log(args);
+    return "222";
+  `
+    ],
+    [
+      (...args:any) => console.log('555'),
+      `(...args) => {`,
+      ` console.log("555")`
+    ],
+    [
+      (...args:any) => {
+        console.log(args)
+        return '666'
+      },
+      `(...args) => {`,
+      ` {
+    console.log(args);
+    return "666";
+  }`
+    ],
+  ]
+  for (let iteration of dataProvider) {
+    it('render', () => {
+      const {container} = render(
+        <JsonViewer
+          rootName={false}
+          value={iteration[0]}
+        />
+      )
+      expect(container.children.length).eq(1)
+      const functionName = container.getElementsByClassName('data-function-start')
+      expect(functionName.length).eq(1)
+      expect(functionName[0].textContent).eq(iteration[1])
+
+      const functionBody = container.getElementsByClassName('data-function')
+      expect(functionBody.length).eq(1)
+      expect(functionBody[0].textContent).eq(iteration[2])
+    });
+  }
+})
