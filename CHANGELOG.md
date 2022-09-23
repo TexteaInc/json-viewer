@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.6.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.3...json-viewer-v2.6.0) (2022-09-23)
+
+
+### Features
+
+* add hover effect ([#77](https://github.com/TexteaInc/json-viewer/issues/77)) ([6b50a01](https://github.com/TexteaInc/json-viewer/commit/6b50a016978a510a60c9e41c2a1e9c629cc961d2))
+* object expand by click on dots ([#76](https://github.com/TexteaInc/json-viewer/issues/76)) ([b4bb9d5](https://github.com/TexteaInc/json-viewer/commit/b4bb9d5cc439dffadba1dbcf115cd36596243cb7))
+
+
+### Bug Fixes
+
+* some enhancements ([#78](https://github.com/TexteaInc/json-viewer/issues/78)) ([46e1c68](https://github.com/TexteaInc/json-viewer/commit/46e1c6892c71cd04adf5daa91af708ae53ee8a6d))
+
 ## [2.5.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.2...json-viewer-v2.5.3) (2022-09-22)
 
 
