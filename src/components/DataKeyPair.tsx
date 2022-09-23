@@ -114,7 +114,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
                 try {
                   copy(
                     JSON.stringify(
-                      value,
+                      typeof value === 'function' ? value.toString() : value,
                       null,
                       '  '
                     )
