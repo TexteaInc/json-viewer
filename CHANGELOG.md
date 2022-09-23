@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.7.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.0...json-viewer-v2.7.1) (2022-09-23)
+
+
+### Bug Fixes
+
+* browser field cause vite build fail ([#85](https://github.com/TexteaInc/json-viewer/issues/85)) ([3dd6842](https://github.com/TexteaInc/json-viewer/commit/3dd68425bde0963600f9e60c646f14443d94b65b))
+* **example:** image url match ([19fd4eb](https://github.com/TexteaInc/json-viewer/commit/19fd4eb968d69aceef4d548406659c5706b825ff))
+* throw error if change '__proto__' ([209788e](https://github.com/TexteaInc/json-viewer/commit/209788eb14aa39bf887b52f4fdcf7d913bd3d2fe))
+
 ## [2.7.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.6.0...json-viewer-v2.7.0) (2022-09-23)
 
 
