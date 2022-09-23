@@ -13,6 +13,9 @@ export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   let key
   if (path.length > 0) {
     key = arr[0]
+    if (key === '__proto__') {
+      throw new TypeError('don\'t modify __proto__!!!')
+    }
     if (arr.length > 1) {
       arr.shift()
       obj[key] = applyValue(obj[key], arr, value)
