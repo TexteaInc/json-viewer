@@ -26,6 +26,9 @@ const avatar = 'https://i.imgur.com/1bX5QH6.jpg'
 function aPlusB (a: number, b: number) {
   return a + b
 }
+const aPlusBConst = function (a: number, b: number) {
+  return a + b
+}
 
 const loopObject = {
   foo: 1,
@@ -71,7 +74,16 @@ const example = {
     'second-child': false,
     'last-child': null
   },
-  fn: aPlusB,
+  function: aPlusB,
+  constFunction: aPlusBConst,
+  anonymousFunction: function (a: number, b: number) {
+    return a + b
+  },
+  shortFunction: (arg1: any, arg2: any) => console.log(arg1, arg2),
+  shortLongFunction: (arg1: any, arg2: any) => {
+    console.log(arg1, arg2)
+    return '123'
+  },
   string_number: '1234',
   timer: 0,
   avatar,
