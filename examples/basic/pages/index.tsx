@@ -20,6 +20,8 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { ocean } from '../shared'
 
+const allowedDomains = ['i.imgur.com']
+
 // this url is copied from: https://beta.reactjs.org/learn/passing-props-to-a-component
 const avatar = 'https://i.imgur.com/1bX5QH6.jpg'
 
@@ -202,8 +204,17 @@ const IndexPage: React.FC = () => {
         keyRenderer={KeyRenderer}
         valueTypes={[
           createDataType(
-            (value) => typeof value === 'string' &&
-              value.startsWith('https://i.imgur.com'),
+            (value) => {
+              if (typeof value === 'string') {
+                try {
+                  const url = new URL(value)
+                  return allowedDomains.includes(url.host) && url.pathname.endsWith('.jpg')
+                } catch (_) {
+                  return false
+                }
+              }
+              return false
+            },
             (props) => {
               return <Image height={50} width={50} src={props.value}
                             alt={props.value}/>
