@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.6.0...json-viewer-v2.7.0) (2022-09-23)
+
+
+### Features
+
+* enhance function dataType ([#81](https://github.com/TexteaInc/json-viewer/issues/81)) ([d2e75d6](https://github.com/TexteaInc/json-viewer/commit/d2e75d6ce90d6bf7d8200d3407324ff31727622c))
+
 ## [2.6.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.5.3...json-viewer-v2.6.0) (2022-09-23)
 
 
