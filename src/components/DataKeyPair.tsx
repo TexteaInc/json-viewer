@@ -47,7 +47,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     }
     return propsEditable
   }, [path, propsEditable, storeEditable, value])
-  const [tempValue, setTempValue] = useState(value)
+  const [tempValue, setTempValue] = useState(typeof value === 'function' ? () => value : value)
   const depth = path.length
   const key = path[depth - 1]
   const hoverPath = useJsonViewerStore(store => store.hoverPath)
@@ -114,7 +114,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
                 try {
                   copy(
                     JSON.stringify(
-                      value,
+                      typeof value === 'function' ? value.toString() : value,
                       null,
                       '  '
                     )
