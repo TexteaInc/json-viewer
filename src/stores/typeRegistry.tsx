@@ -18,6 +18,7 @@ import {
 } from '../components/DataTypes/Object'
 import type { DataItemProps, DataType } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
+import {isEmptyObjectOrArray} from "../utils";
 
 type TypeRegistryState = {
   registry: DataType<any>[]
@@ -53,6 +54,7 @@ export const {
 
 const objectType: DataType<object> = {
   is: (value) => typeof value === 'object',
+  expandable: (value) => isEmptyObjectOrArray(value as object),
   Component: ObjectType,
   PreComponent: PreObjectType,
   PostComponent: PostObjectType

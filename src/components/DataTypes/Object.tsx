@@ -9,6 +9,7 @@ import type { DataItemProps } from '../../type'
 import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../icons/CircularArrowsIcon'
 import { DataBox } from '../mui/DataBox'
+import {isEmptyObjectOrArray} from "../../utils";
 
 const objectLb = '{'
 const arrayLb = '['
@@ -32,13 +33,6 @@ function inspectMetadata (value: object) {
   return `${length} Items${name ? ` (${name})` : ''}`
 }
 
-function isEmptyObjectOrArray(value: object | any[]): boolean {
-  if (Array.isArray(value) && value.length === 0) {
-    return true
-  }
-
-  return typeof value === 'object' && Object.keys(value).length === 0;
-}
 export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()

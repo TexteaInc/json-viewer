@@ -62,10 +62,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const [editing, setEditing] = useState(false)
   const onChange = useJsonViewerStore(store => store.onChange)
   const keyColor = useTextColor()
-  const numberKeyColor = useJsonViewerStore(
-    store => store.colorspace.base0C)
-  const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(
-    value)
+  const numberKeyColor = useJsonViewerStore(store => store.colorspace.base0C)
+  const { Component, expandable: isExpandable, PreComponent, PostComponent, Editor } = useTypeComponents(value)
   const quotesOnKeys = useJsonViewerStore(store => store.quotesOnKeys)
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = root === value
@@ -179,7 +177,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     value
   ])
 
-  const expandable = !!(PreComponent && PostComponent)
+  const expandable = isExpandable || !!(PreComponent && PostComponent)
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   const downstreamProps: DataItemProps = useMemo(() => ({
     path,

@@ -123,3 +123,11 @@ export const isCycleReference = (
   }
   return false
 }
+
+export function isEmptyObjectOrArray(value: unknown): boolean {
+  if (Array.isArray(value) && value.length === 0) {
+    return true
+  }
+
+  return typeof value === 'object' && value !== null && Object.keys(value).length === 0;
+}
