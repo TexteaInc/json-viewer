@@ -44,7 +44,6 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
     return isTrap
       ? false
       : depth < defaultInspectDepth
-
   })
   const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
     set((oldState) => {

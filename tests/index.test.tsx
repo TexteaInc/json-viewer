@@ -252,7 +252,7 @@ describe('render <JsonViewer/> with props', () => {
 
 describe('Expand elements by click on dots', () => {
   it('render', () => {
-    const {container, rerender} = render(
+    const { container, rerender } = render(
         <JsonViewer
             rootName={false}
             value={['string1', 'string2']}
@@ -260,7 +260,7 @@ describe('Expand elements by click on dots', () => {
         />
     )
 
-    let elements = container.getElementsByClassName('data-object-body');
+    let elements = container.getElementsByClassName('data-object-body')
     expect(elements.length).eq(1)
     expect(elements[0].textContent).eq('...')
     fireEvent.click(elements[0])
@@ -272,34 +272,33 @@ describe('Expand elements by click on dots', () => {
             defaultInspectDepth={0}
         />
     )
-    elements = container.getElementsByClassName('data-object-body');
+    elements = container.getElementsByClassName('data-object-body')
     expect(elements.length).eq(0)
 
-    elements = container.getElementsByClassName('data-object');
+    elements = container.getElementsByClassName('data-object')
     expect(elements.length).eq(1)
     expect(elements[0].children.length).eq(2)
   })
 })
 
-
 describe('test functions', () => {
   const func1 = function (...args: any[]) {
     console.log(args)
-    return '111';
+    return '111'
   }
 
-  function func2(...args: any[]) {
+  function func2 (...args: any[]) {
     console.log(args)
-    return '222';
+    return '222'
   }
 
   const dataProvider = [
     [
       function (...args: any) {
         console.log(args)
-        return '333';
+        return '333'
       },
-      `(...args) {`,
+      '(...args) {',
       `
     console.log(args);
     return "333";
@@ -307,7 +306,7 @@ describe('test functions', () => {
     ],
     [
       func1,
-      `(...args) {`,
+      '(...args) {',
       `
     console.log(args);
     return "111";
@@ -315,7 +314,7 @@ describe('test functions', () => {
     ],
     [
       func2,
-      `func2(...args) {`,
+      'func2(...args) {',
       `
     console.log(args);
     return "222";
@@ -323,15 +322,15 @@ describe('test functions', () => {
     ],
     [
       (...args:any) => console.log('555'),
-      `(...args) => {`,
-      ` console.log("555")`
+      '(...args) => {',
+      ' console.log("555")'
     ],
     [
       (...args:any) => {
         console.log(args)
         return '666'
       },
-      `(...args) => {`,
+      '(...args) => {',
       ` {
     console.log(args);
     return "666";
@@ -340,15 +339,14 @@ describe('test functions', () => {
     [
       function (a: number, b: number) {
         throw Error('Be careful to use the function just as value in useState() hook')
-      }
-      ,
-      `(a, b) {`,
+      },
+      '(a, b) {',
       `
     throw Error("Be careful to use the function just as value in useState() hook");
   `
     ],
     [
-      ({prop1, prop2, ...other}:any) => {
+      ({ prop1, prop2, ...other }:any) => {
         console.log(prop1, prop2, other)
         return '777'
       },
@@ -364,7 +362,7 @@ describe('test functions', () => {
     ],
     [
       {
-        func: ({prop1, prop2, ...other}:any) => {
+        func: ({ prop1, prop2, ...other }:any) => {
           console.log(prop1, prop2, other)
           return '777'
         }
@@ -381,16 +379,16 @@ describe('test functions', () => {
     ],
     [
       // @ts-ignore
-      (function(e,n){return e+n}),
-      `(e, n) {`,
+      function (e, n) { return e + n },
+      '(e, n) {',
       `
       return e + n;
     `
-    ],
+    ]
   ]
-  for (let iteration of dataProvider) {
+  for (const iteration of dataProvider) {
     it('render', () => {
-      const {container} = render(
+      const { container } = render(
         <JsonViewer
           rootName={false}
           value={iteration[0]}
@@ -404,13 +402,13 @@ describe('test functions', () => {
       const functionBody = container.getElementsByClassName('data-function')
       expect(functionBody.length).eq(1)
       expect(functionBody[0].textContent).eq(iteration[2])
-    });
+    })
   }
 })
 
 describe('Expand function by click on dots', () => {
   it('render', () => {
-    const {container, rerender} = render(
+    const { container, rerender } = render(
       <JsonViewer
         rootName={false}
         value={(e:any) => console.log('it works')}
@@ -418,7 +416,7 @@ describe('Expand function by click on dots', () => {
       />
     )
 
-    let elements = container.getElementsByClassName('data-function-body');
+    let elements = container.getElementsByClassName('data-function-body')
     expect(elements.length).eq(1)
     expect(elements[0].textContent).eq('...')
     fireEvent.click(elements[0])
@@ -430,10 +428,10 @@ describe('Expand function by click on dots', () => {
         defaultInspectDepth={0}
       />
     )
-    elements = container.getElementsByClassName('data-function-body');
+    elements = container.getElementsByClassName('data-function-body')
     expect(elements.length).eq(0)
 
-    elements = container.getElementsByClassName('data-function');
+    elements = container.getElementsByClassName('data-function')
     expect(elements.length).eq(1)
     expect(elements[0].children.length).eq(0)
     expect(elements[0].textContent).not.eq('...')
