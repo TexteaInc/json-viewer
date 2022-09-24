@@ -32,12 +32,23 @@ function inspectMetadata (value: object) {
   return `${length} Items${name ? ` (${name})` : ''}`
 }
 
+function isEmptyObjectOrArray(value: object | any[]): boolean {
+  if (Array.isArray(value) && value.length === 0) {
+    return true
+  }
+
+  return typeof value === 'object' && Object.keys(value).length === 0;
+}
 export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
-  const sizeOfValue = useMemo(
-    () => props.inspect ? inspectMetadata(props.value) : '',
+  const sizeOfValue = useMemo(() => {
+      if (isEmptyObjectOrArray(props.value)) {
+        return null;
+      }
+      return props.inspect ? inspectMetadata(props.value) : ''
+    },
     [props.inspect, props.value]
   )
   const isTrap = useIsCycleReference(props.path, props.value)
@@ -78,8 +89,12 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
 export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
-  const sizeOfValue = useMemo(
-    () => !props.inspect ? inspectMetadata(props.value) : '',
+  const sizeOfValue = useMemo(() => {
+      if (isEmptyObjectOrArray(props.value)) {
+        return inspectMetadata(props.value);
+      }
+      return !props.inspect ? inspectMetadata(props.value) : ''
+    },
     [props.inspect, props.value]
   )
   return (
@@ -231,10 +246,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const marginLeft = props.inspect ? 0.6 : 0
   const width = useJsonViewerStore(store => store.indentWidth)
   const indentWidth = props.inspect ? width - marginLeft : width
-  if (Array.isArray(props.value) && props.value.length === 0){
-    return null
-  }
-  if (typeof props.value === 'object' && Object.keys(props.value).length === 0){
+  if (isEmptyObjectOrArray(props.value)){
     return null
   }
   return (

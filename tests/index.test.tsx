@@ -450,6 +450,8 @@ describe('Hide body if array is empty', () => {
         />
     )
 
+    expect(container.textContent).eq('[]0 Items')
+
     let elements = container.getElementsByClassName('data-object');
     expect(elements.length).eq(0)
   })
@@ -464,6 +466,8 @@ describe('Hide body if object is empty', () => {
             defaultInspectDepth={1}
         />
     )
+
+    expect(container.textContent).eq('{}0 Items')
 
     let elements = container.getElementsByClassName('data-object');
     expect(elements.length).eq(0)
