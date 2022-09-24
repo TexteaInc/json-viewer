@@ -6,31 +6,45 @@ on:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
+  publish-json-viewer:
+    name: 'Publish @textea/json-viewer'
+    needs: release-please
+    if: ${{ needs.release-please.outputs.releases_created }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        if: ${{ steps.release.outputs.release_created }}
       - name: Use Node.js LTS
         uses: actions/setup-node@v3
-        if: ${{ steps.release.outputs.release_created }}
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
-      - name: Install dependencies
-        if: ${{ steps.release.outputs.release_created }}
-        run: yarn install
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v3
+        id: yarn-release-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-release-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-release
+      - name: Install Dependencies
+        run: |
+          yarn install
       - name: Prepack
-        if: ${{ steps.release.outputs.release_created }}
         run: yarn run prepack
       - uses: JS-DevTools/npm-publish@v1
         name: Publish to npm
-        if: ${{ steps.release.outputs.release_created }}
         with:
           access: 'public'
           token: ${{ secrets.NPM_TOKEN }}
