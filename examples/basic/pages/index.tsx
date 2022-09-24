@@ -59,6 +59,8 @@ const example = {
   loopObject,
   loopArray,
   longArray,
+  emptyArray: [],
+  emptyObject: {},
   string: 'this is a string',
   integer: 42,
   array: [19, 19, 810, 'test', NaN],
