@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.2...json-viewer-v2.7.3) (2022-09-24)
+
+
+### Bug Fixes
+
+* add compare function in baseCellType Editor ([53bb796](https://github.com/TexteaInc/json-viewer/commit/53bb796003eb16aa854adff28d4d6caf4d6f8175))
+
 ## [2.7.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.1...json-viewer-v2.7.2) (2022-09-24)
 
 
