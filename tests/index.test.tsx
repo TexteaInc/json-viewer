@@ -439,3 +439,33 @@ describe('Expand function by click on dots', () => {
     expect(elements[0].textContent).not.eq('...')
   })
 })
+
+describe('Hide body if array is empty', () => {
+  it('render', () => {
+    const {container} = render(
+        <JsonViewer
+            rootName={false}
+            value={[]}
+            defaultInspectDepth={1}
+        />
+    )
+
+    let elements = container.getElementsByClassName('data-object');
+    expect(elements.length).eq(0)
+  })
+})
+
+describe('Hide body if object is empty', () => {
+  it('render', () => {
+    const {container} = render(
+        <JsonViewer
+            rootName={false}
+            value={{}}
+            defaultInspectDepth={1}
+        />
+    )
+
+    let elements = container.getElementsByClassName('data-object');
+    expect(elements.length).eq(0)
+  })
+})

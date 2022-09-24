@@ -231,6 +231,12 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const marginLeft = props.inspect ? 0.6 : 0
   const width = useJsonViewerStore(store => store.indentWidth)
   const indentWidth = props.inspect ? width - marginLeft : width
+  if (Array.isArray(props.value) && props.value.length === 0){
+    return null
+  }
+  if (typeof props.value === 'object' && Object.keys(props.value).length === 0){
+    return null
+  }
   return (
     <Box
       className='data-object'
