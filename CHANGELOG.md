@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.1...json-viewer-v2.7.2) (2022-09-24)
+
+
+### Bug Fixes
+
+* disable ssr in function inspect ([8a303f2](https://github.com/TexteaInc/json-viewer/commit/8a303f28da66a263cf391a89473b79a21692ce11))
+
 ## [2.7.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.0...json-viewer-v2.7.1) (2022-09-23)
 
 
