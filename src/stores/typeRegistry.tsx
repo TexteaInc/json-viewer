@@ -97,7 +97,9 @@ export function predefined (): DataType<any>[] {
     }
     dataType.Component = memo(dataType.Component, compare)
     if (dataType.Editor) {
-      dataType.Editor = memo(dataType.Editor)
+      dataType.Editor = memo(dataType.Editor, function compare (prevProps, nextProps) {
+        return Object.is(prevProps.value, nextProps.value)
+      })
     }
     if (dataType.PreComponent) {
       dataType.PreComponent = memo(dataType.PreComponent, compare)
