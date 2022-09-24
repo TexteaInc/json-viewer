@@ -6,9 +6,9 @@ on:
       - main
     paths:
       - '**.tsx?'
+      - '**.jsx?'
   pull_request:
     branches:
-      - develop
       - main
 
 jobs:
