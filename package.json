@@ -55,6 +55,7 @@
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
     "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache --fix",
+    "lint:ci": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache",
     "build": "rollup -c rollup.config.ts --configPlugin swc3",
     "prepublishOnly": "npm run build"
   },

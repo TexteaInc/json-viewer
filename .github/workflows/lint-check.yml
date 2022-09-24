@@ -1,0 +1,42 @@
+name: Lint Check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.tsx?'
+      - '**.jsx?'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.tsx?'
+      - '**.jsx?'
+jobs:
+  lint-check:
+    name: ESLint check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install Dependencies
+        run: yarn install
+      - name: Lint
+        run: yarn lint:ci
