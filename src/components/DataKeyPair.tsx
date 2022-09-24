@@ -218,29 +218,29 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
             ? (inspect
                 ? <ExpandMoreIcon sx={{
                   fontSize: '.8rem',
-                  '&:hover': {cursor: 'pointer'},
+                  '&:hover': { cursor: 'pointer' }
                 }}/>
                 : <ChevronRightIcon sx={{
                   fontSize: '.8rem',
-                  '&:hover': {cursor: 'pointer'},
+                  '&:hover': { cursor: 'pointer' }
                 }}/>
               )
             : null
         }
         {
           (isRoot
-              ? (
-                  rootName !== false
+            ? (
+                rootName !== false
                   ? (quotesOnKeys ? <>&quot;{rootName}&quot;</> : <>{rootName}</>)
                   : null
               )
-              : KeyRenderer.when(downstreamProps)
-                  ? <KeyRenderer {...downstreamProps} />
-                  : nestedIndex === undefined && (
-                    isNumberKey
-                      ? <Box component='span' style={{ color: numberKeyColor }}>{key}</Box>
-                      : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
-                  )
+            : KeyRenderer.when(downstreamProps)
+              ? <KeyRenderer {...downstreamProps} />
+              : nestedIndex === undefined && (
+                isNumberKey
+                  ? <Box component='span' style={{ color: numberKeyColor }}>{key}</Box>
+                  : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
+              )
           )
         }
         {

@@ -8,9 +8,9 @@ import { DataTypeLabel } from '../DataTypeLabel'
 const functionBody = (func: Function) => {
   const funcString = func.toString()
 
-  let isUsualFunction = true;
-  let parenthesisPos = funcString.indexOf(')');
-  let arrowPos = funcString.indexOf('=>');
+  let isUsualFunction = true
+  const parenthesisPos = funcString.indexOf(')')
+  const arrowPos = funcString.indexOf('=>')
   if (arrowPos !== -1 && arrowPos > parenthesisPos) {
     isUsualFunction = false
   }
@@ -25,10 +25,10 @@ const functionBody = (func: Function) => {
 }
 
 const functionName = (func: Function) => {
-  let funcString = func.toString();
+  const funcString = func.toString()
   const isUsualFunction = funcString.indexOf('function') !== -1
   if (isUsualFunction) {
-    return funcString.substring(8, funcString.indexOf('{')).trim();
+    return funcString.substring(8, funcString.indexOf('{')).trim()
   }
 
   return funcString.substring(0, funcString.indexOf('=>') + 2).trim()
@@ -44,7 +44,7 @@ export const PreFunctionType: React.FC<DataItemProps<Function>> = (props) => {
       <Box
         component='span' className='data-function-start'
         sx={{
-          letterSpacing: 0.5,
+          letterSpacing: 0.5
         }}
       >
         {functionName(props.value)}
@@ -79,12 +79,12 @@ export const FunctionType: React.FC<DataItemProps<Function>> = (props) => {
           <Box component='span' className='data-function-body'
                onClick={() => props.setInspect(true)}
                sx={{
-                 '&:hover': {cursor: 'pointer'}
+                 '&:hover': { cursor: 'pointer' }
                }}
           >
             ...
           </Box>
-        )
+          )
       }
     </Box>
   )

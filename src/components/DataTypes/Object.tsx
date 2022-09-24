@@ -65,7 +65,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
             <CircularArrowsIcon sx={{
               fontSize: 12,
               color: textColor,
-              mx: 0.5,
+              mx: 0.5
             }}/>
             {isTrap}
           </>
@@ -190,8 +190,8 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     let entries: [key: string, value: unknown][] = Object.entries(value)
     if (objectSortKeys) {
       entries = entries.sort(([a], [b]) => objectSortKeys === true
-          ? a.localeCompare(b)
-          : objectSortKeys(a, b)
+        ? a.localeCompare(b)
+        : objectSortKeys(a, b)
       )
     }
     const elements = entries.slice(0, displayLength).map(([key, value]) => {
@@ -250,7 +250,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
               <Box component='span' className='data-object-body'
                  onClick={() => props.setInspect(true)}
                  sx={{
-                   "&:hover": {cursor: "pointer"}
+                   '&:hover': { cursor: 'pointer' }
                  }}
               >
                 ...
