@@ -109,6 +109,7 @@
   },
   "packageManager": "yarn@3.2.2",
   "workspaces": [
-    "examples/*"
+    "examples/*",
+    "docs"
   ]
 }
