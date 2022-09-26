@@ -7,6 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@textea/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
     "next": "^12.3.1",
     "nextra": "^2.0.0-beta.29",
@@ -15,7 +16,8 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.7.18",
+    "@textea/dev-kit": "^0.13.8",
+    "@types/node": "^18.7.21",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "next-transpile-modules": "^9.0.0",
