@@ -74,7 +74,7 @@ const Component = () => (
 )
 ```
 
-![Avatar Preview](docs/public/avatar-preview.png)
+![Avatar Preview](public/avatar-preview.png)
 
 [see the full code](examples/basic/pages/index.tsx)
 
@@ -110,7 +110,7 @@ const Component = () => (
 )
 ```
 
-![Ocean Theme Preview](docs/public/ocean-theme.png)
+![Ocean Theme Preview](public/ocean-theme.png)
 
 ### Browser
 

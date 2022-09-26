@@ -18,7 +18,7 @@ import Image from 'next/image'
 import type React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { ocean } from '../shared'
+import { ocean } from '../../lib/shared'
 
 const allowedDomains = ['i.imgur.com']
 
@@ -130,14 +130,6 @@ const IndexPage: React.FC = () => {
           >
             JSON viewer
           </Typography>
-          <a href='https://www.netlify.com' target='_blank' rel='noreferrer'>
-            <Image
-              width={114}
-              height={51}
-              src='https://www.netlify.com/v3/img/components/netlify-color-accent.svg'
-              alt='Deploys by Netlify'
-            />
-          </a>
         </Toolbar>
       </AppBar>
       <Toolbar/>
