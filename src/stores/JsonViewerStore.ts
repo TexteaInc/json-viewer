@@ -38,7 +38,7 @@ export type JsonViewerActions = {
   setHover: (path: Path | null, nestedIndex?: number) => void
 }
 
-export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
+export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =>
   create(
     combine<JsonViewerState<T>, JsonViewerActions>(
       {
@@ -46,7 +46,10 @@ export const createJsonViewerStore = <T = unknown>(props: JsonViewerProps<T>) =>
         enableClipboard: props.enableClipboard ?? true,
         indentWidth: props.indentWidth ?? 3,
         groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
-        collapseStringsAfterLength: props.collapseStringsAfterLength ?? 50,
+        collapseStringsAfterLength:
+          (props.collapseStringsAfterLength === false)
+            ? Number.MAX_VALUE
+            : props.collapseStringsAfterLength ?? 50,
         maxDisplayLength: props.maxDisplayLength ?? 30,
         rootName: props.rootName ?? 'root',
         onChange: props.onChange ?? (() => {}),

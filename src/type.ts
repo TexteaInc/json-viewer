@@ -107,9 +107,9 @@ export type JsonViewerProps<T = unknown> = {
    *
    * String content can be expanded and collapsed by clicking on the string value.
    *
-   * @default 100
+   * @default 50
    */
-  collapseStringsAfterLength?: number
+  collapseStringsAfterLength?: number | false
 
   /**
    * Whether sort keys through `String.prototype.localeCompare()`
