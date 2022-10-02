@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.4](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.3...json-viewer-v2.7.4) (2022-10-02)
+
+
+### Bug Fixes
+
+* editable for basic value ([#95](https://github.com/TexteaInc/json-viewer/issues/95)) ([76e77b0](https://github.com/TexteaInc/json-viewer/commit/76e77b03558f03fb129b4d4b64d21fd690ec970d))
+
 ## [2.7.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.2...json-viewer-v2.7.3) (2022-09-24)
 
 
