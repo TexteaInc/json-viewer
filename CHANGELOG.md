@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.4...json-viewer-v2.8.0) (2022-10-02)
+
+
+### Features
+
+* support `props.collapseStringsAfterLength` with false ([#97](https://github.com/TexteaInc/json-viewer/issues/97)) ([5c611a2](https://github.com/TexteaInc/json-viewer/commit/5c611a20e0379b1f3560ccc1bd571496d7e8d7e6))
+
 ## [2.7.4](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.3...json-viewer-v2.7.4) (2022-10-02)
 
 
