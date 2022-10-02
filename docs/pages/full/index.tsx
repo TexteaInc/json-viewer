@@ -1,10 +1,14 @@
 import {
   AppBar,
-  FormControl, FormControlLabel,
+  FormControl,
+  FormControlLabel,
   InputLabel,
   MenuItem,
-  Select, Switch,
-  TextField, Toolbar, Typography
+  Select,
+  Switch,
+  TextField,
+  Toolbar,
+  Typography
 } from '@mui/material'
 import {
   applyValue,
@@ -106,6 +110,7 @@ const IndexPage: React.FC = () => {
   const [theme, setTheme] = useState<JsonViewerTheme>('light')
   const [src, setSrc] = useState(() => example)
   const [displayDataTypes, setDisplayDataTypes] = useState(true)
+  const [editable, setEditable] = useState(true)
   useEffect(() => {
     const loop = () => {
       setSrc(src => ({
@@ -135,7 +140,14 @@ const IndexPage: React.FC = () => {
       <Toolbar/>
       <FormControlLabel
         control={<Switch
-          value={displayDataTypes}
+          checked={editable}
+          onChange={event => setEditable(event.target.checked)}
+        />}
+        label='Editable'
+      />
+      <FormControlLabel
+        control={<Switch
+          checked={displayDataTypes}
           onChange={event => setDisplayDataTypes(event.target.checked)}
         />}
         label='DisplayDataTypes'
@@ -189,6 +201,7 @@ const IndexPage: React.FC = () => {
       </FormControl>
       <JsonViewer
         value={src}
+        editable={editable}
         indentWidth={indent}
         theme={theme}
         displayDataTypes={displayDataTypes}
