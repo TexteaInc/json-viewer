@@ -216,7 +216,7 @@ export function predefined (): DataType<any>[] {
             <Box
               component='span'
               sx={{
-                overflowWrap: 'break-word',
+                overflowWrap: 'anywhere',
                 cursor: hasRest ? 'pointer' : 'inherit'
               }}
               onClick={() => {
