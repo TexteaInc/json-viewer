@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.8.0...json-viewer-v2.8.1) (2022-10-04)
+
+
+### Bug Fixes
+
+* set `overflowWrap` to `anywhere` ([#99](https://github.com/TexteaInc/json-viewer/issues/99)) ([6d10db3](https://github.com/TexteaInc/json-viewer/commit/6d10db32d98751d7c12845bbcb8eecf70aab9143))
+
 ## [2.8.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.7.4...json-viewer-v2.8.0) (2022-10-02)
 
 
