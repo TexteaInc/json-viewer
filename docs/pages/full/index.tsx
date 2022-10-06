@@ -110,6 +110,7 @@ const IndexPage: React.FC = () => {
   const [theme, setTheme] = useState<JsonViewerTheme>('light')
   const [src, setSrc] = useState(() => example)
   const [displayDataTypes, setDisplayDataTypes] = useState(true)
+  const [displayObjectSize, setDisplayObjectSize] = useState(true)
   const [editable, setEditable] = useState(true)
   useEffect(() => {
     const loop = () => {
@@ -151,6 +152,13 @@ const IndexPage: React.FC = () => {
           onChange={event => setDisplayDataTypes(event.target.checked)}
         />}
         label='DisplayDataTypes'
+      />
+      <FormControlLabel
+        control={<Switch
+          checked={displayObjectSize}
+          onChange={event => setDisplayObjectSize(event.target.checked)}
+        />}
+        label='DisplayObjectSize'
       />
       <TextField
         label='indentWidth'
@@ -205,6 +213,7 @@ const IndexPage: React.FC = () => {
         indentWidth={indent}
         theme={theme}
         displayDataTypes={displayDataTypes}
+        displayObjectSize={displayObjectSize}
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[

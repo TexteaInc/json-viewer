@@ -29,6 +29,7 @@ export type JsonViewerState<T = unknown> = {
   value: T
   onChange: JsonViewerOnChange
   keyRenderer: JsonViewerKeyRenderer
+  displayObjectSize: boolean
 }
 
 export type JsonViewerActions = {
@@ -63,7 +64,8 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
         inspectCache: {},
         hoverPath: null,
         colorspace: lightColorspace,
-        value: props.value
+        value: props.value,
+        displayObjectSize: props.displayObjectSize ?? true
       },
       (set, get) => ({
         getInspectCache: (path, nestedIndex) => {
