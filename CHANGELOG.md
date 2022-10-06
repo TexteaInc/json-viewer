@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.8.1...json-viewer-v2.9.0) (2022-10-06)
+
+
+### Features
+
+* support `displayObjectSize` ([#102](https://github.com/TexteaInc/json-viewer/issues/102)) ([164bd4c](https://github.com/TexteaInc/json-viewer/commit/164bd4c2324e585602f369dfcca6c23dbe2ee4b4)), closes [#101](https://github.com/TexteaInc/json-viewer/issues/101)
+
 ## [2.8.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.8.0...json-viewer-v2.8.1) (2022-10-04)
 
 
