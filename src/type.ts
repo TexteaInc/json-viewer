@@ -141,4 +141,11 @@ export type JsonViewerProps<T = unknown> = {
    * @default 'light'
    */
   theme?: JsonViewerTheme
+
+  /**
+   * Whether display the size of array and object
+   *
+   * @default true
+   */
+  displayObjectSize?: boolean
 }
