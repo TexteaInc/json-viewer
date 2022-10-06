@@ -229,6 +229,13 @@ describe('render <JsonViewer/> with props', () => {
     })
   })
 
+  it('render with displayObjectSize', async () => {
+    const selection = [true, false]
+    selection.forEach(displayObjectSize => {
+      render(<JsonViewer value={['string1', 'string2']} displayObjectSize={displayObjectSize}/>)
+    })
+  })
+
   it('render with dataTypes', async () => {
     render(<JsonViewer value={undefined} valueTypes={[]}/>)
     render(<JsonViewer value={undefined} valueTypes={[

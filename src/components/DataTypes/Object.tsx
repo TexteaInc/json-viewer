@@ -40,6 +40,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
     () => props.inspect ? inspectMetadata(props.value) : '',
     [props.inspect, props.value]
   )
+  const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const isTrap = useIsCycleReference(props.path, props.value)
   return (
     <Box
@@ -49,16 +50,21 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
       }}
     >
       {isArray ? arrayLb : objectLb}
-      <Box
-        component='span'
-        sx={{
-          pl: 0.5,
-          fontStyle: 'italic',
-          color: metadataColor
-        }}
-      >
-        {sizeOfValue}
-      </Box>
+      {displayObjectSize
+        ? (
+          <Box
+            component='span'
+            sx={{
+              pl: 0.5,
+              fontStyle: 'italic',
+              color: metadataColor
+            }}
+          >
+            {sizeOfValue}
+          </Box>
+          )
+        : null}
+
       {isTrap && !props.inspect
         ? (
           <>
@@ -78,6 +84,7 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
 export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
+  const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const sizeOfValue = useMemo(
     () => !props.inspect ? inspectMetadata(props.value) : '',
     [props.inspect, props.value]
@@ -85,16 +92,21 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   return (
     <Box component='span' className='data-object-end'>
       {isArray ? arrayRb : objectRb}
-      <Box
-        component='span'
-        sx={{
-          pl: 0.5,
-          fontStyle: 'italic',
-          color: metadataColor
-        }}
-      >
-        {sizeOfValue}
-      </Box>
+      {displayObjectSize
+        ? (
+          <Box
+            component='span'
+            sx={{
+              pl: 0.5,
+              fontStyle: 'italic',
+              color: metadataColor
+            }}
+          >
+            {sizeOfValue}
+          </Box>
+          )
+        : null
+      }
     </Box>
   )
 }
