@@ -43,6 +43,10 @@ jobs:
           yarn install
       - name: Prepack
         run: yarn run prepack
+      - name: Build
+        run: npm run build
+      - name: Delete Scripts
+        run: npm pkg delete scripts
       - uses: JS-DevTools/npm-publish@v1
         name: Publish to npm
         with:
