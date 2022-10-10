@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.9.0...json-viewer-v2.9.1) (2022-10-10)
+
+
+### Bug Fixes
+
+* remove scripts when publishing ([45d9cf9](https://github.com/TexteaInc/json-viewer/commit/45d9cf925d24f4a3508fa8ba36bfd6dfe7bd298e))
+
 ## [2.9.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.8.1...json-viewer-v2.9.0) (2022-10-06)
 
 
