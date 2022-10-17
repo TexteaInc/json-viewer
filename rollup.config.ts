@@ -39,7 +39,7 @@ const outputMatrix = (
   const baseName = basename(name)
   return format.flatMap(format => ({
     file: resolve(outputDir, `${baseName}.${format === 'es' ? 'm' : ''}js`),
-    sourcemap: true,
+    sourcemap: false,
     name: 'JsonViewer',
     format,
     banner: `/// <reference types="./${baseName}.d.ts" />`,
