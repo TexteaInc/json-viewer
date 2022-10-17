@@ -1,6 +1,6 @@
 import type React from 'react'
 
-import type { DataItemProps, EditorProps } from '../type'
+import type { DataItemProps, EditorProps, Path } from '../type'
 
 export const applyValue = (obj: any, path: (string | number)[], value: any) => {
   if (typeof obj !== 'object' || obj === null) {
@@ -28,44 +28,44 @@ export const applyValue = (obj: any, path: (string | number)[], value: any) => {
 
 // case 1: you only render with a single component
 export function createDataType<ValueType = unknown> (
-  is: (value: unknown) => boolean,
+  is: (value: unknown, path: Path) => boolean,
   Component: React.ComponentType<DataItemProps<ValueType>>
 ): {
-  is: (value: unknown) => boolean
+  is: (value: unknown, path: Path) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
 }
 // case 2: you only render with a single component with editor
 export function createDataType<ValueType = unknown> (
-  is: (value: unknown) => boolean,
+  is: (value: unknown, path: Path) => boolean,
   Component: React.ComponentType<DataItemProps<ValueType>>,
   Editor: React.ComponentType<EditorProps<ValueType>>
 ): {
-  is: (value: unknown) => boolean
+  is: (value: unknown, path: Path) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
   Editor: React.ComponentType<DataItemProps<ValueType>>
 }
 // case 3: you only render with a component with pre and post.
 export function createDataType<ValueType = unknown> (
-  is: (value: unknown) => boolean,
+  is: (value: unknown, path: Path) => boolean,
   Component: React.ComponentType<DataItemProps<ValueType>>,
   Editor: undefined,
   PreComponent: React.ComponentType<DataItemProps<ValueType>>,
   PostComponent: React.ComponentType<DataItemProps<ValueType>>
 ): {
-  is: (value: unknown) => boolean
+  is: (value: unknown, path: Path) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
   PreComponent: React.ComponentType<DataItemProps<ValueType>>
   PostComponent: React.ComponentType<DataItemProps<ValueType>>
 }
 // case 4: need all of these
 export function createDataType<ValueType = unknown> (
-  is: (value: unknown) => boolean,
+  is: (value: unknown, path: Path) => boolean,
   Component: React.ComponentType<DataItemProps<ValueType>>,
   Editor: React.ComponentType<EditorProps<ValueType>>,
   PreComponent: React.ComponentType<DataItemProps<ValueType>>,
   PostComponent: React.ComponentType<DataItemProps<ValueType>>
 ): {
-  is: (value: unknown) => boolean
+  is: (value: unknown, path: Path) => boolean
   Component: React.ComponentType<DataItemProps<ValueType>>
   Editor: React.ComponentType<DataItemProps<ValueType>>
   PreComponent: React.ComponentType<DataItemProps<ValueType>>
@@ -73,7 +73,7 @@ export function createDataType<ValueType = unknown> (
 }
 
 export function createDataType<ValueType = unknown> (
-  is: (value: unknown) => boolean,
+  is: (value: unknown, path: Path) => boolean,
   Component: React.ComponentType<DataItemProps<ValueType>>,
   Editor?: React.ComponentType<EditorProps<ValueType>> | undefined,
   PreComponent?: React.ComponentType<DataItemProps<ValueType>> | undefined,
