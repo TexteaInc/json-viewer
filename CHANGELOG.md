@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.9.1...json-viewer-v2.10.0) (2022-10-17)
+
+
+### Features
+
+* support path in dataType ([#107](https://github.com/TexteaInc/json-viewer/issues/107)) ([f0aca0f](https://github.com/TexteaInc/json-viewer/commit/f0aca0fc9bf7906b9391f4e03c1a27ed0e3ea02c))
+
 ## [2.9.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.9.0...json-viewer-v2.9.1) (2022-10-10)
 
 
