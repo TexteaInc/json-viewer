@@ -16,7 +16,7 @@ import {
   PostObjectType,
   PreObjectType
 } from '../components/DataTypes/Object'
-import type { DataItemProps, DataType } from '../type'
+import type { DataItemProps, DataType, Path } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
 type TypeRegistryState = {
@@ -59,10 +59,10 @@ const objectType: DataType<object> = {
 }
 
 export function matchTypeComponents<Value> (
-  value: Value, registry: TypeRegistryState['registry']): DataType<Value> {
+  value: Value, path: Path, registry: TypeRegistryState['registry']): DataType<Value> {
   let potential: DataType<Value> | undefined
   for (const T of registry) {
-    if (T.is(value)) {
+    if (T.is(value, path)) {
       potential = T
       if (typeof value === 'object') {
         // early return for case like `null`
@@ -79,9 +79,9 @@ export function matchTypeComponents<Value> (
   return potential
 }
 
-export function useTypeComponents (value: unknown) {
+export function useTypeComponents (value: unknown, path: Path) {
   const registry = useTypeRegistryStore(store => store.registry)
-  return useMemo(() => matchTypeComponents(value, registry), [value, registry])
+  return useMemo(() => matchTypeComponents(value, path, registry), [value, path, registry])
 }
 
 export function predefined (): DataType<any>[] {
