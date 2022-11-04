@@ -76,7 +76,7 @@ const Component = () => (
 
 ![Avatar Preview](public/avatar-preview.png)
 
-[see the full code](examples/basic/pages/index.tsx)
+[see the full code](docs/pages/full/index.tsx)
 
 ### Base 16 Theme Support
 
