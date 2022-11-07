@@ -3,7 +3,12 @@ import create from 'zustand'
 import createContext from 'zustand/context'
 import { combine } from 'zustand/middleware'
 
-import type { JsonViewerOnChange, JsonViewerProps, Path } from '..'
+import type {
+  JsonViewerOnChange,
+  JsonViewerOnCopy,
+  JsonViewerProps,
+  Path
+} from '..'
 import type { Colorspace } from '../theme/base16'
 import { lightColorspace } from '../theme/base16'
 import type { JsonViewerKeyRenderer } from '../type'
@@ -28,6 +33,7 @@ export type JsonViewerState<T = unknown> = {
   rootName: false | string
   value: T
   onChange: JsonViewerOnChange
+  onCopy: JsonViewerOnCopy | undefined
   keyRenderer: JsonViewerKeyRenderer
   displayObjectSize: boolean
 }
@@ -54,6 +60,7 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
         maxDisplayLength: props.maxDisplayLength ?? 30,
         rootName: props.rootName ?? 'root',
         onChange: props.onChange ?? (() => {}),
+        onCopy: props.onCopy ?? undefined,
         keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
         editable: props.editable ?? false,
         defaultInspectDepth: props.defaultInspectDepth ?? 5,
