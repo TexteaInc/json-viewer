@@ -5,9 +5,23 @@ import type { Colorspace } from './theme/base16'
 
 export type Path = (string | number)[]
 
+/**
+ * @param path path to the target value
+ * @param oldValue
+ * @param newValue
+ */
 export type JsonViewerOnChange = <U = unknown>(
-  path: (string | number)[], oldValue: U,
+  path: Path, oldValue: U,
   newValue: U /*, type: ChangeType */) => void
+
+/**
+ *  @param path path to the target value
+ *  @param value
+ */
+export type JsonViewerOnCopy = <U = unknown>(
+  path: Path,
+  value: U
+) => unknown | Promise<unknown>
 
 export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
@@ -33,7 +47,7 @@ export type DataType<ValueType = unknown> = {
 }
 
 export interface JsonViewerKeyRenderer extends React.FC<DataItemProps> {
-  when(props: DataItemProps): boolean
+  when (props: DataItemProps): boolean
 }
 
 export type JsonViewerTheme = 'light' | 'dark' | 'auto' | Colorspace
@@ -59,13 +73,8 @@ export type JsonViewerProps<T = unknown> = {
    */
   keyRenderer?: JsonViewerKeyRenderer
   valueTypes?: DataType<any>[]
-  /**
-   *
-   * @param path path to the target value
-   * @param oldValue
-   * @param newValue
-   */
-  onChange?: <U>(path: Path, oldValue: U, newValue: U) => void
+  onChange?: JsonViewerOnChange
+  onCopy?: JsonViewerOnCopy
   /**
    * Whether enable clipboard feature.
    *

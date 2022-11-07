@@ -113,11 +113,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
                 event.preventDefault()
                 try {
                   copy(
-                    JSON.stringify(
-                      typeof value === 'function' ? value.toString() : value,
-                      null,
-                      '  '
-                    )
+                    path,
+                    value
                   )
                 } catch (e) {
                   // in some case, this will throw error
