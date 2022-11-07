@@ -56,6 +56,7 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   useSetIfNotUndefinedEffect('rootName', props.rootName)
   useSetIfNotUndefinedEffect('displayDataTypes', props.displayDataTypes)
   useSetIfNotUndefinedEffect('displayObjectSize', props.displayObjectSize)
+  useSetIfNotUndefinedEffect('onCopy', props.onCopy)
   useEffect(() => {
     if (props.theme === 'light') {
       api.setState({
