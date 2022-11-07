@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.10.0...json-viewer-v2.11.0) (2022-11-07)
+
+
+### Features
+
+* support `props.onCopy` ([#113](https://github.com/TexteaInc/json-viewer/issues/113)) ([a739ab0](https://github.com/TexteaInc/json-viewer/commit/a739ab0afdced7445e21883f98b92410c15bb63b))
+
 ## [2.10.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.9.1...json-viewer-v2.10.0) (2022-10-17)
 
 
