@@ -1,6 +1,7 @@
 {
   "extends": "./node_modules/@textea/dev-kit/config/tsconfig.root.json",
   "compilerOptions": {
+    "target": "ES2018",
     "outDir": "./dist/out/",
     "rootDir": "./src/",
     "jsx": "react-jsx",
