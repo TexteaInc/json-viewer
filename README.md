@@ -1,6 +1,7 @@
 # @textea/json-viewer
 
 [![npm](https://img.shields.io/npm/v/@textea/json-viewer)](https://www.npmjs.com/package/@textea/json-viewer)
+[![npm](https://img.shields.io/npm/dm/@textea/json-viewer.svg)](https://www.npmjs.com/package/@textea/json-viewer)
 [![npm](https://img.shields.io/npm/l/@textea/json-viewer)](https://github.com/TexteaInc/json-viewer/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/TexteaInc/json-viewer/branch/main/graph/badge.svg?token=r32mzVhrRl)](https://codecov.io/gh/TexteaInc/json-viewer)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4fab3ed5-7084-449d-9fc9-12df09108301/deploy-status)](https://viewer.textea.io)
