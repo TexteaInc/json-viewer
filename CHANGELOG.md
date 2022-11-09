@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.11.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.11.0...json-viewer-v2.11.1) (2022-11-09)
+
+
+### Bug Fixes
+
+* build issues ([001fd8c](https://github.com/TexteaInc/json-viewer/commit/001fd8c62d63312a27e3f8c791a9c7a2ba899e53))
+* use ES2018 as target ([afd7c6c](https://github.com/TexteaInc/json-viewer/commit/afd7c6ccec98c8a53f3eec1c7cd5863748197d24))
+
 ## [2.11.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.10.0...json-viewer-v2.11.0) (2022-11-07)
 
 
