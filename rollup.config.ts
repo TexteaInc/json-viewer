@@ -13,12 +13,13 @@ import type {
 } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import { defineRollupSwcOption, swc } from 'rollup-plugin-swc3'
+import { fileURLToPath } from 'url'
 
 let cache: RollupCache
 
 const dtsOutput = new Set<[string, string]>()
 
-const outputDir = resolve(__dirname, 'dist')
+const outputDir = fileURLToPath(new URL('dist', import.meta.url))
 
 const external = [
   '@emotion/react',
@@ -30,9 +31,13 @@ const external = [
   '@mui/material/styles',
   'copy-to-clipboard',
   'zustand',
+  'zustand/context',
+  'zustand/middleware',
+  'group-items',
   'react',
   'react/jsx-runtime',
-  'react-dom'
+  'react-dom',
+  'react-dom/client'
 ]
 const outputMatrix = (
   name: string, format: ModuleFormat[]): OutputOptions[] => {
