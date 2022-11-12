@@ -9,7 +9,7 @@
   "dependencies": {
     "@textea/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
-    "next": "^13.0.2",
+    "next": "^13.0.3",
     "nextra": "^2.0.0-beta.41",
     "nextra-theme-docs": "^2.0.0-beta.41",
     "react": "^18.2.0",
