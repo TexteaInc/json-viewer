@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.11.1...json-viewer-v2.11.2) (2022-11-28)
+
+
+### Bug Fixes
+
+* show three dots only on collapsed strings ([#118](https://github.com/TexteaInc/json-viewer/issues/118)) ([aca110e](https://github.com/TexteaInc/json-viewer/commit/aca110e8d9f62754086b379b00f12e2e01cb3e4d))
+
 ## [2.11.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.11.0...json-viewer-v2.11.1) (2022-11-09)
 
 
