@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   FormControl,
   FormControlLabel,
   InputLabel,
@@ -138,75 +139,90 @@ const IndexPage: React.FC = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Toolbar/>
-      <FormControlLabel
-        control={<Switch
-          checked={editable}
-          onChange={event => setEditable(event.target.checked)}
-        />}
-        label='Editable'
-      />
-      <FormControlLabel
-        control={<Switch
-          checked={displayDataTypes}
-          onChange={event => setDisplayDataTypes(event.target.checked)}
-        />}
-        label='DisplayDataTypes'
-      />
-      <FormControlLabel
-        control={<Switch
-          checked={displayObjectSize}
-          onChange={event => setDisplayObjectSize(event.target.checked)}
-        />}
-        label='DisplayObjectSize'
-      />
-      <TextField
-        label='indentWidth'
-        value={indent}
-        type='number'
-        onChange={
-          event => {
-            const indent = parseInt(event.target.value)
-            if (indent > -1 && indent < 10) {
-              setIndent(indent)
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        width: '100%',
+        gap: '10px',
+        paddingX: '5px',
+        paddingY: '10px',
+        minHeight: '64px',
+        marginTop: '64px'
+      }}>
+        <FormControlLabel
+          control={<Switch
+            checked={editable}
+            onChange={event => setEditable(event.target.checked)}
+          />}
+          label='Editable'
+        />
+        <FormControlLabel
+          control={<Switch
+            checked={displayDataTypes}
+            onChange={event => setDisplayDataTypes(event.target.checked)}
+          />}
+          label='DisplayDataTypes'
+        />
+        <FormControlLabel
+          control={<Switch
+            checked={displayObjectSize}
+            onChange={event => setDisplayObjectSize(event.target.checked)}
+          />}
+          label='DisplayObjectSize'
+        />
+        <TextField
+          label='indentWidth'
+          value={indent}
+          size='small'
+          type='number'
+          onChange={
+            event => {
+              const indent = parseInt(event.target.value)
+              if (indent > -1 && indent < 10) {
+                setIndent(indent)
+              }
             }
           }
-        }
-      />
-      <TextField
-        label='groupArraysAfterLength'
-        value={groupArraysAfterLength}
-        type='number'
-        onChange={
-          event => {
-            const groupArraysAfterLength = parseInt(event.target.value)
-            if (groupArraysAfterLength > -1 && groupArraysAfterLength < 500) {
-              setGroupArraysAfterLength(groupArraysAfterLength)
+        />
+        <TextField
+          label='groupArraysAfterLength'
+          value={groupArraysAfterLength}
+          size='small'
+          type='number'
+          onChange={
+            event => {
+              const groupArraysAfterLength = parseInt(event.target.value)
+              if (groupArraysAfterLength > -1 && groupArraysAfterLength < 500) {
+                setGroupArraysAfterLength(groupArraysAfterLength)
+              }
             }
           }
-        }
-      />
-      <FormControl>
-        <InputLabel>Theme</InputLabel>
-        <Select
-          value={themeKey}
-          label='Theme'
-          onChange={(event) => {
-            if (event.target.value === 'ocean') {
-              setTheme(ocean)
-              setThemeKey('ocean')
-            } else {
-              setTheme(event.target.value as any)
-              setThemeKey(event.target.value as any)
-            }
-          }}
+        />
+        <FormControl
+          size='small'
         >
-          <MenuItem value='auto'>auto</MenuItem>
-          <MenuItem value='light'>light</MenuItem>
-          <MenuItem value='dark'>dark</MenuItem>
-          <MenuItem value='ocean'>ocean</MenuItem>
-        </Select>
-      </FormControl>
+          <InputLabel>Theme</InputLabel>
+          <Select
+            value={themeKey}
+            label='Theme'
+            onChange={(event) => {
+              if (event.target.value === 'ocean') {
+                setTheme(ocean)
+                setThemeKey('ocean')
+              } else {
+                setTheme(event.target.value as any)
+                setThemeKey(event.target.value as any)
+              }
+            }}
+          >
+            <MenuItem value='auto'>auto</MenuItem>
+            <MenuItem value='light'>light</MenuItem>
+            <MenuItem value='dark'>dark</MenuItem>
+            <MenuItem value='ocean'>ocean</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
       <JsonViewer
         value={src}
         editable={editable}
@@ -231,7 +247,7 @@ const IndexPage: React.FC = () => {
             },
             (props) => {
               return <Image height={50} width={50} src={props.value}
-                            alt={props.value}/>
+                alt={props.value} />
             }
           )
         ]}
