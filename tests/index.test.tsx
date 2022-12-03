@@ -444,3 +444,33 @@ describe('Expand function by click on dots', () => {
     expect(elements[0].textContent).not.eq('...')
   })
 })
+
+describe('Show three dots after string collapsing', () => {
+  it('render', () => {
+    const Component = ()=> <JsonViewer
+        rootName={false}
+        value={'string string string'}
+        collapseStringsAfterLength={6}
+    />;
+    const { container, rerender } = render(<Component />)
+
+    let elements = container.getElementsByClassName('string-value')
+    expect(elements.length).eq(1)
+    expect(elements[0].children.length).eq(1)
+    expect(elements[0].textContent).eq('"string..."')
+    fireEvent.click(elements[0].children[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('string-value')
+    expect(elements.length).eq(1)
+    expect(elements[0].children.length).eq(1)
+    expect(elements[0].textContent).eq('"string string string"')
+    fireEvent.click(elements[0].children[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('string-value')
+    expect(elements.length).eq(1)
+    expect(elements[0].children.length).eq(1)
+    expect(elements[0].textContent).eq('"string..."')
+  })
+})

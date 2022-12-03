@@ -205,12 +205,10 @@ export function predefined (): DataType<any>[] {
         'string',
         (props) => {
           const [showRest, setShowRest] = useState(false)
-          const collapseStringsAfterLength = useJsonViewerStore(
-            store => store.collapseStringsAfterLength)
+          const collapseStringsAfterLength = useJsonViewerStore(store => store.collapseStringsAfterLength)
           const value = showRest
             ? props.value
-            : props.value.slice(0,
-              collapseStringsAfterLength)
+            : props.value.slice(0, collapseStringsAfterLength)
           const hasRest = props.value.length > collapseStringsAfterLength
           return (
             <Box
@@ -220,12 +218,14 @@ export function predefined (): DataType<any>[] {
                 cursor: hasRest ? 'pointer' : 'inherit'
               }}
               onClick={() => {
-                setShowRest(value => !value)
+                if (hasRest) {
+                  setShowRest(value => !value)
+                }
               }}
             >
               &quot;
               {value}
-              {showRest ? <span>...</span> : <></>}
+              {hasRest && !showRest && (<span>...</span>)}
               &quot;
             </Box>
           )
