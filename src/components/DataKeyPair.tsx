@@ -17,6 +17,7 @@ import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
 import { DataBox } from './mui/DataBox'
+import {getValueSize} from "../utils";
 
 export type DataKeyPairProps = {
   value: unknown
@@ -62,10 +63,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const [editing, setEditing] = useState(false)
   const onChange = useJsonViewerStore(store => store.onChange)
   const keyColor = useTextColor()
-  const numberKeyColor = useJsonViewerStore(
-    store => store.colorspace.base0C)
-  const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(
-    value, path)
+  const numberKeyColor = useJsonViewerStore(store => store.colorspace.base0C)
+  const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(value, path)
   const quotesOnKeys = useJsonViewerStore(store => store.quotesOnKeys)
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = root === value
@@ -176,7 +175,8 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     value
   ])
 
-  const expandable = !!(PreComponent && PostComponent)
+  const isEmptyValue = useMemo(() => getValueSize(value) === 0, [value]);
+  const expandable = !isEmptyValue && !!(PreComponent && PostComponent)
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   const downstreamProps: DataItemProps = useMemo(() => ({
     path,
@@ -206,7 +206,9 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
             if (event.isDefaultPrevented()) {
               return
             }
-            setInspect(state => !state)
+            if (!isEmptyValue) {
+              setInspect(state => !state)
+            }
           }, [setInspect])
         }
       >

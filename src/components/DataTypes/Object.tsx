@@ -9,6 +9,7 @@ import type { DataItemProps } from '../../type'
 import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../icons/CircularArrowsIcon'
 import { DataBox } from '../mui/DataBox'
+import {getValueSize} from "../../utils";
 
 const objectLb = '{'
 const arrayLb = '['
@@ -16,15 +17,11 @@ const objectRb = '}'
 const arrayRb = ']'
 
 function inspectMetadata (value: object) {
-  let length
+  let length = getValueSize(value);
+
   let name = ''
-  if (Array.isArray(value)) {
-    length = value.length
-  } else if (value instanceof Map || value instanceof Set) {
+  if (value instanceof Map || value instanceof Set) {
     name = value[Symbol.toStringTag]
-    length = value.size
-  } else {
-    length = Object.keys(value).length
   }
   if (Object.prototype.hasOwnProperty.call(value, Symbol.toStringTag)) {
     name = (value as any)[Symbol.toStringTag]
@@ -36,9 +33,8 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
-  const sizeOfValue = useMemo(
-    () => props.inspect ? inspectMetadata(props.value) : '',
-    [props.inspect, props.value]
+  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value]);
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value),[props.inspect, props.value]
   )
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const isTrap = useIsCycleReference(props.path, props.value)
@@ -50,20 +46,18 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
       }}
     >
       {isArray ? arrayLb : objectLb}
-      {displayObjectSize
-        ? (
-          <Box
-            component='span'
-            sx={{
-              pl: 0.5,
-              fontStyle: 'italic',
-              color: metadataColor
-            }}
-          >
-            {sizeOfValue}
-          </Box>
-          )
-        : null}
+      {displayObjectSize && props.inspect && !isEmptyValue && (
+        <Box
+          component='span'
+          sx={{
+            pl: 0.5,
+            fontStyle: 'italic',
+            color: metadataColor
+          }}
+        >
+          {sizeOfValue}
+        </Box>
+      )}
 
       {isTrap && !props.inspect
         ? (
@@ -85,14 +79,13 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
-  const sizeOfValue = useMemo(
-    () => !props.inspect ? inspectMetadata(props.value) : '',
-    [props.inspect, props.value]
-  )
+  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value]);
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.inspect, props.value])
+
   return (
     <Box component='span' className='data-object-end'>
       {isArray ? arrayRb : objectRb}
-      {displayObjectSize
+      {displayObjectSize && (isEmptyValue || !props.inspect)
         ? (
           <Box
             component='span'
@@ -118,12 +111,9 @@ function getIterator (value: any): value is Iterable<unknown> {
 export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
   const borderColor = useJsonViewerStore(store => store.colorspace.base02)
-  const groupArraysAfterLength = useJsonViewerStore(
-    store => store.groupArraysAfterLength)
+  const groupArraysAfterLength = useJsonViewerStore(store => store.groupArraysAfterLength)
   const isTrap = useIsCycleReference(props.path, props.value)
-  const [displayLength, setDisplayLength] = useState(
-    useJsonViewerStore(store => store.maxDisplayLength)
-  )
+  const [displayLength, setDisplayLength] = useState(useJsonViewerStore(store => store.maxDisplayLength))
   const objectSortKeys = useJsonViewerStore(store => store.objectSortKeys)
   const elements = useMemo(() => {
     if (!props.inspect) {
@@ -201,10 +191,9 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
     // object
     let entries: [key: string, value: unknown][] = Object.entries(value)
     if (objectSortKeys) {
-      entries = entries.sort(([a], [b]) => objectSortKeys === true
-        ? a.localeCompare(b)
-        : objectSortKeys(a, b)
-      )
+      entries = objectSortKeys === true
+        ? entries.sort(([a], [b]) => a.localeCompare(b))
+        : entries.sort(([a], [b]) => objectSortKeys(a, b))
     }
     const elements = entries.slice(0, displayLength).map(([key, value]) => {
       const path = [...props.path, key]
@@ -243,6 +232,10 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const marginLeft = props.inspect ? 0.6 : 0
   const width = useJsonViewerStore(store => store.indentWidth)
   const indentWidth = props.inspect ? width - marginLeft : width
+  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value]);
+  if (isEmptyValue) {
+    return null
+  }
   return (
     <Box
       className='data-object'

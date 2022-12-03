@@ -16,8 +16,7 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
   const isTrap = useIsCycleReference(path, value)
   const getInspectCache = useJsonViewerStore(store => store.getInspectCache)
   const setInspectCache = useJsonViewerStore(store => store.setInspectCache)
-  const defaultInspectDepth = useJsonViewerStore(
-    store => store.defaultInspectDepth)
+  const defaultInspectDepth = useJsonViewerStore(store => store.defaultInspectDepth)
   useEffect(() => {
     const inspect = getInspectCache(path, nestedIndex)
     if (inspect !== undefined) {
