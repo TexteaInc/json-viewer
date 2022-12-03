@@ -6,10 +6,10 @@ import { useTextColor } from '../../hooks/useColor'
 import { useIsCycleReference } from '../../hooks/useIsCycleReference'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
+import { getValueSize } from '../../utils'
 import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../icons/CircularArrowsIcon'
 import { DataBox } from '../mui/DataBox'
-import {getValueSize} from "../../utils";
 
 const objectLb = '{'
 const arrayLb = '['
@@ -17,7 +17,7 @@ const objectRb = '}'
 const arrayRb = ']'
 
 function inspectMetadata (value: object) {
-  let length = getValueSize(value);
+  const length = getValueSize(value)
 
   let name = ''
   if (value instanceof Map || value instanceof Set) {
@@ -33,8 +33,8 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
-  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value]);
-  const sizeOfValue = useMemo(() => inspectMetadata(props.value),[props.inspect, props.value]
+  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.inspect, props.value]
   )
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const isTrap = useIsCycleReference(props.path, props.value)
@@ -79,7 +79,7 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
-  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value]);
+  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.inspect, props.value])
 
   return (
@@ -232,7 +232,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
   const marginLeft = props.inspect ? 0.6 : 0
   const width = useJsonViewerStore(store => store.indentWidth)
   const indentWidth = props.inspect ? width - marginLeft : width
-  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value]);
+  const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   if (isEmptyValue) {
     return null
   }

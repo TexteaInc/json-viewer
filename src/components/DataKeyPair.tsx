@@ -16,8 +16,8 @@ import { useInspect } from '../hooks/useInspect'
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
+import { getValueSize } from '../utils'
 import { DataBox } from './mui/DataBox'
-import {getValueSize} from "../utils";
 
 export type DataKeyPairProps = {
   value: unknown
@@ -175,7 +175,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
     value
   ])
 
-  const isEmptyValue = useMemo(() => getValueSize(value) === 0, [value]);
+  const isEmptyValue = useMemo(() => getValueSize(value) === 0, [value])
   const expandable = !isEmptyValue && !!(PreComponent && PostComponent)
   const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
   const downstreamProps: DataItemProps = useMemo(() => ({

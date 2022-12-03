@@ -518,7 +518,7 @@ describe('Click on empty iterables', () => {
         rootName={false}
         value={[]}
         defaultInspectDepth={0}
-    />;
+    />
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -544,7 +544,7 @@ describe('Click on empty iterables', () => {
         rootName={false}
         value={[]}
         defaultInspectDepth={0}
-    />;
+    />
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -570,7 +570,7 @@ describe('Click on empty iterables', () => {
       rootName={false}
       value={new Map()}
       defaultInspectDepth={0}
-  />;
+  />
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -596,7 +596,7 @@ describe('Click on empty iterables', () => {
       rootName={false}
       value={new Set()}
       defaultInspectDepth={0}
-  />;
+  />
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -616,6 +616,5 @@ describe('Click on empty iterables', () => {
     rerender(<Component />)
     elements = container.getElementsByClassName('data-object-body')
     expect(elements.length).eq(0)
-
   })
 })

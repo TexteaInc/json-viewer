@@ -124,8 +124,7 @@ export const isCycleReference = (
   return false
 }
 
-
-export function getValueSize(value: any): number {
+export function getValueSize (value: any): number {
   if (value === null || undefined) {
     return 0
   } else if (Array.isArray(value)) {
@@ -134,10 +133,10 @@ export function getValueSize(value: any): number {
     return value.size
   } else if (value instanceof Date) {
     return 1
-  } else if (typeof value === "object") {
+  } else if (typeof value === 'object') {
     return Object.keys(value).length
   } else if (typeof value === 'string') {
     return value.length
   }
-  return 1;
+  return 1
 }
