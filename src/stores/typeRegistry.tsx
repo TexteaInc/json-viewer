@@ -225,7 +225,7 @@ export function predefined (): DataType<any>[] {
             >
               &quot;
               {value}
-              {hasRest && !showRest && (<span>...</span>)}
+              {hasRest && !showRest && (<Box component="span">...</Box>)}
               &quot;
             </Box>
           )
