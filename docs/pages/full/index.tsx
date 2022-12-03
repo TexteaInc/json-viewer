@@ -67,12 +67,15 @@ const example = {
   string: 'this is a string',
   integer: 42,
   array: [19, 19, 810, 'test', NaN],
+  emptyArray: [],
   nestedArray: [
     [1, 2],
     [3, 4]
   ],
   map,
+  emptyMap: new Map(),
   set,
+  emptySet: new Set(),
   float: 114.514,
   undefined,
   superLongString,
@@ -81,6 +84,7 @@ const example = {
     'second-child': false,
     'last-child': null
   },
+  emptyObject: {},
   function: aPlusB,
   constFunction: aPlusBConst,
   anonymousFunction: function (a: number, b: number) {
