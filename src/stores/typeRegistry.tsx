@@ -282,7 +282,7 @@ export function predefined (): DataType<any>[] {
         !isInt(value),
       ...createEasyType(
         'float',
-        ({ value }) => <>{`${value}`}</>,
+        ({ value }) => <>{value}</>,
         {
           colorKey: 'base0B',
           fromString: value => parseFloat(value)
@@ -296,7 +296,7 @@ export function predefined (): DataType<any>[] {
       is: (value) => typeof value === 'number' && isInt(value),
       ...createEasyType(
         'int',
-        ({ value }) => <>{`${value}`}</>,
+        ({ value }) => <>{value}</>,
         {
           colorKey: 'base0F',
           fromString: value => parseInt(value)
