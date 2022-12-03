@@ -447,11 +447,11 @@ describe('Expand function by click on dots', () => {
 
 describe('Show three dots after string collapsing', () => {
   it('render', () => {
-    const Component = ()=> <JsonViewer
+    const Component = () => <JsonViewer
         rootName={false}
         value={'string string string'}
         collapseStringsAfterLength={6}
-    />;
+    />
     const { container, rerender } = render(<Component />)
 
     let elements = container.getElementsByClassName('string-value')
