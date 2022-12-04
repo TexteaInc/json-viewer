@@ -205,12 +205,10 @@ export function predefined (): DataType<any>[] {
         'string',
         (props) => {
           const [showRest, setShowRest] = useState(false)
-          const collapseStringsAfterLength = useJsonViewerStore(
-            store => store.collapseStringsAfterLength)
+          const collapseStringsAfterLength = useJsonViewerStore(store => store.collapseStringsAfterLength)
           const value = showRest
             ? props.value
-            : props.value.slice(0,
-              collapseStringsAfterLength)
+            : props.value.slice(0, collapseStringsAfterLength)
           const hasRest = props.value.length > collapseStringsAfterLength
           return (
             <Box
@@ -220,12 +218,14 @@ export function predefined (): DataType<any>[] {
                 cursor: hasRest ? 'pointer' : 'inherit'
               }}
               onClick={() => {
-                setShowRest(value => !value)
+                if (hasRest) {
+                  setShowRest(value => !value)
+                }
               }}
             >
               &quot;
               {value}
-              {showRest ? <span>...</span> : <></>}
+              {hasRest && !showRest && (<Box component='span'>...</Box>)}
               &quot;
             </Box>
           )
@@ -282,7 +282,7 @@ export function predefined (): DataType<any>[] {
         !isInt(value),
       ...createEasyType(
         'float',
-        ({ value }) => <>{`${value}`}</>,
+        ({ value }) => <>{value}</>,
         {
           colorKey: 'base0B',
           fromString: value => parseFloat(value)
@@ -296,7 +296,7 @@ export function predefined (): DataType<any>[] {
       is: (value) => typeof value === 'number' && isInt(value),
       ...createEasyType(
         'int',
-        ({ value }) => <>{`${value}`}</>,
+        ({ value }) => <>{value}</>,
         {
           colorKey: 'base0F',
           fromString: value => parseInt(value)
