@@ -445,6 +445,180 @@ describe('Expand function by click on dots', () => {
   })
 })
 
+describe('See empty iterables', () => {
+  it('Array', () => {
+    const { container } = render(
+        <JsonViewer
+            rootName={false}
+            value={[]}
+            defaultInspectDepth={0}
+        />
+    )
+
+    let elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+    elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+  })
+  it('Object', () => {
+    const { container } = render(
+        <JsonViewer
+            rootName={false}
+            value={{}}
+            defaultInspectDepth={0}
+        />
+    )
+
+    let elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+    elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+  })
+  it('Map', () => {
+    const { container } = render(
+        <JsonViewer
+            rootName={false}
+            value={new Map()}
+            defaultInspectDepth={0}
+        />
+    )
+
+    let elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+    elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+  })
+  it('Set', () => {
+    const { container } = render(
+        <JsonViewer
+            rootName={false}
+            value={new Set()}
+            defaultInspectDepth={0}
+        />
+    )
+
+    let elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+    elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+  })
+})
+
+describe('Click on empty iterables', () => {
+  it('Array', () => {
+    const Component = () => <JsonViewer
+        rootName={false}
+        value={[]}
+        defaultInspectDepth={0}
+    />
+    const { container, rerender } = render(<Component />)
+
+    // Click on start brace
+    let elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+
+    // Click on end brace
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+  })
+  it('Object', () => {
+    const Component = () => <JsonViewer
+        rootName={false}
+        value={[]}
+        defaultInspectDepth={0}
+    />
+    const { container, rerender } = render(<Component />)
+
+    // Click on start brace
+    let elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+
+    // Click on end brace
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+  })
+  it('Map', () => {
+    const Component = () => <JsonViewer
+      rootName={false}
+      value={new Map()}
+      defaultInspectDepth={0}
+  />
+    const { container, rerender } = render(<Component />)
+
+    // Click on start brace
+    let elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+
+    // Click on end brace
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+  })
+  it('Set', () => {
+    const Component = () => <JsonViewer
+      rootName={false}
+      value={new Set()}
+      defaultInspectDepth={0}
+  />
+    const { container, rerender } = render(<Component />)
+
+    // Click on start brace
+    let elements = container.getElementsByClassName('data-object-start')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+
+    // Click on end brace
+    elements = container.getElementsByClassName('data-object-end')
+    expect(elements.length).eq(1)
+    fireEvent.click(elements[0])
+
+    rerender(<Component />)
+    elements = container.getElementsByClassName('data-object-body')
+    expect(elements.length).eq(0)
+  })
+})
+
 describe('Show three dots after string collapsing', () => {
   it('render', () => {
     const Component = () => <JsonViewer
