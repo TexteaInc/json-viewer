@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.12.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.11.2...json-viewer-v2.12.0) (2022-12-05)
+
+
+### Features
+
+* collapse all empty iterables and disable expanding them ([#123](https://github.com/TexteaInc/json-viewer/issues/123)) ([105b002](https://github.com/TexteaInc/json-viewer/commit/105b002e43e77d3f3d83d0297207896cb8dd6ceb))
+* invert logic for showing dots ([#122](https://github.com/TexteaInc/json-viewer/issues/122)) ([0e7292d](https://github.com/TexteaInc/json-viewer/commit/0e7292da459c77dac583dcc20af302505c3c1cc4))
+
 ## [2.11.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.11.1...json-viewer-v2.11.2) (2022-11-28)
 
 
