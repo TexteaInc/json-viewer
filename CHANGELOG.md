@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.1...json-viewer-v2.12.2) (2022-12-24)
+
+
+### Bug Fixes
+
+* set target as `ES5` ([d8384db](https://github.com/TexteaInc/json-viewer/commit/d8384db936d2eca972ca553ff3fe4767a15c6dff))
+
 ## [2.12.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.0...json-viewer-v2.12.1) (2022-12-24)
 
 
