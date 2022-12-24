@@ -41,6 +41,7 @@
   "exports": {
     ".": {
       "types": "./src/type.d.ts",
+      "default": "./dist/index.js",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     }
