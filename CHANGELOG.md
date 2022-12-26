@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.2...json-viewer-v2.12.3) (2022-12-26)
+
+
+### Bug Fixes
+
+* remove export default ([9c8fda6](https://github.com/TexteaInc/json-viewer/commit/9c8fda627fc892f002e3baef85eb686fcf1fbb72))
+
 ## [2.12.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.1...json-viewer-v2.12.2) (2022-12-24)
 
 
