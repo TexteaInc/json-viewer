@@ -37,7 +37,7 @@ const external = [
   'react',
   'react/jsx-runtime',
   'react-dom',
-  'react-dom/client',
+  'react-dom/client'
 ]
 const outputMatrix = (
   name: string, format: ModuleFormat[]): OutputOptions[] => {
