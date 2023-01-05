@@ -38,7 +38,6 @@ const external = [
   'react/jsx-runtime',
   'react-dom',
   'react-dom/client',
-  '@textea/dev-kit/utils'
 ]
 const outputMatrix = (
   name: string, format: ModuleFormat[]): OutputOptions[] => {
