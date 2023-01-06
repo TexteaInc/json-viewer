@@ -1,5 +1,4 @@
 {
-  "extends": "./node_modules/@textea/dev-kit/config/tsconfig.root.json",
   "compilerOptions": {
     "target": "ES5",
     "outDir": "./dist/out/",
@@ -7,7 +6,9 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
     "incremental": false,
-    "declaration": true
+    "declaration": true,
+    "moduleResolution": "node", 
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*.ts"

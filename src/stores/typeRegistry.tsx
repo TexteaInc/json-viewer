@@ -1,5 +1,4 @@
 import { Box } from '@mui/material'
-import { DevelopmentError } from '@textea/dev-kit/utils'
 import React, { memo, SetStateAction, useMemo, useState } from 'react'
 import create from 'zustand'
 import createStore from 'zustand/context'
@@ -74,7 +73,7 @@ export function matchTypeComponents<Value> (
     if (typeof value === 'object') {
       return objectType as unknown as DataType<Value>
     }
-    throw new DevelopmentError('this is not possible')
+    throw new Error('this is not possible')
   }
   return potential
 }

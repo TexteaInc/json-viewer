@@ -9,14 +9,13 @@
   "dependencies": {
     "@textea/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
-    "next": "^12.3.4",
+    "next": "^13.1.1",
     "nextra": "^2.0.0-beta.42",
     "nextra-theme-docs": "^2.0.0-beta.42",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@textea/dev-kit": "^1.1.0",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
