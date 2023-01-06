@@ -1,5 +1,5 @@
 {
-  "extends": "@textea/dev-kit/config/tsconfig.root.json",
+  // "extends": "@textea/dev-kit/config/tsconfig.root.json", // todo: to remove
   "compilerOptions": {
     "paths": {
       "@textea/json-viewer": [
@@ -8,7 +8,23 @@
     },
     "jsx": "preserve",
     "incremental": true,
-    "noEmit": true
+    "noEmit": true,
+    // "target": "es5",
+    "target": "ES2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+       "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
   },
   "include": [
     "next-env.d.ts",
