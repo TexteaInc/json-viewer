@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.12.5](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.4...json-viewer-v2.12.5) (2023-01-11)
+
+
+### Bug Fixes
+
+* move eslint related deps to devDependencies ([#142](https://github.com/TexteaInc/json-viewer/issues/142)) ([7e2705d](https://github.com/TexteaInc/json-viewer/commit/7e2705d6639483aa5a0bf77b7d37f77e3e9de60b))
+* remove `workspaces` in `package.json` before release ([#143](https://github.com/TexteaInc/json-viewer/issues/143)) ([e3723c1](https://github.com/TexteaInc/json-viewer/commit/e3723c1b4ff880c250b8a7b2aa85097cf5b4f7b8))
+
 ## [2.12.4](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.3...json-viewer-v2.12.4) (2023-01-01)
 
 
