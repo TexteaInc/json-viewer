@@ -47,6 +47,8 @@ jobs:
         run: npm run build
       - name: Delete Scripts
         run: npm pkg delete scripts
+      - name: Delete Workspaces
+        run: npm pkg delete workspaces
       - uses: JS-DevTools/npm-publish@v1
         name: Publish to npm
         with:
