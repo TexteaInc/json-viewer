@@ -16,7 +16,7 @@ import {
   ContentCopyIcon,
   EditIcon,
   ExpandMoreIcon
-} from './icons'
+} from './Icons'
 import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {
