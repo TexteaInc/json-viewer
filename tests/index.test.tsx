@@ -269,7 +269,7 @@ describe('Expand elements by click on dots', () => {
 
     let elements = container.getElementsByClassName('data-object-body')
     expect(elements.length).eq(1)
-    expect(elements[0].textContent).eq('...')
+    expect(elements[0].textContent).eq('…')
     fireEvent.click(elements[0])
 
     rerender(
@@ -425,7 +425,7 @@ describe('Expand function by click on dots', () => {
 
     let elements = container.getElementsByClassName('data-function-body')
     expect(elements.length).eq(1)
-    expect(elements[0].textContent).eq('...')
+    expect(elements[0].textContent).eq('…')
     fireEvent.click(elements[0])
 
     rerender(
@@ -441,7 +441,7 @@ describe('Expand function by click on dots', () => {
     elements = container.getElementsByClassName('data-function')
     expect(elements.length).eq(1)
     expect(elements[0].children.length).eq(0)
-    expect(elements[0].textContent).not.eq('...')
+    expect(elements[0].textContent).not.eq('…')
   })
 })
 
@@ -631,7 +631,7 @@ describe('Show three dots after string collapsing', () => {
     let elements = container.getElementsByClassName('string-value')
     expect(elements.length).eq(1)
     expect(elements[0].children.length).eq(1)
-    expect(elements[0].textContent).eq('"string..."')
+    expect(elements[0].textContent).eq('"string…"')
     fireEvent.click(elements[0].children[0])
 
     rerender(<Component />)
@@ -645,6 +645,6 @@ describe('Show three dots after string collapsing', () => {
     elements = container.getElementsByClassName('string-value')
     expect(elements.length).eq(1)
     expect(elements[0].children.length).eq(1)
-    expect(elements[0].textContent).eq('"string..."')
+    expect(elements[0].textContent).eq('"string…"')
   })
 })
