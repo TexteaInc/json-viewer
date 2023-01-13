@@ -169,7 +169,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
               key='last'
               onClick={() => setDisplayLength(length => length * 2)}
             >
-              hidden {rest} items...
+              hidden {rest} items…
             </DataBox>
           )
         }
@@ -215,7 +215,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
           key='last'
           onClick={() => setDisplayLength(length => length * 2)}
         >
-          hidden {rest} items...
+          hidden {rest} items…
         </DataBox>
       )
     }
@@ -255,10 +255,11 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
               <Box component='span' className='data-object-body'
                  onClick={() => props.setInspect(true)}
                  sx={{
-                   '&:hover': { cursor: 'pointer' }
+                   '&:hover': { cursor: 'pointer' },
+                   padding: 0.5
                  }}
               >
-                ...
+                …
               </Box>
                 )
               : null
