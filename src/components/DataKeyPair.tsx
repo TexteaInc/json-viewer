@@ -246,10 +246,10 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           (
             isRoot
               ? (rootName !== false
-                  ? <DataBox sx={{ mx: 0.5 }}>:</DataBox>
+                  ? <DataBox sx={{ mr: 0.5 }}>:</DataBox>
                   : null)
               : nestedIndex === undefined && (
-               <DataBox sx={{ mx: 0.5 }}>:</DataBox>
+               <DataBox sx={{ mr: 0.5 }}>:</DataBox>
               )
           )
         }
