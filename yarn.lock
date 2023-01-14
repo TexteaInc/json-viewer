@@ -1132,22 +1132,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:^5.11.0":
-  version: 5.11.0
-  resolution: "@mui/icons-material@npm:5.11.0"
-  dependencies:
-    "@babel/runtime": ^7.20.6
-  peerDependencies:
-    "@mui/material": ^5.0.0
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 764c1185b3432f0228f3c5217b0e218b10f106fa96d305dfc62c0ef5afd2a7a087b0d664fd0a8171282e195c18d3ee073d5f037901a2bed1a1519a70fbb0501c
-  languageName: node
-  linkType: hard
-
 "@mui/material@npm:^5.11.4":
   version: 5.11.4
   resolution: "@mui/material@npm:5.11.4"
@@ -1820,7 +1804,6 @@ __metadata:
     "@commitlint/config-angular": ^17.4.2
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@mui/icons-material": ^5.11.0
     "@mui/material": ^5.11.4
     "@rollup/plugin-alias": ^4.0.2
     "@rollup/plugin-commonjs": ^24.0.0

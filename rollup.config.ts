@@ -26,7 +26,6 @@ const external = [
   '@emotion/styled',
   '@emotion/react/jsx-runtime',
   '@emotion/react/jsx-dev-runtime',
-  '@mui/icons-material',
   '@mui/material',
   '@mui/material/styles',
   'copy-to-clipboard',
