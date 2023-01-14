@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.13.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.5...json-viewer-v2.13.0) (2023-01-14)
+
+
+### Features
+
+* **ui:** replace triple dots (...) with ellipsis (…) ([#165](https://github.com/TexteaInc/json-viewer/issues/165)) ([6e3f1cf](https://github.com/TexteaInc/json-viewer/commit/6e3f1cfc51e76896f19ea24297fd035618ef7cde))
+
+
+### Bug Fixes
+
+* add vite as dev dependency ([#148](https://github.com/TexteaInc/json-viewer/issues/148)) ([b85bbf9](https://github.com/TexteaInc/json-viewer/commit/b85bbf9c8ccd833ee4d81c6d4a6791d62e42d551))
+* inline icons from `@mui/icons-material` ([#147](https://github.com/TexteaInc/json-viewer/issues/147)) ([84a5d06](https://github.com/TexteaInc/json-viewer/commit/84a5d0633551fc3c178c97bcda1205f010146056))
+* **ui:** remove left margin in key-value separator ([#153](https://github.com/TexteaInc/json-viewer/issues/153)) ([4d6a858](https://github.com/TexteaInc/json-viewer/commit/4d6a858796afe53d7c08e2258d4346414fcb3224))
+
 ## [2.12.5](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.4...json-viewer-v2.12.5) (2023-01-11)
 
 
