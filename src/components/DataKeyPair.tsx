@@ -1,11 +1,3 @@
-import {
-  Check as CheckIcon,
-  ChevronRight as ChevronRightIcon,
-  Close as CloseIcon,
-  ContentCopy as ContentCopyIcon,
-  Edit as EditIcon,
-  ExpandMore as ExpandMoreIcon
-} from '@mui/icons-material'
 import { Box, styled } from '@mui/material'
 import type React from 'react'
 import { useCallback, useMemo, useState } from 'react'
@@ -17,6 +9,14 @@ import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
 import { getValueSize } from '../utils'
+import {
+  CheckIcon,
+  ChevronRightIcon,
+  CloseIcon,
+  ContentCopyIcon,
+  EditIcon,
+  ExpandMoreIcon
+} from './Icons'
 import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {

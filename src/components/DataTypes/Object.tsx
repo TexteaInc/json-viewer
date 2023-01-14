@@ -8,7 +8,7 @@ import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
 import { getValueSize } from '../../utils'
 import { DataKeyPair } from '../DataKeyPair'
-import { CircularArrowsIcon } from '../icons/CircularArrowsIcon'
+import { CircularArrowsIcon } from '../Icons'
 import { DataBox } from '../mui/DataBox'
 
 const objectLb = '{'
