@@ -1,7 +1,8 @@
 import copyToClipboard from 'copy-to-clipboard'
+import { useAtomValue } from 'jotai'
 import { useCallback, useRef, useState } from 'react'
 
-import { useJsonViewerStore } from '../stores/JsonViewerStore'
+import { onCopyAtom } from '../state'
 import type { JsonViewerOnCopy } from '../type'
 import { safeStringify } from '../utils'
 
@@ -23,7 +24,7 @@ export function useClipboard ({ timeout = 2000 } = {}) {
     copyTimeout.current = window.setTimeout(() => setCopied(false), timeout)
     setCopied(value)
   }, [timeout])
-  const onCopy = useJsonViewerStore(store => store.onCopy)
+  const onCopy = useAtomValue(onCopyAtom)
 
   const copy = useCallback<JsonViewerOnCopy>((path, value: unknown) => {
     if (typeof onCopy === 'function') {

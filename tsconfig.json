@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ESNext",
     "outDir": "./dist/out/",
     "rootDir": "./src/",
     "jsx": "react-jsx",

@@ -1,7 +1,5 @@
-import type {
-  Dispatch,
-  SetStateAction
-} from 'react'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { useAtomCallback } from 'jotai/utils'
 import {
   useCallback,
   useEffect,
@@ -9,33 +7,46 @@ import {
 } from 'react'
 
 import {
-  useJsonViewerStore
-} from '../stores/JsonViewerStore'
+  defaultInspectDepthAtom,
+  getInspectCacheAtomFamily,
+  setInspectCacheAtomFamily
+} from '../state'
 import { useIsCycleReference } from './useIsCycleReference'
 
 export function useInspect (path: (string | number)[], value: any, nestedIndex?: number) {
   const depth = path.length
   const isTrap = useIsCycleReference(path, value)
-  const getInspectCache = useJsonViewerStore(store => store.getInspectCache)
-  const setInspectCache = useJsonViewerStore(store => store.setInspectCache)
-  const defaultInspectDepth = useJsonViewerStore(store => store.defaultInspectDepth)
+  const defaultInspectDepth = useAtomValue(defaultInspectDepthAtom)
+
+  const getInspectCache = useAtomCallback(
+    useCallback((get, set, arg) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useAtomValue(getInspectCacheAtomFamily(arg))
+    }, [])
+  )
+  const setInspectCache = useAtomCallback(
+    useCallback((get, set, arg) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useSetAtom(setInspectCacheAtomFamily(arg))
+    }, [])
+  )
   useEffect(() => {
-    const inspect = getInspectCache(path, nestedIndex)
+    const inspect = getInspectCache({ path, nestedIndex })
     if (inspect !== undefined) {
       return
     }
     if (nestedIndex !== undefined) {
-      setInspectCache(path, false, nestedIndex)
+      setInspectCache({ path, action: false, nestedIndex })
     } else {
       // do not inspect when it is a cycle reference, otherwise there will have a loop
       const inspect = isTrap
         ? false
         : depth < defaultInspectDepth
-      setInspectCache(path, inspect)
+      setInspectCache({ path, inspect })
     }
-  }, [defaultInspectDepth, depth, getInspectCache, isTrap, nestedIndex, path, setInspectCache])
-  const [inspect, set] = useState<boolean>(() => {
-    const shouldInspect = getInspectCache(path, nestedIndex)
+  }, [defaultInspectDepth, depth, isTrap, nestedIndex, path, getInspectCache, setInspectCache])
+  const shouldInspect = useAtomValue(getInspectCacheAtomFamily({ path, nestedIndex }))
+  const [inspect, setOriginal] = useState<boolean>(() => {
     if (shouldInspect !== undefined) {
       return shouldInspect
     }
@@ -46,12 +57,15 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
       ? false
       : depth < defaultInspectDepth
   })
-  const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
-    set((oldState) => {
-      const newState = typeof apply === 'boolean' ? apply : apply(oldState)
-      setInspectCache(path, newState, nestedIndex)
-      return newState
-    })
-  }, [nestedIndex, path, setInspectCache])
+  const setInspect = useAtomCallback(
+    useCallback((get, set, apply) => {
+      setOriginal((oldState) => {
+        const newState = typeof apply === 'boolean' ? apply : apply(oldState)
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useSetAtom(setInspectCacheAtomFamily(apply))
+        return newState
+      })
+    }, [])
+  )
   return [inspect, setInspect] as const
 }

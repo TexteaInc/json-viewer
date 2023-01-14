@@ -1,11 +1,23 @@
 import { Box } from '@mui/material'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { useAtomCallback } from 'jotai/utils'
 import type { ComponentProps, FC, MouseEvent } from 'react'
 import { useCallback, useMemo, useState } from 'react'
 
-import { useTextColor } from '../hooks/useColor'
 import { useClipboard } from '../hooks/useCopyToClipboard'
 import { useInspect } from '../hooks/useInspect'
-import { useJsonViewerStore } from '../stores/JsonViewerStore'
+import {
+  colorspaceAtom,
+  editableAtom,
+  enableClipboardAtom,
+  hoverPathAtom,
+  keyRendererAtom,
+  onChangeAtom,
+  quotesOnKeysAtom,
+  rootNameAtom,
+  setHoverAtomFamily,
+  valueAtom
+} from '../state'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
 import { getValueSize } from '../utils'
@@ -43,7 +55,7 @@ const IconBox: FC<IconBoxProps> = (props) => (
 export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const { value, path, nestedIndex } = props
   const propsEditable = props.editable ?? undefined
-  const storeEditable = useJsonViewerStore(store => store.editable)
+  const storeEditable = useAtomValue(editableAtom)
   const editable = useMemo(() => {
     if (storeEditable === false) {
       return false
@@ -60,26 +72,33 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const [tempValue, setTempValue] = useState(typeof value === 'function' ? () => value : value)
   const depth = path.length
   const key = path[depth - 1]
-  const hoverPath = useJsonViewerStore(store => store.hoverPath)
+  const hoverPath = useAtomValue(hoverPathAtom)
   const isHover = useMemo(() => {
     return hoverPath && path.every(
       (value, index) => value === hoverPath.path[index] && nestedIndex ===
         hoverPath.nestedIndex)
   }, [hoverPath, path, nestedIndex])
-  const setHover = useJsonViewerStore(store => store.setHover)
-  const root = useJsonViewerStore(store => store.value)
+  const setHover = useAtomCallback(
+    useCallback((get, set, arg) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useSetAtom(setHoverAtomFamily(arg))
+    }, [])
+  )
+  const root = useAtomValue(valueAtom)
   const [inspect, setInspect] = useInspect(path, value, nestedIndex)
   const [editing, setEditing] = useState(false)
-  const onChange = useJsonViewerStore(store => store.onChange)
-  const keyColor = useTextColor()
-  const numberKeyColor = useJsonViewerStore(store => store.colorspace.base0C)
+  const onChange = useAtomValue(onChangeAtom)
+  const {
+    base07: keyColor,
+    base0C: numberKeyColor
+  } = useAtomValue(colorspaceAtom)
   const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(value, path)
-  const quotesOnKeys = useJsonViewerStore(store => store.quotesOnKeys)
-  const rootName = useJsonViewerStore(store => store.rootName)
+  const quotesOnKeys = useAtomValue(quotesOnKeysAtom)
+  const rootName = useAtomValue(rootNameAtom)
   const isRoot = root === value
   const isNumberKey = Number.isInteger(Number(key))
 
-  const enableClipboard = useJsonViewerStore(store => store.enableClipboard)
+  const enableClipboard = useAtomValue(enableClipboardAtom)
   const { copy, copied } = useClipboard()
 
   const actionIcons = useMemo(() => {
@@ -161,7 +180,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
 
   const isEmptyValue = useMemo(() => getValueSize(value) === 0, [value])
   const expandable = !isEmptyValue && !!(PreComponent && PostComponent)
-  const KeyRenderer = useJsonViewerStore(store => store.keyRenderer)
+  const KeyRenderer = useAtomValue(keyRendererAtom)
   const downstreamProps: DataItemProps = useMemo(() => ({
     path,
     inspect,
@@ -173,10 +192,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
       className='data-key-pair'
       data-testid={'data-key-pair' + path.join('.')}
       sx={{ userSelect: 'text' }}
-      onMouseEnter={
-        useCallback(() => setHover(path, nestedIndex),
-          [setHover, path, nestedIndex])
-      }
+      onMouseEnter={() => setHover({ path, nestedIndex })}
     >
       <DataBox
         component='span'
