@@ -4,16 +4,13 @@ import type { SetStateAction } from 'react'
 import type { JsonViewerProps, Path } from '..'
 import {
   collapseStringsAfterLengthAtom,
-  colorspaceAtom,
   defaultInspectDepthAtom,
   displayDataTypesAtom,
   displayObjectSizeAtom,
   editableAtom,
   enableClipboardAtom,
   groupArraysAfterLengthAtom,
-  hoverPathAtom,
   indentWidthAtom,
-  inspectCacheAtom,
   keyRendererAtom,
   maxDisplayLengthAtom,
   objectSortKeysAtom,
@@ -21,11 +18,9 @@ import {
   onCopyAtom,
   onSelectAtom,
   quotesOnKeysAtom,
-  registryAtom,
   rootNameAtom,
   valueAtom
 } from '../state'
-import { lightColorspace } from '../theme/base16'
 import type { JsonViewerKeyRenderer, JsonViewerState } from '../type'
 
 export { Provider as JsonViewerProvider } from 'jotai'
@@ -61,11 +56,7 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>): 
   [quotesOnKeysAtom, props.quotesOnKeys ?? true],
   [displayDataTypesAtom, props.displayDataTypes ?? true],
   // internal state
-  [inspectCacheAtom, {}],
-  [hoverPathAtom, null],
-  [colorspaceAtom, lightColorspace],
   [valueAtom, props.value],
-  [displayObjectSizeAtom, props.displayObjectSize ?? true],
-  [registryAtom, []] // moved from JsonViewerProvider
+  [displayObjectSizeAtom, props.displayObjectSize ?? true]
 ]
 export type JsonViewerStore = ReturnType<typeof createJsonViewerStore>

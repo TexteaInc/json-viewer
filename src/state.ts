@@ -1,5 +1,6 @@
 import { atom } from 'jotai'
 
+import { lightColorspace } from './theme/base16'
 import type { JsonViewerState, TypeRegistryState } from './type'
 
 export const valueAtom = atom<JsonViewerState['value'] | undefined>(undefined)
@@ -15,14 +16,14 @@ export const displayDataTypesAtom = atom<JsonViewerState['displayDataTypes'] | u
 export const displayObjectSizeAtom = atom<JsonViewerState['displayObjectSize'] | undefined>(undefined)
 export const onCopyAtom = atom<JsonViewerState['onCopy'] | undefined>(undefined)
 export const onSelectAtom = atom<JsonViewerState['onSelect'] | undefined>(undefined)
-export const colorspaceAtom = atom<JsonViewerState['colorspace'] | undefined>(undefined)
+export const colorspaceAtom = atom<JsonViewerState['colorspace']>(lightColorspace)
 export const collapseStringsAfterLengthAtom = atom<JsonViewerState['collapseStringsAfterLength'] | undefined>(undefined)
 export const defaultInspectDepthAtom = atom<JsonViewerState['defaultInspectDepth'] | undefined>(undefined)
 export const objectSortKeysAtom = atom<JsonViewerState['objectSortKeys'] | undefined>(undefined)
 export const quotesOnKeysAtom = atom<JsonViewerState['quotesOnKeys'] | undefined>(undefined)
-export const inspectCacheAtom = atom<JsonViewerState['inspectCache'] | undefined>(undefined)
-export const hoverPathAtom = atom<JsonViewerState['hoverPath'] | undefined>(undefined)
-export const registryAtom = atom<TypeRegistryState['registry'] | undefined>(undefined)
+export const inspectCacheAtom = atom<JsonViewerState['inspectCache'] | undefined>({})
+export const hoverPathAtom = atom<JsonViewerState['hoverPath'] | null>(null)
+export const registryAtom = atom<TypeRegistryState['registry']>([])
 
 export const getInspectCacheAtom = atom(
   (get) => get(inspectCacheAtom),
