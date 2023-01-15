@@ -1,5 +1,6 @@
-import { SvgIcon, SvgIconProps } from '@mui/material'
-import type React from 'react'
+import type { SvgIconProps } from '@mui/material'
+import { SvgIcon } from '@mui/material'
+import React from 'react'
 
 const BaseIcon: React.FC<SvgIconProps> = ({ d, ...props }) => {
   return (
