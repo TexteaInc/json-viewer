@@ -1,6 +1,6 @@
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 import type { SetStateAction } from 'react'
-import React, { memo, useMemo, useState } from 'react'
+import { memo, useMemo, useState } from 'react'
 import create from 'zustand'
 import createStore from 'zustand/context'
 import { combine } from 'zustand/middleware'

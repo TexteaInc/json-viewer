@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 import type { ComponentProps } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 

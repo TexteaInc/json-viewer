@@ -1,7 +1,6 @@
-import {
-  createTheme, Paper,
-  ThemeProvider
-} from '@mui/material'
+import Paper from '@mui/material/Paper'
+import createTheme from '@mui/material/styles/createTheme'
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { DataKeyPair } from './components/DataKeyPair'
