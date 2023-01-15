@@ -81,6 +81,7 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-replace": "^5.0.2",
     "@swc/core": "^1.3.27",
+    "@swc/plugin-transform-imports": "^1.5.36",
     "@testing-library/react": "^13.4.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",

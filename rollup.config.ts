@@ -27,7 +27,7 @@ const external = [
   '@emotion/react/jsx-runtime',
   '@emotion/react/jsx-dev-runtime',
   '@mui/material',
-  '@mui/material/styles',
+  /@mui\/material\/.*/,
   'copy-to-clipboard',
   'zustand',
   'zustand/context',
@@ -47,7 +47,9 @@ const outputMatrix = (
     format,
     banner: `/// <reference types="./${baseName}.d.ts" />`,
     globals: external.reduce((object, module) => {
-      object[module] = module
+      if (typeof module === 'string') {
+        object[module] = module
+      }
       return object
     }, {} as Record<string, string>)
   }))
@@ -101,6 +103,20 @@ const buildMatrix = (input: string, output: string, config: {
               runtime: 'automatic',
               importSource: '@emotion/react'
             }
+          },
+          experimental: {
+            plugins: config.browser
+              ? []
+              : [
+                  [
+                    '@swc/plugin-transform-imports',
+                    {
+                      '@mui/material': {
+                        transform: '@mui/material/{{member}}'
+                      }
+                    }
+                  ]
+                ]
           }
         }
       }))
@@ -124,7 +140,7 @@ const dtsMatrix = (): RollupOptions[] => {
 
 const build: RollupOptions[] = [
   buildMatrix('./src/index.tsx', 'index', {
-    format: ['es', 'umd'],
+    format: ['es', 'cjs'],
     browser: false,
     dts: true
   }),
