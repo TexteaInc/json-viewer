@@ -1,6 +1,8 @@
-import {
+import type {
   Dispatch,
-  SetStateAction,
+  SetStateAction
+} from 'react'
+import {
   useCallback,
   useEffect,
   useState

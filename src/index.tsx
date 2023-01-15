@@ -2,8 +2,7 @@ import {
   createTheme, Paper,
   ThemeProvider
 } from '@mui/material'
-import type React from 'react'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { DataKeyPair } from './components/DataKeyPair'
 import { useThemeDetector } from './hooks/useThemeDetector'
