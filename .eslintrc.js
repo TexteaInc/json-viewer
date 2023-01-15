@@ -8,7 +8,12 @@ module.exports = {
   env: {
     browser: true, es6: true
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'standard'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'standard'
+  ],
   globals: {
     Atomics: 'readonly', SharedArrayBuffer: 'readonly'
   },
@@ -75,6 +80,7 @@ module.exports = {
           delimiter: 'semi', requireLast: false
         }
       }],
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',

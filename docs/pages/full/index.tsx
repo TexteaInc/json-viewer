@@ -11,17 +11,18 @@ import {
   Toolbar,
   Typography
 } from '@mui/material'
-import {
-  applyValue,
-  createDataType,
-  JsonViewer,
+import type {
   JsonViewerKeyRenderer,
   JsonViewerOnChange,
   JsonViewerTheme
 } from '@textea/json-viewer'
+import {
+  applyValue,
+  createDataType,
+  JsonViewer
+} from '@textea/json-viewer'
 import Image from 'next/image'
-import type React from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { ocean } from '../../lib/shared'
 

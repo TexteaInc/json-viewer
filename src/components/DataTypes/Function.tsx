@@ -3,7 +3,7 @@
  *  Because in Next.js SSR, the function will be translated to other type
  */
 import { Box, NoSsr } from '@mui/material'
-import type React from 'react'
+import React from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'

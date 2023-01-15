@@ -1,6 +1,5 @@
 import { Box, styled } from '@mui/material'
-import type React from 'react'
-import { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
 import { useTextColor } from '../hooks/useColor'
 import { useClipboard } from '../hooks/useCopyToClipboard'

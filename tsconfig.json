@@ -7,11 +7,9 @@
     "jsxImportSource": "@emotion/react",
     "incremental": false,
     "declaration": true,
-    "moduleResolution": "node", 
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/**/*.ts"
-  ],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
