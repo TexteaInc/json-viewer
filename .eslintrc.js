@@ -88,6 +88,16 @@ module.exports = {
     '@typescript-eslint/no-restricted-imports': [
       'error',
       {
+        paths: [
+          {
+            name: '@mui/material',
+            importNames: ['styled', 'createTheme', 'ThemeProvider'],
+            message: `
+Use "import { styled } from '@mui/material/styles'" instead.
+Use "import { createTheme } from '@mui/material/styles'" instead.
+Use "import { ThemeProvider } from '@mui/system'" instead.`
+          }
+        ],
         patterns: [
           {
             group: ['**/dist'],
