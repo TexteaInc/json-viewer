@@ -1,6 +1,7 @@
 import { useAtomValue, useSetAtom } from 'jotai'
-import { useAtomCallback } from 'jotai/utils'
 import {
+  Dispatch,
+  SetStateAction,
   useCallback,
   useEffect,
   useState
@@ -8,8 +9,8 @@ import {
 
 import {
   defaultInspectDepthAtom,
-  getInspectCacheAtomFamily,
-  setInspectCacheAtomFamily
+  getInspectCacheAtom,
+  setInspectCacheAtom
 } from '../state'
 import { useIsCycleReference } from './useIsCycleReference'
 
@@ -17,19 +18,8 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
   const depth = path.length
   const isTrap = useIsCycleReference(path, value)
   const defaultInspectDepth = useAtomValue(defaultInspectDepthAtom)
-
-  const getInspectCache = useAtomCallback(
-    useCallback((get, set, arg) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useAtomValue(getInspectCacheAtomFamily(arg))
-    }, [])
-  )
-  const setInspectCache = useAtomCallback(
-    useCallback((get, set, arg) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useSetAtom(setInspectCacheAtomFamily(arg))
-    }, [])
-  )
+  const getInspectCache = useSetAtom(getInspectCacheAtom)
+  const setInspectCache = useSetAtom(setInspectCacheAtom)
   useEffect(() => {
     const inspect = getInspectCache({ path, nestedIndex })
     if (inspect !== undefined) {
@@ -45,8 +35,8 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
       setInspectCache({ path, inspect })
     }
   }, [defaultInspectDepth, depth, isTrap, nestedIndex, path, getInspectCache, setInspectCache])
-  const shouldInspect = useAtomValue(getInspectCacheAtomFamily({ path, nestedIndex }))
-  const [inspect, setOriginal] = useState<boolean>(() => {
+  const [inspect, set] = useState<boolean>(() => {
+    const shouldInspect = getInspectCache({ path, nestedIndex })
     if (shouldInspect !== undefined) {
       return shouldInspect
     }
@@ -57,15 +47,12 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
       ? false
       : depth < defaultInspectDepth
   })
-  const setInspect = useAtomCallback(
-    useCallback((get, set, apply) => {
-      setOriginal((oldState) => {
-        const newState = typeof apply === 'boolean' ? apply : apply(oldState)
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useSetAtom(setInspectCacheAtomFamily(apply))
-        return newState
-      })
-    }, [])
-  )
+  const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
+    set((oldState) => {
+      const newState = typeof apply === 'boolean' ? apply : apply(oldState)
+      setInspectCache({ path, newState, nestedIndex })
+      return newState
+    })
+  }, [nestedIndex, path, setInspectCache])
   return [inspect, setInspect] as const
 }

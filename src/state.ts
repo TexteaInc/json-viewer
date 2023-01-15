@@ -1,5 +1,4 @@
 import { atom } from 'jotai'
-import { atomFamily } from 'jotai/utils'
 
 import type { JsonViewerState, TypeRegistryState } from './type'
 
@@ -25,36 +24,44 @@ export const inspectCacheAtom = atom<JsonViewerState['inspectCache'] | undefined
 export const hoverPathAtom = atom<JsonViewerState['hoverPath'] | undefined>(undefined)
 export const registryAtom = atom<TypeRegistryState['registry'] | undefined>(undefined)
 
-export const getInspectCacheAtomFamily = atomFamily(({ path, nestedIndex }) => {
-  const target = nestedIndex === undefined
-    ? path.join('.')
-    : `${path.join('.')}[${nestedIndex}]nt`
-  return atom((get) => get(inspectCacheAtom)[target])
-})
-export const setInspectCacheAtomFamily = atomFamily(({ path, action, nestedIndex }) => atom((get, set) => {
-  const target = nestedIndex === undefined
-    ? path.join('.')
-    : `${path.join('.')}[${nestedIndex}]nt`
-  const inspectCache = get(inspectCacheAtom)
-  return set(inspectCacheAtom, {
-    ...inspectCache,
-    [target]: typeof action === 'function'
-      ? action(inspectCache[target])
-      : action
-  })
-}))
-export const setHoverAtomFamily = atomFamily(({ path, nestedIndex }) => atom(
-  (get, set) => set(hoverPathAtom, path
+export const getInspectCacheAtom = atom(
+  (get) => get(inspectCacheAtom),
+  (get, _set, { path, nestedIndex }) => {
+    const target = nestedIndex === undefined
+      ? path.join('.')
+      : `${path.join('.')}[${nestedIndex}]nt`
+    return get(inspectCacheAtom)[target]
+  }
+)
+export const setInspectCacheAtom = atom(
+  (get) => get(inspectCacheAtom),
+  (get, set, { path, action, nestedIndex }) => {
+    const target = nestedIndex === undefined
+      ? path.join('.')
+      : `${path.join('.')}[${nestedIndex}]nt`
+    const inspectCache = get(inspectCacheAtom)
+    return set(inspectCacheAtom, {
+      ...inspectCache,
+      [target]: typeof action === 'function'
+        ? action(inspectCache[target])
+        : action
+    })
+  }
+)
+export const setHoverAtom = atom(
+  (get) => get(hoverPathAtom),
+  (_get, set, { path, nestedIndex }) => set(hoverPathAtom, path
     ? { path, nestedIndex }
     : null
   )
-))
-export const registryTypesAtomFamily = atomFamily((setState) => atom(
-  (get, set) => {
+)
+
+export const registryTypesAtom = atom(
+  (get) => get(registryAtom),
+  (get, set, setState) => {
     if (typeof setState === 'function') {
-      set(registryAtom, setState)
-      return
+      return setState(get(registryAtom))
     }
-    return setState
+    return set(registryAtom, setState)
   }
-))
+)
