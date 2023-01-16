@@ -1788,7 +1788,7 @@ __metadata:
     gray-matter: ^4.0.3
     next: ^13.1.2
     next-transpile-modules: ^10.0.0
-    nextra: ^2.2.1
+    nextra: ^2.2.3
     nextra-theme-docs: ^2.2.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -7429,9 +7429,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nextra@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "nextra@npm:2.2.1"
+"nextra@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "nextra@npm:2.2.3"
   dependencies:
     "@mdx-js/mdx": ^2.1.5
     "@mdx-js/react": ^2.1.5
@@ -7443,7 +7443,7 @@ __metadata:
     next-mdx-remote: ^4.2.0
     p-limit: ^3.1.0
     rehype-katex: ^6.0.2
-    rehype-pretty-code: 0.7.0
+    rehype-pretty-code: 0.8.1
     remark-gfm: ^3.0.1
     remark-math: ^5.1.1
     remark-reading-time: ^2.0.1
@@ -7455,7 +7455,7 @@ __metadata:
     next: ">=9.5.3"
     react: ">=16.13.1"
     react-dom: ">=16.13.1"
-  checksum: 1490b3f2428c999bf8d31663d6ee8b88e9a308a5741145309d38b52abd8c35e0f95bd4e783278748a45835bad81a31605a124bb841830925ca638cd64ae28c32
+  checksum: 901e4b2b671fd59239a7f8138550093ae43c382e13ced3063da4fa62c91340068eb6129ad136d90d640eb994386123fbe735e1645e8d1f809016b51062738292
   languageName: node
   linkType: hard
 
@@ -8298,16 +8298,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehype-pretty-code@npm:0.7.0":
-  version: 0.7.0
-  resolution: "rehype-pretty-code@npm:0.7.0"
+"rehype-pretty-code@npm:0.8.1":
+  version: 0.8.1
+  resolution: "rehype-pretty-code@npm:0.8.1"
   dependencies:
     hash-obj: ^4.0.0
     nanoid: ^4.0.0
     parse-numeric-range: ^1.3.0
   peerDependencies:
     shiki: "*"
-  checksum: 0ae56d3572fd88c259c04e681e150da2bf356ba350b513e1c0700e5d6db4ff87a00521bce248065a2a5c0e59b1dc65c070cbd5110f0cb4286c8acfde0cd4a879
+  checksum: 17993afeb059cacb8d5cdfa070d03fc7ef32633fb45774ff7c09a2910e52cd5f6142bc23f73bd9084425e35dd92c3e8f11d621da8b5380667b5eb9be6a317d95
   languageName: node
   linkType: hard
 
