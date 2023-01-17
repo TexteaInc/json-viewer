@@ -1,4 +1,5 @@
-import { Box, styled } from '@mui/material'
+import { Box } from '@mui/material'
+import type { ComponentProps } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 
 import { useTextColor } from '../hooks/useColor'
@@ -25,10 +26,19 @@ export type DataKeyPairProps = {
   path: (string | number)[]
 }
 
-const IconBox = styled(props => <Box {...props} component='span'/>)`
-  cursor: pointer;
-  padding-left: 0.7rem;
-` as typeof Box
+type IconBoxProps = ComponentProps<typeof Box>
+
+const IconBox: React.FC<IconBoxProps> = (props) => (
+  <Box
+    component='span'
+    {...props}
+    sx={{
+      cursor: 'pointer',
+      paddingLeft: '0.7rem',
+      ...props.sx
+    }}
+  />
+)
 
 export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   const { value, path, nestedIndex } = props
