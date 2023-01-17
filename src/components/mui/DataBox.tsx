@@ -1,5 +1,16 @@
-import { Box, styled } from '@mui/material'
+import { Box } from '@mui/material'
+import type { ComponentProps } from 'react'
+import React from 'react'
 
-export const DataBox = styled(props => <Box component='div' {...props}/>)`
-  display: inline-block;
-` as typeof Box
+type DataBoxProps = ComponentProps<typeof Box>
+
+export const DataBox: React.FC<DataBoxProps> = props => (
+  <Box
+    component='div'
+    {...props}
+    sx={{
+      display: 'inline-block',
+      ...props.sx
+    }}
+  />
+)
