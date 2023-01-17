@@ -1735,6 +1735,8 @@ __metadata:
     vitest: ^0.29.8
     zustand: ^4.3.7
   peerDependencies:
+    "@emotion/react": ^11
+    "@emotion/styled": ^11
     react: ^17 || ^18
     react-dom: ^17 || ^18
   languageName: unknown
