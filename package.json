@@ -31,19 +31,14 @@
     "tree-view",
     "treeview"
   ],
+  "sideEffects": false,
   "types": "dist/index.d.ts",
-  "jsdelivr": "dist/browser.js",
-  "browser": {
-    "vanilla": "dist/browser.js"
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/cjs/index.js",
+  "module": "dist/index.js",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
+    "types": "./src/type.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -56,11 +51,9 @@
     "postpack": "pinst --enable",
     "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache --fix",
     "lint:ci": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache",
-    "build": "rollup -c rollup.config.ts --configPlugin swc3"
+    "build": "tsc && rollup -c rollup.config.ts --configPlugin swc3"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.12",
     "copy-to-clipboard": "^3.3.3",
     "zustand": "^4.3.6"
@@ -70,12 +63,16 @@
     "*.{ts,tsx,js,jsx}": "npx eslint --cache --fix"
   },
   "peerDependencies": {
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "react": "^17 || ^18",
     "react-dom": "^17 || ^18"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-angular": "^17.4.4",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@rollup/plugin-alias": "^4.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
@@ -85,7 +82,6 @@
     "@types/node": "^18.15.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@types/web": "^0.0.96",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "@vitejs/plugin-react": "^3.1.0",

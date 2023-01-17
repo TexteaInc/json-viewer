@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES5",
-    "outDir": "./dist/out/",
-    "rootDir": "./src/",
+    "module": "es6",
+    "target": "es2019",
+    "outDir": "dist",
+    "lib": ["dom", "dom.iterable", "es2020"],
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
-    "incremental": false,
-    "declaration": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true
   },
-  "include": ["./src"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

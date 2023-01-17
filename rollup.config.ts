@@ -3,8 +3,7 @@ import { basename, resolve } from 'node:path'
 
 import alias from '@rollup/plugin-alias'
 import commonjs from '@rollup/plugin-commonjs'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import replace from '@rollup/plugin-replace'
+import nodeResolve from '@rollup/plugin-node-resolve'
 import type {
   ModuleFormat,
   OutputOptions,
@@ -19,7 +18,7 @@ let cache: RollupCache
 
 const dtsOutput = new Set<[string, string]>()
 
-const outputDir = fileURLToPath(new URL('dist', import.meta.url))
+const outputDir = fileURLToPath(new URL('dist/cjs', import.meta.url))
 
 const external = [
   '@emotion/react',
@@ -63,7 +62,7 @@ const buildMatrix = (input: string, output: string, config: {
     input,
     output: outputMatrix(output, config.format),
     cache,
-    external: config.browser ? [] : external,
+    external,
     plugins: [
       alias({
         entries: config.browser
@@ -79,11 +78,6 @@ const buildMatrix = (input: string, output: string, config: {
                 replacement: '@emotion/react/jsx-runtime'
               }
             ]
-      }),
-      config.browser && replace({
-        preventAssignment: true,
-        'process.env.NODE_ENV': JSON.stringify('production'),
-        'typeof window': JSON.stringify('object')
       }),
       commonjs(),
       nodeResolve(),
@@ -112,7 +106,7 @@ const dtsMatrix = (): RollupOptions[] => {
     cache,
     output: {
       file: resolve(outputDir, `${output}.d.ts`),
-      format: 'es'
+      format: 'umd'
     },
     plugins: [
       dts()
@@ -122,13 +116,8 @@ const dtsMatrix = (): RollupOptions[] => {
 
 const build: RollupOptions[] = [
   buildMatrix('./src/index.tsx', 'index', {
-    format: ['es', 'umd'],
+    format: ['umd'],
     browser: false,
-    dts: true
-  }),
-  buildMatrix('./src/browser.tsx', 'browser', {
-    format: ['es', 'umd'],
-    browser: true,
     dts: true
   }),
   ...dtsMatrix()

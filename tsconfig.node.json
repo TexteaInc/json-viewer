@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "Node"
-  },
-  "include": ["src", "rollup.config.ts", "vite.config.ts"]
-}
