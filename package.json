@@ -100,7 +100,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-simple-import-sort": "^9.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "expect-type": "^0.15.0",
     "husky": "^8.0.3",
