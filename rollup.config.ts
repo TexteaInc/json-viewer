@@ -32,7 +32,6 @@ const external = [
   'zustand',
   'zustand/context',
   'zustand/middleware',
-  'group-items',
   'react',
   'react/jsx-runtime',
   'react-dom',

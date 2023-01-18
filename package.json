@@ -63,7 +63,6 @@
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.4",
     "copy-to-clipboard": "^3.3.3",
-    "group-items": "^2.2.0",
     "zustand": "^4.1.5"
   },
   "lint-staged": {
