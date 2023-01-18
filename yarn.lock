@@ -1832,7 +1832,6 @@ __metadata:
     eslint-plugin-simple-import-sort: ^9.0.0
     eslint-plugin-unused-imports: ^2.0.0
     expect-type: ^0.15.0
-    group-items: ^2.2.0
     husky: ^8.0.3
     jsdom: ^21.0.0
     lint-staged: ^13.1.0
@@ -3420,15 +3419,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deep-eql@npm:^4.0.0":
-  version: 4.1.1
-  resolution: "deep-eql@npm:4.1.1"
-  dependencies:
-    type-detect: ^4.0.0
-  checksum: e14ec4065a38d89e48dee9c79c43c45c48bb0932e2be01898874517892ea15e20619d9c570019d6086ed74ea5557cc03ba4fab11878d20922d548221979b8d94
-  languageName: node
-  linkType: hard
-
 "deep-eql@npm:^4.1.2":
   version: 4.1.3
   resolution: "deep-eql@npm:4.1.3"
@@ -5009,15 +4999,6 @@ __metadata:
     section-matter: ^1.0.0
     strip-bom-string: ^1.0.0
   checksum: 37717bd424344487d655392251ce8d8878a1275ee087003e61208fba3bfd59cbb73a85b2159abf742ae95e23db04964813fdc33ae18b074208428b2528205222
-  languageName: node
-  linkType: hard
-
-"group-items@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "group-items@npm:2.2.0"
-  dependencies:
-    deep-eql: ^4.0.0
-  checksum: 920d4b231712205cf169631053414b3e870c481f7042d14d79f601f21d29dc720686f8a3f1e65bc019ffaf9dd9c4e83f4a5520cdcb009eb29bb980052874d8db
   languageName: node
   linkType: hard
 

@@ -4,6 +4,7 @@ import { describe, expect, test } from 'vitest'
 
 import type { DataItemProps } from '../src'
 import { applyValue, createDataType, isCycleReference } from '../src'
+import { segmentArray } from '../src/utils'
 
 describe('function applyValue', () => {
   const patches: any[] = [{}, undefined, 1, '2', 3n, 0.4]
@@ -202,5 +203,42 @@ describe('function createDataType', () => {
     expect(dataType.Editor).toBeTypeOf('function')
     expect(dataType.PreComponent).toBeTypeOf('function')
     expect(dataType.PostComponent).toBeTypeOf('function')
+  })
+})
+
+describe('function segmentArray', () => {
+  test('case 1', () => {
+    const array = [1, 2, 3, 4, 5]
+    const result = segmentArray(array, 2)
+    expect(result).to.deep.eq([
+      [1, 2],
+      [3, 4],
+      [5]
+    ])
+  })
+
+  test('case 2', () => {
+    const array = [1, 2, 3, 4, 5]
+    const result = segmentArray(array, 3)
+    expect(result).to.deep.eq([
+      [1, 2, 3],
+      [4, 5]
+    ])
+  })
+
+  test('case 3', () => {
+    const array = [1, 2, 3, 4, 5]
+    const result = segmentArray(array, 5)
+    expect(result).to.deep.eq([
+      [1, 2, 3, 4, 5]
+    ])
+  })
+
+  test('case 4', () => {
+    const array = [1, 2, 3, 4, 5]
+    const result = segmentArray(array, 6)
+    expect(result).to.deep.eq([
+      [1, 2, 3, 4, 5]
+    ])
   })
 })

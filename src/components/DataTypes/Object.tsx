@@ -1,12 +1,11 @@
 import { Box } from '@mui/material'
-import { group } from 'group-items'
 import React, { useMemo, useState } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
 import { useIsCycleReference } from '../../hooks/useIsCycleReference'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
-import { getValueSize } from '../../utils'
+import { getValueSize, segmentArray } from '../../utils'
 import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../Icons'
 import { DataBox } from '../mui/DataBox'
@@ -176,9 +175,7 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
         return elements
       }
 
-      const elements: unknown[][] = group<unknown>(value)
-        .by((_, index) => Math.floor(index / groupArraysAfterLength))
-        .asArrays()
+      const elements: unknown[][] = segmentArray(value, groupArraysAfterLength)
 
       return elements.map((list, index) => {
         const path = [...props.path]

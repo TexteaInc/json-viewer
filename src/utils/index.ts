@@ -140,3 +140,13 @@ export function getValueSize (value: any): number {
   }
   return 1
 }
+
+export function segmentArray<T> (arr: T[], size: number): T[][] {
+  const result: T[][] = []
+  let index = 0
+  while (index < arr.length) {
+    result.push(arr.slice(index, index + size))
+    index += size
+  }
+  return result
+}
