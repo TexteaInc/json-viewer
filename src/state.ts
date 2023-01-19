@@ -1,4 +1,6 @@
+import deepEqual from 'fast-deep-equal'
 import { atom } from 'jotai'
+import { atomFamily } from 'jotai/utils'
 
 import { lightColorspace } from './theme/base16'
 import type { JsonViewerState, TypeRegistryState } from './type'
@@ -21,19 +23,20 @@ export const collapseStringsAfterLengthAtom = atom<JsonViewerState['collapseStri
 export const defaultInspectDepthAtom = atom<JsonViewerState['defaultInspectDepth'] | undefined>(undefined)
 export const objectSortKeysAtom = atom<JsonViewerState['objectSortKeys'] | undefined>(undefined)
 export const quotesOnKeysAtom = atom<JsonViewerState['quotesOnKeys'] | undefined>(undefined)
-export const inspectCacheAtom = atom<JsonViewerState['inspectCache'] | undefined>({})
+export const inspectCacheAtom = atom<JsonViewerState['inspectCache']>({})
 export const hoverPathAtom = atom<JsonViewerState['hoverPath'] | null>(null)
 export const registryAtom = atom<TypeRegistryState['registry']>([])
 
-export const getInspectCacheAtom = atom(
-  (get) => get(inspectCacheAtom),
-  (get, _set, { path, nestedIndex }) => {
+// TODO check: if memory leaks, add to last line of useEffect:
+// return () => { atomFamily.remove ... // Anything in here is fired on component unmount }
+export const getInspectCacheAtom = atomFamily(({ path, nestedIndex }) => atom(
+  (get) => {
     const target = nestedIndex === undefined
       ? path.join('.')
       : `${path.join('.')}[${nestedIndex}]nt`
     return get(inspectCacheAtom)[target]
   }
-)
+), deepEqual)
 export const setInspectCacheAtom = atom(
   (get) => get(inspectCacheAtom),
   (get, set, { path, action, nestedIndex }) => {
@@ -51,10 +54,9 @@ export const setInspectCacheAtom = atom(
 )
 export const setHoverAtom = atom(
   (get) => get(hoverPathAtom),
-  (_get, set, { path, nestedIndex }) => set(hoverPathAtom, path
-    ? { path, nestedIndex }
-    : null
-  )
+  (_get, set, { path, nestedIndex }) => {
+    set(hoverPathAtom, path ? { path, nestedIndex } : null)
+  }
 )
 
 export const registryTypesAtom = atom(

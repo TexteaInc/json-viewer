@@ -12,17 +12,21 @@ import {
   getInspectCacheAtom,
   setInspectCacheAtom
 } from '../state'
+import type { HostPath, JsonViewerProps } from '../type'
 import { useIsCycleReference } from './useIsCycleReference'
 
-export function useInspect (path: (string | number)[], value: any, nestedIndex?: number) {
+export function useInspect (
+  path: HostPath['path'],
+  value: JsonViewerProps['value'],
+  nestedIndex?: HostPath['nestedIndex']
+) {
   const depth = path.length
   const isTrap = useIsCycleReference(path, value)
   const defaultInspectDepth = useAtomValue(defaultInspectDepthAtom)
-  const getInspectCache = useSetAtom(getInspectCacheAtom)
+  const inspectCache = useAtomValue(getInspectCacheAtom({ path, nestedIndex }))
   const setInspectCache = useSetAtom(setInspectCacheAtom)
   useEffect(() => {
-    const inspect = getInspectCache({ path, nestedIndex })
-    if (inspect !== undefined) {
+    if (inspectCache !== undefined) {
       return
     }
     if (nestedIndex !== undefined) {
@@ -34,11 +38,10 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
         : depth < defaultInspectDepth
       setInspectCache({ path, inspect })
     }
-  }, [defaultInspectDepth, depth, isTrap, nestedIndex, path, getInspectCache, setInspectCache])
+  }, [defaultInspectDepth, depth, isTrap, nestedIndex, path, inspectCache, setInspectCache])
   const [inspect, set] = useState<boolean>(() => {
-    const shouldInspect = getInspectCache({ path, nestedIndex })
-    if (shouldInspect !== undefined) {
-      return shouldInspect
+    if (inspectCache !== undefined) {
+      return inspectCache
     }
     if (nestedIndex !== undefined) {
       return false
