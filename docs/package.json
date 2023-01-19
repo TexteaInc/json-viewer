@@ -10,14 +10,14 @@
     "@textea/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
     "next": "^13.1.2",
-    "nextra": "^2.2.3",
-    "nextra-theme-docs": "^2.2.1",
+    "nextra": "^2.2.6",
+    "nextra-theme-docs": "^2.2.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
-    "@types/react": "^18.0.26",
+    "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "next-transpile-modules": "^10.0.0",
     "typescript": "^4.9.4"
