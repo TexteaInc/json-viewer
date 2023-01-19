@@ -11,8 +11,11 @@ export type Path = (string | number)[]
  * @param newValue
  */
 export type JsonViewerOnChange = <U = unknown>(
-  path: Path, oldValue: U,
-  newValue: U /*, type: ChangeType */) => void
+  path: Path,
+  oldValue: U,
+  newValue: U
+  /*, type: ChangeType */
+) => void
 
 /**
  * @param path path to the target value
@@ -127,8 +130,7 @@ export type JsonViewerProps<T = unknown> = {
   /**
    * Whether this value can be edited.
    *
-   * Pass `false` to turn off the edit feature.
-   * Pass a function to customize the result.
+   * Provide a function to customize this behavior by returning a boolean based on the value and path.
    *
    * @default false
    */
@@ -188,11 +190,13 @@ export type JsonViewerProps<T = unknown> = {
   displayDataTypes?: boolean
 
   /**
-   * Whether display the size of array and object
+   * Whether display the size of `Object`, `Array`, `Map` and `Set`.
+   *
+   * Provide a function to customize this behavior by returning a boolean based on the value and path.
    *
    * @default true
    */
-  displayObjectSize?: boolean
+  displaySize?: boolean | ((path: Path, value: unknown) => boolean)
 
   /**
    * Whether to highlight updates.
