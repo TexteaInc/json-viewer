@@ -179,7 +179,7 @@ const IndexPage: FC = () => {
   const [theme, setTheme] = useState<JsonViewerTheme>('light')
   const [src, setSrc] = useState(() => example)
   const [displayDataTypes, setDisplayDataTypes] = useState(true)
-  const [displayObjectSize, setDisplayObjectSize] = useState(true)
+  const [displaySize, setDisplaySize] = useState(true)
   const [editable, setEditable] = useState(true)
   const [highlightUpdates, setHighlightUpdates] = useState(true)
   useEffect(() => {
@@ -249,8 +249,8 @@ const IndexPage: FC = () => {
         <FormControlLabel
           control={(
             <Switch
-              checked={displayObjectSize}
-              onChange={event => setDisplayObjectSize(event.target.checked)}
+              checked={displaySize}
+              onChange={event => setDisplaySize(event.target.checked)}
             />
           )}
           label='DisplayObjectSize'
@@ -314,7 +314,7 @@ const IndexPage: FC = () => {
         indentWidth={indent}
         theme={theme}
         displayDataTypes={displayDataTypes}
-        displayObjectSize={displayObjectSize}
+        displaySize={displaySize}
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[
