@@ -34,9 +34,9 @@ const PreObjectType: FC<DataItemProps<object>> = (props) => {
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
-  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value]
-  )
-  const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
+  const displaySize = useJsonViewerStore(store => store.displaySize)
+  const shouldDisplaySize = useMemo(() => typeof displaySize === 'function' ? displaySize(props.path, props.value) : displaySize, [displaySize, props.path, props.value])
   const isTrap = useIsCycleReference(props.path, props.value)
   return (
     <Box
@@ -47,7 +47,7 @@ const PreObjectType: FC<DataItemProps<object>> = (props) => {
       }}
     >
       {isArray ? arrayLb : objectLb}
-      {displayObjectSize && props.inspect && !isEmptyValue && (
+      {shouldDisplaySize && props.inspect && !isEmptyValue && (
         <Box
           component='span'
           sx={{
@@ -80,14 +80,15 @@ const PreObjectType: FC<DataItemProps<object>> = (props) => {
 const PostObjectType: FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
-  const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
+  const displaySize = useJsonViewerStore(store => store.displaySize)
+  const shouldDisplaySize = useMemo(() => typeof displaySize === 'function' ? displaySize(props.path, props.value) : displaySize, [displaySize, props.path, props.value])
 
   return (
     <Box component='span' className='data-object-end'>
       {isArray ? arrayRb : objectRb}
-      {displayObjectSize && (isEmptyValue || !props.inspect)
+      {shouldDisplaySize && (isEmptyValue || !props.inspect)
         ? (
           <Box
             component='span'
