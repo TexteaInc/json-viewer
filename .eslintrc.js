@@ -94,8 +94,7 @@ module.exports = {
             importNames: ['styled', 'createTheme', 'ThemeProvider'],
             message: `
 Use "import { styled } from '@mui/material/styles'" instead.
-Use "import { createTheme } from '@mui/material/styles'" instead.
-Use "import { ThemeProvider } from '@mui/system'" instead.`
+Use "import { createTheme, ThemeProvider } from '@mui/material/styles'" instead.`
           }
         ],
         patterns: [
