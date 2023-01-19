@@ -113,6 +113,9 @@ const buildMatrix = (input: string, output: string, config: {
                     {
                       '@mui/material': {
                         transform: '@mui/material/{{member}}'
+                      },
+                      '@mui/material/styles': {
+                        transform: '@mui/material/styles/{{member}}'
                       }
                     }
                   ]
