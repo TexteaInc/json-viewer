@@ -187,8 +187,9 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
       data-testid={'data-key-pair' + path.join('.')}
       sx={{ userSelect: 'text' }}
       onMouseEnter={
-        useCallback(() => setHover({ path, nestedIndex }),
-          [setHover, path, nestedIndex])
+        useCallback(() => {
+          setHover({ path, nestedIndex })
+        }, [setHover, path, nestedIndex])
       }
     >
       <DataBox

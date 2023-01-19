@@ -43,7 +43,7 @@ export const PreObjectType: FC<DataItemProps<object>> = (props) => {
   } = useAtomValue(colorspaceAtom)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
-  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.inspect, props.value])
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
   const displayObjectSize = useAtomValue(displayObjectSizeAtom)
   const isTrap = useIsCycleReference(props.path, props.value)
   return (
