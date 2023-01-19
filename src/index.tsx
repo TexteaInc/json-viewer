@@ -60,7 +60,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   useSetIfNotUndefinedEffect('highlightUpdates', props.highlightUpdates)
   useSetIfNotUndefinedEffect('rootName', props.rootName)
   useSetIfNotUndefinedEffect('displayDataTypes', props.displayDataTypes)
-  useSetIfNotUndefinedEffect('displayObjectSize', props.displayObjectSize)
+  useSetIfNotUndefinedEffect('displaySize', props.displaySize)
   useSetIfNotUndefinedEffect('onCopy', props.onCopy)
   useSetIfNotUndefinedEffect('onSelect', props.onSelect)
   useEffect(() => {
