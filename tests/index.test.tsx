@@ -307,9 +307,9 @@ describe('test functions', () => {
       },
       '(...args) {',
       `
-    console.log(args);
-    return "333";
-  `
+        console.log(args);
+        return "333";
+      `
     ],
     [
       func1,
@@ -328,69 +328,63 @@ describe('test functions', () => {
   `
     ],
     [
-      (...args:any) => console.log('555'),
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      (...args: any) => console.log('555'),
       '(...args) => {',
       ' console.log("555")'
     ],
     [
-      (...args:any) => {
+      (...args: any) => {
         console.log(args)
         return '666'
       },
       '(...args) => {',
       ` {
-    console.log(args);
-    return "666";
-  }`
+        console.log(args);
+        return "666";
+      }`
     ],
     [
+      // eslint-disable-next-line unused-imports/no-unused-vars
       function (a: number, b: number) {
         throw Error('Be careful to use the function just as value in useState() hook')
       },
       '(a, b) {',
       `
-    throw Error("Be careful to use the function just as value in useState() hook");
-  `
+        throw Error("Be careful to use the function just as value in useState() hook");
+      `
     ],
     [
-      ({ prop1, prop2, ...other }:any) => {
+      ({ prop1, prop2, ...other }: any) => {
         console.log(prop1, prop2, other)
         return '777'
       },
-      `({
-    prop1,
-    prop2,
-    ...other
-  }) => {`,
+      '({ prop1, prop2, ...other }) => {',
       ` {
-    console.log(prop1, prop2, other);
-    return "777";
-  }`
+        console.log(prop1, prop2, other);
+        return "777";
+      }`
     ],
     [
       {
-        func: ({ prop1, prop2, ...other }:any) => {
+        func: ({ prop1, prop2, ...other }: any) => {
           console.log(prop1, prop2, other)
-          return '777'
+          return '888'
         }
       },
-      `({
-      prop1,
-      prop2,
-      ...other
-    }) => {`,
+      '({ prop1, prop2, ...other }) => {',
       ` {
-      console.log(prop1, prop2, other);
-      return "777";
-    }`
+          console.log(prop1, prop2, other);
+          return "888";
+        }`
     ],
     [
       // @ts-ignore
       function (e, n) { return e + n },
       '(e, n) {',
       `
-      return e + n;
-    `
+        return e + n;
+      `
     ]
   ]
   for (const iteration of dataProvider) {
@@ -418,7 +412,7 @@ describe('Expand function by click on dots', () => {
     const { container, rerender } = render(
       <JsonViewer
         rootName={false}
-        value={(e:any) => console.log('it works')}
+        value={(e: any) => console.log('it works')}
         defaultInspectDepth={0}
       />
     )
@@ -431,7 +425,7 @@ describe('Expand function by click on dots', () => {
     rerender(
       <JsonViewer
         rootName={false}
-        value={(e:any) => console.log('it works')}
+        value={(e: any) => console.log('it works')}
         defaultInspectDepth={0}
       />
     )
