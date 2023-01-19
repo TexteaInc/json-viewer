@@ -36,7 +36,7 @@ export function useInspect (
       const inspect = isTrap
         ? false
         : depth < defaultInspectDepth
-      setInspectCache({ path, inspect })
+      setInspectCache({ path, action: inspect })
     }
   }, [defaultInspectDepth, depth, isTrap, nestedIndex, path, inspectCache, setInspectCache])
   const [inspect, set] = useState<boolean>(() => {
@@ -53,7 +53,7 @@ export function useInspect (
   const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
     set((oldState) => {
       const newState = typeof apply === 'boolean' ? apply : apply(oldState)
-      setInspectCache({ path, newState, nestedIndex })
+      setInspectCache({ path, action: newState, nestedIndex })
       return newState
     })
   }, [nestedIndex, path, setInspectCache])

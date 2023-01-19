@@ -2,8 +2,8 @@ import {
   createTheme, Paper,
   ThemeProvider
 } from '@mui/material'
+import { useAtomValue, useSetAtom } from 'jotai'
 import type { Atom } from 'jotai'
-import { useAtom, useSetAtom } from 'jotai'
 import type { FC, ReactElement } from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
@@ -99,7 +99,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
     registerTypes(allTypes)
   }, [predefinedTypes, props.valueTypes, registerTypes])
 
-  const value = useAtom(valueAtom)
+  const value = useAtomValue(valueAtom)
   const setHover = useSetAtom(setHoverAtom)
   return (
     <Paper
