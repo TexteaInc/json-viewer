@@ -1,4 +1,4 @@
-import { useAtomValue, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import {
   Dispatch,
   SetStateAction,
@@ -7,11 +7,7 @@ import {
   useState
 } from 'react'
 
-import {
-  defaultInspectDepthAtom,
-  getInspectCacheAtom,
-  setInspectCacheAtom
-} from '../state'
+import { defaultInspectDepthAtom, inspectCacheAtom } from '../state'
 import type { HostPath, JsonViewerProps } from '../type'
 import { useIsCycleReference } from './useIsCycleReference'
 
@@ -23,8 +19,7 @@ export function useInspect (
   const depth = path.length
   const isTrap = useIsCycleReference(path, value)
   const defaultInspectDepth = useAtomValue(defaultInspectDepthAtom)
-  const inspectCache = useAtomValue(getInspectCacheAtom({ path, nestedIndex }))
-  const setInspectCache = useSetAtom(setInspectCacheAtom)
+  const [inspectCache, setInspectCache] = useAtom(inspectCacheAtom({ path, nestedIndex }))
   useEffect(() => {
     if (inspectCache !== undefined) {
       return

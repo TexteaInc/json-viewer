@@ -23,35 +23,33 @@ export const collapseStringsAfterLengthAtom = atom<JsonViewerState['collapseStri
 export const defaultInspectDepthAtom = atom<JsonViewerState['defaultInspectDepth'] | undefined>(undefined)
 export const objectSortKeysAtom = atom<JsonViewerState['objectSortKeys'] | undefined>(undefined)
 export const quotesOnKeysAtom = atom<JsonViewerState['quotesOnKeys'] | undefined>(undefined)
-export const inspectCacheAtom = atom<JsonViewerState['inspectCache']>({})
 export const hoverPathAtom = atom<JsonViewerState['hoverPath'] | null>(null)
 export const registryAtom = atom<TypeRegistryState['registry']>([])
 
+const _inspectCacheAtom = atom<JsonViewerState['inspectCache']>({})
 // TODO check: if memory leaks, add to last line of useEffect:
 // return () => { atomFamily.remove ... // Anything in here is fired on component unmount }
-export const getInspectCacheAtom = atomFamily(({ path, nestedIndex }) => atom(
+export const inspectCacheAtom = atomFamily(({ path, nestedIndex }) => atom(
   (get) => {
     const target = nestedIndex === undefined
       ? path.join('.')
       : `${path.join('.')}[${nestedIndex}]nt`
-    return get(inspectCacheAtom)[target]
-  }
-), deepEqual)
-export const setInspectCacheAtom = atom(
-  (get) => get(inspectCacheAtom),
+    return get(_inspectCacheAtom)[target]
+  },
   (get, set, { path, action, nestedIndex }) => {
     const target = nestedIndex === undefined
       ? path.join('.')
       : `${path.join('.')}[${nestedIndex}]nt`
-    const inspectCache = get(inspectCacheAtom)
-    return set(inspectCacheAtom, {
+    const inspectCache = get(_inspectCacheAtom)
+    return set(_inspectCacheAtom, {
       ...inspectCache,
       [target]: typeof action === 'function'
         ? action(inspectCache[target])
         : action
     })
   }
-)
+), deepEqual)
+
 export const setHoverAtom = atom(
   (get) => get(hoverPathAtom),
   (_get, set, { path, nestedIndex }) => {
