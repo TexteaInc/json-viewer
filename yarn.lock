@@ -1762,7 +1762,7 @@ __metadata:
     gray-matter: ^4.0.3
     next: ^13.1.2
     next-transpile-modules: ^10.0.0
-    nextra: ^2.2.6
+    nextra: ^2.2.9
     nextra-theme-docs: ^2.2.6
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -7171,9 +7171,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nextra@npm:^2.2.6":
-  version: 2.2.6
-  resolution: "nextra@npm:2.2.6"
+"nextra@npm:^2.2.9":
+  version: 2.2.9
+  resolution: "nextra@npm:2.2.9"
   dependencies:
     "@mdx-js/mdx": ^2.1.5
     "@mdx-js/react": ^2.1.5
@@ -7198,7 +7198,7 @@ __metadata:
     next: ">=9.5.3"
     react: ">=16.13.1"
     react-dom: ">=16.13.1"
-  checksum: 994f5a8942f35999789ed5e2ef1cc1b5cb99a9c0ae7ebab7fc3cf711f7b4fd566f35c7ee30163ea20f5a4506117554bafbe0a69af8c062532b8a3bc2994a3480
+  checksum: 32789aa4bb48abd1c5135a928288b9c5b870249658d12c2e4048af279586e7f19cc397e475dc4d708ca36847031841deb8f328086e97ced51f5637c63c292ffd
   languageName: node
   linkType: hard
 
