@@ -50,8 +50,8 @@ const replacePlugin = replace({
 const esmTransformImportsPlugin: [string, Record<string, any>] = [
   '@swc/plugin-transform-imports',
   {
-    '@mui/material': { transform: '@mui/material/{{member}}' },
-    '@mui/material/styles': { transform: '@mui/material/styles/{{member}}' }
+    '@mui/material': { transform: '@mui/material/{{member}}/index.js' },
+    '@mui/material/styles': { transform: '@mui/material/styles/{{member}}.js' }
   }
 ]
 
