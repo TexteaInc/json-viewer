@@ -1793,7 +1793,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.48.2
     "@vitejs/plugin-react": ^3.0.1
     "@vitest/coverage-c8": ^0.27.2
-    "@vitest/ui": ^0.27.2
+    "@vitest/ui": ^0.28.1
     copy-to-clipboard: ^3.3.3
     eslint: ^8.32.0
     eslint-config-standard: ^17.0.0
@@ -2291,14 +2291,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^0.27.2":
-  version: 0.27.2
-  resolution: "@vitest/ui@npm:0.27.2"
+"@vitest/ui@npm:^0.28.1":
+  version: 0.28.1
+  resolution: "@vitest/ui@npm:0.28.1"
   dependencies:
     fast-glob: ^3.2.12
     flatted: ^3.2.7
+    pathe: ^1.1.0
+    picocolors: ^1.0.0
     sirv: ^2.0.2
-  checksum: 2ab6a764a18e5fb3980f0d07d84c73b6323c1a972c56e09baed545f66397e4d7b29218ac8425db828911e740a63d50dfd8f9a8f5dfb3aa978d02410d38e8a951
+  checksum: e484b9be1760caa88e2580ffe874266f91842c3a086404c321543ee5ce024b77126c9d62a95ac8cd4368bf6c06ca75acee103e318729de553f9de82186291dc5
   languageName: node
   linkType: hard
 
@@ -7645,6 +7647,13 @@ __metadata:
   version: 1.0.0
   resolution: "pathe@npm:1.0.0"
   checksum: 7b71a4930a5b46111c92149632f74b0e87bade3eabe6c9168dcc4846857a4e124eacc0c2bf044fe0d2a8b7f87ae62b9b2cb11938c61899d485cc36dd1a243a23
+  languageName: node
+  linkType: hard
+
+"pathe@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "pathe@npm:1.1.0"
+  checksum: 6b9be9968ea08a90c0824934799707a1c6a1ad22ac1f22080f377e3f75856d5e53a331b01d327329bfce538a14590587cfb250e8e7947f64408797c84c252056
   languageName: node
   linkType: hard
 
