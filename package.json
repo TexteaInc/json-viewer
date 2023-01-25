@@ -40,7 +40,7 @@
   "module": "dist/index.mjs",
   "exports": {
     ".": {
-      "types": "./src/type.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     }
