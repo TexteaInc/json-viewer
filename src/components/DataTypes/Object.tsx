@@ -51,7 +51,8 @@ export const PreObjectType: React.FC<DataItemProps<object>> = (props) => {
           sx={{
             pl: 0.5,
             fontStyle: 'italic',
-            color: metadataColor
+            color: metadataColor,
+            userSelect: 'none'
           }}
         >
           {sizeOfValue}
@@ -91,7 +92,8 @@ export const PostObjectType: React.FC<DataItemProps<object>> = (props) => {
             sx={{
               pl: 0.5,
               fontStyle: 'italic',
-              color: metadataColor
+              color: metadataColor,
+              userSelect: 'none'
             }}
           >
             {sizeOfValue}
@@ -163,7 +165,8 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
                 lineHeight: 1.5,
                 color: keyColor,
                 letterSpacing: 0.5,
-                opacity: 0.8
+                opacity: 0.8,
+                userSelect: 'none'
               }}
               key='last'
               onClick={() => setDisplayLength(length => length * 2)}
@@ -207,7 +210,8 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
             lineHeight: 1.5,
             color: keyColor,
             letterSpacing: 0.5,
-            opacity: 0.8
+            opacity: 0.8,
+            userSelect: 'none'
           }}
           key='last'
           onClick={() => setDisplayLength(length => length * 2)}
@@ -253,7 +257,8 @@ export const ObjectType: React.FC<DataItemProps<object>> = (props) => {
                  onClick={() => props.setInspect(true)}
                  sx={{
                    '&:hover': { cursor: 'pointer' },
-                   padding: 0.5
+                   padding: 0.5,
+                   userSelect: 'none'
                  }}
               >
                 …

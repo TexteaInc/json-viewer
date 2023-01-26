@@ -20,7 +20,8 @@ export const DataTypeLabel: React.FC<DataLabelProps> = ({
       sx={{
         mx: 0.5,
         fontSize: '0.7rem',
-        opacity: 0.8
+        opacity: 0.8,
+        userSelect: 'none'
       }}
     >{dataType}</DataBox>
   )
