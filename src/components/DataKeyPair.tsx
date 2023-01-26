@@ -196,6 +196,9 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
   return (
     <Box className='data-key-pair'
          data-testid={'data-key-pair' + path.join('.')}
+         sx={{
+           userSelect: 'text'
+         }}
          onMouseEnter={
            useCallback(() => setHover(path, nestedIndex),
              [setHover, path, nestedIndex])
