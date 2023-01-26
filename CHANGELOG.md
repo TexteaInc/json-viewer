@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.13.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.13.0...json-viewer-v2.13.1) (2023-01-26)
+
+
+### Bug Fixes
+
+* correct types reference ([#219](https://github.com/TexteaInc/json-viewer/issues/219)) ([3da8caf](https://github.com/TexteaInc/json-viewer/commit/3da8caf146162767fc4e1c99f7d840b7d6739449))
+* key and value text should be selectable ([#217](https://github.com/TexteaInc/json-viewer/issues/217)) ([94ad428](https://github.com/TexteaInc/json-viewer/commit/94ad4289ad0a2fd281be7932576960c1b788dcc2))
+
 ## [2.13.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.12.5...json-viewer-v2.13.0) (2023-01-14)
 
 
