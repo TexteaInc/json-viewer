@@ -15,6 +15,7 @@ tsconfig.tsbuildinfo
 .eslintcache
 node_modules
 
+.swc
 .next
 .vercel
 coverage
