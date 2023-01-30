@@ -1821,7 +1821,7 @@ __metadata:
     prettier: ^2.8.3
     react: ^18.2.0
     react-dom: ^18.2.0
-    rollup: ^3.10.1
+    rollup: ^3.12.0
     rollup-plugin-dts: ^5.1.1
     rollup-plugin-swc3: ^0.8.0
     ts-node: ^10.9.1
@@ -8363,9 +8363,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.10.1":
-  version: 3.10.1
-  resolution: "rollup@npm:3.10.1"
+"rollup@npm:^3.12.0":
+  version: 3.12.0
+  resolution: "rollup@npm:3.12.0"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -8373,7 +8373,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 69c2bba82833f2977db08a5c10da651e0668f1335652499543c297633eb44eaf1473575973025a07cffd78903be8d10626e5abac063e49fb47d3f7dd8c18bf00
+  checksum: 66182947ea74bd4777e1a02514124f49eacc6b123e23738cf31342f8e73b79e43da05671aebe6d5f55b5830ebf3dd11f2eaba1b98b8fc6a9e6d96fd4c3ecc534
   languageName: node
   linkType: hard
 
