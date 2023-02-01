@@ -73,23 +73,22 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   const predefinedTypes = useMemo(() => predefined(), [])
   const registerTypes = useTypeRegistryStore(store => store.registerTypes)
   if (onceRef.current) {
-    const allTypes = [...predefinedTypes]
-    props.valueTypes?.forEach(type => {
-      allTypes.push(type)
-    })
+    const allTypes = props.valueTypes
+      ? [...predefinedTypes, ...props.valueTypes]
+      : [...predefinedTypes]
     registerTypes(allTypes)
     onceRef.current = false
   }
   useEffect(() => {
-    const allTypes = [...predefinedTypes]
-    props.valueTypes?.forEach(type => {
-      allTypes.push(type)
-    })
+    const allTypes = props.valueTypes
+      ? [...predefinedTypes, ...props.valueTypes]
+      : [...predefinedTypes]
     registerTypes(allTypes)
-  }, [predefinedTypes, props.valueTypes, registerTypes])
+  }, [props.valueTypes, predefinedTypes, registerTypes])
 
   const value = useJsonViewerStore(store => store.value)
   const setHover = useJsonViewerStore(store => store.setHover)
+  const onMouseLeave = useCallback(() => setHover(null), [setHover])
   return (
     <Paper
       elevation={0}
@@ -100,11 +99,7 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
         userSelect: 'none',
         contentVisibility: 'auto'
       }}
-      onMouseLeave={
-        useCallback(() => {
-          setHover(null)
-        }, [setHover])
-      }
+      onMouseLeave={ onMouseLeave }
     >
       <DataKeyPair
         value={value}

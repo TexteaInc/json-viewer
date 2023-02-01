@@ -221,7 +221,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
             if (!isEmptyValue) {
               setInspect(state => !state)
             }
-          }, [setInspect])
+          }, [isEmptyValue, setInspect])
         }
       >
         {
