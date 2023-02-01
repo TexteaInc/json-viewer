@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import type { SetStateAction } from 'react'
-import React, { memo, useMemo, useState } from 'react'
+import { memo, useMemo, useState } from 'react'
 import create from 'zustand'
 import createStore from 'zustand/context'
 import { combine } from 'zustand/middleware'
@@ -166,7 +166,10 @@ export function predefined (): DataType<any>[] {
             </Box>
           )
         },
-        { colorKey: 'base08', displayTypeLabel: false }
+        {
+          colorKey: 'base08',
+          displayTypeLabel: false
+        }
       )
     }
   )

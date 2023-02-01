@@ -16,18 +16,14 @@ export function createEasyType<Value> (
     displayTypeLabel?: boolean
   }
 ): Omit<DataType<Value>, 'is'> {
-  const displayTypeLabel = config.displayTypeLabel ?? true
+  const { fromString, colorKey, displayTypeLabel = true } = config
+
   const Render = React.memo(renderValue)
   const EasyType: React.FC<DataItemProps<Value>> = (props) => {
     const storeDisplayDataTypes = useJsonViewerStore(store => store.displayDataTypes)
-    const color = useJsonViewerStore(
-      store => store.colorspace[config.colorKey])
+    const color = useJsonViewerStore(store => store.colorspace[colorKey])
     return (
-      <DataBox
-        sx={{
-          color
-        }}
-      >
+      <DataBox sx={{ color }} >
         {(displayTypeLabel && storeDisplayDataTypes) && <DataTypeLabel dataType={type}/>}
         <DataBox className={`${type}-value`}>
           <Render value={props.value}/>
@@ -36,15 +32,15 @@ export function createEasyType<Value> (
     )
   }
   EasyType.displayName = `easy-${type}-type`
-  if (!config.fromString) {
+
+  if (!fromString) {
     return {
       Component: EasyType
     }
   }
-  const fromString = config.fromString
+
   const EasyTypeEditor: React.FC<EditorProps<Value>> = ({ value, setValue }) => {
-    const color = useJsonViewerStore(
-      store => store.colorspace[config.colorKey])
+    const color = useJsonViewerStore(store => store.colorspace[colorKey])
     return (
       <InputBase
         value={value}
@@ -72,6 +68,7 @@ export function createEasyType<Value> (
     )
   }
   EasyTypeEditor.displayName = `easy-${type}-type-editor`
+
   return {
     Component: EasyType,
     Editor: EasyTypeEditor
