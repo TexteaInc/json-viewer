@@ -5,14 +5,19 @@ import { JsonViewerPreview } from '../components/JsonViewerPreview'
 # @textea/json-viewer
 
 ### NPM
+
 ```shell
 npm install @textea/json-viewer
 ```
+
 ### Yarn
+
 ```shell
 yarn add @textea/json-viewer
 ```
+
 ### PNPM
+
 ```shell
 pnpm add @textea/json-viewer
 ```
@@ -38,13 +43,46 @@ const Component = () => (<JsonViewer value={object}/>)
   }}
 />
 
+### Props
+
+| Name                         | Type                                                                                                    | Default   | Description                                                                                                                                                                          |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `value`                      | `any`                                                                                                   | -         | Your input data. Any value, `object`, `Array`, primitive type, even `Map` or `Set`.                                                                                                  |
+| `rootName`                   | `string` or `false`                                                                                     | "root"    | The name of the root value.                                                                                                                                                          |
+| `theme`                      | `"light"` <br />\| `"dark"` <br />\| `"auto"` <br />\| [Base16](https://github.com/chriskempson/base16) | `"light"` | Color theme.                                                                                                                                                                         |
+| `className`                  | `string`                                                                                                | -         | Custom class name.                                                                                                                                                                   |
+| `style`                      | `CSSProperties`                                                                                         | -         | Custom style.                                                                                                                                                                        |
+| `indentWidth`                | `number`                                                                                                | 3         | Indent width for nested objects                                                                                                                                                      |
+| `keyRenderer`                | `{when: (props) => boolean}`                                                                            | -         | Customize a key, if `keyRenderer.when` returns `true`.                                                                                                                               |
+| `valueTypes`                 | `ValueTypes`                                                                                            | -         | Customize value types.                                                                                                                                                               |
+| `onChange`                   | `(path, oldVal, newVal) => void`                                                                        | -         | Callback when value changed.                                                                                                                                                         |
+| `onCopy`                     | `(path, value) => void`                                                                                 | -         | Callback when value copied.                                                                                                                                                          |
+| `enableClipboard`            | `boolean`                                                                                               | `true`    | Whether enable clipboard feature.                                                                                                                                                    |
+| `editable`                   | `boolean` \|<br />`(path, currentValue) => boolean`                                                     | `false`   | Whether enable edit feature. You can pass a function to customize the result.                                                                                                        |
+| `defaultInspectDepth`        | `number`                                                                                                | 5         | Default inspect depth for nested objects.<br /><br />_\* If the number is set too large, it could result in performance issues._                                                     |
+| `maxDisplayLength`           | `number`                                                                                                | 30        | Hide items after reaching the count.<br />`Array` and `Object` will be affected.<br /><br />_\* If the number is set too large, it could result in performance issues._              |
+| `groupArraysAfterLength`     | `number`                                                                                                | 100       | Group arrays after reaching the count.<br />Groups are displayed with bracket notation and can be expanded and collapsed by clicking on the brackets.                                |
+| `collapseStringsAfterLength` | `number`                                                                                                | 50        | Cut off the string after reaching the count. Collapsed strings are followed by an ellipsis.<br /><br />String content can be expanded and collapsed by clicking on the string value. |
+| `objectSortKeys`             | `boolean`                                                                                               | `false`   | Whether sort keys through `String.prototype.localeCompare()`                                                                                                                         |
+| `quotesOnKeys`               | `boolean`                                                                                               | `true`    | Whether add quotes on keys.                                                                                                                                                          |
+| `displayDataTypes`           | `boolean`                                                                                               | `true`    | Whether display data type labels.                                                                                                                                                    |
+| `displayObjectSize`          | `boolean`                                                                                               | `true`    | Whether display the size of array and object.                                                                                                                                        |
+
+#### Props mapping from `react-json-view`
+
+| Name        | Type      | Alternative                                       |
+| ----------- | --------- | ------------------------------------------------- |
+| `name`      | `string`  | See `rootName`                                    |
+| `src`       | `any`     | See `value`                                       |
+| `collapsed` | `boolean` | Set `defaultInspectDepth` to `0` to collapse all. |
+
 ### Type Declaration
 
 see [src/type.ts](https://github.com/TexteaInc/json-viewer/blob/main/src/type.ts)
 
 ### Full Example
 
-<Link href='/full'>
+<Link href="/full">
   <Button>
     View ->
   </Button>
