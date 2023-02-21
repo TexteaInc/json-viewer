@@ -1,5 +1,5 @@
-import type { JsonViewerProps } from '@ewe/json-viewer'
-import { JsonViewer } from '@ewe/json-viewer'
+import type { JsonViewerProps } from '@ojemuyiwa/json-viewer'
+import { JsonViewer } from '@ojemuyiwa/json-viewer'
 import React from 'react'
 
 export const JsonViewerPreview: React.FC<JsonViewerProps> = (props) => {

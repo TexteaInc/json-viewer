@@ -1,4 +1,4 @@
-import type { NamedColorspace } from '@ewe/json-viewer'
+import type { NamedColorspace } from '@ojemuyiwa/json-viewer'
 
 export const ocean: NamedColorspace = {
   scheme: 'Ocean',

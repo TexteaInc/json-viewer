@@ -1,5 +1,5 @@
 export default {
-  logo: '@ewe/json-viewer',
+  logo: '@ojemuyiwa/json-viewer',
   project: {
     link: 'https://github.com/ojemuyiwa/json-viewer'
   },

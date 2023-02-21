@@ -1,8 +1,8 @@
-# @ewe/json-viewer
+# @ojemuyiwa/json-viewer
 
-[![npm](https://img.shields.io/npm/v/@ewe/json-viewer)](https://www.npmjs.com/package/@ewe/json-viewer)
-[![npm](https://img.shields.io/npm/dm/@ewe/json-viewer.svg)](https://www.npmjs.com/package/@ewe/json-viewer)
-[![npm](https://img.shields.io/npm/l/@ewe/json-viewer)](https://github.com/ojemuyiwa/json-viewer/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@ojemuyiwa/json-viewer)](https://www.npmjs.com/package/@ojemuyiwa/json-viewer)
+[![npm](https://img.shields.io/npm/dm/@ojemuyiwa/json-viewer.svg)](https://www.npmjs.com/package/@ojemuyiwa/json-viewer)
+[![npm](https://img.shields.io/npm/l/@ojemuyiwa/json-viewer)](https://github.com/ojemuyiwa/json-viewer/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/ojemuyiwa/json-viewer/branch/main/graph/badge.svg?token=r32mzVhrRl)](https://codecov.io/gh/ojemuyiwa/json-viewer)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4fab3ed5-7084-449d-9fc9-12df09108301/deploy-status)](https://viewer.textea.io)
 
@@ -22,15 +22,15 @@ This is a React component for JSON viewer, but not only a JSON viewer.
 
 ### NPM
 ```shell
-npm install @ewe/json-viewer
+npm install @ojemuyiwa/json-viewer
 ```
 ### Yarn
 ```shell
-yarn add @ewe/json-viewer
+yarn add @ojemuyiwa/json-viewer
 ```
 ### PNPM
 ```shell
-pnpm add @ewe/json-viewer
+pnpm add @ojemuyiwa/json-viewer
 ```
 
 ### Type Declaration
@@ -40,7 +40,7 @@ see [src/type.ts](src/type.ts)
 ### Basic Example
 
 ```tsx
-import { JsonViewer } from '@ewe/json-viewer'
+import { JsonViewer } from '@ojemuyiwa/json-viewer'
 
 const object = { /* my json object */ }
 const Component = () => (<JsonViewer value={object}/>)
@@ -49,7 +49,7 @@ const Component = () => (<JsonViewer value={object}/>)
 ### Customizable data type
 
 ```tsx
-import { JsonViewer, createDataType } from '@ewe/json-viewer'
+import { JsonViewer, createDataType } from '@ojemuyiwa/json-viewer'
 
 const object = {
   // what if I want to inspect a image?
@@ -120,7 +120,7 @@ const Component = () => (
 <html lang="en">
 <body>
 <div id="json-viewer"></div>
-<script src="https://cdn.jsdelivr.net/npm/@ewe/json-viewer"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ojemuyiwa/json-viewer"></script>
 <script>
   new JsonViewer({
     value: { /* ... */ }

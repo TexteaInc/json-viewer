@@ -1,5 +1,5 @@
 {
-  "name": "@ewe/json-viewer-docs",
+  "name": "@ojemuyiwa/json-viewer-docs",
   "private": true,
   "scripts": {
     "dev": "next",
@@ -7,7 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@ewe/json-viewer": "workspace:^",
+    "@ojemuyiwa/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
     "next": "^13.1.5",
     "nextra": "^2.2.13",

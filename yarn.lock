@@ -919,11 +919,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ewe/json-viewer-docs@workspace:docs":
+"@ojemuyiwa/json-viewer-docs@workspace:docs":
   version: 0.0.0-use.local
-  resolution: "@ewe/json-viewer-docs@workspace:docs"
+  resolution: "@ojemuyiwa/json-viewer-docs@workspace:docs"
   dependencies:
-    "@ewe/json-viewer": "workspace:^"
+    "@ojemuyiwa/json-viewer": "workspace:^"
     "@types/node": ^18.11.18
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10
@@ -938,9 +938,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@ewe/json-viewer@workspace:., @ewe/json-viewer@workspace:^":
+"@ojemuyiwa/json-viewer@workspace:., @ojemuyiwa/json-viewer@workspace:^":
   version: 0.0.0-use.local
-  resolution: "@ewe/json-viewer@workspace:."
+  resolution: "@ojemuyiwa/json-viewer@workspace:."
   dependencies:
     "@commitlint/cli": ^17.4.2
     "@commitlint/config-angular": ^17.4.2
