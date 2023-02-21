@@ -1,7 +1,7 @@
 export default {
-  logo: '@textea/json-viewer',
+  logo: '@ewe/json-viewer',
   project: {
-    link: 'https://github.com/TexteaInc/json-viewer'
+    link: 'https://github.com/ojemuyiwa/json-viewer'
   },
   navigation: {
     prev: true,

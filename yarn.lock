@@ -919,6 +919,83 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ewe/json-viewer-docs@workspace:docs":
+  version: 0.0.0-use.local
+  resolution: "@ewe/json-viewer-docs@workspace:docs"
+  dependencies:
+    "@ewe/json-viewer": "workspace:^"
+    "@types/node": ^18.11.18
+    "@types/react": ^18.0.27
+    "@types/react-dom": ^18.0.10
+    gray-matter: ^4.0.3
+    next: ^13.1.5
+    next-transpile-modules: ^10.0.0
+    nextra: ^2.2.13
+    nextra-theme-docs: ^2.2.13
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.9.4
+  languageName: unknown
+  linkType: soft
+
+"@ewe/json-viewer@workspace:., @ewe/json-viewer@workspace:^":
+  version: 0.0.0-use.local
+  resolution: "@ewe/json-viewer@workspace:."
+  dependencies:
+    "@commitlint/cli": ^17.4.2
+    "@commitlint/config-angular": ^17.4.2
+    "@emotion/react": ^11.10.5
+    "@emotion/styled": ^11.10.5
+    "@mui/material": ^5.11.6
+    "@rollup/plugin-alias": ^4.0.3
+    "@rollup/plugin-commonjs": ^24.0.1
+    "@rollup/plugin-node-resolve": ^15.0.1
+    "@rollup/plugin-replace": ^5.0.2
+    "@swc/core": ^1.3.27
+    "@swc/plugin-transform-imports": ^1.5.36
+    "@testing-library/react": 13.4.0
+    "@types/node": ^18.11.18
+    "@types/react": 18.0.25
+    "@types/react-dom": 18.0.9
+    "@types/web": ^0.0.89
+    "@typescript-eslint/eslint-plugin": ^5.49.0
+    "@typescript-eslint/parser": ^5.49.0
+    "@vitejs/plugin-react": ^3.0.1
+    "@vitest/coverage-c8": ^0.28.1
+    "@vitest/ui": ^0.28.1
+    copy-to-clipboard: ^3.3.3
+    eslint: ^8.32.0
+    eslint-config-standard: ^17.0.0
+    eslint-plugin-cypress: ^2.12.1
+    eslint-plugin-import: ^2.27.5
+    eslint-plugin-n: ^15.6.1
+    eslint-plugin-promise: ^6.1.1
+    eslint-plugin-react: ^7.32.1
+    eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-simple-import-sort: ^9.0.0
+    eslint-plugin-unused-imports: ^2.0.0
+    expect-type: ^0.15.0
+    husky: ^8.0.3
+    jsdom: ^21.1.0
+    lint-staged: ^13.1.0
+    pinst: ^3.0.0
+    prettier: ^2.8.3
+    react: 18.2.0
+    react-dom: 18.2.0
+    rollup: ^3.12.0
+    rollup-plugin-dts: ^5.1.1
+    rollup-plugin-swc3: ^0.8.0
+    ts-node: ^10.9.1
+    typescript: ^4.9.4
+    vite: ^4.0.4
+    vitest: ^0.28.1
+    zustand: ^4.1.5
+  peerDependencies:
+    react: ^17 || ^18
+    react-dom: ^17 || ^18
+  languageName: unknown
+  linkType: soft
+
 "@fastify/deepmerge@npm:^1.1.0":
   version: 1.1.0
   resolution: "@fastify/deepmerge@npm:1.1.0"
@@ -1744,7 +1821,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^13.4.0":
+"@testing-library/react@npm:13.4.0":
   version: 13.4.0
   resolution: "@testing-library/react@npm:13.4.0"
   dependencies:
@@ -1757,83 +1834,6 @@ __metadata:
   checksum: 51ec548c1fdb1271089a5c63e0908f0166f2c7fcd9cacd3108ebbe0ce64cb4351812d885892020dc37608418cfb15698514856502b3cab0e5cc58d6cc1bd4a3e
   languageName: node
   linkType: hard
-
-"@textea/json-viewer-docs@workspace:docs":
-  version: 0.0.0-use.local
-  resolution: "@textea/json-viewer-docs@workspace:docs"
-  dependencies:
-    "@textea/json-viewer": "workspace:^"
-    "@types/node": ^18.11.18
-    "@types/react": ^18.0.27
-    "@types/react-dom": ^18.0.10
-    gray-matter: ^4.0.3
-    next: ^13.1.5
-    next-transpile-modules: ^10.0.0
-    nextra: ^2.2.13
-    nextra-theme-docs: ^2.2.13
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.9.4
-  languageName: unknown
-  linkType: soft
-
-"@textea/json-viewer@workspace:., @textea/json-viewer@workspace:^":
-  version: 0.0.0-use.local
-  resolution: "@textea/json-viewer@workspace:."
-  dependencies:
-    "@commitlint/cli": ^17.4.2
-    "@commitlint/config-angular": ^17.4.2
-    "@emotion/react": ^11.10.5
-    "@emotion/styled": ^11.10.5
-    "@mui/material": ^5.11.6
-    "@rollup/plugin-alias": ^4.0.3
-    "@rollup/plugin-commonjs": ^24.0.1
-    "@rollup/plugin-node-resolve": ^15.0.1
-    "@rollup/plugin-replace": ^5.0.2
-    "@swc/core": ^1.3.27
-    "@swc/plugin-transform-imports": ^1.5.36
-    "@testing-library/react": ^13.4.0
-    "@types/node": ^18.11.18
-    "@types/react": ^18.0.27
-    "@types/react-dom": ^18.0.10
-    "@types/web": ^0.0.89
-    "@typescript-eslint/eslint-plugin": ^5.49.0
-    "@typescript-eslint/parser": ^5.49.0
-    "@vitejs/plugin-react": ^3.0.1
-    "@vitest/coverage-c8": ^0.28.1
-    "@vitest/ui": ^0.28.1
-    copy-to-clipboard: ^3.3.3
-    eslint: ^8.32.0
-    eslint-config-standard: ^17.0.0
-    eslint-plugin-cypress: ^2.12.1
-    eslint-plugin-import: ^2.27.5
-    eslint-plugin-n: ^15.6.1
-    eslint-plugin-promise: ^6.1.1
-    eslint-plugin-react: ^7.32.1
-    eslint-plugin-react-hooks: ^4.6.0
-    eslint-plugin-simple-import-sort: ^9.0.0
-    eslint-plugin-unused-imports: ^2.0.0
-    expect-type: ^0.15.0
-    husky: ^8.0.3
-    jsdom: ^21.1.0
-    lint-staged: ^13.1.0
-    pinst: ^3.0.0
-    prettier: ^2.8.3
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    rollup: ^3.12.0
-    rollup-plugin-dts: ^5.1.1
-    rollup-plugin-swc3: ^0.8.0
-    ts-node: ^10.9.1
-    typescript: ^4.9.4
-    vite: ^4.0.4
-    vitest: ^0.28.1
-    zustand: ^4.1.5
-  peerDependencies:
-    react: ^17 || ^18
-    react-dom: ^17 || ^18
-  languageName: unknown
-  linkType: soft
 
 "@tootallnate/once@npm:2":
   version: 2.0.0
@@ -2050,6 +2050,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:18.0.9":
+  version: 18.0.9
+  resolution: "@types/react-dom@npm:18.0.9"
+  dependencies:
+    "@types/react": "*"
+  checksum: e744e3feba25fc43733289d4df4d9c0e59fcca7f34e8c89d75f81a339accb2bd70236d69382d47d2c0ad06a1529b2e56aa6171fe175854d60e07156ddceedfcb
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:^18.0.0":
   version: 18.0.6
   resolution: "@types/react-dom@npm:18.0.6"
@@ -2094,6 +2103,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 18cae64f5bfd6bb58fbd8ee2ba52ec82de844f114254e26de7b513e4b86621f643f9b71d7066958cd571b0d78cb86cbceda449c5289f9349ca573df29ab69252
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.0.25":
+  version: 18.0.25
+  resolution: "@types/react@npm:18.0.25"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 231d658c45abdef044a716b4502774f1585d8336d73b2f5bd68f181acbfc874b7a457686ecd29b415b43ed0922c309bab7e2cf96832d188a3f4f1b02f2af760a
   languageName: node
   linkType: hard
 
@@ -7931,7 +7951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
+"react-dom@npm:18.2.0, react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -7986,7 +8006,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:18.2.0, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:

@@ -15,12 +15,12 @@ import type {
   JsonViewerKeyRenderer,
   JsonViewerOnChange,
   JsonViewerTheme
-} from '@textea/json-viewer'
+} from '@ewe/json-viewer'
 import {
   applyValue,
   createDataType,
   JsonViewer
-} from '@textea/json-viewer'
+} from '@ewe/json-viewer'
 import Image from 'next/image'
 import React, { useCallback, useEffect, useState } from 'react'
 

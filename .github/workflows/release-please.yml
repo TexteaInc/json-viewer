@@ -15,7 +15,7 @@ jobs:
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
   publish-json-viewer:
-    name: 'Publish @textea/json-viewer'
+    name: 'Publish @ewe/json-viewer'
     needs: release-please
     if: ${{ needs.release-please.outputs.releases_created }}
     runs-on: ubuntu-latest

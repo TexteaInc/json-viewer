@@ -1,4 +1,4 @@
-import type { NamedColorspace } from '@textea/json-viewer'
+import type { NamedColorspace } from '@ewe/json-viewer'
 
 export const ocean: NamedColorspace = {
   scheme: 'Ocean',

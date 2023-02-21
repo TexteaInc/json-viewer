@@ -2,7 +2,8 @@
  * Use NoSsr on function value.
  *  Because in Next.js SSR, the function will be translated to other type
  */
-import { Box, NoSsr } from '@mui/material'
+import Box from '@mui/material/Box'
+import NoSsr from '@mui/material/NoSsr'
 import React from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'

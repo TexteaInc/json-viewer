@@ -1,4 +1,4 @@
-import { InputBase } from '@mui/material'
+import InputBase from '@mui/material/InputBase'
 import React, { useCallback } from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
