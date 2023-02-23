@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.14.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.13.1...json-viewer-v2.14.0) (2023-02-23)
+
+
+### Features
+
+* support `onSelect` callback ([#238](https://github.com/TexteaInc/json-viewer/issues/238)) ([81ef6ed](https://github.com/TexteaInc/json-viewer/commit/81ef6edcfe6af0dba296af00898b33b4e315d539))
+
+
+### Bug Fixes
+
+* reduce MUI size by using `@swc/plugin-transform-imports` ([#169](https://github.com/TexteaInc/json-viewer/issues/169)) ([f5739d6](https://github.com/TexteaInc/json-viewer/commit/f5739d6346d3c7365c6f0c62713dcace54deb314))
+
 ## [2.13.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.13.0...json-viewer-v2.13.1) (2023-01-26)
 
 
