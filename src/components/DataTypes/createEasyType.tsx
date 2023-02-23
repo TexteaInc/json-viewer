@@ -22,8 +22,10 @@ export function createEasyType<Value> (
   const EasyType: React.FC<DataItemProps<Value>> = (props) => {
     const storeDisplayDataTypes = useJsonViewerStore(store => store.displayDataTypes)
     const color = useJsonViewerStore(store => store.colorspace[colorKey])
+    const onSelect = useJsonViewerStore(store => store.onSelect)
+
     return (
-      <DataBox sx={{ color }} >
+      <DataBox onClick={() => onSelect?.(props.path, props.value)} sx={{ color }} >
         {(displayTypeLabel && storeDisplayDataTypes) && <DataTypeLabel dataType={type}/>}
         <DataBox className={`${type}-value`}>
           <Render value={props.value}/>

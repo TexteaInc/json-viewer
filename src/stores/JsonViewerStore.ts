@@ -6,6 +6,7 @@ import { combine } from 'zustand/middleware'
 import type {
   JsonViewerOnChange,
   JsonViewerOnCopy,
+  JsonViewerOnSelect,
   JsonViewerProps,
   Path
 } from '..'
@@ -34,6 +35,7 @@ export type JsonViewerState<T = unknown> = {
   value: T
   onChange: JsonViewerOnChange
   onCopy: JsonViewerOnCopy | undefined
+  onSelect: JsonViewerOnSelect | undefined
   keyRenderer: JsonViewerKeyRenderer
   displayObjectSize: boolean
 }
@@ -61,6 +63,7 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
         rootName: props.rootName ?? 'root',
         onChange: props.onChange ?? (() => {}),
         onCopy: props.onCopy ?? undefined,
+        onSelect: props.onSelect ?? undefined,
         keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
         editable: props.editable ?? false,
         defaultInspectDepth: props.defaultInspectDepth ?? 5,
