@@ -23,6 +23,15 @@ export type JsonViewerOnCopy = <U = unknown>(
   value: U
 ) => unknown | Promise<unknown>
 
+/**
+ * @param path path to the target value
+ * @param value
+ */
+export type JsonViewerOnSelect = <U = unknown>(
+  path: Path,
+  value: U,
+) => void
+
 export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
   setInspect: Dispatch<SetStateAction<boolean>>
@@ -75,6 +84,7 @@ export type JsonViewerProps<T = unknown> = {
   valueTypes?: DataType<any>[]
   onChange?: JsonViewerOnChange
   onCopy?: JsonViewerOnCopy
+  onSelect?: JsonViewerOnSelect
   /**
    * Whether enable clipboard feature.
    *
