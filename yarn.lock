@@ -1800,7 +1800,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.49.0
     "@typescript-eslint/parser": ^5.49.0
     "@vitejs/plugin-react": ^3.0.1
-    "@vitest/coverage-c8": ^0.28.1
+    "@vitest/coverage-c8": ^0.29.2
     "@vitest/ui": ^0.28.1
     copy-to-clipboard: ^3.3.3
     eslint: ^8.32.0
@@ -2289,15 +2289,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-c8@npm:^0.28.1":
-  version: 0.28.1
-  resolution: "@vitest/coverage-c8@npm:0.28.1"
+"@vitest/coverage-c8@npm:^0.29.2":
+  version: 0.29.2
+  resolution: "@vitest/coverage-c8@npm:0.29.2"
   dependencies:
-    c8: ^7.12.0
+    c8: ^7.13.0
     picocolors: ^1.0.0
     std-env: ^3.3.1
-    vitest: 0.28.1
-  checksum: 944a3586ac03876a6142eb51411f791b121b8a45f49cb2eab4f374ee235acfea9dcee85878eb08b89710d1ae1a49f04313c273cdf5af35c33564e8b08427cf29
+  peerDependencies:
+    vitest: ">=0.29.0 <1"
+  checksum: 791921e492931864e7a969a4ab7897e551080d68093a3ff4798c98b628c8f27268fad9ba8997f37e9302154a3b36032a0709e2fe8d4b8c00a42d1d453ef1497b
   languageName: node
   linkType: hard
 
@@ -2796,9 +2797,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"c8@npm:^7.12.0":
-  version: 7.12.0
-  resolution: "c8@npm:7.12.0"
+"c8@npm:^7.13.0":
+  version: 7.13.0
+  resolution: "c8@npm:7.13.0"
   dependencies:
     "@bcoe/v8-coverage": ^0.2.3
     "@istanbuljs/schema": ^0.1.3
@@ -2814,7 +2815,7 @@ __metadata:
     yargs-parser: ^20.2.9
   bin:
     c8: bin/c8.js
-  checksum: 3b7fa9ad7cff2cb0bb579467e6b544498fbd46e9353a809ad3b8cf749df4beadd074cde277356b0552f3c8055b1b3ec3ebaf2209e9ad4bdefed92dbf64d283ab
+  checksum: 491abf4cf3097cdcfd24dbac49162f1383861c22c77fdd9280bcd38240e1e07d2c6a59da5d4df59a61a8204e2fc297d31fd526e495faf8d2f20dcc12a37b144c
   languageName: node
   linkType: hard
 
@@ -9849,7 +9850,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:0.28.1, vitest@npm:^0.28.1":
+"vitest@npm:^0.28.1":
   version: 0.28.1
   resolution: "vitest@npm:0.28.1"
   dependencies:
