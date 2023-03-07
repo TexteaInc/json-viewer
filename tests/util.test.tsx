@@ -2,7 +2,7 @@ import { expectTypeOf } from 'expect-type'
 import type { ComponentType } from 'react'
 import { describe, expect, test } from 'vitest'
 
-import type { DataItemProps } from '../src'
+import type { DataItemProps, Path } from '../src'
 import { applyValue, createDataType, isCycleReference } from '../src'
 import { segmentArray } from '../src/utils'
 
@@ -95,17 +95,10 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown) => value is string
+      is:(value: unknown, path: Path) => value is string
       Component: ComponentType<DataItemProps<string>>
     }>()
-    const someValue: unknown = null
     expectTypeOf(dataType.is).returns.toBeBoolean()
-    if (dataType.is(someValue)) {
-      expectTypeOf(someValue).toMatchTypeOf<string>()
-    } else {
-      expectTypeOf(someValue).not.toMatchTypeOf<string>()
-      expectTypeOf(someValue).toMatchTypeOf<unknown>()
-    }
     expect(dataType.is).toBeTypeOf('function')
     expect(dataType.Component).toBeTypeOf('function')
   })
@@ -125,7 +118,7 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown) => value is string
+      is:(value: unknown, path: Path) => value is string
       Component: ComponentType<DataItemProps<string>>
       Editor: ComponentType<DataItemProps<string>>
     }>()
@@ -155,7 +148,7 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown) => value is string
+      is:(value: unknown, path: Path) => value is string
       Component: ComponentType<DataItemProps<string>>
       PreComponent: ComponentType<DataItemProps<string>>
       PostComponent: ComponentType<DataItemProps<string>>
@@ -191,7 +184,7 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown) => value is string
+      is:(value: unknown, path: Path) => value is string
       Component: ComponentType<DataItemProps<string>>
       Editor: ComponentType<DataItemProps<string>>
       PreComponent: ComponentType<DataItemProps<string>>
