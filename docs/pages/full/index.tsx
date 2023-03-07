@@ -22,7 +22,8 @@ import {
   JsonViewer
 } from '@textea/json-viewer'
 import Image from 'next/image'
-import React, { useCallback, useEffect, useState } from 'react'
+import type { FC } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { ocean } from '../../lib/shared'
 
@@ -109,7 +110,7 @@ const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
 }
 KeyRenderer.when = (props) => props.value === 114.514
 
-const IndexPage: React.FC = () => {
+const IndexPage: FC = () => {
   const [indent, setIndent] = useState(3)
   const [groupArraysAfterLength, setGroupArraysAfterLength] = useState(100)
   const [themeKey, setThemeKey] = useState<string>('light')

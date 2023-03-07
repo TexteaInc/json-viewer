@@ -1,5 +1,6 @@
 import { InputBase } from '@mui/material'
-import React, { useCallback } from 'react'
+import type { ChangeEventHandler, ComponentType, FC } from 'react'
+import { memo, useCallback } from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { Colorspace } from '../../theme/base16'
@@ -9,7 +10,7 @@ import { DataBox } from '../mui/DataBox'
 
 export function createEasyType<Value> (
   type: string,
-  renderValue: React.ComponentType<Pick<DataItemProps<Value>, 'value'>>,
+  renderValue: ComponentType<Pick<DataItemProps<Value>, 'value'>>,
   config: {
     colorKey: keyof Colorspace
     fromString?: (value: string) => Value
@@ -18,8 +19,8 @@ export function createEasyType<Value> (
 ): Omit<DataType<Value>, 'is'> {
   const { fromString, colorKey, displayTypeLabel = true } = config
 
-  const Render = React.memo(renderValue)
-  const EasyType: React.FC<DataItemProps<Value>> = (props) => {
+  const Render = memo(renderValue)
+  const EasyType: FC<DataItemProps<Value>> = (props) => {
     const storeDisplayDataTypes = useJsonViewerStore(store => store.displayDataTypes)
     const color = useJsonViewerStore(store => store.colorspace[colorKey])
     const onSelect = useJsonViewerStore(store => store.onSelect)
@@ -41,13 +42,13 @@ export function createEasyType<Value> (
     }
   }
 
-  const EasyTypeEditor: React.FC<EditorProps<Value>> = ({ value, setValue }) => {
+  const EasyTypeEditor: FC<EditorProps<Value>> = ({ value, setValue }) => {
     const color = useJsonViewerStore(store => store.colorspace[colorKey])
     return (
       <InputBase
         value={value}
         onChange={
-          useCallback<React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>(
+          useCallback<ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>(
             (event) => {
               const value = fromString(event.target.value)
               setValue(value)

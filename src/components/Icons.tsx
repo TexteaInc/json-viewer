@@ -1,8 +1,8 @@
 import type { SvgIconProps } from '@mui/material'
 import { SvgIcon } from '@mui/material'
-import React from 'react'
+import type { FC } from 'react'
 
-const BaseIcon: React.FC<SvgIconProps> = ({ d, ...props }) => {
+const BaseIcon: FC<SvgIconProps> = ({ d, ...props }) => {
   return (
     <SvgIcon {...props}>
       <path d={d}/>
@@ -18,30 +18,30 @@ const ContentCopy = 'M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v
 const Edit = 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'
 const ExpandMore = 'M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z'
 
-export const CheckIcon: React.FC<SvgIconProps> = (props) => {
+export const CheckIcon: FC<SvgIconProps> = (props) => {
   return <BaseIcon d={Check} {...props} />
 }
 
-export const ChevronRightIcon: React.FC<SvgIconProps> = (props) => {
+export const ChevronRightIcon: FC<SvgIconProps> = (props) => {
   return <BaseIcon d={ChevronRight} {...props} />
 }
 
-export const CircularArrowsIcon: React.FC<SvgIconProps> = (props) => {
+export const CircularArrowsIcon: FC<SvgIconProps> = (props) => {
   return <BaseIcon d={CircularArrows} {...props} />
 }
 
-export const CloseIcon: React.FC<SvgIconProps> = (props) => {
+export const CloseIcon: FC<SvgIconProps> = (props) => {
   return <BaseIcon d={Close} {...props} />
 }
 
-export const ContentCopyIcon: React.FC<SvgIconProps> = (props) => {
+export const ContentCopyIcon: FC<SvgIconProps> = (props) => {
   return <BaseIcon d={ContentCopy} {...props} />
 }
 
-export const EditIcon: React.FC<SvgIconProps> = (props) => {
+export const EditIcon: FC<SvgIconProps> = (props) => {
   return <BaseIcon d={Edit} {...props} />
 }
 
-export const ExpandMoreIcon: React.FC<SvgIconProps> = (props) => {
+export const ExpandMoreIcon: FC<SvgIconProps> = (props) => {
   return <BaseIcon d={ExpandMore} {...props} />
 }
