@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.14.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.14.0...json-viewer-v2.14.1) (2023-03-07)
+
+
+### Bug Fixes
+
+* migrate zustand away from `zustand/context' ([ed6c699](https://github.com/TexteaInc/json-viewer/commit/ed6c6993134cf01408c6092e88c47b45b6b8a314))
+* migrate zustand to v4 ([5bbfcf9](https://github.com/TexteaInc/json-viewer/commit/5bbfcf9901a3224c5a5c8e57e06e8c902c57c0b2))
+
 ## [2.14.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.13.1...json-viewer-v2.14.0) (2023-02-23)
 
 
