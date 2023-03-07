@@ -1,4 +1,4 @@
-import type React from 'react'
+import type { ComponentType } from 'react'
 
 import type { DataItemProps, EditorProps, Path } from '../type'
 
@@ -29,55 +29,55 @@ export const applyValue = (obj: any, path: (string | number)[], value: any) => {
 // case 1: you only render with a single component
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
-  Component: React.ComponentType<DataItemProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>
 ): {
   is: (value: unknown, path: Path) => boolean
-  Component: React.ComponentType<DataItemProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>
 }
 // case 2: you only render with a single component with editor
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
-  Component: React.ComponentType<DataItemProps<ValueType>>,
-  Editor: React.ComponentType<EditorProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>,
+  Editor: ComponentType<EditorProps<ValueType>>
 ): {
   is: (value: unknown, path: Path) => boolean
-  Component: React.ComponentType<DataItemProps<ValueType>>
-  Editor: React.ComponentType<DataItemProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>
+  Editor: ComponentType<DataItemProps<ValueType>>
 }
 // case 3: you only render with a component with pre and post.
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
-  Component: React.ComponentType<DataItemProps<ValueType>>,
+  Component: ComponentType<DataItemProps<ValueType>>,
   Editor: undefined,
-  PreComponent: React.ComponentType<DataItemProps<ValueType>>,
-  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+  PreComponent: ComponentType<DataItemProps<ValueType>>,
+  PostComponent: ComponentType<DataItemProps<ValueType>>
 ): {
   is: (value: unknown, path: Path) => boolean
-  Component: React.ComponentType<DataItemProps<ValueType>>
-  PreComponent: React.ComponentType<DataItemProps<ValueType>>
-  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>
+  PreComponent: ComponentType<DataItemProps<ValueType>>
+  PostComponent: ComponentType<DataItemProps<ValueType>>
 }
 // case 4: need all of these
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
-  Component: React.ComponentType<DataItemProps<ValueType>>,
-  Editor: React.ComponentType<EditorProps<ValueType>>,
-  PreComponent: React.ComponentType<DataItemProps<ValueType>>,
-  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>,
+  Editor: ComponentType<EditorProps<ValueType>>,
+  PreComponent: ComponentType<DataItemProps<ValueType>>,
+  PostComponent: ComponentType<DataItemProps<ValueType>>
 ): {
   is: (value: unknown, path: Path) => boolean
-  Component: React.ComponentType<DataItemProps<ValueType>>
-  Editor: React.ComponentType<DataItemProps<ValueType>>
-  PreComponent: React.ComponentType<DataItemProps<ValueType>>
-  PostComponent: React.ComponentType<DataItemProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>
+  Editor: ComponentType<DataItemProps<ValueType>>
+  PreComponent: ComponentType<DataItemProps<ValueType>>
+  PostComponent: ComponentType<DataItemProps<ValueType>>
 }
 
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
-  Component: React.ComponentType<DataItemProps<ValueType>>,
-  Editor?: React.ComponentType<EditorProps<ValueType>> | undefined,
-  PreComponent?: React.ComponentType<DataItemProps<ValueType>> | undefined,
-  PostComponent?: React.ComponentType<DataItemProps<ValueType>> | undefined
+  Component: ComponentType<DataItemProps<ValueType>>,
+  Editor?: ComponentType<EditorProps<ValueType>> | undefined,
+  PreComponent?: ComponentType<DataItemProps<ValueType>> | undefined,
+  PostComponent?: ComponentType<DataItemProps<ValueType>> | undefined
 ): any {
   return {
     is,

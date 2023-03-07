@@ -1,4 +1,4 @@
-import React from 'react'
+import type { FC } from 'react'
 
 import { DataBox } from './mui/DataBox'
 
@@ -7,7 +7,7 @@ export type DataLabelProps = {
   enable?: boolean
 }
 
-export const DataTypeLabel: React.FC<DataLabelProps> = ({
+export const DataTypeLabel: FC<DataLabelProps> = ({
   dataType
   , enable = true
 }) => {

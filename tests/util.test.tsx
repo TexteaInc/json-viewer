@@ -1,5 +1,5 @@
 import { expectTypeOf } from 'expect-type'
-import type React from 'react'
+import type { ComponentType } from 'react'
 import { describe, expect, test } from 'vitest'
 
 import type { DataItemProps } from '../src'
@@ -96,7 +96,7 @@ describe('function createDataType', () => {
     )
     expectTypeOf(dataType).toEqualTypeOf<{
       is:(value: unknown) => value is string
-      Component: React.ComponentType<DataItemProps<string>>
+      Component: ComponentType<DataItemProps<string>>
     }>()
     const someValue: unknown = null
     expectTypeOf(dataType.is).returns.toBeBoolean()
@@ -126,8 +126,8 @@ describe('function createDataType', () => {
     )
     expectTypeOf(dataType).toEqualTypeOf<{
       is:(value: unknown) => value is string
-      Component: React.ComponentType<DataItemProps<string>>
-      Editor: React.ComponentType<DataItemProps<string>>
+      Component: ComponentType<DataItemProps<string>>
+      Editor: ComponentType<DataItemProps<string>>
     }>()
     expectTypeOf(dataType.is).returns.toBeBoolean()
     expect(dataType.is).toBeTypeOf('function')
@@ -156,9 +156,9 @@ describe('function createDataType', () => {
     )
     expectTypeOf(dataType).toEqualTypeOf<{
       is:(value: unknown) => value is string
-      Component: React.ComponentType<DataItemProps<string>>
-      PreComponent: React.ComponentType<DataItemProps<string>>
-      PostComponent: React.ComponentType<DataItemProps<string>>
+      Component: ComponentType<DataItemProps<string>>
+      PreComponent: ComponentType<DataItemProps<string>>
+      PostComponent: ComponentType<DataItemProps<string>>
     }>()
     expectTypeOf(dataType.is).returns.toBeBoolean()
     expect(dataType.is).toBeTypeOf('function')
@@ -192,10 +192,10 @@ describe('function createDataType', () => {
     )
     expectTypeOf(dataType).toEqualTypeOf<{
       is:(value: unknown) => value is string
-      Component: React.ComponentType<DataItemProps<string>>
-      Editor: React.ComponentType<DataItemProps<string>>
-      PreComponent: React.ComponentType<DataItemProps<string>>
-      PostComponent: React.ComponentType<DataItemProps<string>>
+      Component: ComponentType<DataItemProps<string>>
+      Editor: ComponentType<DataItemProps<string>>
+      PreComponent: ComponentType<DataItemProps<string>>
+      PostComponent: ComponentType<DataItemProps<string>>
     }>()
     expectTypeOf(dataType.is).returns.toBeBoolean()
     expect(dataType.is).toBeTypeOf('function')

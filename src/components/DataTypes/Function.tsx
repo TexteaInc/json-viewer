@@ -3,7 +3,7 @@
  *  Because in Next.js SSR, the function will be translated to other type
  */
 import { Box, NoSsr } from '@mui/material'
-import React from 'react'
+import type { FC } from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
@@ -41,7 +41,7 @@ const functionName = (func: Function) => {
 const lb = '{'
 const rb = '}'
 
-export const PreFunctionType: React.FC<DataItemProps<Function>> = (props) => {
+export const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
   return (
     <NoSsr>
       <DataTypeLabel dataType='function'/>
@@ -58,7 +58,7 @@ export const PreFunctionType: React.FC<DataItemProps<Function>> = (props) => {
   )
 }
 
-export const PostFunctionType: React.FC<DataItemProps<Function>> = () => {
+export const PostFunctionType: FC<DataItemProps<Function>> = () => {
   return (
     <NoSsr>
       <Box component='span' className='data-function-end'>
@@ -68,7 +68,7 @@ export const PostFunctionType: React.FC<DataItemProps<Function>> = () => {
   )
 }
 
-export const FunctionType: React.FC<DataItemProps<Function>> = (props) => {
+export const FunctionType: FC<DataItemProps<Function>> = (props) => {
   const functionColor = useJsonViewerStore(store => store.colorspace.base05)
   return (
     <NoSsr>

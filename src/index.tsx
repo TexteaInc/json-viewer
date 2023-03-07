@@ -2,7 +2,8 @@ import {
   createTheme, Paper,
   ThemeProvider
 } from '@mui/material'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import type { FC, ReactElement } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { DataKeyPair } from './components/DataKeyPair'
 import { useThemeDetector } from './hooks/useThemeDetector'
@@ -42,7 +43,7 @@ function useSetIfNotUndefinedEffect<Key extends keyof JsonViewerProps> (
 /**
  * @internal
  */
-const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
+const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   const api = useJsonViewerStoreApi()
   useSetIfNotUndefinedEffect('value', props.value)
   useSetIfNotUndefinedEffect('editable', props.editable)
@@ -112,7 +113,7 @@ const JsonViewerInner: React.FC<JsonViewerProps> = (props) => {
   )
 }
 
-export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Value>): React.ReactElement {
+export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Value>): ReactElement {
   const isAutoDarkTheme = useThemeDetector()
   const themeType = useMemo(() => props.theme === 'auto'
     ? (isAutoDarkTheme ? 'light' : 'dark')
