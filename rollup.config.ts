@@ -31,7 +31,6 @@ const external = [
   'copy-to-clipboard',
   'zustand',
   'zustand/context',
-  'zustand/middleware',
   'react',
   'react/jsx-runtime',
   'react-dom',

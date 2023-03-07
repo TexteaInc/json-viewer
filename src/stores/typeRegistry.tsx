@@ -1,9 +1,9 @@
 import { Box } from '@mui/material'
 import type { SetStateAction } from 'react'
 import { memo, useMemo, useState } from 'react'
-import create from 'zustand'
-import createStore from 'zustand/context'
-import { combine } from 'zustand/middleware'
+import type { StoreApi } from 'zustand'
+import { create } from 'zustand'
+import createContext from 'zustand/context'
 
 import { createEasyType } from '../components/DataTypes/createEasyType'
 import {
@@ -21,35 +21,30 @@ import { useJsonViewerStore } from './JsonViewerStore'
 
 type TypeRegistryState = {
   registry: DataType<any>[]
-}
 
-type TypeRegistryActions = {
   registerTypes: (setState: SetStateAction<DataType<any>[]>) => void
 }
 
-export const createTypeRegistryStore = () => create(
-  combine<TypeRegistryState, TypeRegistryActions>(
-    {
-      registry: []
-    },
-    (set) => ({
-      registerTypes: (setState) => {
-        set(state => ({
-          registry:
-            typeof setState === 'function'
-              ? setState(state.registry)
-              : setState
-        }))
-      }
-    })
-  )
-)
+export const createTypeRegistryStore = () => {
+  return create<TypeRegistryState>()((set) => ({
+    registry: [],
+
+    registerTypes: (setState) => {
+      set(state => ({
+        registry:
+          typeof setState === 'function'
+            ? setState(state.registry)
+            : setState
+      }))
+    }
+  }))
+}
 
 export const {
   Provider: TypeRegistryProvider,
   useStore: useTypeRegistryStore,
   useStoreApi: useTypeRegistryStoreApi
-} = createStore<ReturnType<typeof createTypeRegistryStore>>()
+} = createContext<StoreApi<TypeRegistryState>>()
 
 const objectType: DataType<object> = {
   is: (value) => typeof value === 'object',
