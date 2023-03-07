@@ -3,19 +3,20 @@ import {
   ThemeProvider
 } from '@mui/material'
 import type { FC, ReactElement } from 'react'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 
 import { DataKeyPair } from './components/DataKeyPair'
 import { useThemeDetector } from './hooks/useThemeDetector'
 import {
   createJsonViewerStore,
-  JsonViewerProvider,
-  useJsonViewerStore,
-  useJsonViewerStoreApi
+  JsonViewerStoreContext,
+  useJsonViewerStore
 } from './stores/JsonViewerStore'
 import {
-  createTypeRegistryStore, predefined,
-  TypeRegistryProvider, useTypeRegistryStore
+  createTypeRegistryStore,
+  predefined,
+  TypeRegistryStoreContext,
+  useTypeRegistryStore
 } from './stores/typeRegistry'
 import { darkColorspace, lightColorspace } from './theme/base16'
 import type { JsonViewerProps } from './type'
@@ -30,21 +31,21 @@ function useSetIfNotUndefinedEffect<Key extends keyof JsonViewerProps> (
   key: Key,
   value: JsonViewerProps[Key] | undefined
 ) {
-  const api = useJsonViewerStoreApi()
+  const { setState } = useContext(JsonViewerStoreContext)
   useEffect(() => {
     if (value !== undefined) {
-      api.setState({
+      setState({
         [key]: value
       })
     }
-  }, [key, value, api])
+  }, [key, value, setState])
 }
 
 /**
  * @internal
  */
 const JsonViewerInner: FC<JsonViewerProps> = (props) => {
-  const api = useJsonViewerStoreApi()
+  const { setState } = useContext(JsonViewerStoreContext)
   useSetIfNotUndefinedEffect('value', props.value)
   useSetIfNotUndefinedEffect('editable', props.editable)
   useSetIfNotUndefinedEffect('indentWidth', props.indentWidth)
@@ -60,19 +61,19 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   useSetIfNotUndefinedEffect('onSelect', props.onSelect)
   useEffect(() => {
     if (props.theme === 'light') {
-      api.setState({
+      setState({
         colorspace: lightColorspace
       })
     } else if (props.theme === 'dark') {
-      api.setState({
+      setState({
         colorspace: darkColorspace
       })
     } else if (typeof props.theme === 'object') {
-      api.setState({
+      setState({
         colorspace: props.theme
       })
     }
-  }, [api, props.theme])
+  }, [setState, props.theme])
   const onceRef = useRef(true)
   const predefinedTypes = useMemo(() => predefined(), [])
   const registerTypes = useTypeRegistryStore(store => store.registerTypes)
@@ -143,17 +144,18 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
     })
   }, [themeType])
   const mixedProps = { ...props, theme: themeType }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const jsonViewerStore = useMemo(() => createJsonViewerStore(props), [])
+  const typeRegistryStore = useMemo(() => createTypeRegistryStore(), [])
+
   return (
     <ThemeProvider theme={theme}>
-      <TypeRegistryProvider createStore={createTypeRegistryStore}>
-        <JsonViewerProvider createStore={() => {
-          // This function only runs once, so we don't need a memo for this.
-          //  Refs: https://github.com/pmndrs/zustand/blob/77d14b17bc33a6f10f072802fac56aa78510710e/src/context.ts#L36-L38
-          return createJsonViewerStore(props)
-        }}>
+      <TypeRegistryStoreContext.Provider value={typeRegistryStore}>
+        <JsonViewerStoreContext.Provider value={jsonViewerStore}>
           <JsonViewerInner {...mixedProps}/>
-        </JsonViewerProvider>
-      </TypeRegistryProvider>
+        </JsonViewerStoreContext.Provider>
+      </TypeRegistryStoreContext.Provider>
     </ThemeProvider>
   )
 }

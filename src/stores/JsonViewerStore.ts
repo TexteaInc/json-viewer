@@ -1,7 +1,7 @@
 import type { SetStateAction } from 'react'
+import { createContext, useContext } from 'react'
 import type { StoreApi } from 'zustand'
-import { create } from 'zustand'
-import createContext from 'zustand/context'
+import { create, useStore } from 'zustand'
 
 import type {
   JsonViewerOnChange,
@@ -105,8 +105,11 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
   }))
 }
 
-export const {
-  useStore: useJsonViewerStore,
-  useStoreApi: useJsonViewerStoreApi,
-  Provider: JsonViewerProvider
-} = createContext<StoreApi<JsonViewerState>>()
+export const JsonViewerStoreContext = createContext<StoreApi<JsonViewerState>>(undefined)
+
+export const JsonViewerProvider = JsonViewerStoreContext.Provider
+
+export const useJsonViewerStore = <U extends unknown>(selector: (state: JsonViewerState) => U, equalityFn?: (a: U, b: U) => boolean) => {
+  const store = useContext(JsonViewerStoreContext)
+  return useStore(store, selector, equalityFn)
+}
