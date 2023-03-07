@@ -1,5 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react'
-import type React from 'react'
+import type { ComponentType, CSSProperties, Dispatch, FC, SetStateAction } from 'react'
 
 import type { Colorspace } from './theme/base16'
 
@@ -41,7 +40,7 @@ export interface DataItemProps<ValueType = unknown> {
 
 export type EditorProps<ValueType = unknown> = {
   value: ValueType
-  setValue: React.Dispatch<ValueType>
+  setValue: Dispatch<ValueType>
 }
 
 export type DataType<ValueType = unknown> = {
@@ -49,13 +48,13 @@ export type DataType<ValueType = unknown> = {
    * Whether the value belongs to the data type
    */
   is: (value: unknown, path: Path) => boolean
-  Component: React.ComponentType<DataItemProps<ValueType>>
-  Editor?: React.ComponentType<EditorProps<ValueType>>
-  PreComponent?: React.ComponentType<DataItemProps<ValueType>>
-  PostComponent?: React.ComponentType<DataItemProps<ValueType>>
+  Component: ComponentType<DataItemProps<ValueType>>
+  Editor?: ComponentType<EditorProps<ValueType>>
+  PreComponent?: ComponentType<DataItemProps<ValueType>>
+  PostComponent?: ComponentType<DataItemProps<ValueType>>
 }
 
-export interface JsonViewerKeyRenderer extends React.FC<DataItemProps> {
+export interface JsonViewerKeyRenderer extends FC<DataItemProps> {
   when (props: DataItemProps): boolean
 }
 
@@ -154,7 +153,7 @@ export type JsonViewerProps<T = unknown> = {
   displayDataTypes?: boolean
 
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
   /**
    *
    * @default 'light'

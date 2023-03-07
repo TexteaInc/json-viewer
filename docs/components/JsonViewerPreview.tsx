@@ -1,8 +1,8 @@
 import type { JsonViewerProps } from '@textea/json-viewer'
 import { JsonViewer } from '@textea/json-viewer'
-import React from 'react'
+import type { FC } from 'react'
 
-export const JsonViewerPreview: React.FC<JsonViewerProps> = (props) => {
+export const JsonViewerPreview: FC<JsonViewerProps> = (props) => {
   return (
     <JsonViewer
       theme='auto'

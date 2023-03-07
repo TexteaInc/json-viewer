@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import type { ComponentProps } from 'react'
-import React, { useCallback, useMemo, useState } from 'react'
+import type { ComponentProps, FC, MouseEvent } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { useTextColor } from '../hooks/useColor'
 import { useClipboard } from '../hooks/useCopyToClipboard'
@@ -28,7 +28,7 @@ export type DataKeyPairProps = {
 
 type IconBoxProps = ComponentProps<typeof Box>
 
-const IconBox: React.FC<IconBoxProps> = (props) => (
+const IconBox: FC<IconBoxProps> = (props) => (
   <Box
     component='span'
     {...props}
@@ -40,7 +40,7 @@ const IconBox: React.FC<IconBoxProps> = (props) => (
   />
 )
 
-export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
+export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const { value, path, nestedIndex } = props
   const propsEditable = props.editable ?? undefined
   const storeEditable = useJsonViewerStore(store => store.editable)
@@ -214,7 +214,7 @@ export const DataKeyPair: React.FC<DataKeyPairProps> = (props) => {
           opacity: 0.8
         }}
         onClick={
-          useCallback((event: React.MouseEvent<HTMLSpanElement>) => {
+          useCallback((event: MouseEvent<HTMLSpanElement>) => {
             if (event.isDefaultPrevented()) {
               return
             }
