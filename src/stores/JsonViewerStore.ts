@@ -1,7 +1,7 @@
 import type { SetStateAction } from 'react'
-import create from 'zustand'
+import type { StoreApi } from 'zustand'
+import { create } from 'zustand'
 import createContext from 'zustand/context'
-import { combine } from 'zustand/middleware'
 
 import type {
   JsonViewerOnChange,
@@ -38,85 +38,75 @@ export type JsonViewerState<T = unknown> = {
   onSelect: JsonViewerOnSelect | undefined
   keyRenderer: JsonViewerKeyRenderer
   displayObjectSize: boolean
-}
 
-export type JsonViewerActions = {
   getInspectCache: (path: Path, nestedIndex?: number) => boolean
   setInspectCache: (
     path: Path, action: SetStateAction<boolean>, nestedIndex?: number) => void
   setHover: (path: Path | null, nestedIndex?: number) => void
 }
 
-export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =>
-  create(
-    combine<JsonViewerState<T>, JsonViewerActions>(
-      {
-        // provided by user
-        enableClipboard: props.enableClipboard ?? true,
-        indentWidth: props.indentWidth ?? 3,
-        groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
-        collapseStringsAfterLength:
-          (props.collapseStringsAfterLength === false)
-            ? Number.MAX_VALUE
-            : props.collapseStringsAfterLength ?? 50,
-        maxDisplayLength: props.maxDisplayLength ?? 30,
-        rootName: props.rootName ?? 'root',
-        onChange: props.onChange ?? (() => {}),
-        onCopy: props.onCopy ?? undefined,
-        onSelect: props.onSelect ?? undefined,
-        keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
-        editable: props.editable ?? false,
-        defaultInspectDepth: props.defaultInspectDepth ?? 5,
-        objectSortKeys: props.objectSortKeys ?? false,
-        quotesOnKeys: props.quotesOnKeys ?? true,
-        displayDataTypes: props.displayDataTypes ?? true,
-        // internal state
-        inspectCache: {},
-        hoverPath: null,
-        colorspace: lightColorspace,
-        value: props.value,
-        displayObjectSize: props.displayObjectSize ?? true
-      },
-      (set, get) => ({
-        getInspectCache: (path, nestedIndex) => {
-          const target = nestedIndex !== undefined
-            ? path.join('.') +
+export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) => {
+  return create<JsonViewerState>()((set, get) => ({
+    // provided by user
+    enableClipboard: props.enableClipboard ?? true,
+    indentWidth: props.indentWidth ?? 3,
+    groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
+    collapseStringsAfterLength:
+      (props.collapseStringsAfterLength === false)
+        ? Number.MAX_VALUE
+        : props.collapseStringsAfterLength ?? 50,
+    maxDisplayLength: props.maxDisplayLength ?? 30,
+    rootName: props.rootName ?? 'root',
+    onChange: props.onChange ?? (() => {}),
+    onCopy: props.onCopy ?? undefined,
+    onSelect: props.onSelect ?? undefined,
+    keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
+    editable: props.editable ?? false,
+    defaultInspectDepth: props.defaultInspectDepth ?? 5,
+    objectSortKeys: props.objectSortKeys ?? false,
+    quotesOnKeys: props.quotesOnKeys ?? true,
+    displayDataTypes: props.displayDataTypes ?? true,
+    // internal state
+    inspectCache: {},
+    hoverPath: null,
+    colorspace: lightColorspace,
+    value: props.value,
+    displayObjectSize: props.displayObjectSize ?? true,
+
+    getInspectCache: (path, nestedIndex) => {
+      const target = nestedIndex !== undefined
+        ? path.join('.') +
             `[${nestedIndex}]nt`
-            : path.join('.')
-          return get().inspectCache[target]
-        },
-        setInspectCache: (path, action, nestedIndex) => {
-          const target = nestedIndex !== undefined
-            ? path.join('.') +
+        : path.join('.')
+      return get().inspectCache[target]
+    },
+    setInspectCache: (path, action, nestedIndex) => {
+      const target = nestedIndex !== undefined
+        ? path.join('.') +
             `[${nestedIndex}]nt`
-            : path.join('.')
-          set(state => ({
-            inspectCache: {
-              ...state.inspectCache,
-              [target]: typeof action === 'function'
-                ? action(
-                  state.inspectCache[target])
-                : action
-            }
-          }))
-        },
-        setHover: (path, nestedIndex) => {
-          set({
-            hoverPath: path
-              ? ({
-                  path,
-                  nestedIndex
-                })
-              : null
-          })
+        : path.join('.')
+      set(state => ({
+        inspectCache: {
+          ...state.inspectCache,
+          [target]: typeof action === 'function'
+            ? action(
+              state.inspectCache[target])
+            : action
         }
+      }))
+    },
+    setHover: (path, nestedIndex) => {
+      set({
+        hoverPath: path
+          ? ({ path, nestedIndex })
+          : null
       })
-    )
-  )
-export type JsonViewerStore = ReturnType<typeof createJsonViewerStore>
+    }
+  }))
+}
 
 export const {
   useStore: useJsonViewerStore,
   useStoreApi: useJsonViewerStoreApi,
   Provider: JsonViewerProvider
-} = createContext<JsonViewerStore>()
+} = createContext<StoreApi<JsonViewerState>>()
