@@ -30,7 +30,6 @@ const external = [
   '@mui/material/styles',
   'copy-to-clipboard',
   'zustand',
-  'zustand/context',
   'react',
   'react/jsx-runtime',
   'react-dom',
