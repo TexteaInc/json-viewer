@@ -1,9 +1,8 @@
 import { Box } from '@mui/material'
 import type { SetStateAction } from 'react'
-import { memo, useMemo, useState } from 'react'
+import { createContext, memo, useContext, useMemo, useState } from 'react'
 import type { StoreApi } from 'zustand'
-import { create } from 'zustand'
-import createContext from 'zustand/context'
+import { createStore, useStore } from 'zustand'
 
 import { createEasyType } from '../components/DataTypes/createEasyType'
 import {
@@ -26,7 +25,7 @@ type TypeRegistryState = {
 }
 
 export const createTypeRegistryStore = () => {
-  return create<TypeRegistryState>()((set) => ({
+  return createStore<TypeRegistryState>()((set) => ({
     registry: [],
 
     registerTypes: (setState) => {
@@ -40,11 +39,14 @@ export const createTypeRegistryStore = () => {
   }))
 }
 
-export const {
-  Provider: TypeRegistryProvider,
-  useStore: useTypeRegistryStore,
-  useStoreApi: useTypeRegistryStoreApi
-} = createContext<StoreApi<TypeRegistryState>>()
+export const TypeRegistryStoreContext = createContext<StoreApi<TypeRegistryState>>(undefined)
+
+export const TypeRegistryProvider = TypeRegistryStoreContext.Provider
+
+export const useTypeRegistryStore = <U extends unknown>(selector: (state: TypeRegistryState) => U, equalityFn?: (a: U, b: U) => boolean) => {
+  const store = useContext(TypeRegistryStoreContext)
+  return useStore(store, selector, equalityFn)
+}
 
 const objectType: DataType<object> = {
   is: (value) => typeof value === 'object',
