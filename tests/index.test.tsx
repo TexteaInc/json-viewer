@@ -411,7 +411,7 @@ describe('Expand function by click on dots', () => {
     const { container, rerender } = render(
       <JsonViewer
         rootName={false}
-        value={(e: any) => console.log('it works')}
+        value={(e: string) => console.log(e)}
         defaultInspectDepth={0}
       />
     )
@@ -424,7 +424,7 @@ describe('Expand function by click on dots', () => {
     rerender(
       <JsonViewer
         rootName={false}
-        value={(e: any) => console.log('it works')}
+        value={(e: string) => console.log(e)}
         defaultInspectDepth={0}
       />
     )
