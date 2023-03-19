@@ -5,7 +5,7 @@ import type { FC } from 'react'
 const BaseIcon: FC<SvgIconProps> = ({ d, ...props }) => {
   return (
     <SvgIcon {...props}>
-      <path d={d}/>
+      <path d={d} />
     </SvgIcon>
   )
 }

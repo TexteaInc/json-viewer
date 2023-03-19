@@ -44,9 +44,10 @@ const rb = '}'
 export const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
   return (
     <NoSsr>
-      <DataTypeLabel dataType='function'/>
+      <DataTypeLabel dataType='function' />
       <Box
-        component='span' className='data-function-start'
+        component='span'
+        className='data-function-start'
         sx={{
           letterSpacing: 0.5
         }}
@@ -83,17 +84,18 @@ export const FunctionType: FC<DataItemProps<Function>> = (props) => {
         {props.inspect
           ? functionBody(props.value)
           : (
-            <Box component='span' className='data-function-body'
-                 onClick={() => props.setInspect(true)}
-                 sx={{
-                   '&:hover': { cursor: 'pointer' },
-                   padding: 0.5
-                 }}
+            <Box
+              component='span'
+              className='data-function-body'
+              onClick={() => props.setInspect(true)}
+              sx={{
+                '&:hover': { cursor: 'pointer' },
+                padding: 0.5
+              }}
             >
               …
             </Box>
-            )
-        }
+            )}
       </Box>
     </NoSsr>
   )

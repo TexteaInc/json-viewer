@@ -85,74 +85,54 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const actionIcons = useMemo(() => {
     if (editing) {
       return (
-          <>
-            <IconBox>
-              <CloseIcon
-                sx={{
-                  fontSize: '.8rem'
-                }}
-                onClick={() => {
-                  // abort editing
-                  setEditing(false)
-                  setTempValue(value)
-                }}
-              />
-            </IconBox>
-            <IconBox>
-              <CheckIcon
-                sx={{
-                  fontSize: '.8rem'
-                }}
-                onClick={() => {
-                  // finish editing, save data
-                  setEditing(false)
-                  onChange(path, value, tempValue)
-                }}
-              />
-            </IconBox>
-          </>
+        <>
+          <IconBox>
+            <CloseIcon
+              sx={{ fontSize: '.8rem' }}
+              onClick={() => {
+                // abort editing
+                setEditing(false)
+                setTempValue(value)
+              }}
+            />
+          </IconBox>
+          <IconBox>
+            <CheckIcon
+              sx={{ fontSize: '.8rem' }}
+              onClick={() => {
+                // finish editing, save data
+                setEditing(false)
+                onChange(path, value, tempValue)
+              }}
+            />
+          </IconBox>
+        </>
       )
     }
     return (
-        <>
-          {enableClipboard && (
-            <IconBox
-              onClick={event => {
-                event.preventDefault()
-                try {
-                  copy(
-                    path,
-                    value
-                  )
-                } catch (e) {
-                  // in some case, this will throw error
-                  // for example: circular structure
-                  // fixme: `useAlert` hook
-                  console.error(e)
-                }
-              }}
-            >
-              {
-                copied
-                  ? (
-                    <CheckIcon
-                      sx={{
-                        fontSize: '.8rem'
-                      }}
-                    />
-                    )
-                  : (
-                    <ContentCopyIcon
-                      sx={{
-                        fontSize: '.8rem'
-                      }}
-                    />
-                    )
+      <>
+        {enableClipboard && (
+          <IconBox
+            onClick={event => {
+              event.preventDefault()
+              try {
+                copy(path, value)
+              } catch (e) {
+                // in some case, this will throw error
+                // fixme: `useAlert` hook
+                console.error(e)
               }
-            </IconBox>
-          )}
-          {/* todo: support edit object */}
-          {(Editor && editable) &&
+            }}
+          >
+            {
+              copied
+                ? <CheckIcon sx={{ fontSize: '.8rem' }} />
+                : <ContentCopyIcon sx={{ fontSize: '.8rem' }} />
+            }
+          </IconBox>
+        )}
+        {/* todo: support edit object */}
+        {(Editor && editable) &&
             (
               <IconBox
                 onClick={event => {
@@ -160,15 +140,10 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
                   setEditing(true)
                 }}
               >
-                <EditIcon
-                  sx={{
-                    fontSize: '.8rem'
-                  }}
-                />
+                <EditIcon sx={{ fontSize: '.8rem' }} />
               </IconBox>
-            )
-          }
-        </>
+            )}
+      </>
     )
   },
   [
@@ -194,15 +169,14 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     value
   }), [inspect, path, setInspect, value])
   return (
-    <Box className='data-key-pair'
-         data-testid={'data-key-pair' + path.join('.')}
-         sx={{
-           userSelect: 'text'
-         }}
-         onMouseEnter={
-           useCallback(() => setHover(path, nestedIndex),
-             [setHover, path, nestedIndex])
-         }
+    <Box
+      className='data-key-pair'
+      data-testid={'data-key-pair' + path.join('.')}
+      sx={{ userSelect: 'text' }}
+      onMouseEnter={
+        useCallback(() => setHover(path, nestedIndex),
+          [setHover, path, nestedIndex])
+      }
     >
       <DataBox
         component='span'
@@ -227,24 +201,30 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
         {
           expandable
             ? (inspect
-                ? <ExpandMoreIcon sx={{
-                  fontSize: '.8rem',
-                  '&:hover': { cursor: 'pointer' }
-                }}/>
-                : <ChevronRightIcon sx={{
-                  fontSize: '.8rem',
-                  '&:hover': { cursor: 'pointer' }
-                }}/>
+                ? (
+                  <ExpandMoreIcon
+                    sx={{
+                      fontSize: '.8rem',
+                      '&:hover': { cursor: 'pointer' }
+                    }}
+                  />
+                  )
+                : (
+                  <ChevronRightIcon
+                    sx={{
+                      fontSize: '.8rem',
+                      '&:hover': { cursor: 'pointer' }
+                    }}
+                  />
+                  )
               )
             : null
         }
         {
           (isRoot
-            ? (
-                rootName !== false
-                  ? (quotesOnKeys ? <>&quot;{rootName}&quot;</> : <>{rootName}</>)
-                  : null
-              )
+            ? rootName !== false
+              ? (quotesOnKeys ? <>&quot;{rootName}&quot;</> : <>{rootName}</>)
+              : null
             : KeyRenderer.when(downstreamProps)
               ? <KeyRenderer {...downstreamProps} />
               : nestedIndex === undefined && (
@@ -257,11 +237,9 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
         {
           (
             isRoot
-              ? (rootName !== false
-                  ? <DataBox sx={{ mr: 0.5 }}>:</DataBox>
-                  : null)
+              ? (rootName !== false && <DataBox sx={{ mr: 0.5 }}>:</DataBox>)
               : nestedIndex === undefined && (
-               <DataBox sx={{ mr: 0.5 }}>:</DataBox>
+                <DataBox sx={{ mr: 0.5 }}>:</DataBox>
               )
           )
         }
@@ -270,11 +248,14 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
       </DataBox>
       {
         (editing && editable)
-          ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
+          ? (Editor && <Editor value={tempValue} setValue={setTempValue} />)
           : (Component)
               ? <Component {...downstreamProps} />
-              : <Box component='span'
-                   className='data-value-fallback'>{`fallback: ${value}`}</Box>
+              : (
+                <Box component='span' className='data-value-fallback'>
+                  {`fallback: ${value}`}
+                </Box>
+                )
       }
       {PostComponent && <PostComponent {...downstreamProps} />}
       {(isHover && expandable && !inspect) && actionIcons}

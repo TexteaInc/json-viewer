@@ -50,6 +50,8 @@
   ],
   "scripts": {
     "test": "vitest",
+    "test:run": "vitest run",
+    "dev": "yarn workspace @textea/json-viewer-docs dev",
     "coverage": "vitest run --coverage",
     "postinstall": "husky install",
     "prepack": "pinst --disable",

@@ -40,7 +40,8 @@ export const PreObjectType: FC<DataItemProps<object>> = (props) => {
   const isTrap = useIsCycleReference(props.path, props.value)
   return (
     <Box
-      component='span' className='data-object-start'
+      component='span'
+      className='data-object-start'
       sx={{
         letterSpacing: 0.5
       }}
@@ -60,18 +61,18 @@ export const PreObjectType: FC<DataItemProps<object>> = (props) => {
         </Box>
       )}
 
-      {isTrap && !props.inspect
-        ? (
-          <>
-            <CircularArrowsIcon sx={{
+      {isTrap && !props.inspect && (
+        <>
+          <CircularArrowsIcon
+            sx={{
               fontSize: 12,
               color: textColor,
               mx: 0.5
-            }}/>
-            {isTrap}
-          </>
-          )
-        : null}
+            }}
+          />
+          {isTrap}
+        </>
+      )}
     </Box>
   )
 }
@@ -100,8 +101,7 @@ export const PostObjectType: FC<DataItemProps<object>> = (props) => {
             {sizeOfValue}
           </Box>
           )
-        : null
-      }
+        : null}
     </Box>
   )
 }
@@ -130,18 +130,27 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
         for (const item of value) {
           // fixme: key might be a object, array, or any value for the `Map<any, any>`
           const [k, value] = item
-          const key = `${k}`
+          const key = k.toString()
           elements.push(
-            <DataKeyPair key={key} path={[...props.path, key]} value={value}
-                         editable={false}/>
+            <DataKeyPair
+              key={key}
+              path={[...props.path, key]}
+              value={value}
+              editable={false}
+            />
           )
         }
       } else {
         let count = 0
         for (const item of value) {
           elements.push(
-            <DataKeyPair key={count} path={[...props.path, `iterator:${count}`]}
-                         value={item} nestedIndex={count} editable={false}/>
+            <DataKeyPair
+              key={count}
+              path={[...props.path, `iterator:${count}`]}
+              value={item}
+              nestedIndex={count}
+              editable={false}
+            />
           )
           count++
         }
@@ -154,7 +163,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
         const elements = value.slice(0, displayLength).map((value, index) => {
           const path = [...props.path, index]
           return (
-            <DataKeyPair key={index} path={path} value={value}/>
+            <DataKeyPair key={index} path={path} value={value} />
           )
         })
         if (value.length > displayLength) {
@@ -184,8 +193,12 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
       return elements.map((list, index) => {
         const path = [...props.path]
         return (
-          <DataKeyPair key={index} path={path} value={list}
-                       nestedIndex={index}/>
+          <DataKeyPair
+            key={index}
+            path={path}
+            value={list}
+            nestedIndex={index}
+          />
         )
       })
     }
@@ -199,7 +212,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
     const elements = entries.slice(0, displayLength).map(([key, value]) => {
       const path = [...props.path, key]
       return (
-        <DataKeyPair key={key} path={path} value={value}/>
+        <DataKeyPair key={key} path={path} value={value} />
       )
     })
     if (entries.length > displayLength) {
@@ -252,20 +265,20 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
       {
         props.inspect
           ? elements
-          : !isTrap
-              ? (
-              <Box component='span' className='data-object-body'
-                 onClick={() => props.setInspect(true)}
-                 sx={{
-                   '&:hover': { cursor: 'pointer' },
-                   padding: 0.5,
-                   userSelect: 'none'
-                 }}
-              >
-                …
-              </Box>
-                )
-              : null
+          : !isTrap && (
+            <Box
+              component='span'
+              className='data-object-body'
+              onClick={() => props.setInspect(true)}
+              sx={{
+                '&:hover': { cursor: 'pointer' },
+                padding: 0.5,
+                userSelect: 'none'
+              }}
+            >
+              …
+            </Box>
+            )
       }
     </Box>
   )

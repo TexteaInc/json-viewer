@@ -152,13 +152,15 @@ export function predefined (): DataType<any>[] {
           const backgroundColor = useJsonViewerStore(
             store => store.colorspace.base02)
           return (
-            <Box sx={{
-              fontSize: '0.8rem',
-              backgroundColor,
-              fontWeight: 'bold',
-              borderRadius: '3px',
-              padding: '0.5px 2px'
-            }}>
+            <Box
+              sx={{
+                fontSize: '0.8rem',
+                backgroundColor,
+                fontWeight: 'bold',
+                borderRadius: '3px',
+                padding: '0.5px 2px'
+              }}
+            >
               NULL
             </Box>
           )
@@ -180,12 +182,14 @@ export function predefined (): DataType<any>[] {
           const backgroundColor = useJsonViewerStore(
             store => store.colorspace.base02)
           return (
-            <Box sx={{
-              fontSize: '0.7rem',
-              backgroundColor,
-              borderRadius: '3px',
-              padding: '0.5px 2px'
-            }}>
+            <Box
+              sx={{
+                fontSize: '0.7rem',
+                backgroundColor,
+                borderRadius: '3px',
+                padding: '0.5px 2px'
+              }}
+            >
               undefined
             </Box>
           )
@@ -258,12 +262,14 @@ export function predefined (): DataType<any>[] {
           const backgroundColor = useJsonViewerStore(
             store => store.colorspace.base02)
           return (
-            <Box sx={{
-              backgroundColor,
-              fontSize: '0.8rem',
-              fontWeight: 'bold',
-              borderRadius: '3px'
-            }}>
+            <Box
+              sx={{
+                backgroundColor,
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                borderRadius: '3px'
+              }}
+            >
               NaN
             </Box>
           )
