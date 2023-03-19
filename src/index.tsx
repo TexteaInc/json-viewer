@@ -104,7 +104,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
         userSelect: 'none',
         contentVisibility: 'auto'
       }}
-      onMouseLeave={ onMouseLeave }
+      onMouseLeave={onMouseLeave}
     >
       <DataKeyPair
         value={value}
@@ -153,7 +153,7 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
     <ThemeProvider theme={theme}>
       <TypeRegistryStoreContext.Provider value={typeRegistryStore}>
         <JsonViewerStoreContext.Provider value={jsonViewerStore}>
-          <JsonViewerInner {...mixedProps}/>
+          <JsonViewerInner {...mixedProps} />
         </JsonViewerStoreContext.Provider>
       </TypeRegistryStoreContext.Provider>
     </ThemeProvider>

@@ -23,7 +23,7 @@ export default class JsonViewer {
 
     if (container) {
       this.root = createRoot(container)
-      this.root.render(<JsonViewerComponent {...this.props}/>)
+      this.root.render(<JsonViewerComponent {...this.props} />)
     }
   }
 

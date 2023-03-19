@@ -105,8 +105,9 @@ const example = {
 }
 
 const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
-  return <del aria-label='I dont like this number'>&quot;{path.slice(
-    -1)}&quot;</del>
+  return (
+    <del aria-label='I dont like this number'>&quot;{path.slice(-1)}&quot;</del>
+  )
 }
 KeyRenderer.when = (props) => props.value === 114.514
 
@@ -145,36 +146,44 @@ const IndexPage: FC = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        width: '100%',
-        gap: '10px',
-        paddingX: '5px',
-        paddingY: '10px',
-        minHeight: '64px',
-        marginTop: '64px'
-      }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          width: '100%',
+          gap: '10px',
+          paddingX: '5px',
+          paddingY: '10px',
+          minHeight: '64px',
+          marginTop: '64px'
+        }}
+      >
         <FormControlLabel
-          control={<Switch
-            checked={editable}
-            onChange={event => setEditable(event.target.checked)}
-          />}
+          control={(
+            <Switch
+              checked={editable}
+              onChange={event => setEditable(event.target.checked)}
+            />
+          )}
           label='Editable'
         />
         <FormControlLabel
-          control={<Switch
-            checked={displayDataTypes}
-            onChange={event => setDisplayDataTypes(event.target.checked)}
-          />}
+          control={(
+            <Switch
+              checked={displayDataTypes}
+              onChange={event => setDisplayDataTypes(event.target.checked)}
+            />
+          )}
           label='DisplayDataTypes'
         />
         <FormControlLabel
-          control={<Switch
-            checked={displayObjectSize}
-            onChange={event => setDisplayObjectSize(event.target.checked)}
-          />}
+          control={(
+            <Switch
+              checked={displayObjectSize}
+              onChange={event => setDisplayObjectSize(event.target.checked)}
+            />
+          )}
           label='DisplayObjectSize'
         />
         <TextField
@@ -252,8 +261,14 @@ const IndexPage: FC = () => {
               return false
             },
             (props) => {
-              return <Image height={50} width={50} src={props.value}
-                alt={props.value} />
+              return (
+                <Image
+                  height={50}
+                  width={50}
+                  src={props.value}
+                  alt={props.value}
+                />
+              )
             }
           )
         ]}

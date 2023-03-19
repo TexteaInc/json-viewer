@@ -61,74 +61,84 @@ const full = {
 
 describe('render <JsonViewer/>', () => {
   it('render undefined', () => {
-    render(<JsonViewer value={undefined}/>)
+    render(<JsonViewer value={undefined} />)
   })
 
   it('render null', () => {
-    render(<JsonViewer value={null}/>)
+    render(<JsonViewer value={null} />)
   })
 
   it('render null', () => {
-    render(<JsonViewer value={null}/>)
+    render(<JsonViewer value={null} />)
   })
 
   it('render NaN', () => {
-    render(<JsonViewer value={NaN}/>)
+    render(<JsonViewer value={NaN} />)
   })
 
   it('render number', () => {
-    render(<JsonViewer value={1}/>)
-    render(<JsonViewer value={-0}/>)
-    render(<JsonViewer value={+0}/>)
-    render(<JsonViewer value={114514}/>)
-    render(<JsonViewer value={114.514}/>)
-    render(<JsonViewer value={Infinity}/>)
+    render(<JsonViewer value={1} />)
+    render(<JsonViewer value={-0} />)
+    render(<JsonViewer value={+0} />)
+    render(<JsonViewer value={114514} />)
+    render(<JsonViewer value={114.514} />)
+    render(<JsonViewer value={Infinity} />)
   })
 
   it('render bigint', () => {
-    render(<JsonViewer value={114514n}/>)
+    render(<JsonViewer value={114514n} />)
   })
 
   it('render array', () => {
-    render(<JsonViewer value={[1, '2', 3.0, Infinity]}/>)
-    render(<JsonViewer value={new Array(1e5).fill(1)}/>)
+    render(<JsonViewer value={[1, '2', 3.0, Infinity]} />)
+    render(<JsonViewer value={new Array(1e5).fill(1)} />)
   })
 
   it('render Set', () => {
-    render(<JsonViewer value={new Set([1, '2', 3.0, Infinity])}/>)
+    render(<JsonViewer value={new Set([1, '2', 3.0, Infinity])} />)
   })
 
   it('render Map', () => {
     render(
       <JsonViewer
-        value={new Map<string, number>([['foo', 1], ['goo', 2]])}/>
+        value={new Map<string, number>([['foo', 1], ['goo', 2]])}
+      />
     )
     render(
       <JsonViewer
-        value={new Map<any, number>([[[], 1], [{}, 2]])}/>
+        value={new Map<any, number>([[[], 1], [{}, 2]])}
+      />
     )
   })
 
   it('render object', () => {
-    render(<JsonViewer value={{}}/>)
-    render(<JsonViewer value={{
-      foo: '1',
-      goo: 2,
-      hoo: {
-        foo: [1, 2, 3]
-      }
-    }}/>)
+    render(<JsonViewer value={{}} />)
+    render(
+      <JsonViewer
+        value={{
+          foo: '1',
+          goo: 2,
+          hoo: {
+            foo: [1, 2, 3]
+          }
+        }}
+      />
+    )
   })
 
   it('render function', () => {
-    render(<JsonViewer value={function aPlusB (a: number, b: number) {
-      return a + b
-    }}/>)
-    render(<JsonViewer value={(a: number, b: number) => a + b}/>)
+    render(
+      <JsonViewer
+        value={function aPlusB (a: number, b: number) {
+          return a + b
+        }}
+      />
+    )
+    render(<JsonViewer value={(a: number, b: number) => a + b} />)
   })
 
   it('render full', () => {
-    render(<JsonViewer value={full}/>)
+    render(<JsonViewer value={full} />)
   })
 })
 describe('render <JsonViewer/> with multiple instances', () => {
@@ -171,7 +181,7 @@ describe('render <JsonViewer/> with props', () => {
   it('render with quotesOnKeys', () => {
     const selection = [true, false]
     selection.forEach(quotesOnKeys => {
-      render(<JsonViewer value={full} quotesOnKeys={quotesOnKeys}/>)
+      render(<JsonViewer value={full} quotesOnKeys={quotesOnKeys} />)
     })
   })
 
@@ -201,7 +211,7 @@ describe('render <JsonViewer/> with props', () => {
       }
     ] as const
     selection.forEach(theme => {
-      render(<JsonViewer value={full} theme={theme}/>)
+      render(<JsonViewer value={full} theme={theme} />)
     })
   })
 
@@ -211,12 +221,12 @@ describe('render <JsonViewer/> with props', () => {
       false,
       (a: string, b: string) => a.localeCompare(b)]
     selection.forEach(objectSortKeys => {
-      render(<JsonViewer value={full} objectSortKeys={objectSortKeys}/>)
+      render(<JsonViewer value={full} objectSortKeys={objectSortKeys} />)
     })
   })
 
   it('render with rootName false', async () => {
-    render(<JsonViewer value={undefined} rootName={false}/>)
+    render(<JsonViewer value={undefined} rootName={false} />)
     expect((await screen.findByTestId('data-key-pair')).innerText)
       .toEqual(undefined)
   })
@@ -224,46 +234,51 @@ describe('render <JsonViewer/> with props', () => {
   it('render with displayDataTypes', async () => {
     const selection = [true, false]
     selection.forEach(displayDataTypes => {
-      render(<JsonViewer value={undefined} displayDataTypes={displayDataTypes}/>)
+      render(<JsonViewer value={undefined} displayDataTypes={displayDataTypes} />)
     })
   })
 
   it('render with displayObjectSize', async () => {
     const selection = [true, false]
     selection.forEach(displayObjectSize => {
-      render(<JsonViewer value={['string1', 'string2']} displayObjectSize={displayObjectSize}/>)
+      render(<JsonViewer value={['string1', 'string2']} displayObjectSize={displayObjectSize} />)
     })
   })
 
   it('render with dataTypes', async () => {
-    render(<JsonViewer value={undefined} valueTypes={[]}/>)
-    render(<JsonViewer value={undefined} valueTypes={[
-      {
-        is: (value) => typeof value === 'string',
-        Component: (props) => {
-          expectTypeOf(props.value).toMatchTypeOf<unknown>()
-          return null
-        }
-      },
-      createDataType<string>(
-        (value) => typeof value === 'string',
-        (props) => {
-          expectTypeOf(props.value).toMatchTypeOf<string>()
-          return null
-        }
-      )
-    ]}/>)
+    render(<JsonViewer value={undefined} valueTypes={[]} />)
+    render(
+      <JsonViewer
+        value={undefined}
+        valueTypes={[
+          {
+            is: (value) => typeof value === 'string',
+            Component: (props) => {
+              expectTypeOf(props.value).toMatchTypeOf<unknown>()
+              return null
+            }
+          },
+          createDataType<string>(
+            (value) => typeof value === 'string',
+            (props) => {
+              expectTypeOf(props.value).toMatchTypeOf<string>()
+              return null
+            }
+          )
+        ]}
+      />
+    )
   })
 })
 
 describe('Expand elements by click on dots', () => {
   it('render', () => {
     const { container, rerender } = render(
-        <JsonViewer
-            rootName={false}
-            value={['string1', 'string2']}
-            defaultInspectDepth={0}
-        />
+      <JsonViewer
+        rootName={false}
+        value={['string1', 'string2']}
+        defaultInspectDepth={0}
+      />
     )
 
     let elements = container.getElementsByClassName('data-object-body')
@@ -272,11 +287,11 @@ describe('Expand elements by click on dots', () => {
     fireEvent.click(elements[0])
 
     rerender(
-        <JsonViewer
-            rootName={false}
-            value={['string1', 'string2']}
-            defaultInspectDepth={0}
-        />
+      <JsonViewer
+        rootName={false}
+        value={['string1', 'string2']}
+        defaultInspectDepth={0}
+      />
     )
     elements = container.getElementsByClassName('data-object-body')
     expect(elements.length).eq(0)
@@ -441,11 +456,11 @@ describe('Expand function by click on dots', () => {
 describe('See empty iterables', () => {
   it('Array', () => {
     const { container } = render(
-        <JsonViewer
-            rootName={false}
-            value={[]}
-            defaultInspectDepth={0}
-        />
+      <JsonViewer
+        rootName={false}
+        value={[]}
+        defaultInspectDepth={0}
+      />
     )
 
     let elements = container.getElementsByClassName('data-object-body')
@@ -457,11 +472,11 @@ describe('See empty iterables', () => {
   })
   it('Object', () => {
     const { container } = render(
-        <JsonViewer
-            rootName={false}
-            value={{}}
-            defaultInspectDepth={0}
-        />
+      <JsonViewer
+        rootName={false}
+        value={{}}
+        defaultInspectDepth={0}
+      />
     )
 
     let elements = container.getElementsByClassName('data-object-body')
@@ -473,11 +488,11 @@ describe('See empty iterables', () => {
   })
   it('Map', () => {
     const { container } = render(
-        <JsonViewer
-            rootName={false}
-            value={new Map()}
-            defaultInspectDepth={0}
-        />
+      <JsonViewer
+        rootName={false}
+        value={new Map()}
+        defaultInspectDepth={0}
+      />
     )
 
     let elements = container.getElementsByClassName('data-object-body')
@@ -489,11 +504,11 @@ describe('See empty iterables', () => {
   })
   it('Set', () => {
     const { container } = render(
-        <JsonViewer
-            rootName={false}
-            value={new Set()}
-            defaultInspectDepth={0}
-        />
+      <JsonViewer
+        rootName={false}
+        value={new Set()}
+        defaultInspectDepth={0}
+      />
     )
 
     let elements = container.getElementsByClassName('data-object-body')
@@ -507,11 +522,13 @@ describe('See empty iterables', () => {
 
 describe('Click on empty iterables', () => {
   it('Array', () => {
-    const Component = () => <JsonViewer
+    const Component = () => (
+      <JsonViewer
         rootName={false}
         value={[]}
         defaultInspectDepth={0}
-    />
+      />
+    )
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -533,11 +550,13 @@ describe('Click on empty iterables', () => {
     expect(elements.length).eq(0)
   })
   it('Object', () => {
-    const Component = () => <JsonViewer
+    const Component = () => (
+      <JsonViewer
         rootName={false}
         value={[]}
         defaultInspectDepth={0}
-    />
+      />
+    )
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -559,11 +578,13 @@ describe('Click on empty iterables', () => {
     expect(elements.length).eq(0)
   })
   it('Map', () => {
-    const Component = () => <JsonViewer
-      rootName={false}
-      value={new Map()}
-      defaultInspectDepth={0}
-  />
+    const Component = () => (
+      <JsonViewer
+        rootName={false}
+        value={new Map()}
+        defaultInspectDepth={0}
+      />
+    )
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -585,11 +606,13 @@ describe('Click on empty iterables', () => {
     expect(elements.length).eq(0)
   })
   it('Set', () => {
-    const Component = () => <JsonViewer
-      rootName={false}
-      value={new Set()}
-      defaultInspectDepth={0}
-  />
+    const Component = () => (
+      <JsonViewer
+        rootName={false}
+        value={new Set()}
+        defaultInspectDepth={0}
+      />
+    )
     const { container, rerender } = render(<Component />)
 
     // Click on start brace
@@ -614,11 +637,13 @@ describe('Click on empty iterables', () => {
 
 describe('Show three dots after string collapsing', () => {
   it('render', () => {
-    const Component = () => <JsonViewer
+    const Component = () => (
+      <JsonViewer
         rootName={false}
         value={'string string string'}
         collapseStringsAfterLength={6}
-    />
+      />
+    )
     const { container, rerender } = render(<Component />)
 
     let elements = container.getElementsByClassName('string-value')
