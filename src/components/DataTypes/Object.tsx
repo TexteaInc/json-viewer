@@ -34,7 +34,7 @@ export const PreObjectType: FC<DataItemProps<object>> = (props) => {
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
-  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.inspect, props.value]
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value]
   )
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const isTrap = useIsCycleReference(props.path, props.value)
@@ -81,7 +81,7 @@ export const PostObjectType: FC<DataItemProps<object>> = (props) => {
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
-  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.inspect, props.value])
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
 
   return (
     <Box component='span' className='data-object-end'>
