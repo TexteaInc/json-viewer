@@ -150,3 +150,23 @@ export function segmentArray<T> (arr: T[], size: number): T[][] {
   }
   return result
 }
+
+// https://stackoverflow.com/a/72457899
+export function circularStringify (obj: any, space?: string | number) {
+  const seenValues = []
+
+  function circularReplacer (key: string | number, value: any) {
+    if (typeof value === 'object' && value !== null && Object.keys(value).length) {
+      const stackSize = seenValues.length
+      if (stackSize) {
+        // clean up expired references
+        for (let n = stackSize - 1; seenValues[n][key] !== value; --n) { seenValues.pop() }
+        if (seenValues.includes(value)) return '[Circular]'
+      }
+      seenValues.push(value)
+    }
+    return value
+  }
+
+  return JSON.stringify(obj, circularReplacer, space)
+}
