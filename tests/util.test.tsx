@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest'
 
 import type { DataItemProps, Path } from '../src'
 import { applyValue, createDataType, isCycleReference } from '../src'
-import { circularStringify, segmentArray } from '../src/utils'
+import { safeStringify, segmentArray } from '../src/utils'
 
 describe('function applyValue', () => {
   const patches: any[] = [{}, undefined, 1, '2', 3n, 0.4]
@@ -239,7 +239,7 @@ describe('function segmentArray', () => {
 describe('function circularStringify', () => {
   test('should works as JSON.stringify', () => {
     const obj = { foo: 1, bar: 2 }
-    expect(circularStringify(obj)).to.eq(JSON.stringify(obj))
+    expect(safeStringify(obj)).to.eq(JSON.stringify(obj))
   })
 
   test('should works with circular reference in object', () => {
@@ -251,14 +251,14 @@ describe('function circularStringify', () => {
       }
     }
     obj.bar.bar = obj.bar
-    expect(circularStringify(obj)).to.eq('{"foo":1,"bar":{"foo":2,"bar":"[Circular]"}}')
+    expect(safeStringify(obj)).to.eq('{"foo":1,"bar":{"foo":2,"bar":"[Circular]"}}')
   })
 
   test('should works with circular reference in array', () => {
     const array = [1, 2, 3, 4, 5]
     // @ts-expect-error ignore
     array[2] = array
-    expect(circularStringify(array)).to.eq('[1,2,"[Circular]",4,5]')
+    expect(safeStringify(array)).to.eq('[1,2,"[Circular]",4,5]')
   })
 
   test('should works with complex circular object', () => {
@@ -278,6 +278,34 @@ describe('function circularStringify', () => {
     obj.a.b.e = obj.e
     // @ts-expect-error ignore
     obj.e.g = obj.a.b
-    expect(circularStringify(obj)).to.eq('{"a":{"b":{"c":1,"d":2,"e":{"f":3,"g":"[Circular]"}}},"e":{"f":3,"g":"[Circular]"}}')
+    expect(safeStringify(obj)).to.eq('{"a":{"b":{"c":1,"d":2,"e":{"f":3,"g":"[Circular]"}}},"e":{"f":3,"g":"[Circular]"}}')
+  })
+
+  test('should works with ES6 Map', () => {
+    const map = new Map()
+    map.set('foo', 1)
+    map.set('bar', 2)
+    expect(safeStringify(map)).to.eq('{"foo":1,"bar":2}')
+  })
+
+  test('should works with ES6 Set', () => {
+    const set = new Set()
+    set.add(1)
+    set.add(2)
+    expect(safeStringify(set)).to.eq('[1,2]')
+  })
+
+  test('should works with ES6 Map with circular reference', () => {
+    const map = new Map()
+    map.set('foo', 1)
+    map.set('bar', map)
+    expect(safeStringify(map)).to.eq('{"foo":1,"bar":"[Circular]"}')
+  })
+
+  test('should works with ES6 Set with circular reference', () => {
+    const set = new Set()
+    set.add(1)
+    set.add(set)
+    expect(safeStringify(set)).to.eq('[1,"[Circular]"]')
   })
 })
