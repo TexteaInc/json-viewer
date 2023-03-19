@@ -3,7 +3,7 @@ import { useCallback, useRef, useState } from 'react'
 
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import type { JsonViewerOnCopy } from '../type'
-import { circularStringify } from '../utils'
+import { safeStringify } from '../utils'
 
 /**
  * useClipboard hook accepts one argument options in which copied status timeout duration is defined (defaults to 2000). Hook returns object with properties:
@@ -52,7 +52,7 @@ export function useClipboard ({ timeout = 2000 } = {}) {
           }]`, error)
       }
     } else {
-      const valueToCopy = circularStringify(
+      const valueToCopy = safeStringify(
         typeof value === 'function' ? value.toString() : value,
         '  '
       )

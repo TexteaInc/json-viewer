@@ -151,16 +151,45 @@ export function segmentArray<T> (arr: T[], size: number): T[][] {
   return result
 }
 
-// https://stackoverflow.com/a/72457899
-export function circularStringify (obj: any, space?: string | number) {
+export function safeStringify (obj: any, space?: string | number) {
   const seenValues = []
 
-  function circularReplacer (key: string | number, value: any) {
+  function replacer (key: string | number, value: any) {
+    // https://github.com/GoogleChromeLabs/jsbi/issues/30
+    if (typeof value === 'bigint') return value.toString()
+
+    // Map and Set are not supported by JSON.stringify
+    if (value instanceof Map) {
+      if ('toJSON' in value && typeof value.toJSON === 'function') return value.toJSON()
+      if (value.size === 0) return {}
+
+      if (seenValues.includes(value)) return '[Circular]'
+      seenValues.push(value)
+
+      const entries = Array.from(value.entries())
+      if (entries.every(([key]) => typeof key === 'string' || typeof key === 'number')) {
+        return Object.fromEntries(entries)
+      }
+
+      // if keys are not string or number, we can't convert to object
+      // fallback to default behavior
+      return {}
+    }
+    if (value instanceof Set) {
+      if ('toJSON' in value && typeof value.toJSON === 'function') return value.toJSON()
+
+      if (seenValues.includes(value)) return '[Circular]'
+      seenValues.push(value)
+
+      return Array.from(value.values())
+    }
+
+    // https://stackoverflow.com/a/72457899
     if (typeof value === 'object' && value !== null && Object.keys(value).length) {
       const stackSize = seenValues.length
       if (stackSize) {
         // clean up expired references
-        for (let n = stackSize - 1; seenValues[n][key] !== value; --n) { seenValues.pop() }
+        for (let n = stackSize - 1; n >= 0 && seenValues[n][key] !== value; --n) { seenValues.pop() }
         if (seenValues.includes(value)) return '[Circular]'
       }
       seenValues.push(value)
@@ -168,5 +197,5 @@ export function circularStringify (obj: any, space?: string | number) {
     return value
   }
 
-  return JSON.stringify(obj, circularReplacer, space)
+  return JSON.stringify(obj, replacer, space)
 }
