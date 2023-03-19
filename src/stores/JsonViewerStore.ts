@@ -105,7 +105,8 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
   }))
 }
 
-export const JsonViewerStoreContext = createContext<StoreApi<JsonViewerState>>(undefined)
+// why as any? See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/24509#issuecomment-382213106
+export const JsonViewerStoreContext = createContext<StoreApi<JsonViewerState>>(undefined as any)
 
 export const JsonViewerProvider = JsonViewerStoreContext.Provider
 

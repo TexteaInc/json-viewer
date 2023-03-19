@@ -9,6 +9,7 @@
     "moduleResolution": "node",
     "isolatedModules": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "declaration": true,
     "sourceMap": true,
     "strict": true

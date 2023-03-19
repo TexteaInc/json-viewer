@@ -39,7 +39,8 @@ export const createTypeRegistryStore = () => {
   }))
 }
 
-export const TypeRegistryStoreContext = createContext<StoreApi<TypeRegistryState>>(undefined)
+// why as any? See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/24509#issuecomment-382213106
+export const TypeRegistryStoreContext = createContext<StoreApi<TypeRegistryState>>(undefined as any)
 
 export const TypeRegistryProvider = TypeRegistryStoreContext.Provider
 
