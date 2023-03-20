@@ -4,6 +4,7 @@
     "outDir": "./dist/out/",
     "rootDir": "./src/",
     "jsx": "react-jsx",
+    "strict": true,
     "jsxImportSource": "@emotion/react",
     "incremental": false,
     "declaration": true,

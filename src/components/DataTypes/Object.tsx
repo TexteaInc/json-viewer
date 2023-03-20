@@ -127,32 +127,36 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
     if (iterator && !Array.isArray(value)) {
       const elements = []
       if (value instanceof Map) {
-        for (const item of value) {
+        value.forEach((value, k) => {
           // fixme: key might be a object, array, or any value for the `Map<any, any>`
-          const [k, value] = item
           const key = k.toString()
+          const path = [...props.path, key]
           elements.push(
             <DataKeyPair
               key={key}
-              path={[...props.path, key]}
+              path={path}
               value={value}
               editable={false}
             />
           )
-        }
+        })
       } else {
+        // iterate with iterator func
+        const iterator = value[Symbol.iterator]()
+        let result = iterator.next()
         let count = 0
-        for (const item of value) {
+        while (!result.done) {
           elements.push(
             <DataKeyPair
               key={count}
               path={[...props.path, `iterator:${count}`]}
-              value={item}
+              value={result.value}
               nestedIndex={count}
               editable={false}
             />
           )
           count++
+          result = iterator.next()
         }
       }
       return elements

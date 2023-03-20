@@ -105,6 +105,8 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
   }))
 }
 
+// @ts-expect-error we intentionally want to pass undefined to the context
+// See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/24509#issuecomment-382213106
 export const JsonViewerStoreContext = createContext<StoreApi<JsonViewerState>>(undefined)
 
 export const JsonViewerProvider = JsonViewerStoreContext.Provider
