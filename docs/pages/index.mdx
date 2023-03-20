@@ -4,22 +4,42 @@ import { JsonViewerPreview } from '../components/JsonViewerPreview'
 
 # @textea/json-viewer
 
-### NPM
+## Overview
+
+> **Makes data visualization a breeze!**
+
+`@textea/json-viewer` allows you to display JSON data in a readable and user-friendly format. But it's not just limited to JSON - you can use it to view **ANY** kind of data. The library is highly customizable and supports 100% TypeScript, making it easy to modify and tailor to your specific needs.
+
+## Getting Started
+
+### Installation
 
 ```shell
 npm install @textea/json-viewer
-```
-
-### Yarn
-
-```shell
+# or
 yarn add @textea/json-viewer
+# or
+pnpm add @textea/json-viewer
 ```
 
-### PNPM
+You can also use it directly from a CDN:
 
-```shell
-pnpm add @textea/json-viewer
+```html {5,8-12} filename="index.html"
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="json-viewer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer"></script>
+
+    <script>
+      new JsonViewer({
+        value: {
+          /* ... */
+        }
+      }).render('#json-viewer')
+    </script>
+  </body>
+</html>
 ```
 
 ### Basic Example
@@ -27,8 +47,10 @@ pnpm add @textea/json-viewer
 ```tsx
 import { JsonViewer } from '@textea/json-viewer'
 
-const object = { /* my json object */ }
-const Component = () => (<JsonViewer value={object}/>)
+const object = {
+  /* my json object */
+}
+const Component = () => <JsonViewer value={object} />
 ```
 
 <JsonViewerPreview
@@ -37,13 +59,26 @@ const Component = () => (<JsonViewer value={object}/>)
     number: 1,
     float: 114.514,
     bigint: 10086n,
-    object: {
-      value: new Date('December 17, 1995 03:24:00')
-    }
+    object: { a: undefined },
+    map: new Map([
+      ['oh no', null],
+      ['birth', new Date('December 17, 1995 03:24:00')]
+    ])
   }}
 />
 
-### Props
+### Full Example
+
+<br />
+<Button variant="contained" component={Link} href="/full">
+  DEMO
+</Button>
+
+Check the [source code](https://github.com/TexteaInc/json-viewer/blob/main/docs/pages/full/index.tsx) for more details.
+
+## Configuration
+
+### Options
 
 | Name                         | Type                                                                                                    | Default   | Description                                                                                                                                                                          |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -57,7 +92,7 @@ const Component = () => (<JsonViewer value={object}/>)
 | `valueTypes`                 | `ValueTypes`                                                                                            | -         | Customize value types.                                                                                                                                                               |
 | `onChange`                   | `(path, oldVal, newVal) => void`                                                                        | -         | Callback when value changed.                                                                                                                                                         |
 | `onCopy`                     | `(path, value) => void`                                                                                 | -         | Callback when value copied.                                                                                                                                                          |
-| `onSelect`                     | `(path, value) => void`                                                                                 | -         | Callback when value selected.                                                                                                                                                          |
+| `onSelect`                   | `(path, value) => void`                                                                                 | -         | Callback when value selected.                                                                                                                                                        |
 | `enableClipboard`            | `boolean`                                                                                               | `true`    | Whether enable clipboard feature.                                                                                                                                                    |
 | `editable`                   | `boolean` \|<br />`(path, currentValue) => boolean`                                                     | `false`   | Whether enable edit feature. You can pass a function to customize the result.                                                                                                        |
 | `defaultInspectDepth`        | `number`                                                                                                | 5         | Default inspect depth for nested objects.<br /><br />_\* If the number is set too large, it could result in performance issues._                                                     |
@@ -69,7 +104,7 @@ const Component = () => (<JsonViewer value={object}/>)
 | `displayDataTypes`           | `boolean`                                                                                               | `true`    | Whether display data type labels.                                                                                                                                                    |
 | `displayObjectSize`          | `boolean`                                                                                               | `true`    | Whether display the size of array and object.                                                                                                                                        |
 
-#### Props mapping from `react-json-view`
+#### Mapping from [`mac-s-g/react-json-view`](https://github.com/mac-s-g/react-json-view)
 
 | Name        | Type      | Alternative                                       |
 | ----------- | --------- | ------------------------------------------------- |
@@ -79,19 +114,13 @@ const Component = () => (<JsonViewer value={object}/>)
 
 ### Type Declaration
 
-see [src/type.ts](https://github.com/TexteaInc/json-viewer/blob/main/src/type.ts)
-
-### Full Example
-
-<Link href="/full">
-  <Button>
-    View ->
-  </Button>
-</Link>
+See [src/type.ts](https://github.com/TexteaInc/json-viewer/blob/main/src/type.ts)
 
 ## Contributors
 
-<a href="https://github.com/TexteaInc/json-viewer/graphs/contributors"><img src="https://opencollective.com/json-viewer/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/TexteaInc/json-viewer/graphs/contributors">
+  <img src="https://opencollective.com/json-viewer/contributors.svg?width=890&button=false" />
+</a>
 
 ## Acknowledge
 
