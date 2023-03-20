@@ -9,7 +9,7 @@ export const JsonViewerPreview: FC<JsonViewerProps> = (props) => {
   return (
     <JsonViewer
       theme={currentTheme}
-      style={{
+      sx={{
         fontSize: 12
       }}
       value={props.value}
