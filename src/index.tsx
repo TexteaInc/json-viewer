@@ -2,6 +2,7 @@ import {
   createTheme, Paper,
   ThemeProvider
 } from '@mui/material'
+import clsx from 'clsx'
 import type { FC, ReactElement } from 'react'
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 
@@ -74,6 +75,10 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
       })
     }
   }, [setState, props.theme])
+  const themeCls = useMemo(() => {
+    if (typeof props.theme === 'object') return 'json-viewer-theme-custom'
+    return props.theme === 'dark' ? 'json-viewer-theme-dark' : 'json-viewer-theme-light'
+  }, [props.theme])
   const onceRef = useRef(true)
   const predefinedTypes = useMemo(() => predefined(), [])
   const registerTypes = useTypeRegistryStore(store => store.registerTypes)
@@ -97,7 +102,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   return (
     <Paper
       elevation={0}
-      className={props.className}
+      className={clsx(themeCls, props.className)}
       style={props.style}
       sx={{
         fontFamily: 'monospace',
