@@ -277,8 +277,8 @@ const IndexPage: FC = () => {
             }, []
           )
         }
-        style={{
-          paddingLeft: 16
+        sx={{
+          paddingLeft: 2
         }}
       />
     </div>

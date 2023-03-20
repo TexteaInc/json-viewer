@@ -102,7 +102,8 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
       sx={{
         fontFamily: 'monospace',
         userSelect: 'none',
-        contentVisibility: 'auto'
+        contentVisibility: 'auto',
+        ...props.sx
       }}
       onMouseLeave={onMouseLeave}
     >
