@@ -3,9 +3,10 @@
  *  Because in Next.js SSR, the function will be translated to other type
  */
 import { Box, NoSsr } from '@mui/material'
+import { useAtomValue } from 'jotai'
 import type { FC } from 'react'
 
-import { useJsonViewerStore } from '../../stores/JsonViewerStore'
+import { colorspaceAtom } from '../../state'
 import type { DataItemProps } from '../../type'
 import { DataTypeLabel } from '../DataTypeLabel'
 
@@ -70,7 +71,7 @@ export const PostFunctionType: FC<DataItemProps<Function>> = () => {
 }
 
 export const FunctionType: FC<DataItemProps<Function>> = (props) => {
-  const functionColor = useJsonViewerStore(store => store.colorspace.base05)
+  const { base05: functionColor } = useAtomValue(colorspaceAtom)
   return (
     <NoSsr>
       <Box

@@ -1,8 +1,9 @@
 import { InputBase } from '@mui/material'
+import { useAtomValue } from 'jotai'
 import type { ChangeEventHandler, ComponentType, FC } from 'react'
 import { memo, useCallback } from 'react'
 
-import { useJsonViewerStore } from '../../stores/JsonViewerStore'
+import { colorspaceAtom, displayDataTypesAtom, onSelectAtom } from '../../state'
 import type { Colorspace } from '../../theme/base16'
 import type { DataItemProps, DataType, EditorProps } from '../../type'
 import { DataTypeLabel } from '../DataTypeLabel'
@@ -18,13 +19,11 @@ export function createEasyType<Value> (
   }
 ): Omit<DataType<Value>, 'is'> {
   const { fromString, colorKey, displayTypeLabel = true } = config
-
   const Render = memo(renderValue)
   const EasyType: FC<DataItemProps<Value>> = (props) => {
-    const storeDisplayDataTypes = useJsonViewerStore(store => store.displayDataTypes)
-    const color = useJsonViewerStore(store => store.colorspace[colorKey])
-    const onSelect = useJsonViewerStore(store => store.onSelect)
-
+    const storeDisplayDataTypes = useAtomValue(displayDataTypesAtom)
+    const color = useAtomValue(colorspaceAtom)[colorKey]
+    const onSelect = useAtomValue(onSelectAtom)
     return (
       <DataBox onClick={() => onSelect?.(props.path, props.value)} sx={{ color }}>
         {(displayTypeLabel && storeDisplayDataTypes) && <DataTypeLabel dataType={type} />}
@@ -41,9 +40,8 @@ export function createEasyType<Value> (
       Component: EasyType
     }
   }
-
   const EasyTypeEditor: FC<EditorProps<Value>> = ({ value, setValue }) => {
-    const color = useJsonViewerStore(store => store.colorspace[colorKey])
+    const color = useAtomValue(colorspaceAtom)[colorKey]
     return (
       <InputBase
         value={value}

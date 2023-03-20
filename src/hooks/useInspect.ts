@@ -1,43 +1,42 @@
-import type {
-  Dispatch,
-  SetStateAction
-} from 'react'
+import { useAtom, useAtomValue } from 'jotai'
 import {
+  Dispatch,
+  SetStateAction,
   useCallback,
   useEffect,
   useState
 } from 'react'
 
-import {
-  useJsonViewerStore
-} from '../stores/JsonViewerStore'
+import { defaultInspectDepthAtom, inspectCacheAtom } from '../state'
+import type { HostPath, JsonViewerProps } from '../type'
 import { useIsCycleReference } from './useIsCycleReference'
 
-export function useInspect (path: (string | number)[], value: any, nestedIndex?: number) {
+export function useInspect (
+  path: HostPath['path'],
+  value: JsonViewerProps['value'],
+  nestedIndex?: HostPath['nestedIndex']
+) {
   const depth = path.length
   const isTrap = useIsCycleReference(path, value)
-  const getInspectCache = useJsonViewerStore(store => store.getInspectCache)
-  const setInspectCache = useJsonViewerStore(store => store.setInspectCache)
-  const defaultInspectDepth = useJsonViewerStore(store => store.defaultInspectDepth)
+  const defaultInspectDepth = useAtomValue(defaultInspectDepthAtom)
+  const [inspectCache, setInspectCache] = useAtom(inspectCacheAtom({ path, nestedIndex }))
   useEffect(() => {
-    const inspect = getInspectCache(path, nestedIndex)
-    if (inspect !== undefined) {
+    if (inspectCache !== undefined) {
       return
     }
     if (nestedIndex !== undefined) {
-      setInspectCache(path, false, nestedIndex)
+      setInspectCache({ path, action: false, nestedIndex })
     } else {
       // do not inspect when it is a cycle reference, otherwise there will have a loop
       const inspect = isTrap
         ? false
         : depth < defaultInspectDepth
-      setInspectCache(path, inspect)
+      setInspectCache({ path, action: inspect })
     }
-  }, [defaultInspectDepth, depth, getInspectCache, isTrap, nestedIndex, path, setInspectCache])
+  }, [defaultInspectDepth, depth, isTrap, nestedIndex, path, inspectCache, setInspectCache])
   const [inspect, set] = useState<boolean>(() => {
-    const shouldInspect = getInspectCache(path, nestedIndex)
-    if (shouldInspect !== undefined) {
-      return shouldInspect
+    if (inspectCache !== undefined) {
+      return inspectCache
     }
     if (nestedIndex !== undefined) {
       return false
@@ -49,7 +48,7 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
   const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
     set((oldState) => {
       const newState = typeof apply === 'boolean' ? apply : apply(oldState)
-      setInspectCache(path, newState, nestedIndex)
+      setInspectCache({ path, action: newState, nestedIndex })
       return newState
     })
   }, [nestedIndex, path, setInspectCache])

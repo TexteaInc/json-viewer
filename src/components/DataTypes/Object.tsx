@@ -1,10 +1,17 @@
 import { Box } from '@mui/material'
+import { useAtomValue } from 'jotai'
 import type { FC } from 'react'
 import { useMemo, useState } from 'react'
 
-import { useTextColor } from '../../hooks/useColor'
 import { useIsCycleReference } from '../../hooks/useIsCycleReference'
-import { useJsonViewerStore } from '../../stores/JsonViewerStore'
+import {
+  colorspaceAtom,
+  displayObjectSizeAtom,
+  groupArraysAfterLengthAtom,
+  indentWidthAtom,
+  maxDisplayLengthAtom,
+  objectSortKeysAtom
+} from '../../state'
 import type { DataItemProps } from '../../type'
 import { getValueSize, segmentArray } from '../../utils'
 import { DataKeyPair } from '../DataKeyPair'
@@ -30,13 +37,14 @@ function inspectMetadata (value: object) {
 }
 
 export const PreObjectType: FC<DataItemProps<object>> = (props) => {
-  const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
-  const textColor = useTextColor()
+  const {
+    base04: metadataColor,
+    base07: textColor
+  } = useAtomValue(colorspaceAtom)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
-  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value]
-  )
-  const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
+  const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
+  const displayObjectSize = useAtomValue(displayObjectSizeAtom)
   const isTrap = useIsCycleReference(props.path, props.value)
   return (
     <Box
@@ -78,9 +86,9 @@ export const PreObjectType: FC<DataItemProps<object>> = (props) => {
 }
 
 export const PostObjectType: FC<DataItemProps<object>> = (props) => {
-  const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
+  const { base04: metadataColor } = useAtomValue(colorspaceAtom)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
-  const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
+  const displayObjectSize = useAtomValue(displayObjectSizeAtom)
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
 
@@ -111,12 +119,14 @@ function getIterator (value: any): value is Iterable<unknown> {
 }
 
 export const ObjectType: FC<DataItemProps<object>> = (props) => {
-  const keyColor = useTextColor()
-  const borderColor = useJsonViewerStore(store => store.colorspace.base02)
-  const groupArraysAfterLength = useJsonViewerStore(store => store.groupArraysAfterLength)
+  const {
+    base02: borderColor,
+    base07: keyColor
+  } = useAtomValue(colorspaceAtom)
+  const groupArraysAfterLength = useAtomValue(groupArraysAfterLengthAtom)
   const isTrap = useIsCycleReference(props.path, props.value)
-  const [displayLength, setDisplayLength] = useState(useJsonViewerStore(store => store.maxDisplayLength))
-  const objectSortKeys = useJsonViewerStore(store => store.objectSortKeys)
+  const [displayLength, setDisplayLength] = useState(useAtomValue(maxDisplayLengthAtom))
+  const objectSortKeys = useAtomValue(objectSortKeysAtom)
   const elements = useMemo(() => {
     if (!props.inspect) {
       return null
@@ -245,7 +255,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
     objectSortKeys
   ])
   const marginLeft = props.inspect ? 0.6 : 0
-  const width = useJsonViewerStore(store => store.indentWidth)
+  const width = useAtomValue(indentWidthAtom)
   const indentWidth = props.inspect ? width - marginLeft : width
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   if (isEmptyValue) {
