@@ -58,7 +58,7 @@
     "postpack": "pinst --enable",
     "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache --fix",
     "lint:ci": "npx eslint . --ext .ts,.tsx,.js,.jsx --cache --max-warnings 0",
-    "build": "rollup -c rollup.config.ts --configPlugin swc3"
+    "build": "tsc && rollup -c rollup.config.ts --configPlugin swc3"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -87,7 +87,6 @@
     "@types/node": "^18.15.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@types/web": "^0.0.99",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
     "@vitejs/plugin-react": "^3.1.0",

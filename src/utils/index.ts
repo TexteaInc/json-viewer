@@ -152,7 +152,7 @@ export function segmentArray<T> (arr: T[], size: number): T[][] {
 }
 
 export function safeStringify (obj: any, space?: string | number) {
-  const seenValues = []
+  const seenValues: any[] = []
 
   function replacer (key: string | number, value: any) {
     // https://github.com/GoogleChromeLabs/jsbi/issues/30
