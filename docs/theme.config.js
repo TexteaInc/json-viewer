@@ -1,5 +1,6 @@
 export default {
   logo: '@textea/json-viewer',
+  docsRepositoryBase: 'https://github.com/TexteaInc/json-viewer/tree/main/docs',
   project: {
     link: 'https://github.com/TexteaInc/json-viewer'
   },

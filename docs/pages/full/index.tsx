@@ -128,9 +128,7 @@ const IndexPage: FC = () => {
       }))
     }
     const id = setInterval(loop, 1000)
-    return () => {
-      clearInterval(id)
-    }
+    return () => clearInterval(id)
   }, [])
   return (
     <div>
@@ -279,6 +277,9 @@ const IndexPage: FC = () => {
             }, []
           )
         }
+        style={{
+          paddingLeft: 16
+        }}
       />
     </div>
   )
