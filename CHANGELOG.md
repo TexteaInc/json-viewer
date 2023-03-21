@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.15.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.14.1...json-viewer-v2.15.0) (2023-03-21)
+
+
+### Features
+
+* expose class `json-viewer-theme-*` for style customization ([3ea2805](https://github.com/TexteaInc/json-viewer/commit/3ea2805d2054dac2188a548a90d6528daa68223d))
+* support passing `sx` props to customize the style ([e10fe1d](https://github.com/TexteaInc/json-viewer/commit/e10fe1dc9acf391c76c2aa770ed81781f120d8e7))
+
+
+### Bug Fixes
+
+* copying on circular JSON/Array throws error ([edfe2f3](https://github.com/TexteaInc/json-viewer/commit/edfe2f3146e05a61a48c54cd256687eb7a26038b))
+* eliminate eslint warning ([e598660](https://github.com/TexteaInc/json-viewer/commit/e5986608a314e2ab5e4c9701abc25412da49b580))
+* improve copy on BigInt / Map / Set ([7c46e07](https://github.com/TexteaInc/json-viewer/commit/7c46e0762b96594970fb4f8be107107a5752c38f))
+
 ## [2.14.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.14.0...json-viewer-v2.14.1) (2023-03-07)
 
 
