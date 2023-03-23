@@ -136,6 +136,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
               key={key}
               path={path}
               value={value}
+              prevValue={props.prevValue instanceof Map ? props.prevValue.get(k) : undefined}
               editable={false}
             />
           )
@@ -167,7 +168,12 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
         const elements = value.slice(0, displayLength).map((value, index) => {
           const path = [...props.path, index]
           return (
-            <DataKeyPair key={index} path={path} value={value} />
+            <DataKeyPair
+              key={index}
+              path={path}
+              value={value}
+              prevValue={Array.isArray(props.prevValue) ? props.prevValue[index] : undefined}
+            />
           )
         })
         if (value.length > displayLength) {
@@ -193,6 +199,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
       }
 
       const elements: unknown[][] = segmentArray(value, groupArraysAfterLength)
+      const prevElements = Array.isArray(props.prevValue) ? segmentArray(props.prevValue, groupArraysAfterLength) : undefined
 
       return elements.map((list, index) => {
         const path = [...props.path]
@@ -202,6 +209,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
             path={path}
             value={list}
             nestedIndex={index}
+            prevValue={prevElements?.[index]}
           />
         )
       })
@@ -216,7 +224,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
     const elements = entries.slice(0, displayLength).map(([key, value]) => {
       const path = [...props.path, key]
       return (
-        <DataKeyPair key={key} path={path} value={value} />
+        <DataKeyPair key={key} path={path} value={value} prevValue={(props.prevValue as any)?.[key]} />
       )
     })
     if (entries.length > displayLength) {
@@ -242,6 +250,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
   }, [
     props.inspect,
     props.value,
+    props.prevValue,
     props.path,
     groupArraysAfterLength,
     displayLength,

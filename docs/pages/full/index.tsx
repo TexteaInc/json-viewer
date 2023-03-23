@@ -120,6 +120,7 @@ const IndexPage: FC = () => {
   const [displayDataTypes, setDisplayDataTypes] = useState(true)
   const [displayObjectSize, setDisplayObjectSize] = useState(true)
   const [editable, setEditable] = useState(true)
+  const [highlightUpdates, setHighlightUpdates] = useState(true)
   useEffect(() => {
     const loop = () => {
       setSrc(src => ({
@@ -165,6 +166,15 @@ const IndexPage: FC = () => {
             />
           )}
           label='Editable'
+        />
+        <FormControlLabel
+          control={(
+            <Switch
+              checked={highlightUpdates}
+              onChange={event => setHighlightUpdates(event.target.checked)}
+            />
+          )}
+          label='Highlight Updates'
         />
         <FormControlLabel
           control={(
@@ -239,6 +249,7 @@ const IndexPage: FC = () => {
       <JsonViewer
         value={src}
         editable={editable}
+        highlightUpdates={highlightUpdates}
         indentWidth={indent}
         theme={theme}
         displayDataTypes={displayDataTypes}
