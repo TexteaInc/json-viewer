@@ -26,7 +26,7 @@ jobs:
           cache: 'yarn'
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
       - uses: actions/cache@v3
         id: yarn-cache
         with:
@@ -40,6 +40,6 @@ jobs:
         run: yarn build
       - name: Test with Coverage
         run: yarn coverage
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
