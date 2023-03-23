@@ -47,7 +47,12 @@ function useSetIfNotUndefinedEffect<Key extends keyof JsonViewerProps> (
  */
 const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   const { setState } = useContext(JsonViewerStoreContext)
-  useSetIfNotUndefinedEffect('value', props.value)
+  useEffect(() => {
+    setState((state) => ({
+      prevValue: state.value,
+      value: props.value
+    }))
+  }, [props.value, setState])
   useSetIfNotUndefinedEffect('editable', props.editable)
   useSetIfNotUndefinedEffect('indentWidth', props.indentWidth)
   useSetIfNotUndefinedEffect('onChange', props.onChange)
@@ -55,6 +60,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   useSetIfNotUndefinedEffect('keyRenderer', props.keyRenderer)
   useSetIfNotUndefinedEffect('maxDisplayLength', props.maxDisplayLength)
   useSetIfNotUndefinedEffect('enableClipboard', props.enableClipboard)
+  useSetIfNotUndefinedEffect('highlightUpdates', props.highlightUpdates)
   useSetIfNotUndefinedEffect('rootName', props.rootName)
   useSetIfNotUndefinedEffect('displayDataTypes', props.displayDataTypes)
   useSetIfNotUndefinedEffect('displayObjectSize', props.displayObjectSize)
@@ -97,6 +103,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   }, [props.valueTypes, predefinedTypes, registerTypes])
 
   const value = useJsonViewerStore(store => store.value)
+  const prevValue = useJsonViewerStore(store => store.prevValue)
   const setHover = useJsonViewerStore(store => store.setHover)
   const onMouseLeave = useCallback(() => setHover(null), [setHover])
   return (
@@ -114,6 +121,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
     >
       <DataKeyPair
         value={value}
+        prevValue={prevValue}
         path={useMemo(() => [], [])}
       />
     </Paper>

@@ -23,6 +23,7 @@ export type JsonViewerState<T = unknown> = {
   indentWidth: number
   groupArraysAfterLength: number
   enableClipboard: boolean
+  highlightUpdates: boolean
   maxDisplayLength: number
   defaultInspectDepth: number
   collapseStringsAfterLength: number
@@ -32,6 +33,7 @@ export type JsonViewerState<T = unknown> = {
   editable: boolean | (<U>(path: Path, currentValue: U) => boolean)
   displayDataTypes: boolean
   rootName: false | string
+  prevValue: T | undefined
   value: T
   onChange: JsonViewerOnChange
   onCopy: JsonViewerOnCopy | undefined
@@ -49,6 +51,7 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
   return create<JsonViewerState>()((set, get) => ({
     // provided by user
     enableClipboard: props.enableClipboard ?? true,
+    highlightUpdates: props.highlightUpdates ?? false,
     indentWidth: props.indentWidth ?? 3,
     groupArraysAfterLength: props.groupArraysAfterLength ?? 100,
     collapseStringsAfterLength:
@@ -71,6 +74,7 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
     hoverPath: null,
     colorspace: lightColorspace,
     value: props.value,
+    prevValue: undefined,
     displayObjectSize: props.displayObjectSize ?? true,
 
     getInspectCache: (path, nestedIndex) => {

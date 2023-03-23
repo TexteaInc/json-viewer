@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import type { ComponentProps, FC, MouseEvent } from 'react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useTextColor } from '../hooks/useColor'
 import { useClipboard } from '../hooks/useCopyToClipboard'
@@ -21,6 +21,7 @@ import { DataBox } from './mui/DataBox'
 
 export type DataKeyPairProps = {
   value: unknown
+  prevValue?: unknown
   nestedIndex?: number
   editable?: boolean
   path: (string | number)[]
@@ -41,7 +42,7 @@ const IconBox: FC<IconBoxProps> = (props) => (
 )
 
 export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
-  const { value, path, nestedIndex } = props
+  const { value, prevValue, path, nestedIndex } = props
   const propsEditable = props.editable ?? undefined
   const storeEditable = useJsonViewerStore(store => store.editable)
   const editable = useMemo(() => {
@@ -73,6 +74,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const onChange = useJsonViewerStore(store => store.onChange)
   const keyColor = useTextColor()
   const numberKeyColor = useJsonViewerStore(store => store.colorspace.base0C)
+  const highlightColor = useJsonViewerStore(store => store.colorspace.base0F)
   const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(value, path)
   const quotesOnKeys = useJsonViewerStore(store => store.quotesOnKeys)
   const rootName = useJsonViewerStore(store => store.rootName)
@@ -81,6 +83,49 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
 
   const enableClipboard = useJsonViewerStore(store => store.enableClipboard)
   const { copy, copied } = useClipboard()
+
+  const highlightUpdates = useJsonViewerStore(store => store.highlightUpdates)
+  const isHighlight = useMemo(() => {
+    if (!highlightUpdates || prevValue === undefined) return false
+
+    // highlight if value type changed
+    if (typeof value !== typeof prevValue) {
+      return true
+    }
+
+    // highlight if isArray changed
+    if (Array.isArray(value) !== Array.isArray(prevValue)) {
+      return true
+    }
+
+    // not highlight object/function
+    // deep compare they will be slow
+    if (typeof value === 'object' || typeof value === 'function') {
+      return false
+    }
+
+    // highlight if not equal
+    if (value !== prevValue) {
+      return true
+    }
+
+    return false
+  }, [highlightUpdates, prevValue, value])
+  const highlightContainer = useRef<HTMLElement>()
+  useEffect(() => {
+    if (highlightContainer.current && isHighlight && 'animate' in highlightContainer.current) {
+      highlightContainer.current.animate(
+        [
+          { backgroundColor: highlightColor },
+          { backgroundColor: '' }
+        ],
+        {
+          duration: 1000,
+          easing: 'ease-in'
+        }
+      )
+    }
+  }, [highlightColor, isHighlight, prevValue, value])
 
   const actionIcons = useMemo(() => {
     if (editing) {
@@ -166,8 +211,9 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     path,
     inspect,
     setInspect,
-    value
-  }), [inspect, path, setInspect, value])
+    value,
+    prevValue
+  }), [inspect, path, setInspect, value, prevValue])
   return (
     <Box
       className='data-key-pair'
@@ -220,20 +266,22 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
               )
             : null
         }
-        {
-          (isRoot
-            ? rootName !== false
-              ? (quotesOnKeys ? <>&quot;{rootName}&quot;</> : <>{rootName}</>)
-              : null
-            : KeyRenderer.when(downstreamProps)
-              ? <KeyRenderer {...downstreamProps} />
-              : nestedIndex === undefined && (
-                isNumberKey
-                  ? <Box component='span' style={{ color: numberKeyColor }}>{key}</Box>
-                  : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
-              )
-          )
-        }
+        <Box ref={highlightContainer} component='span'>
+          {
+            (isRoot
+              ? rootName !== false
+                ? (quotesOnKeys ? <>&quot;{rootName}&quot;</> : <>{rootName}</>)
+                : null
+              : KeyRenderer.when(downstreamProps)
+                ? <KeyRenderer {...downstreamProps} />
+                : nestedIndex === undefined && (
+                  isNumberKey
+                    ? <Box component='span' style={{ color: numberKeyColor }}>{key}</Box>
+                    : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
+                )
+            )
+          }
+        </Box>
         {
           (
             isRoot

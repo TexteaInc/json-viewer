@@ -36,6 +36,7 @@ export interface DataItemProps<ValueType = unknown> {
   inspect: boolean
   setInspect: Dispatch<SetStateAction<boolean>>
   value: ValueType
+  prevValue: ValueType | undefined
   path: Path
 }
 
@@ -168,4 +169,11 @@ export type JsonViewerProps<T = unknown> = {
    * @default true
    */
   displayObjectSize?: boolean
+
+  /**
+   * Whether to highlight updates.
+   *
+   * @default false
+   */
+  highlightUpdates?: boolean
 }
