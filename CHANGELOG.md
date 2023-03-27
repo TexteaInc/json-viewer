@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.16.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.15.0...json-viewer-v2.16.0) (2023-03-27)
+
+
+### Features
+
+* highlight changed ([b9490fe](https://github.com/TexteaInc/json-viewer/commit/b9490fe8e6516d2369535b65b50ddde0a05de55b))
+
+
+### Bug Fixes
+
+* hucky hooks are not executable at unix ([1e5169a](https://github.com/TexteaInc/json-viewer/commit/1e5169a4c1cf1f1c1eb5da94f5648d944fa9c0a2))
+
 ## [2.15.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.14.1...json-viewer-v2.15.0) (2023-03-21)
 
 
