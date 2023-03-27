@@ -35,7 +35,7 @@ export const lightColorspace: NamedColorspace = {
   base07: '#002b36',
   base08: '#d33682',
   base09: '#cb4b16',
-  base0A: '#dc322f',
+  base0A: '#ffd500',
   base0B: '#859900',
   base0C: '#6c71c4',
   base0D: '#586e75',
