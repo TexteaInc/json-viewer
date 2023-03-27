@@ -74,7 +74,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const onChange = useJsonViewerStore(store => store.onChange)
   const keyColor = useTextColor()
   const numberKeyColor = useJsonViewerStore(store => store.colorspace.base0C)
-  const highlightColor = useJsonViewerStore(store => store.colorspace.base0F)
+  const highlightColor = useJsonViewerStore(store => store.colorspace.base0A)
   const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(value, path)
   const quotesOnKeys = useJsonViewerStore(store => store.quotesOnKeys)
   const rootName = useJsonViewerStore(store => store.rootName)
