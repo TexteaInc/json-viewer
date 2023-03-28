@@ -6,7 +6,7 @@ import { Box, NoSsr } from '@mui/material'
 import type { FC } from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
-import type { DataItemProps } from '../../type'
+import type { DataItemProps, DataType } from '../../type'
 import { DataTypeLabel } from '../DataTypeLabel'
 
 const functionBody = (func: Function) => {
@@ -41,7 +41,7 @@ const functionName = (func: Function) => {
 const lb = '{'
 const rb = '}'
 
-export const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
+const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
   return (
     <NoSsr>
       <DataTypeLabel dataType='function' />
@@ -59,7 +59,7 @@ export const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
   )
 }
 
-export const PostFunctionType: FC<DataItemProps<Function>> = () => {
+const PostFunctionType: FC<DataItemProps<Function>> = () => {
   return (
     <NoSsr>
       <Box component='span' className='data-function-end'>
@@ -69,7 +69,7 @@ export const PostFunctionType: FC<DataItemProps<Function>> = () => {
   )
 }
 
-export const FunctionType: FC<DataItemProps<Function>> = (props) => {
+const FunctionType: FC<DataItemProps<Function>> = (props) => {
   const functionColor = useJsonViewerStore(store => store.colorspace.base05)
   return (
     <NoSsr>
@@ -99,4 +99,11 @@ export const FunctionType: FC<DataItemProps<Function>> = (props) => {
       </Box>
     </NoSsr>
   )
+}
+
+export const functionType: DataType<Function> = {
+  is: (value) => typeof value === 'function',
+  Component: FunctionType,
+  PreComponent: PreFunctionType,
+  PostComponent: PostFunctionType
 }
