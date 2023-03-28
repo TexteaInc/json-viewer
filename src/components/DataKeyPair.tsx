@@ -183,6 +183,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
                 onClick={event => {
                   event.preventDefault()
                   setEditing(true)
+                  setTempValue(value)
                 }}
               >
                 <EditIcon sx={{ fontSize: '.8rem' }} />
