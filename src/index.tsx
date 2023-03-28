@@ -15,15 +15,12 @@ import {
 } from './stores/JsonViewerStore'
 import {
   createTypeRegistryStore,
-  predefined,
+  predefinedTypes,
   TypeRegistryStoreContext,
   useTypeRegistryStore
 } from './stores/typeRegistry'
 import { darkColorspace, lightColorspace } from './theme/base16'
 import type { JsonViewerProps } from './type'
-import { applyValue, createDataType, isCycleReference } from './utils'
-
-export { applyValue, createDataType, isCycleReference }
 
 /**
  * @internal
@@ -86,7 +83,6 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
     return props.theme === 'dark' ? 'json-viewer-theme-dark' : 'json-viewer-theme-light'
   }, [props.theme])
   const onceRef = useRef(true)
-  const predefinedTypes = useMemo(() => predefined(), [])
   const registerTypes = useTypeRegistryStore(store => store.registerTypes)
   if (onceRef.current) {
     const allTypes = props.valueTypes
@@ -100,7 +96,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
       ? [...predefinedTypes, ...props.valueTypes]
       : [...predefinedTypes]
     registerTypes(allTypes)
-  }, [props.valueTypes, predefinedTypes, registerTypes])
+  }, [props.valueTypes, registerTypes])
 
   const value = useJsonViewerStore(store => store.value)
   const prevValue = useJsonViewerStore(store => store.prevValue)
@@ -174,5 +170,7 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
   )
 }
 
+export * from './components/DataTypes'
 export * from './theme/base16'
 export * from './type'
+export { applyValue, createDataType, isCycleReference } from './utils'
