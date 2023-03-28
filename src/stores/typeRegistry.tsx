@@ -1,22 +1,22 @@
-import { Box } from '@mui/material'
 import type { SetStateAction } from 'react'
-import { createContext, memo, useContext, useMemo, useState } from 'react'
+import { createContext, memo, useContext, useMemo } from 'react'
 import type { StoreApi } from 'zustand'
 import { createStore, useStore } from 'zustand'
 
-import { createEasyType } from '../components/DataTypes/createEasyType'
 import {
-  FunctionType,
-  PostFunctionType,
-  PreFunctionType
-} from '../components/DataTypes/Function'
-import {
-  ObjectType,
-  PostObjectType,
-  PreObjectType
-} from '../components/DataTypes/Object'
+  bigIntType,
+  booleanType,
+  dateType,
+  floatType,
+  functionType,
+  intType,
+  nanType,
+  nullType,
+  objectType,
+  stringType,
+  undefinedType
+} from '../components/DataTypes'
 import type { DataItemProps, DataType, Path } from '../type'
-import { useJsonViewerStore } from './JsonViewerStore'
 
 type TypeRegistryState = {
   registry: DataType<any>[]
@@ -50,13 +50,6 @@ export const useTypeRegistryStore = <U extends unknown>(selector: (state: TypeRe
   return useStore(store, selector, equalityFn)
 }
 
-const objectType: DataType<object> = {
-  is: (value) => typeof value === 'object',
-  Component: ObjectType,
-  PreComponent: PreObjectType,
-  PostComponent: PostObjectType
-}
-
 function matchTypeComponents<Value> (
   value: Value, path: Path, registry: TypeRegistryState['registry']): DataType<Value> {
   let potential: DataType<Value> | undefined
@@ -83,249 +76,38 @@ export function useTypeComponents (value: unknown, path: Path) {
   return useMemo(() => matchTypeComponents(value, path, registry), [value, path, registry])
 }
 
-export function predefined (): DataType<any>[] {
-  const types: DataType<any>[] = []
-
-  function registerType<Type> (dataType: DataType<Type>): void {
-    function compare (prevProps: Readonly<DataItemProps<Type>>, nextProps: Readonly<DataItemProps<Type>>) {
-      return (
-        Object.is(prevProps.value, nextProps.value) &&
-        prevProps.inspect && nextProps.inspect &&
-        prevProps.path?.join('.') === nextProps.path?.join('.')
-      )
-    }
-    dataType.Component = memo(dataType.Component, compare)
-    if (dataType.Editor) {
-      dataType.Editor = memo(dataType.Editor, function compare (prevProps, nextProps) {
-        return Object.is(prevProps.value, nextProps.value)
-      })
-    }
-    if (dataType.PreComponent) {
-      dataType.PreComponent = memo(dataType.PreComponent, compare)
-    }
-    if (dataType.PostComponent) {
-      dataType.PostComponent = memo(dataType.PostComponent, compare)
-    }
-    types.push(dataType)
+function memorizeDataType<Type> (dataType: DataType<Type>): DataType<Type> {
+  function compare (prevProps: Readonly<DataItemProps<Type>>, nextProps: Readonly<DataItemProps<Type>>) {
+    return (
+      Object.is(prevProps.value, nextProps.value) &&
+      prevProps.inspect && nextProps.inspect &&
+      prevProps.path?.join('.') === nextProps.path?.join('.')
+    )
   }
-
-  registerType<boolean>(
-    {
-      is: (value) => typeof value === 'boolean',
-      ...createEasyType(
-        'bool',
-        ({ value }) => <>{value ? 'true' : 'false'}</>,
-        {
-          colorKey: 'base0E',
-          fromString: value => Boolean(value)
-        }
-      )
-    }
-  )
-
-  const displayOptions: Intl.DateTimeFormatOptions = {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+  dataType.Component = memo(dataType.Component, compare)
+  if (dataType.Editor) {
+    dataType.Editor = memo(dataType.Editor, function compare (prevProps, nextProps) {
+      return Object.is(prevProps.value, nextProps.value)
+    })
   }
-
-  registerType<Date>(
-    {
-      is: (value) => value instanceof Date,
-      ...createEasyType(
-        'date',
-        ({ value }) => <>{value.toLocaleTimeString('en-us', displayOptions)}</>,
-        {
-          colorKey: 'base0D'
-        }
-      )
-    }
-  )
-
-  registerType<null>(
-    {
-      is: (value) => value === null,
-      ...createEasyType(
-        'null',
-        () => {
-          const backgroundColor = useJsonViewerStore(
-            store => store.colorspace.base02)
-          return (
-            <Box
-              sx={{
-                fontSize: '0.8rem',
-                backgroundColor,
-                fontWeight: 'bold',
-                borderRadius: '3px',
-                padding: '0.5px 2px'
-              }}
-            >
-              NULL
-            </Box>
-          )
-        },
-        {
-          colorKey: 'base08',
-          displayTypeLabel: false
-        }
-      )
-    }
-  )
-
-  registerType<undefined>(
-    {
-      is: (value) => value === undefined,
-      ...createEasyType(
-        'undefined',
-        () => {
-          const backgroundColor = useJsonViewerStore(
-            store => store.colorspace.base02)
-          return (
-            <Box
-              sx={{
-                fontSize: '0.7rem',
-                backgroundColor,
-                borderRadius: '3px',
-                padding: '0.5px 2px'
-              }}
-            >
-              undefined
-            </Box>
-          )
-        },
-        {
-          colorKey: 'base05',
-          displayTypeLabel: false
-        }
-      )
-    }
-  )
-
-  registerType<string>(
-    {
-      is: (value) => typeof value === 'string',
-      ...createEasyType(
-        'string',
-        (props) => {
-          const [showRest, setShowRest] = useState(false)
-          const collapseStringsAfterLength = useJsonViewerStore(store => store.collapseStringsAfterLength)
-          const value = showRest
-            ? props.value
-            : props.value.slice(0, collapseStringsAfterLength)
-          const hasRest = props.value.length > collapseStringsAfterLength
-          return (
-            <Box
-              component='span'
-              sx={{
-                overflowWrap: 'anywhere',
-                cursor: hasRest ? 'pointer' : 'inherit'
-              }}
-              onClick={() => {
-                if (hasRest) {
-                  setShowRest(value => !value)
-                }
-              }}
-            >
-              &quot;
-              {value}
-              {hasRest && !showRest && (<Box component='span' sx={{ padding: 0.5 }}>…</Box>)}
-              &quot;
-            </Box>
-          )
-        },
-        {
-          colorKey: 'base09',
-          fromString: value => value
-        }
-      )
-    }
-  )
-
-  registerType<Function>(
-    {
-      is: (value) => typeof value === 'function',
-      Component: FunctionType,
-      PreComponent: PreFunctionType,
-      PostComponent: PostFunctionType
-    }
-  )
-
-  const isInt = (n: number) => n % 1 === 0
-
-  registerType<number>(
-    {
-      is: (value) => typeof value === 'number' && isNaN(value),
-      ...createEasyType(
-        'NaN',
-        () => {
-          const backgroundColor = useJsonViewerStore(
-            store => store.colorspace.base02)
-          return (
-            <Box
-              sx={{
-                backgroundColor,
-                fontSize: '0.8rem',
-                fontWeight: 'bold',
-                borderRadius: '3px'
-              }}
-            >
-              NaN
-            </Box>
-          )
-        },
-        {
-          colorKey: 'base08',
-          displayTypeLabel: false
-        }
-      )
-    }
-  )
-
-  registerType<number>(
-    {
-      is: (value) => typeof value === 'number' &&
-        !isInt(value),
-      ...createEasyType(
-        'float',
-        ({ value }) => <>{value}</>,
-        {
-          colorKey: 'base0B',
-          fromString: value => parseFloat(value)
-        }
-      )
-    }
-  )
-
-  registerType<number>(
-    {
-      is: (value) => typeof value === 'number' && isInt(value),
-      ...createEasyType(
-        'int',
-        ({ value }) => <>{value}</>,
-        {
-          colorKey: 'base0F',
-          fromString: value => parseInt(value)
-        }
-      )
-    }
-  )
-
-  registerType<bigint>(
-    {
-      is: (value) => typeof value === 'bigint',
-      ...createEasyType(
-        'bigint',
-        ({ value }) => <>{`${value}n`}</>,
-        {
-          colorKey: 'base0F',
-          fromString: value => BigInt(value.replace(/\D/g, ''))
-        }
-      )
-    }
-  )
-
-  return types
+  if (dataType.PreComponent) {
+    dataType.PreComponent = memo(dataType.PreComponent, compare)
+  }
+  if (dataType.PostComponent) {
+    dataType.PostComponent = memo(dataType.PostComponent, compare)
+  }
+  return dataType
 }
+
+export const predefinedTypes :DataType<any>[] = [
+  memorizeDataType(booleanType),
+  memorizeDataType(dateType),
+  memorizeDataType(nullType),
+  memorizeDataType(undefinedType),
+  memorizeDataType(stringType),
+  memorizeDataType(functionType),
+  memorizeDataType(nanType),
+  memorizeDataType(intType),
+  memorizeDataType(floatType),
+  memorizeDataType(bigIntType)
+]
