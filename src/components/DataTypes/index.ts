@@ -1,0 +1,8 @@
+export { booleanType } from './Boolean'
+export { dateType } from './Date'
+export { functionType } from './Function'
+export { nullType } from './Null'
+export { bigIntType, floatType, intType, nanType } from './Number'
+export { objectType } from './Object'
+export { stringType } from './String'
+export { undefinedType } from './Undefined'

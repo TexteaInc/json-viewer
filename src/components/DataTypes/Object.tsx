@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react'
 import { useTextColor } from '../../hooks/useColor'
 import { useIsCycleReference } from '../../hooks/useIsCycleReference'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
-import type { DataItemProps } from '../../type'
+import type { DataItemProps, DataType } from '../../type'
 import { getValueSize, segmentArray } from '../../utils'
 import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../Icons'
@@ -29,7 +29,7 @@ function inspectMetadata (value: object) {
   return `${length} Items${name ? ` (${name})` : ''}`
 }
 
-export const PreObjectType: FC<DataItemProps<object>> = (props) => {
+const PreObjectType: FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
@@ -77,7 +77,7 @@ export const PreObjectType: FC<DataItemProps<object>> = (props) => {
   )
 }
 
-export const PostObjectType: FC<DataItemProps<object>> = (props) => {
+const PostObjectType: FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
@@ -110,7 +110,7 @@ function getIterator (value: any): value is Iterable<unknown> {
   return typeof value?.[Symbol.iterator] === 'function'
 }
 
-export const ObjectType: FC<DataItemProps<object>> = (props) => {
+const ObjectType: FC<DataItemProps<object>> = (props) => {
   const keyColor = useTextColor()
   const borderColor = useJsonViewerStore(store => store.colorspace.base02)
   const groupArraysAfterLength = useJsonViewerStore(store => store.groupArraysAfterLength)
@@ -295,4 +295,11 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
       }
     </Box>
   )
+}
+
+export const objectType: DataType<object> = {
+  is: (value) => typeof value === 'object',
+  Component: ObjectType,
+  PreComponent: PreObjectType,
+  PostComponent: PostObjectType
 }

@@ -1,3 +1,4 @@
+import type { SvgIconProps } from '@mui/material'
 import {
   AppBar,
   Box,
@@ -6,12 +7,13 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Switch,
+  SvgIcon, Switch,
   TextField,
   Toolbar,
   Typography
 } from '@mui/material'
 import type {
+  DataType,
   JsonViewerKeyRenderer,
   JsonViewerOnChange,
   JsonViewerTheme
@@ -19,9 +21,11 @@ import type {
 import {
   applyValue,
   createDataType,
-  JsonViewer
+  JsonViewer,
+  stringType
 } from '@textea/json-viewer'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { FC } from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -99,6 +103,7 @@ const example = {
   },
   string_number: '1234',
   timer: 0,
+  link: 'http://example.com',
   avatar,
   date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)'),
   bigint: 123456789087654321n
@@ -110,6 +115,61 @@ const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
   )
 }
 KeyRenderer.when = (props) => props.value === 114.514
+
+const imageDataType = createDataType<string>(
+  (value) => {
+    if (typeof value === 'string') {
+      try {
+        const url = new URL(value)
+        return allowedDomains.includes(url.host) && url.pathname.endsWith('.jpg')
+      } catch (_) {
+        return false
+      }
+    }
+    return false
+  },
+  (props) => {
+    return (
+      <Image
+        height={50}
+        width={50}
+        src={props.value}
+        alt={props.value}
+      />
+    )
+  }
+)
+
+const LinkIcon = (props: SvgIconProps) => (
+  // <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+  <SvgIcon {...props}>
+    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+    <path stroke='currentcolor' d='M11 7h-5a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-5' fill='none'></path>
+    <path stroke='currentcolor' d='M10 14l10 -10'></path>
+    <path stroke='currentcolor' d='M15 4l5 0l0 5' fill='none'></path>
+  </SvgIcon>
+)
+
+const linkType: DataType<string> = {
+  ...stringType,
+  is (value) {
+    return typeof value === 'string' && value.startsWith('http')
+  },
+  PostComponent: (props) => (
+    <Box sx={{
+      display: 'inline-block',
+      marginLeft: 1,
+      color: 'primary.main',
+      textDecoration: 'underline'
+    }}
+    >
+      <Link href={props.value}>
+        Open
+        <LinkIcon sx={{ strokeWidth: 2 }} />
+      </Link>
+    </Box>
+  )
+}
 
 const IndexPage: FC = () => {
   const [indent, setIndent] = useState(3)
@@ -257,29 +317,8 @@ const IndexPage: FC = () => {
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[
-          createDataType(
-            (value) => {
-              if (typeof value === 'string') {
-                try {
-                  const url = new URL(value)
-                  return allowedDomains.includes(url.host) && url.pathname.endsWith('.jpg')
-                } catch (_) {
-                  return false
-                }
-              }
-              return false
-            },
-            (props) => {
-              return (
-                <Image
-                  height={50}
-                  width={50}
-                  src={props.value}
-                  alt={props.value}
-                />
-              )
-            }
-          )
+          linkType,
+          imageDataType
         ]}
         onChange={
           useCallback<JsonViewerOnChange>(
