@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.16.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.16.0...json-viewer-v2.16.1) (2023-03-28)
+
+
+### Bug Fixes
+
+* `applyValue` should shallow copy the input ([5c632a4](https://github.com/TexteaInc/json-viewer/commit/5c632a49342f553058f98dd7a0669a08dca224ce))
+* editing value not correct ([8a8d1cb](https://github.com/TexteaInc/json-viewer/commit/8a8d1cbf5a9eb0ba7bfd86fd523f50bc823b9a49))
+
 ## [2.16.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.15.0...json-viewer-v2.16.0) (2023-03-27)
 
 
