@@ -58,6 +58,36 @@ describe('function applyValue', () => {
       foo: 2
     })
   })
+
+  test('object nested', () => {
+    const original = {
+      foo: {
+        bar: {
+          baz: 1
+        }
+      }
+    }
+    const newValue = applyValue(original, ['foo', 'bar', 'baz'], 2)
+    expect(newValue).is.deep.eq({
+      foo: {
+        bar: {
+          baz: 2
+        }
+      }
+    })
+  })
+
+  test('array', () => {
+    const original = [1, 2, 3]
+    const newValue = applyValue(original, [1], 4)
+    expect(newValue).is.deep.eq([1, 4, 3])
+  })
+
+  test('array nested', () => {
+    const original = [1, [2, [3, 4]]]
+    const newValue = applyValue(original, [1, 1, 1], 5)
+    expect(newValue).is.deep.eq([1, [2, [3, 5]]])
+  })
 })
 
 describe('function isCycleReference', () => {

@@ -2,28 +2,64 @@ import type { ComponentType } from 'react'
 
 import type { DataItemProps, EditorProps, Path } from '../type'
 
-export const applyValue = (obj: any, path: (string | number)[], value: any) => {
-  if (typeof obj !== 'object' || obj === null) {
+// reference: https://github.com/immerjs/immer/blob/main/src/utils/common.ts
+const objectCtorString = Object.prototype.constructor.toString()
+function isPlainObject (value: any): boolean {
+  if (!value || typeof value !== 'object') return false
+
+  const proto = Object.getPrototypeOf(value)
+  if (proto === null) return true
+
+  const Ctor = Object.hasOwnProperty.call(proto, 'constructor') && proto.constructor
+  if (Ctor === Object) return true
+
+  return typeof Ctor === 'function' && Function.toString.call(Ctor) === objectCtorString
+}
+
+function shouldShallowCopy (value: any) {
+  if (!value) return false
+
+  return (
+    isPlainObject(value) ||
+    Array.isArray(value) ||
+    value instanceof Map ||
+    value instanceof Set
+  )
+}
+
+function shallowCopy (value: any) {
+  if (Array.isArray(value)) return Array.prototype.slice.call(value)
+  if (value instanceof Set) return new Set(value)
+  if (value instanceof Map) return new Map(value)
+  if (typeof value === 'object' && value !== null) {
+    return Object.assign({}, value)
+  }
+  return value
+}
+
+export function applyValue (input: any, path: (string | number)[], value: any) {
+  if (typeof input !== 'object' || input === null) {
     if (path.length !== 0) {
       throw new Error('path is incorrect')
     }
     return value
   }
-  const arr: (string | number)[] = [...path]
-  let key
-  if (path.length > 0) {
-    key = arr[0]
+
+  const shouldCopy = shouldShallowCopy(input)
+  if (shouldCopy) input = shallowCopy(input)
+
+  const [key, ...restPath] = path
+  if (key !== undefined) {
     if (key === '__proto__') {
-      throw new TypeError('don\'t modify __proto__!!!')
+      throw new TypeError('Modification of prototype is not allowed')
     }
-    if (arr.length > 1) {
-      arr.shift()
-      obj[key] = applyValue(obj[key], arr, value)
+    if (restPath.length > 0) {
+      input[key] = applyValue(input[key], restPath, value)
     } else {
-      obj[key] = value
+      input[key] = value
     }
   }
-  return obj
+  return input
 }
 
 // case 1: you only render with a single component
