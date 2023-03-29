@@ -43,6 +43,8 @@ const IconBox: FC<IconBoxProps> = (props) => (
 
 export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const { value, prevValue, path, nestedIndex } = props
+  const { Component, PreComponent, PostComponent, Editor, serialize, deserialize } = useTypeComponents(value, path)
+
   const propsEditable = props.editable ?? undefined
   const storeEditable = useJsonViewerStore(store => store.editable)
   const editable = useMemo(() => {
@@ -58,7 +60,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     }
     return storeEditable
   }, [path, propsEditable, storeEditable, value])
-  const [tempValue, setTempValue] = useState(typeof value === 'function' ? () => value : value)
+  const [tempValue, setTempValue] = useState<string>('')
   const depth = path.length
   const key = path[depth - 1]
   const hoverPath = useJsonViewerStore(store => store.hoverPath)
@@ -75,7 +77,6 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const keyColor = useTextColor()
   const numberKeyColor = useJsonViewerStore(store => store.colorspace.base0C)
   const highlightColor = useJsonViewerStore(store => store.colorspace.base0A)
-  const { Component, PreComponent, PostComponent, Editor } = useTypeComponents(value, path)
   const quotesOnKeys = useJsonViewerStore(store => store.quotesOnKeys)
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = root === value
@@ -134,7 +135,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   }, [highlightColor, isHighlight, prevValue, value])
 
   const actionIcons = useMemo(() => {
-    if (editing) {
+    if (editing && deserialize) {
       return (
         <>
           <IconBox>
@@ -143,7 +144,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
               onClick={() => {
                 // abort editing
                 setEditing(false)
-                setTempValue(value)
+                setTempValue('')
               }}
             />
           </IconBox>
@@ -153,7 +154,12 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
               onClick={() => {
                 // finish editing, save data
                 setEditing(false)
-                onChange(path, value, tempValue)
+                try {
+                  const newValue = deserialize(tempValue)
+                  onChange(path, value, newValue)
+                } catch (e) {
+                  // do nothing when deserialize failed
+                }
               }}
             />
           </IconBox>
@@ -182,14 +188,13 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
             }
           </IconBox>
         )}
-        {/* todo: support edit object */}
-        {(Editor && editable) &&
+        {(Editor && editable && serialize && deserialize) &&
             (
               <IconBox
                 onClick={event => {
                   event.preventDefault()
+                  setTempValue(serialize(value))
                   setEditing(true)
-                  setTempValue(value)
                 }}
               >
                 <EditIcon sx={{ fontSize: '.8rem' }} />
@@ -200,6 +205,8 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   },
   [
     Editor,
+    serialize,
+    deserialize,
     copied,
     copy,
     editable,
