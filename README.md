@@ -16,19 +16,24 @@ This is a React component for JSON viewer, but not only a JSON viewer.
 > If you are looking for v1 version based on [mac-s-g/react-json-view](https://github.com/mac-s-g/react-json-view),
 > Please see [v1.x](https://github.com/TexteaInc/json-viewer/tree/v1.x).
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/textea-json-viewer-v2?file=pages%2Findex.js)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/textea-json-viewer-v2-afaey9?file=pages%2Findex.js)
 
 ## Usage
 
 ### NPM
+
 ```shell
 npm install @textea/json-viewer
 ```
+
 ### Yarn
+
 ```shell
 yarn add @textea/json-viewer
 ```
+
 ### PNPM
+
 ```shell
 pnpm add @textea/json-viewer
 ```
@@ -42,8 +47,10 @@ see [src/type.ts](src/type.ts)
 ```tsx
 import { JsonViewer } from '@textea/json-viewer'
 
-const object = { /* my json object */ }
-const Component = () => (<JsonViewer value={object}/>)
+const object = {
+  /* my json object */
+}
+const Component = () => <JsonViewer value={object} />
 ```
 
 ### Customizable data type
@@ -53,7 +60,7 @@ import { JsonViewer, createDataType } from '@textea/json-viewer'
 
 const object = {
   // what if I want to inspect a image?
-  image: 'https://i.imgur.com/1bX5QH6.jpg',
+  image: 'https://i.imgur.com/1bX5QH6.jpg'
   // ... other values
 }
 const Component = () => (
@@ -63,12 +70,12 @@ const Component = () => (
     valueTypes={[
       {
         is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
-        Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value}/>,
+        Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
       },
       // or
       createDataType(
         (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
-        (props) => <Image height={50} width={50} src={props.value} alt={props.value}/>,
+        (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
       )
     ]}
   />
@@ -103,12 +110,7 @@ export const ocean: NamedColorspace = {
   base0F: '#ab7967'
 }
 
-const Component = () => (
-  <JsonViewer
-    value={object}
-    theme={ocean}
-  />
-)
+const Component = () => <JsonViewer value={object} theme={ocean} />
 ```
 
 ![Ocean Theme Preview](public/ocean-theme.png)
@@ -118,31 +120,33 @@ const Component = () => (
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<body>
-<div id="json-viewer"></div>
-<script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer"></script>
-<script>
-  new JsonViewer({
-    value: { /* ... */ }
-  }).render()
-</script>
-</body>
+  <body>
+    <div id="json-viewer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer"></script>
+    <script>
+      new JsonViewer({
+        value: {
+          /* ... */
+        }
+      }).render()
+    </script>
+  </body>
 </html>
 ```
 
 ## Features
 
-- [X] 100% TypeScript
-- [X] Customizable
-    - [X] `keyRenderer` for customize key renderer
-    - [X] `valueTypes` for customize any value types you want
-    - [X] `light | dark | base16` Theme support
-    - [ ] custom metadata
-- [X] Support `Next.js` SSR
-- [X] `onChange` props allow users to edit value
-- [X] Inspect `object`, `Array`, primitive type, even `Map` and `Set` by default.
-- [X] Metadata preview, like total items, length of string...
-- [X] `Copy to Clipboard` on Click
+- [x] 100% TypeScript
+- [x] Customizable
+  - [x] `keyRenderer` for customize key renderer
+  - [x] `valueTypes` for customize any value types you want
+  - [x] `light | dark | base16` Theme support
+  - [ ] custom metadata
+- [x] Support `Next.js` SSR
+- [x] `onChange` props allow users to edit value
+- [x] Inspect `object`, `Array`, primitive type, even `Map` and `Set` by default.
+- [x] Metadata preview, like total items, length of string...
+- [x] `Copy to Clipboard` on Click
 - [ ] Editor for basic types
 - [ ] Fully Test Coverage
 
