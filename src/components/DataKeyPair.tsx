@@ -93,6 +93,12 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
       return true
     }
 
+    if (typeof value === 'number') {
+      // notice: NaN !== NaN
+      if (isNaN(value) && isNaN(prevValue as number)) return false
+      return value !== prevValue
+    }
+
     // highlight if isArray changed
     if (Array.isArray(value) !== Array.isArray(prevValue)) {
       return true
