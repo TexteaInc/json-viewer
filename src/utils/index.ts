@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import type { DataItemProps, EditorProps, Path } from '../type'
+import type { DataItemProps, DataType, EditorProps, Path } from '../type'
 
 // reference: https://github.com/immerjs/immer/blob/main/src/utils/common.ts
 const objectCtorString = Object.prototype.constructor.toString()
@@ -62,6 +62,9 @@ export function applyValue (input: any, path: (string | number)[], value: any) {
   return input
 }
 
+/**
+ * @deprecated use `defineDataType` instead
+ */
 // case 1: you only render with a single component
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
@@ -107,7 +110,6 @@ export function createDataType<ValueType = unknown> (
   PreComponent: ComponentType<DataItemProps<ValueType>>
   PostComponent: ComponentType<DataItemProps<ValueType>>
 }
-
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
   Component: ComponentType<DataItemProps<ValueType>>,
@@ -115,8 +117,47 @@ export function createDataType<ValueType = unknown> (
   PreComponent?: ComponentType<DataItemProps<ValueType>> | undefined,
   PostComponent?: ComponentType<DataItemProps<ValueType>> | undefined
 ): any {
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn('createDataType is deprecated, please use `defineDataType` instead')
+  }
   return {
     is,
+    Component,
+    Editor,
+    PreComponent,
+    PostComponent
+  }
+}
+
+export function defineDataType<ValueType = unknown> ({
+  is,
+  serialize,
+  deserialize,
+  Component,
+  Editor,
+  PreComponent,
+  PostComponent
+}: {
+  is: (value: unknown, path: Path) => boolean
+  /**
+   * transform the value to a string for editing
+   */
+  serialize?: (value: ValueType) => string
+  /**
+   * parse the string back to a value
+   * throw an error if the input is invalid
+   * and the editor will ignore the change
+   */
+  deserialize?: (value: string) => ValueType
+  Component: ComponentType<DataItemProps<ValueType>>
+  Editor?: ComponentType<EditorProps<string>>
+  PreComponent?: ComponentType<DataItemProps<ValueType>>
+  PostComponent?: ComponentType<DataItemProps<ValueType>>
+}): DataType<ValueType> {
+  return {
+    is,
+    serialize,
+    deserialize,
     Component,
     Editor,
     PreComponent,

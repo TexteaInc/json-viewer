@@ -1,69 +1,60 @@
 import { Box } from '@mui/material'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
-import type { DataType } from '../../type'
 import { createEasyType } from './createEasyType'
 
 const isInt = (n: number) => n % 1 === 0
 
-export const nanType: DataType<number> = {
+export const nanType = createEasyType<number>({
   is: (value) => typeof value === 'number' && isNaN(value),
-  ...createEasyType(
-    'NaN',
-    () => {
-      const backgroundColor = useJsonViewerStore(store => store.colorspace.base02)
-      return (
-        <Box
-          sx={{
-            backgroundColor,
-            fontSize: '0.8rem',
-            fontWeight: 'bold',
-            borderRadius: '3px'
-          }}
-        >
-          NaN
-        </Box>
-      )
-    },
-    {
-      colorKey: 'base08',
-      displayTypeLabel: false
-    }
-  )
-}
+  type: 'NaN',
+  colorKey: 'base08',
+  displayTypeLabel: false,
+  serialize: () => 'NaN',
+  // allow deserialize the value back to number
+  deserialize: (value) => parseFloat(value),
+  Renderer: () => {
+    const backgroundColor = useJsonViewerStore(store => store.colorspace.base02)
+    return (
+      <Box
+        sx={{
+          backgroundColor,
+          fontSize: '0.8rem',
+          fontWeight: 'bold',
+          borderRadius: '3px',
+          padding: '0.5px 2px'
+        }}
+      >
+        NaN
+      </Box>
+    )
+  }
+})
 
-export const floatType: DataType<number> = {
-  is: (value) => typeof value === 'number' && !isInt(value),
-  ...createEasyType(
-    'float',
-    ({ value }) => <>{value}</>,
-    {
-      colorKey: 'base0B',
-      fromString: value => parseFloat(value)
-    }
-  )
-}
+export const floatType = createEasyType<number>({
+  is: (value) => typeof value === 'number' && !isInt(value) && !isNaN(value),
+  type: 'float',
+  colorKey: 'base0B',
+  serialize: value => value.toString(),
+  deserialize: value => parseFloat(value),
+  Renderer: ({ value }) => <>{value}</>
+})
 
-export const intType: DataType<number> = {
+export const intType = createEasyType<number>({
   is: (value) => typeof value === 'number' && isInt(value),
-  ...createEasyType(
-    'int',
-    ({ value }) => <>{value}</>,
-    {
-      colorKey: 'base0F',
-      fromString: value => parseInt(value)
-    }
-  )
-}
+  type: 'int',
+  colorKey: 'base0F',
+  serialize: value => value.toString(),
+  // allow deserialize the value to float
+  deserialize: value => parseFloat(value),
+  Renderer: ({ value }) => <>{value}</>
+})
 
-export const bigIntType: DataType<bigint> = {
+export const bigIntType = createEasyType<bigint>({
   is: (value) => typeof value === 'bigint',
-  ...createEasyType(
-    'bigint',
-    ({ value }) => <>{`${value}n`}</>,
-    {
-      colorKey: 'base0F',
-      fromString: value => BigInt(value.replace(/\D/g, ''))
-    }
-  )
-}
+  type: 'bigint',
+  colorKey: 'base0F',
+  serialize: value => value.toString(),
+  deserialize: value => BigInt(value.replace(/\D/g, '')),
+  Renderer: ({ value }) => <>{`${value}n`}</>
+})
