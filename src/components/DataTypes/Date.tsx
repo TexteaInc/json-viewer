@@ -1,5 +1,4 @@
 
-import type { DataType } from '../../type'
 import { createEasyType } from './createEasyType'
 
 const displayOptions: Intl.DateTimeFormatOptions = {
@@ -11,13 +10,9 @@ const displayOptions: Intl.DateTimeFormatOptions = {
   minute: '2-digit'
 }
 
-export const dateType: DataType<Date> = {
+export const dateType = createEasyType<Date>({
   is: (value) => value instanceof Date,
-  ...createEasyType(
-    'date',
-    ({ value }) => <>{value.toLocaleTimeString('en-us', displayOptions)}</>,
-    {
-      colorKey: 'base0D'
-    }
-  )
-}
+  type: 'date',
+  colorKey: 'base0D',
+  Renderer: ({ value }) => <>{value.toLocaleTimeString('en-us', displayOptions)}</>
+})

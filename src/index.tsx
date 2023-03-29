@@ -173,4 +173,4 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
 export * from './components/DataTypes'
 export * from './theme/base16'
 export * from './type'
-export { applyValue, createDataType, isCycleReference, safeStringify } from './utils'
+export { applyValue, createDataType, defineDataType, isCycleReference, safeStringify } from './utils'

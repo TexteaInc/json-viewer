@@ -8,18 +8,22 @@ import type { DataItemProps, DataType, EditorProps } from '../../type'
 import { DataTypeLabel } from '../DataTypeLabel'
 import { DataBox } from '../mui/DataBox'
 
-export function createEasyType<Value> (
-  type: string,
-  renderValue: ComponentType<Pick<DataItemProps<Value>, 'value'>>,
-  config: {
-    colorKey: keyof Colorspace
-    fromString?: (value: string) => Value
-    displayTypeLabel?: boolean
-  }
-): Omit<DataType<Value>, 'is'> {
-  const { fromString, colorKey, displayTypeLabel = true } = config
-
-  const Render = memo(renderValue)
+type EasyTypeConfig<Value> = Pick<DataType<Value>, 'is' | 'serialize' | 'deserialize'> & {
+  type: string
+  colorKey: keyof Colorspace
+  displayTypeLabel?: boolean
+  Renderer: ComponentType<Pick<DataItemProps<Value>, 'value'>>
+}
+export function createEasyType<Value> ({
+  is,
+  serialize,
+  deserialize,
+  type,
+  colorKey,
+  displayTypeLabel = true,
+  Renderer
+}: EasyTypeConfig<Value>): DataType<Value> {
+  const Render = memo(Renderer)
   const EasyType: FC<DataItemProps<Value>> = (props) => {
     const storeDisplayDataTypes = useJsonViewerStore(store => store.displayDataTypes)
     const color = useJsonViewerStore(store => store.colorspace[colorKey])
@@ -36,13 +40,14 @@ export function createEasyType<Value> (
   }
   EasyType.displayName = `easy-${type}-type`
 
-  if (!fromString) {
+  if (!serialize || !deserialize) {
     return {
+      is,
       Component: EasyType
     }
   }
 
-  const EasyTypeEditor: FC<EditorProps<Value>> = ({ value, setValue }) => {
+  const EasyTypeEditor: FC<EditorProps<string>> = ({ value, setValue }) => {
     const color = useJsonViewerStore(store => store.colorspace[colorKey])
     return (
       <InputBase
@@ -50,8 +55,7 @@ export function createEasyType<Value> (
         onChange={
           useCallback<ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>(
             (event) => {
-              const value = fromString(event.target.value)
-              setValue(value)
+              setValue(event.target.value)
             }, [setValue]
           )
         }
@@ -73,6 +77,9 @@ export function createEasyType<Value> (
   EasyTypeEditor.displayName = `easy-${type}-type-editor`
 
   return {
+    is,
+    serialize,
+    deserialize,
     Component: EasyType,
     Editor: EasyTypeEditor
   }

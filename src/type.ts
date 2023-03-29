@@ -52,8 +52,18 @@ export type DataType<ValueType = unknown> = {
    * Whether the value belongs to the data type
    */
   is: (value: unknown, path: Path) => boolean
+  /**
+   * transform the value to a string for editing
+   */
+  serialize?: (value: ValueType) => string
+  /**
+   * parse the string back to a value
+   * throw an error if the input is invalid
+   * and the editor will ignore the change
+   */
+  deserialize?: (value: string) => ValueType
   Component: ComponentType<DataItemProps<ValueType>>
-  Editor?: ComponentType<EditorProps<ValueType>>
+  Editor?: ComponentType<EditorProps<string>>
   PreComponent?: ComponentType<DataItemProps<ValueType>>
   PostComponent?: ComponentType<DataItemProps<ValueType>>
 }

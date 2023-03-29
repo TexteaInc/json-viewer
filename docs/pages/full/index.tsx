@@ -20,7 +20,7 @@ import type {
 } from '@textea/json-viewer'
 import {
   applyValue,
-  createDataType,
+  defineDataType,
   JsonViewer,
   stringType
 } from '@textea/json-viewer'
@@ -44,8 +44,8 @@ const aPlusBConst = function (a: number, b: number) {
 }
 
 const loopObject = {
-  foo: 1,
-  goo: 'string'
+  foo: 42,
+  goo: 'Lorem Ipsum'
 } as Record<string, any>
 
 loopObject.self = loopObject
@@ -67,30 +67,35 @@ const set = new Set([1, 2, 3])
 const superLongString = '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
 
 const example = {
+  avatar,
+  string: 'Lorem ipsum dolor sit amet',
+  integer: 42,
+  float: 114.514,
+  bigint: 123456789087654321n,
+  undefined,
+  timer: 0,
+  date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)'),
+  link: 'http://example.com',
+  emptyArray: [],
+  array: [19, 19, 810, 'test', NaN],
+  emptyObject: {},
+  object: {
+    foo: true,
+    bar: false,
+    last: null
+  },
+  emptyMap: new Map(),
+  map,
+  emptySet: new Set(),
+  set,
   loopObject,
   loopArray,
   longArray,
-  string: 'this is a string',
-  integer: 42,
-  array: [19, 19, 810, 'test', NaN],
-  emptyArray: [],
   nestedArray: [
     [1, 2],
     [3, 4]
   ],
-  map,
-  emptyMap: new Map(),
-  set,
-  emptySet: new Set(),
-  float: 114.514,
-  undefined,
   superLongString,
-  object: {
-    'first-child': true,
-    'second-child': false,
-    'last-child': null
-  },
-  emptyObject: {},
   function: aPlusB,
   constFunction: aPlusBConst,
   anonymousFunction: function (a: number, b: number) {
@@ -101,12 +106,7 @@ const example = {
     console.log(arg1, arg2)
     return '123'
   },
-  string_number: '1234',
-  timer: 0,
-  link: 'http://example.com',
-  avatar,
-  date: new Date('Tue Sep 13 2022 14:07:44 GMT-0500 (Central Daylight Time)'),
-  bigint: 123456789087654321n
+  string_number: '1234'
 }
 
 const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
@@ -116,8 +116,8 @@ const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
 }
 KeyRenderer.when = (props) => props.value === 114.514
 
-const imageDataType = createDataType<string>(
-  (value) => {
+const imageDataType = defineDataType<string>({
+  is: (value) => {
     if (typeof value === 'string') {
       try {
         const url = new URL(value)
@@ -128,17 +128,18 @@ const imageDataType = createDataType<string>(
     }
     return false
   },
-  (props) => {
+  Component: (props) => {
     return (
       <Image
-        height={50}
-        width={50}
+        height={48}
+        width={48}
         src={props.value}
         alt={props.value}
+        style={{ display: 'inline-block' }}
       />
     )
   }
-)
+})
 
 const LinkIcon = (props: SvgIconProps) => (
   // <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
@@ -163,7 +164,7 @@ const linkType: DataType<string> = {
       textDecoration: 'underline'
     }}
     >
-      <Link href={props.value}>
+      <Link href={props.value} target='_blank' rel='noopener noreferrer'>
         Open
         <LinkIcon sx={{ strokeWidth: 2 }} />
       </Link>

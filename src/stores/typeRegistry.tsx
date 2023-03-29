@@ -51,7 +51,10 @@ export const useTypeRegistryStore = <U extends unknown>(selector: (state: TypeRe
 }
 
 function matchTypeComponents<Value> (
-  value: Value, path: Path, registry: TypeRegistryState['registry']): DataType<Value> {
+  value: Value,
+  path: Path,
+  registry: TypeRegistryState['registry']
+): DataType<Value> {
   let potential: DataType<Value> | undefined
   for (const T of registry) {
     if (T.is(value, path)) {

@@ -46,7 +46,7 @@ see [src/type.ts](src/type.ts)
 
 ### Basic Example
 
-```tsx
+```jsx
 import { JsonViewer } from '@textea/json-viewer'
 
 const object = {
@@ -57,8 +57,8 @@ const Component = () => <JsonViewer value={object} />
 
 ### Customizable data type
 
-```tsx
-import { JsonViewer, createDataType } from '@textea/json-viewer'
+```jsx
+import { JsonViewer, defineDataType } from '@textea/json-viewer'
 
 const object = {
   // what if I want to inspect a image?
@@ -75,10 +75,10 @@ const Component = () => (
         Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
       },
       // or
-      createDataType(
-        (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
-        (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
-      )
+      defineDataType({
+        is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
+        Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
+      })
     ]}
   />
 )
