@@ -20,10 +20,12 @@ This is a React component for JSON viewer, but not only a JSON viewer.
 
 ## Usage
 
+`@textea/json-viewer` is using [Material-UI](https://mui.com/) as the base component library, so you need to install it and its peer dependencies first.
+
 ### NPM
 
 ```shell
-npm install @textea/json-viewer
+npm install @textea/json-viewer @mui/material @emotion/react @emotion/styled
 ```
 
 ### Yarn
