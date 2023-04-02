@@ -64,15 +64,31 @@ export type JsonViewerTheme = 'light' | 'dark' | 'auto' | Colorspace
 
 export type JsonViewerProps<T = unknown> = {
   /**
+   * Any value, `object`, `Array`, primitive type, even `Map` or `Set`.
+   */
+  value: T
+
+  /**
    * Name of the root value
    *
    * @default "root"
    */
   rootName?: false | string
+
   /**
-   * Any value, `object`, `Array`, primitive type, even `Map` or `Set`.
+   * Color theme.
+   *
+   * @default 'light'
    */
-  value: T
+  theme?: JsonViewerTheme
+  className?: string
+  style?: CSSProperties
+  /**
+   * [The `sx` prop](https://mui.com/system/getting-started/the-sx-prop/) lets you style elements inline, using values from the theme.
+   * @See https://mui.com/system/getting-started/the-sx-prop/
+   */
+  sx?: SxProps<Theme>
+
   /**
    * Indent width for nested objects
    * @default 3
@@ -83,8 +99,11 @@ export type JsonViewerProps<T = unknown> = {
    */
   keyRenderer?: JsonViewerKeyRenderer
   valueTypes?: DataType<any>[]
+  /** Callback when value changed. */
   onChange?: JsonViewerOnChange
+  /** Callback when value copied, you can use it to customize the copy behavior.<br />\*Note: you will have to write the data to the clipboard by yourself. */
   onCopy?: JsonViewerOnCopy
+  /** Callback when value selected. */
   onSelect?: JsonViewerOnSelect
   /**
    * Whether enable clipboard feature.
@@ -102,16 +121,16 @@ export type JsonViewerProps<T = unknown> = {
    */
   editable?: boolean | (<U = unknown>(path: Path, currentValue: U) => boolean)
   /**
-   * Inspect depth by default.
-   * Do not set the number too large, otherwise there will have performance issue
+   * Default inspect depth for nested objects.
+   * _If the number is set too large, it could result in performance issues._
    * @default 5
    */
   defaultInspectDepth?: number
   /**
    * Hide items after reaching the count.
-   * Array and object will be affected.
+   * `Array` and `Object` will be affected.
    *
-   * If `Object.keys(value).length` is large also, this will cause a performance issue.
+   * _If the number is set too large, it could result in performance issues._
    * @default 30
    */
   maxDisplayLength?: number
@@ -122,7 +141,7 @@ export type JsonViewerProps<T = unknown> = {
    */
   groupArraysAfterLength?: number
   /**
-   * When an integer value is assigned, strings will be cut off at that length.
+   * Cut off the string after reaching the count.
    * Collapsed strings are followed by an ellipsis.
    *
    * String content can be expanded and collapsed by clicking on the string value.
@@ -139,9 +158,7 @@ export type JsonViewerProps<T = unknown> = {
   objectSortKeys?: boolean | ((a: string, b: string) => number)
 
   /**
-   * set `false` to remove quotes from keys
-   *
-   * true for `"name"`, false for `name`
+   * Whether add quotes on keys.
    *
    * @default true
    */
@@ -153,15 +170,6 @@ export type JsonViewerProps<T = unknown> = {
    * @default true
    */
   displayDataTypes?: boolean
-
-  className?: string
-  style?: CSSProperties
-  sx?: SxProps<Theme>
-  /**
-   *
-   * @default 'light'
-   */
-  theme?: JsonViewerTheme
 
   /**
    * Whether display the size of array and object
