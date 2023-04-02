@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.16.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.16.1...json-viewer-v2.16.2) (2023-04-02)
+
+
+### Bug Fixes
+
+* `NaN` should not trigger highlightUpdates ([f09b769](https://github.com/TexteaInc/json-viewer/commit/f09b769ba01dc441d255c83d9f52c4fec7366fe2))
+
 ## [2.16.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.16.0...json-viewer-v2.16.1) (2023-03-28)
 
 
