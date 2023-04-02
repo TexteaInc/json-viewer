@@ -57,7 +57,7 @@ const objectType: DataType<object> = {
   PostComponent: PostObjectType
 }
 
-export function matchTypeComponents<Value> (
+function matchTypeComponents<Value> (
   value: Value, path: Path, registry: TypeRegistryState['registry']): DataType<Value> {
   let potential: DataType<Value> | undefined
   for (const T of registry) {
