@@ -91,6 +91,7 @@ export type JsonViewerProps<T = unknown> = {
 
   /**
    * Indent width for nested objects
+   *
    * @default 3
    */
   indentWidth?: number
@@ -123,6 +124,7 @@ export type JsonViewerProps<T = unknown> = {
   /**
    * Default inspect depth for nested objects.
    * _If the number is set too large, it could result in performance issues._
+   *
    * @default 5
    */
   defaultInspectDepth?: number
@@ -131,12 +133,14 @@ export type JsonViewerProps<T = unknown> = {
    * `Array` and `Object` will be affected.
    *
    * _If the number is set too large, it could result in performance issues._
+   *
    * @default 30
    */
   maxDisplayLength?: number
   /**
    * When an integer value is assigned, arrays will be displayed in groups by count of the value.
    * Groups are displayed with bracket notation and can be expanded and collapsed by clicking on the brackets.
+   *
    * @default 100
    */
   groupArraysAfterLength?: number
