@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { expectTypeOf } from 'expect-type'
 import { describe, expect, it } from 'vitest'
 
-import { createDataType, JsonViewer } from '../src'
+import { defineDataType, JsonViewer } from '../src'
 
 function aPlusB (a: number, b: number) {
   return a + b
@@ -258,13 +258,13 @@ describe('render <JsonViewer/> with props', () => {
               return null
             }
           },
-          createDataType<string>(
-            (value) => typeof value === 'string',
-            (props) => {
+          defineDataType<string>({
+            is: (value) => typeof value === 'string',
+            Component: (props) => {
               expectTypeOf(props.value).toMatchTypeOf<string>()
               return null
             }
-          )
+          })
         ]}
       />
     )
