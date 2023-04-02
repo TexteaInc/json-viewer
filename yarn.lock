@@ -1746,6 +1746,7 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11
     "@emotion/styled": ^11
+    "@mui/material": ^5
     react: ^17 || ^18
     react-dom: ^17 || ^18
   languageName: unknown
