@@ -1,7 +1,6 @@
 /// <reference types="node" />
 import { basename, resolve } from 'node:path'
 
-import alias from '@rollup/plugin-alias'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
@@ -22,10 +21,6 @@ const dtsOutput = new Set<[string, string]>()
 const outputDir = fileURLToPath(new URL('dist', import.meta.url))
 
 const external = [
-  '@emotion/react',
-  '@emotion/styled',
-  '@emotion/react/jsx-runtime',
-  '@emotion/react/jsx-dev-runtime',
   '@mui/material',
   '@mui/material/styles',
   'copy-to-clipboard',
@@ -65,21 +60,6 @@ const buildMatrix = (input: string, output: string, config: {
     cache,
     external: config.browser ? [] : external,
     plugins: [
-      alias({
-        entries: config.browser
-          ? []
-          : [
-              { find: 'react', replacement: '@emotion/react' },
-              {
-                find: 'react/jsx-dev-runtime',
-                replacement: '@emotion/react/jsx-dev-runtime'
-              },
-              {
-                find: 'react/jsx-runtime',
-                replacement: '@emotion/react/jsx-runtime'
-              }
-            ]
-      }),
       config.browser && replace({
         preventAssignment: true,
         'process.env.NODE_ENV': JSON.stringify('production'),
@@ -96,8 +76,7 @@ const buildMatrix = (input: string, output: string, config: {
           },
           transform: {
             react: {
-              runtime: 'automatic',
-              importSource: '@emotion/react'
+              runtime: 'automatic'
             }
           }
         }
