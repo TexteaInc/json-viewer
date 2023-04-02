@@ -7,13 +7,9 @@ export type DataLabelProps = {
   enable?: boolean
 }
 
-export const DataTypeLabel: FC<DataLabelProps> = ({
-  dataType
-  , enable = true
-}) => {
-  if (!enable) {
-    return null
-  }
+export const DataTypeLabel: FC<DataLabelProps> = ({ dataType, enable = true }) => {
+  if (!enable) return null
+
   return (
     <DataBox
       className='data-type-label'
@@ -23,6 +19,8 @@ export const DataTypeLabel: FC<DataLabelProps> = ({
         opacity: 0.8,
         userSelect: 'none'
       }}
-    >{dataType}</DataBox>
+    >
+      {dataType}
+    </DataBox>
   )
 }
