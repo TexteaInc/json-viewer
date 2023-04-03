@@ -1,0 +1,64 @@
+# Migrating from v2 to v3
+
+### Updating your dependencies
+
+The very first thing you will need to do is to update your dependencies.
+
+#### Update version
+
+```bash
+npm install @textea/json-viewer@^3.0.0
+```
+
+#### Install peer dependencies
+
+This package is using [Material-UI](https://mui.com/) as the base component library, so you need to install it and its peer dependencies.
+Starting from v3, these dependencies are no longer included in the package's dependencies.
+
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+```
+
+### Handling breaking changes
+
+#### Use `defineDataType` instead of `createDataType`
+
+`serialize` and `deserialize` have been added to datatype to support editing feature on any data type.
+
+As the result, `createDataType` has been renamed to `defineDataType` and the signature has been changed to accept an object instead of a long list of arguments. For more information, please refer to [Defining data types](/data-type.mdx).
+
+```diff
+- createDataType(
+-   (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
+-   (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
+- )
++ defineDataType({
++   is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
++   Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
++ })
+```
+
+#### Raname `displayObjectSize` to `displaySize`
+
+`displayObjectSize` has been renamed to `displaySize` to describe the prop's purpose more accurately.
+
+```diff
+<JsonViewer
+-  displayObjectSize={true}
++  displaySize={true}
+   value={value}
+/>
+```
+
+Now you can provide a function to customize this behavior by returning a boolean based on the value and path.
+
+```jsx {2-6}
+<JsonViewer
+  displaySize={(path, value) => {
+    if (Array.isArray(value)) return false
+    if (value instanceof Map) return true
+    return true
+  }}
+  value={value}
+/>
+```
