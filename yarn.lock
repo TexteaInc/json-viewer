@@ -1426,14 +1426,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.6":
-  version: 2.11.6
-  resolution: "@popperjs/core@npm:2.11.6"
-  checksum: 47fb328cec1924559d759b48235c78574f2d71a8a6c4c03edb6de5d7074078371633b91e39bbf3f901b32aa8af9b9d8f82834856d2f5737a23475036b16817f0
-  languageName: node
-  linkType: hard
-
-"@popperjs/core@npm:^2.11.7":
+"@popperjs/core@npm:^2.11.6, @popperjs/core@npm:^2.11.7":
   version: 2.11.7
   resolution: "@popperjs/core@npm:2.11.7"
   checksum: 5b6553747899683452a1d28898c1b39173a4efd780e74360bfcda8eb42f1c5e819602769c81a10920fc68c881d07fb40429604517d499567eac079cfa6470f19
@@ -1977,18 +1970,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16":
-  version: 18.0.28
-  resolution: "@types/react@npm:18.0.28"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: e752df961105e5127652460504785897ca6e77259e0da8f233f694f9e8f451cde7fa0709d4456ade0ff600c8ce909cfe29f9b08b9c247fa9b734e126ec53edd7
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^18.0.32":
+"@types/react@npm:*, @types/react@npm:>=16, @types/react@npm:^18.0.32":
   version: 18.0.32
   resolution: "@types/react@npm:18.0.32"
   dependencies:
@@ -3939,14 +3921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "eslint-visitor-keys@npm:3.3.0"
-  checksum: d59e68a7c5a6d0146526b0eec16ce87fbf97fe46b8281e0d41384224375c4e52f5ffb9e16d48f4ea50785cde93f766b0c898e31ab89978d88b0e1720fbfb7808
-  languageName: node
-  linkType: hard
-
-"eslint-visitor-keys@npm:^3.4.0":
+"eslint-visitor-keys@npm:^3.3.0, eslint-visitor-keys@npm:^3.4.0":
   version: 3.4.0
   resolution: "eslint-visitor-keys@npm:3.4.0"
   checksum: 33159169462d3989321a1ec1e9aaaf6a24cc403d5d347e9886d1b5bfe18ffa1be73bdc6203143a28a606b142b1af49787f33cff0d6d0813eb5f2e8d2e1a6043c
@@ -8290,21 +8265,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.18.0":
-  version: 3.20.0
-  resolution: "rollup@npm:3.20.0"
-  dependencies:
-    fsevents: ~2.3.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: ebf75f48eb81234f8233b4ed145b00841cefba26802d4f069f161247ffba085ca5bb165cc3cd662d9c36cfc135a67660dfff9088d3da2d2c6a70addc15f3233a
-  languageName: node
-  linkType: hard
-
-"rollup@npm:^3.20.2":
+"rollup@npm:^3.18.0, rollup@npm:^3.20.2":
   version: 3.20.2
   resolution: "rollup@npm:3.20.2"
   dependencies:
@@ -9300,17 +9261,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.6.4 || ^5.0.0":
-  version: 5.0.2
-  resolution: "typescript@npm:5.0.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: bef1dcd166acfc6934b2ec4d72f93edb8961a5fab36b8dd2aaf6f4f4cd5c0210f2e0850aef4724f3b4913d5aef203a94a28ded731b370880c8bcff7e4ff91fc1
-  languageName: node
-  linkType: hard
-
-"typescript@npm:^5.0.3":
+"typescript@npm:^4.6.4 || ^5.0.0, typescript@npm:^5.0.3":
   version: 5.0.3
   resolution: "typescript@npm:5.0.3"
   bin:
@@ -9320,17 +9271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.6.4 || ^5.0.0#~builtin<compat/typescript>":
-  version: 5.0.2
-  resolution: "typescript@patch:typescript@npm%3A5.0.2#~builtin<compat/typescript>::version=5.0.2&hash=701156"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: bdbf3d0aac0d6cf010fbe0536753dc19f278eb4aba88140dcd25487dfe1c56ca8b33abc0dcd42078790a939b08ebc4046f3e9bb961d77d3d2c3cfa9829da4d53
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@^5.0.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.6.4 || ^5.0.0#~builtin<compat/typescript>, typescript@patch:typescript@^5.0.3#~builtin<compat/typescript>":
   version: 5.0.3
   resolution: "typescript@patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=701156"
   bin:
@@ -9672,45 +9613,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.0 || ^4.0.0":
-  version: 4.2.0
-  resolution: "vite@npm:4.2.0"
-  dependencies:
-    esbuild: ^0.17.5
-    fsevents: ~2.3.2
-    postcss: ^8.4.21
-    resolve: ^1.22.1
-    rollup: ^3.18.0
-  peerDependencies:
-    "@types/node": ">= 14"
-    less: "*"
-    sass: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: 1088cdc0c89ab835aab07a0a114397b749e8dfb20f4b94241ba179d9c371b72d31e13782b22893860c3d65da596e43b24fce5e023f79cfde427f42549f2e1844
-  languageName: node
-  linkType: hard
-
-"vite@npm:^4.2.1":
+"vite@npm:^3.0.0 || ^4.0.0, vite@npm:^4.2.1":
   version: 4.2.1
   resolution: "vite@npm:4.2.1"
   dependencies:
