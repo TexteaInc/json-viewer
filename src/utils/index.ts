@@ -74,6 +74,9 @@ export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean
   Component: ComponentType<DataItemProps<ValueType>>
 }
+/**
+ * @deprecated use `defineDataType` instead
+ */
 // case 2: you only render with a single component with editor
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
@@ -84,6 +87,9 @@ export function createDataType<ValueType = unknown> (
   Component: ComponentType<DataItemProps<ValueType>>
   Editor: ComponentType<DataItemProps<ValueType>>
 }
+/**
+ * @deprecated use `defineDataType` instead
+ */
 // case 3: you only render with a component with pre and post.
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
@@ -97,6 +103,9 @@ export function createDataType<ValueType = unknown> (
   PreComponent: ComponentType<DataItemProps<ValueType>>
   PostComponent: ComponentType<DataItemProps<ValueType>>
 }
+/**
+ * @deprecated use `defineDataType` instead
+ */
 // case 4: need all of these
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
@@ -111,6 +120,9 @@ export function createDataType<ValueType = unknown> (
   PreComponent: ComponentType<DataItemProps<ValueType>>
   PostComponent: ComponentType<DataItemProps<ValueType>>
 }
+/**
+ * @deprecated use `defineDataType` instead
+ */
 export function createDataType<ValueType = unknown> (
   is: (value: unknown, path: Path) => boolean,
   Component: ComponentType<DataItemProps<ValueType>>,
@@ -119,7 +131,7 @@ export function createDataType<ValueType = unknown> (
   PostComponent?: ComponentType<DataItemProps<ValueType>> | undefined
 ): any {
   if (process.env.NODE_ENV !== 'production') {
-    console.warn('createDataType is deprecated, please use `defineDataType` instead')
+    console.warn('createDataType is deprecated, please use `defineDataType` instead. See https://viewer.textea.io/migration/migration-v3#use-definedatatype-instead-of-createdatatype for more information.')
   }
   return {
     is,
@@ -139,6 +151,9 @@ export function defineDataType<ValueType = unknown> ({
   PreComponent,
   PostComponent
 }: {
+  /**
+   * Type matcher - Whether the value belongs to the data type
+   */
   is: (value: unknown, path: Path) => boolean
   /**
    * transform the value to a string for editing
@@ -151,6 +166,12 @@ export function defineDataType<ValueType = unknown> ({
    */
   deserialize?: (value: string) => ValueType
   Component: ComponentType<DataItemProps<ValueType>>
+  /**
+   * if you want to provide a custom editor
+   * you can use this prop to provide a custom editor
+   *
+   * _Note: You need to pass `serialize` and `deserialize` to enable this feature_
+   */
   Editor?: ComponentType<EditorProps<string>>
   PreComponent?: ComponentType<DataItemProps<ValueType>>
   PostComponent?: ComponentType<DataItemProps<ValueType>>
