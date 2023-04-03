@@ -50,7 +50,7 @@ export type EditorProps<ValueType = unknown> = {
 
 export type DataType<ValueType = unknown> = {
   /**
-   * Whether the value belongs to the data type
+   * Type matcher - Whether the value belongs to the data type
    */
   is: (value: unknown, path: Path) => boolean
   /**
@@ -64,6 +64,12 @@ export type DataType<ValueType = unknown> = {
    */
   deserialize?: (value: string) => ValueType
   Component: ComponentType<DataItemProps<ValueType>>
+  /**
+   * if you want to provide a custom editor
+   * you can use this prop to provide a custom editor
+   *
+   * _Note: You need to pass `serialize` and `deserialize` to enable this feature_
+   */
   Editor?: ComponentType<EditorProps<string>>
   PreComponent?: ComponentType<DataItemProps<ValueType>>
   PostComponent?: ComponentType<DataItemProps<ValueType>>
@@ -98,7 +104,8 @@ export type JsonViewerProps<T = unknown> = {
   style?: CSSProperties
   /**
    * [The `sx` prop](https://mui.com/system/getting-started/the-sx-prop/) lets you style elements inline, using values from the theme.
-   * @See https://mui.com/system/getting-started/the-sx-prop/
+   *
+   * @see https://mui.com/system/getting-started/the-sx-prop/
    */
   sx?: SxProps<Theme>
 
@@ -112,6 +119,11 @@ export type JsonViewerProps<T = unknown> = {
    * Customize a key, if `keyRenderer.when` returns `true`.
    */
   keyRenderer?: JsonViewerKeyRenderer
+  /**
+   * Customize the definition of data types.
+   *
+   * @see https://viewer.textea.io/how-to/data-type
+   */
   valueTypes?: DataType<any>[]
   /** Callback when value changed. */
   onChange?: JsonViewerOnChange

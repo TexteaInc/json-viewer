@@ -7,7 +7,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SvgIcon, Switch,
+  SvgIcon,
+  Switch,
   TextField,
   Toolbar,
   Typography
@@ -70,6 +71,7 @@ const example = {
   avatar,
   string: 'Lorem ipsum dolor sit amet',
   integer: 42,
+  url: new URL('https://example.com'),
   float: 114.514,
   bigint: 123456789087654321n,
   undefined,
@@ -171,6 +173,27 @@ const linkType: DataType<string> = {
     </Box>
   )
 }
+
+const urlType = defineDataType<URL>({
+  is: (data) => data instanceof URL,
+  Component: (props) => {
+    const url = props.value.toString()
+    return (
+      <a
+        href={url}
+        target='_blank'
+        rel='noopener noreferrer'
+        style={{
+          cursor: 'pointer',
+          color: '#1976d2',
+          textDecoration: 'underline'
+        }}
+      >
+        {url}
+      </a>
+    )
+  }
+})
 
 const IndexPage: FC = () => {
   const [indent, setIndent] = useState(3)
@@ -318,6 +341,7 @@ const IndexPage: FC = () => {
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[
+          urlType,
           linkType,
           imageDataType
         ]}

@@ -40,10 +40,6 @@ yarn add @textea/json-viewer
 pnpm add @textea/json-viewer
 ```
 
-### Type Declaration
-
-see [src/type.ts](src/type.ts)
-
 ### Basic Example
 
 ```jsx
@@ -70,11 +66,6 @@ const Component = () => (
     value={object}
     // just define it
     valueTypes={[
-      {
-        is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
-        Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
-      },
-      // or
       defineDataType({
         is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
         Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
