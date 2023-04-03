@@ -1,0 +1,303 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+import JsonViewerWithURL from '../../examples/JsonViewerWithURL'
+import JsonViewerWithImage from '../../examples/JsonViewerWithImage'
+import JsonViewerWithWidget from '../../examples/JsonViewerWithWidget'
+
+# Defining data types for any data
+
+By utlizing the `defineDataType` function, you can define data types for any data structure.\
+This is useful in several cases:
+
+- Add support for data type that is not supported by the library
+- Customize / extend the appearance and functionality of a data type
+
+## Explanation
+
+Before we get into the details, let's take a look at the `defineDataType` function signature:
+
+```ts
+function defineDataType<ValueType = unknown>(options: {
+  /**
+   * Type matcher - Whether the value belongs to the data type
+   */
+  is: (value: unknown, path: Path) => boolean
+  /**
+   * transform the value to a string for editing
+   */
+  serialize?: (value: ValueType) => string
+  /**
+   * parse the string back to a value
+   * throw an error if the input is invalid
+   * and the editor will ignore the change
+   */
+  deserialize?: (value: string) => ValueType
+  Component: ComponentType<DataItemProps<ValueType>>
+  /**
+   * if you want to provide a custom editor
+   * you can use this prop to provide a custom editor
+   *
+   * _Note: You need to pass `serialize` and `deserialize` to enable this feature_
+   */
+  Editor?: ComponentType<EditorProps<string>>
+  PreComponent?: ComponentType<DataItemProps<ValueType>>
+  PostComponent?: ComponentType<DataItemProps<ValueType>>
+})
+```
+
+#### `is` - The Type Matcher
+
+`is` is a function that takes a value and a path and returns `true` if the value is the type you want to define.
+
+#### `Component` - The Renderer
+
+`Component` is a React component that renders the value.\
+It receives a `DataItemProps` object as a `prop`.
+
+- `props.value` - The value to render
+- `props.inspect` - if the value is being inspected(expanded).
+- `props.setInspect` - you can use it to toggle the inspect state.
+
+#### `PreComponent` and `PostComponent`
+
+For advanced use cases, you can also provide `PreComponent` and `PostComponent` to render before and after the value. This is useful if you want to add a button or implement an expandable view.
+
+#### `Editor`
+
+You need to provide `serialize` and `deserialize` to transform the value for editing. Using `Editor` component to provide a custom editor for the value **_stringified_** by `serialize`. Under the hood, the edited value will be parsed using `deserialize` and the result will be passed to `onChange` callback.
+
+## Examples
+
+### Adding support for image
+
+Let's say you have an object that looks like this:
+
+```json
+{
+  "image": "https://i.imgur.com/1bX5QH6.jpg"
+}
+```
+
+You might want to preview images in your JSON.\
+We can define a data type for it like this:
+
+<Tabs items={['JS', 'TS']}>
+  <Tab>
+```jsx
+import { defineDataType } from '@textea/json-viewer'
+
+const imageType = defineDataType({
+is: (value) => {
+if (typeof value !== 'string') return false
+try {
+const url = new URL(value)
+return url.pathname.endsWith('.jpg')
+} catch (\_) {
+return false
+}
+},
+Component: (props) => {
+return (
+<img
+height={48}
+width={48}
+src={props.value}
+alt={props.value}
+style={{ display: 'inline-block' }}
+/>
+)
+}
+})
+
+````
+  </Tab>
+  <Tab>
+```tsx
+import { defineDataType } from '@textea/json-viewer'
+
+const imageType = defineDataType<string>({
+  is: (value) => {
+    if (typeof value !== 'string') return false
+    try {
+      const url = new URL(value)
+      return url.pathname.endsWith('.jpg')
+    } catch (_) {
+      return false
+    }
+  },
+  Component: (props) => {
+    return (
+      <img
+        height={48}
+        width={48}
+        src={props.value}
+        alt={props.value}
+        style={{ display: 'inline-block' }}
+      />
+    )
+  }
+})
+````
+
+  </Tab>
+</Tabs>
+
+And then you can use it like this:
+
+```jsx {3,5}
+<JsonViewer
+  value={{
+    image: 'https://i.imgur.com/1bX5QH6.jpg'
+  }}
+  valueTypes={[imageType]}
+/>
+```
+
+<br />
+<JsonViewerWithImage />
+
+### Adding support for `URL`
+
+Let's add support for the [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) API.
+
+<Tabs items={['JS', 'TS']}>
+  <Tab>
+```jsx
+import { defineDataType } from '@textea/json-viewer'
+
+const urlType = defineDataType({
+is: (value) => value instanceof URL,
+Component: (props) => {
+const url = props.value.toString()
+return (
+<a
+href={url}
+target='\_blank'
+rel='noopener noreferrer'
+style={{
+          cursor: 'pointer',
+          color: '#1976d2',
+          textDecoration: 'underline'
+        }} >
+{url}
+</a>
+)
+}
+})
+
+````
+  </Tab>
+  <Tab>
+```tsx
+import { defineDataType } from '@textea/json-viewer'
+
+const urlType = defineDataType<URL>({
+  is: (value) => value instanceof URL,
+  Component: (props) => {
+    const url = props.value.toString()
+    return (
+      <a
+        href={url}
+        target='_blank'
+        rel='noopener noreferrer'
+        style={{
+          cursor: 'pointer',
+          color: '#1976d2',
+          textDecoration: 'underline'
+        }}
+      >
+        {url}
+      </a>
+    )
+  }
+})
+````
+
+  </Tab>
+</Tabs>
+
+And then you can use it like this:
+
+```jsx {4,6}
+<JsonViewer
+  value={{
+    string: 'this is a string',
+    url: new URL('https://example.com')
+  }}
+  valueTypes={[urlType]}
+/>
+```
+
+Which will give you the following result 🎉
+
+<br />
+<JsonViewerWithURL />
+
+### Adding widgets to the value
+
+Sometimes you might want to add a button to the value.
+
+<JsonViewerWithWidget />
+
+In this example, we will **extend the built-in `stringType`** and add a button to open the link in a new tab.
+
+<Tabs items={['JS', 'TS']}>
+  <Tab>
+```jsx
+import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
+import { Button } from '@mui/material'
+
+const linkType = defineDataType({
+...stringType,
+is (value) {
+return typeof value === 'string' && value.startsWith('http')
+},
+PostComponent: (props) => (
+<Button
+variant='contained'
+size='small'
+href={props.value}
+target='\_blank'
+rel='noopener noreferrer'
+sx={{
+        display: 'inline-block',
+        marginLeft: 1
+      }} >
+Open
+<LinkIcon sx={{ strokeWidth: 2 }} />
+</Button>
+)
+})
+
+````
+  </Tab>
+  <Tab>
+```tsx
+import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
+import { Button } from '@mui/material'
+
+const linkType = defineDataType<string>({
+  ...stringType,
+  is (value) {
+    return typeof value === 'string' && value.startsWith('http')
+  },
+  PostComponent: (props) => (
+    <Button
+      variant='contained'
+      size='small'
+      href={props.value}
+      target='_blank'
+      rel='noopener noreferrer'
+      sx={{
+        display: 'inline-block',
+        marginLeft: 1
+      }}
+    >
+      Open
+      <LinkIcon sx={{ strokeWidth: 2 }} />
+    </Button>
+  )
+})
+````
+
+  </Tab>
+</Tabs>
