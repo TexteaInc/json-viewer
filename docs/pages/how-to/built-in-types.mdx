@@ -1,0 +1,80 @@
+import { JsonViewerToggleBoolean1, JsonViewerToggleBoolean2 } from '../../examples/JsonViewerToggleBoolean'
+
+# Extend Built-in Data Types
+
+The following is a list of the built-in data types that can be extended:
+
+- `stringType`
+- `intType`
+- `floatType`
+- `booleanType`
+- `dateType`
+- `nanType`
+- `nullType`
+- `undefinedType`
+- `bigIntType`
+- `objectType`
+- `functionType`
+
+
+## Example
+
+### Displaying Boolean Values as Icons
+
+Suppose you want to display boolean values as icons (e.g., ✔️ or ❌) instead of the default `true` or `false`. There are two ways to accomplish this:
+
+1. Override the `Component` property of the built-in booleanType data type:
+
+
+<JsonViewerToggleBoolean1 />
+
+```tsx
+import { JsonViewer, defineDataType, booleanType } from '@textea/json-viewer'
+import { Button } from '@mui/material'
+
+const toggleBoolType = defineDataType<boolean>({
+  ...booleanType,
+  Component: ({ value }) => (
+    <span>{value ? '✔️' : '❌'}</span>
+  )
+})
+
+<JsonViewer
+  value={{
+    agree: true,
+    disagree: false,
+  }}
+  valueTypes={[toggleBoolType]}
+/>
+```
+[[Source Code]](https://github.com/TexteaInc/json-viewer/blob/main/docs/examples/JsonViewerToggleBoolean.tsx)
+
+2. Create a new data type with `defineEasyType`
+
+<JsonViewerToggleBoolean2 />
+
+```tsx
+import { defineEasyType, booleanType } from '@textea/json-viewer'
+
+const booleanType = defineEasyType<boolean>({
+  ...booleanType,
+  type: 'bool',
+  colorKey: 'base0E',
+  Renderer: ({ value }) => (
+    <span>{value ? '✔️' : '❌'}</span>
+  )
+})
+
+<JsonViewer
+  value={{
+    agree: true,
+    disagree: false,
+  }}
+  valueTypes={[toggleBoolType]}
+/>
+```
+[[Source Code]](https://github.com/TexteaInc/json-viewer/blob/main/docs/examples/JsonViewerToggleBoolean.tsx)
+
+Did you notice the difference between the two examples?
+
+`defineEasyType` is a helper function that creates data types with type labels and colors. So you only need to care about how the balue should be rendered. All other details will be automatically handled.
