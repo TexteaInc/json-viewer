@@ -15,12 +15,14 @@ export type JsonViewerOnChange = <U = unknown>(
   newValue: U /*, type: ChangeType */) => void
 
 /**
- *  @param path path to the target value
- *  @param value
+ * @param path path to the target value
+ * @param value
+ * @param copy the function to copy the value to clipboard
  */
 export type JsonViewerOnCopy = <U = unknown>(
   path: Path,
-  value: U
+  value: U,
+  copy: (value: string) => Promise<void>
 ) => unknown | Promise<unknown>
 
 /**

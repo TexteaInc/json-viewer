@@ -1,9 +1,8 @@
-import copyToClipboard from 'copy-to-clipboard'
 import { useCallback, useRef, useState } from 'react'
 
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import type { JsonViewerOnCopy } from '../type'
-import { safeStringify } from '../utils'
+import { copyString, safeStringify } from '../utils'
 
 /**
  * useClipboard hook accepts one argument options in which copied status timeout duration is defined (defaults to 2000). Hook returns object with properties:
@@ -25,24 +24,11 @@ export function useClipboard ({ timeout = 2000 } = {}) {
   }, [timeout])
   const onCopy = useJsonViewerStore(store => store.onCopy)
 
-  const copy = useCallback<JsonViewerOnCopy>((path, value: unknown) => {
+  const copy = useCallback<JsonViewerOnCopy>(async (path, value: unknown) => {
     if (typeof onCopy === 'function') {
       try {
-        const result = onCopy(path, value)
-        if (result instanceof Promise) {
-          result.then(() => {
-            handleCopyResult(true)
-          }).catch((error) => {
-            console.error(
-              `error when copy ${path.length === 0
-                ? 'src'
-                : `src[${path.join(
-                  '.')}`
-              }]`, error)
-          })
-        } else {
-          handleCopyResult(true)
-        }
+        await onCopy(path, value, copyString)
+        handleCopyResult(true)
       } catch (error) {
         console.error(
           `error when copy ${path.length === 0
@@ -52,18 +38,20 @@ export function useClipboard ({ timeout = 2000 } = {}) {
           }]`, error)
       }
     } else {
-      const valueToCopy = safeStringify(
-        typeof value === 'function' ? value.toString() : value,
-        '  '
-      )
-      if ('clipboard' in navigator) {
-        navigator.clipboard.writeText(valueToCopy)
-          .then(() => handleCopyResult(true))
-          // When navigator.clipboard throws an error, fallback to copy-to-clipboard package
-          .catch(() => copyToClipboard(valueToCopy))
-      } else {
-        // fallback to copy-to-clipboard when navigator.clipboard is not available
-        copyToClipboard(valueToCopy)
+      try {
+        const valueToCopy = safeStringify(
+          typeof value === 'function' ? value.toString() : value,
+          '  '
+        )
+        await copyString(valueToCopy)
+        handleCopyResult(true)
+      } catch (error) {
+        console.error(
+          `error when copy ${path.length === 0
+            ? 'src'
+            : `src[${path.join(
+              '.')}`
+          }]`, error)
       }
     }
   }, [handleCopyResult, onCopy])

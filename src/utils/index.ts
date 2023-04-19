@@ -1,3 +1,4 @@
+import copyToClipboard from 'copy-to-clipboard'
 import type { ComponentType } from 'react'
 
 import type { DataItemProps, EditorProps, Path } from '../type'
@@ -187,6 +188,15 @@ export function segmentArray<T> (arr: T[], size: number): T[][] {
   return result
 }
 
+/**
+ * A safe version of `JSON.stringify` that handles circular references and BigInts.
+ *
+ * *This function might be changed in the future to support more types. Use it with caution.*
+ *
+ * @param obj A JavaScript value, usually an object or array, to be converted.
+ * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
+ * @returns
+ */
 export function safeStringify (obj: any, space?: string | number) {
   const seenValues: any[] = []
 
@@ -234,4 +244,17 @@ export function safeStringify (obj: any, space?: string | number) {
   }
 
   return JSON.stringify(obj, replacer, space)
+}
+
+export async function copyString (value: string) {
+  if ('clipboard' in navigator) {
+    try {
+      await navigator.clipboard.writeText(value)
+    } catch {
+      // When navigator.clipboard throws an error, fallback to copy-to-clipboard package
+    }
+  }
+
+  // fallback to copy-to-clipboard when navigator.clipboard is not available
+  copyToClipboard(value)
 }
