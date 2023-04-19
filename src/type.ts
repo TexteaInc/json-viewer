@@ -50,30 +50,51 @@ export type EditorProps<ValueType = unknown> = {
   setValue: Dispatch<ValueType>
 }
 
+/**
+ * A data type definition, including methods for checking, serializing, and deserializing values, as well as components for rendering and editing values.
+ *
+ * @template ValueType The type of the value represented by this data type
+ */
 export type DataType<ValueType = unknown> = {
   /**
-   * Type matcher - Whether the value belongs to the data type
+   * Determines whether a given value belongs to this data type.
+   *
+   * @param value The value to check
+   * @param path The path to the value within the input data structure
+   * @returns `true` if the value belongs to this data type, `false` otherwise
    */
   is: (value: unknown, path: Path) => boolean
   /**
-   * transform the value to a string for editing
+   * Convert the value of this data type to a string for editing
    */
   serialize?: (value: ValueType) => string
   /**
-   * parse the string back to a value
-   * throw an error if the input is invalid
-   * and the editor will ignore the change
+   * Converts a string representation of a value back to a value of this data type.
+   *
+   * Throws an error if the input is invalid, in which case the editor will ignore the change.
    */
   deserialize?: (value: string) => ValueType
+  /**
+   * The main component used to render a value of this data type.
+   */
   Component: ComponentType<DataItemProps<ValueType>>
   /**
-   * if you want to provide a custom editor
-   * you can use this prop to provide a custom editor
+   * An optional custom editor component for editing values of this data type.
    *
-   * _Note: You need to pass `serialize` and `deserialize` to enable this feature_
+   * You must also provide a `serialize` and `deserialize` function to enable this feature.
    */
   Editor?: ComponentType<EditorProps<string>>
+  /**
+   * An optional component to render before the value.
+   *
+   * In collapsed mode, it will still be rendered as a prefix.
+   */
   PreComponent?: ComponentType<DataItemProps<ValueType>>
+  /**
+   * An optional component to render after the value.
+   *
+   * In collapsed mode, it will still be rendered as a suffix.
+   */
   PostComponent?: ComponentType<DataItemProps<ValueType>>
 }
 
