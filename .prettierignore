@@ -7,6 +7,9 @@ yarn.lock
 *generated*
 storybook-static
 
+# document
+*.mdx
+
 # VSCode personal settings
 .vscode/launch.json
 .vscode/tasks.json
