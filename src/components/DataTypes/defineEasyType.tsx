@@ -8,13 +8,24 @@ import type { DataItemProps, DataType, EditorProps } from '../../type'
 import { DataTypeLabel } from '../DataTypeLabel'
 import { DataBox } from '../mui/DataBox'
 
-type EasyTypeConfig<Value> = Pick<DataType<Value>, 'is' | 'serialize' | 'deserialize'> & {
+export type EasyTypeConfig<Value> = Pick<DataType<Value>, 'is' | 'serialize' | 'deserialize'> & {
   type: string
   colorKey: keyof Colorspace
   displayTypeLabel?: boolean
-  Renderer: ComponentType<Pick<DataItemProps<Value>, 'value'>>
+  Renderer: ComponentType<DataItemProps<Value>>
 }
-export function createEasyType<Value> ({
+/**
+ * Enhanced version of `defineDataType` that creates a `DataType` with editor and a optional type label.
+ * It will take care of the color and all the necessary props.
+ *
+ * *All of the built-in data types are defined with this function.*
+ *
+ * @param config.type The type name.
+ * @param config.colorKey The color key in the colorspace. ('base00' - 'base0F')
+ * @param config.displayTypeLabel Whether to display the type label.
+ * @param config.Renderer The component to render the value.
+ */
+export function defineEasyType<Value> ({
   is,
   serialize,
   deserialize,
@@ -33,7 +44,13 @@ export function createEasyType<Value> ({
       <DataBox onClick={() => onSelect?.(props.path, props.value)} sx={{ color }}>
         {(displayTypeLabel && storeDisplayDataTypes) && <DataTypeLabel dataType={type} />}
         <DataBox className={`${type}-value`}>
-          <Render value={props.value} />
+          <Render
+            path={props.path}
+            inspect={props.inspect}
+            setInspect={props.setInspect}
+            value={props.value}
+            prevValue={props.prevValue}
+          />
         </DataBox>
       </DataBox>
     )

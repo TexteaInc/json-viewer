@@ -2,9 +2,9 @@ import { Box } from '@mui/material'
 import { useState } from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
-import { createEasyType } from './createEasyType'
+import { defineEasyType } from './defineEasyType'
 
-export const stringType = createEasyType<string>({
+export const stringType = defineEasyType<string>({
   is: (value) => typeof value === 'string',
   type: 'string',
   colorKey: 'base09',
