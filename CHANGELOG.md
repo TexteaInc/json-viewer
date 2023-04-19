@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.16.2...json-viewer-v2.17.0) (2023-04-19)
+
+
+### Features
+
+* expose copy function to `onCopy` callback ([5e4c7f3](https://github.com/TexteaInc/json-viewer/commit/5e4c7f37e73ceff86e781981e50a845dca693d5c))
+
 ## [2.16.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.16.1...json-viewer-v2.16.2) (2023-04-02)
 
 
