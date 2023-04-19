@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
-import { createEasyType } from './createEasyType'
+import { defineEasyType } from './defineEasyType'
 
 const isInt = (n: number) => n % 1 === 0
 
-export const nanType = createEasyType<number>({
+export const nanType = defineEasyType<number>({
   is: (value) => typeof value === 'number' && isNaN(value),
   type: 'NaN',
   colorKey: 'base08',
@@ -31,7 +31,7 @@ export const nanType = createEasyType<number>({
   }
 })
 
-export const floatType = createEasyType<number>({
+export const floatType = defineEasyType<number>({
   is: (value) => typeof value === 'number' && !isInt(value) && !isNaN(value),
   type: 'float',
   colorKey: 'base0B',
@@ -40,7 +40,7 @@ export const floatType = createEasyType<number>({
   Renderer: ({ value }) => <>{value}</>
 })
 
-export const intType = createEasyType<number>({
+export const intType = defineEasyType<number>({
   is: (value) => typeof value === 'number' && isInt(value),
   type: 'int',
   colorKey: 'base0F',
@@ -50,7 +50,7 @@ export const intType = createEasyType<number>({
   Renderer: ({ value }) => <>{value}</>
 })
 
-export const bigIntType = createEasyType<bigint>({
+export const bigIntType = defineEasyType<bigint>({
   is: (value) => typeof value === 'bigint',
   type: 'bigint',
   colorKey: 'base0F',

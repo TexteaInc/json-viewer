@@ -1,5 +1,5 @@
 
-import { createEasyType } from './createEasyType'
+import { defineEasyType } from './defineEasyType'
 
 const displayOptions: Intl.DateTimeFormatOptions = {
   weekday: 'short',
@@ -10,7 +10,7 @@ const displayOptions: Intl.DateTimeFormatOptions = {
   minute: '2-digit'
 }
 
-export const dateType = createEasyType<Date>({
+export const dateType = defineEasyType<Date>({
   is: (value) => value instanceof Date,
   type: 'date',
   colorKey: 'base0D',
