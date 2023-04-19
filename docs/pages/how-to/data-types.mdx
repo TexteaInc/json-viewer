@@ -2,6 +2,7 @@ import { Tab, Tabs } from 'nextra-theme-docs'
 import JsonViewerWithURL from '../../examples/JsonViewerWithURL'
 import JsonViewerWithImage from '../../examples/JsonViewerWithImage'
 import JsonViewerWithWidget from '../../examples/JsonViewerWithWidget'
+import JsonViewerCustomizeDate from '../../examples/JsonViewerCustomizeDate'
 
 # Defining data types for any data
 
@@ -273,3 +274,37 @@ const linkType = defineDataType<string>({
 ```
   </Tab>
 </Tabs>
+
+### Customize the `Date` format
+
+By default, `Date` values are displayed using the `toLocaleString` method. You will learn how to create a custom data type for `Date` and display it in a different format. We will use the enhanced `defineEasyType` function to simplify the process.
+
+<Tabs items={['JS', 'TS']}>
+  <Tab>
+```jsx
+import { defineEasyType } from '@textea/json-viewer'
+
+const myDateType = defineEasyType({
+  is: (value) => value instanceof Date,
+  type: 'date',
+  colorKey: 'base0D',
+  Renderer: ({ value }) => <>{value.toISOString().split('T')[0]}</>
+})
+```
+  </Tab>
+
+  <Tab>
+```tsx
+import { defineEasyType } from '@textea/json-viewer'
+
+const myDateType = defineEasyType<Date>({
+  is: (value) => value instanceof Date,
+  type: 'date',
+  colorKey: 'base0D',
+  Renderer: ({ value }) => <>{value.toISOString().split('T')[0]}</>
+})
+```
+  </Tab>
+</Tabs>
+
+<JsonViewerCustomizeDate />
