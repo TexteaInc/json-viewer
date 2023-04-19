@@ -145,7 +145,7 @@ export type JsonViewerProps<T = unknown> = {
   /**
    * Customize the definition of data types.
    *
-   * @see https://viewer.textea.io/how-to/data-type
+   * @see https://viewer.textea.io/how-to/data-types
    */
   valueTypes?: DataType<any>[]
   /** Callback when value changed. */
