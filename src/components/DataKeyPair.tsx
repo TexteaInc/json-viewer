@@ -8,7 +8,7 @@ import { useInspect } from '../hooks/useInspect'
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
-import { getValueSize } from '../utils'
+import { copyString, getValueSize } from '../utils'
 import {
   CheckIcon,
   ChevronRightIcon,
@@ -167,7 +167,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
             onClick={event => {
               event.preventDefault()
               try {
-                copy(path, value)
+                copy(path, value, copyString)
               } catch (e) {
                 // in some case, this will throw error
                 // fixme: `useAlert` hook
