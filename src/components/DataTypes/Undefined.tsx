@@ -1,9 +1,9 @@
 import { Box } from '@mui/material'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
-import { createEasyType } from './createEasyType'
+import { defineEasyType } from './defineEasyType'
 
-export const undefinedType = createEasyType<undefined>({
+export const undefinedType = defineEasyType<undefined>({
   is: (value) => value === undefined,
   type: 'undefined',
   colorKey: 'base05',

@@ -1,5 +1,6 @@
 export { booleanType } from './Boolean'
 export { dateType } from './Date'
+export { defineEasyType, type EasyTypeConfig } from './defineEasyType'
 export { functionType } from './Function'
 export { nullType } from './Null'
 export { bigIntType, floatType, intType, nanType } from './Number'
