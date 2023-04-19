@@ -5,71 +5,42 @@ import JsonViewerWithWidget from '../../examples/JsonViewerWithWidget'
 
 # Defining data types for any data
 
-By utlizing the `defineDataType` function, you can define data types for any data structure.\
-This is useful in several cases:
+The `defineDataType` function allows you to define custom data types for any data structure. This is useful for:
 
-- Add support for data type that is not supported by the library
-- Customize / extend the appearance and functionality of a data type
+- Adding support for data types not supported by the library.
+- Customizing or extending the appearance and functionality of existing data types.
 
-## Explanation
+## Introduction
 
-Before we get into the details, let's take a look at the `defineDataType` function signature:
+To define a data type using `defineDataType`, you provide an object with various properties, such as `is`, `Component`, `PreComponent`, `PostComponent`, and `Editor`. These properties enable you to specify how to match values of the data type, how to render them, and how to edit them.
 
-```ts
-function defineDataType<ValueType = unknown>(options: {
-  /**
-   * Type matcher - Whether the value belongs to the data type
-   */
-  is: (value: unknown, path: Path) => boolean
-  /**
-   * transform the value to a string for editing
-   */
-  serialize?: (value: ValueType) => string
-  /**
-   * parse the string back to a value
-   * throw an error if the input is invalid
-   * and the editor will ignore the change
-   */
-  deserialize?: (value: string) => ValueType
-  Component: ComponentType<DataItemProps<ValueType>>
-  /**
-   * if you want to provide a custom editor
-   * you can use this prop to provide a custom editor
-   *
-   * _Note: You need to pass `serialize` and `deserialize` to enable this feature_
-   */
-  Editor?: ComponentType<EditorProps<string>>
-  PreComponent?: ComponentType<DataItemProps<ValueType>>
-  PostComponent?: ComponentType<DataItemProps<ValueType>>
-})
-```
+Before we dive into the details of defining a data type, let's take a closer look at the object that you'll need to provide to `defineDataType`.
 
 #### `is` - The Type Matcher
 
-`is` is a function that takes a value and a path and returns `true` if the value is the type you want to define.
+The `is` function takes a value and a path and returns true if the value belongs to the data type being defined.
 
 #### `Component` - The Renderer
 
-`Component` is a React component that renders the value.\
-It receives a `DataItemProps` object as a `prop`.
+The `Component` prop is a React component that renders the value of the data type. It receives a `DataItemProps` object as a `prop`, which includes the following:
 
-- `props.value` - The value to render
-- `props.inspect` - if the value is being inspected(expanded).
-- `props.setInspect` - you can use it to toggle the inspect state.
+- `props.value` - The value to render.
+- `props.inspect` - A Boolean flag indicating whether the value is being inspected (expanded).
+- `props.setInspect` - A function that can be used to toggle the inspect state.
 
 #### `PreComponent` and `PostComponent`
 
-For advanced use cases, you can also provide `PreComponent` and `PostComponent` to render before and after the value. This is useful if you want to add a button or implement an expandable view.
+For advanced use cases, you can provide `PreComponent` and `PostComponent` to render content before and after the value, respectively. This is useful if you want to add a button or implement an expandable view.
 
 #### `Editor`
 
-You need to provide `serialize` and `deserialize` to transform the value for editing. Using `Editor` component to provide a custom editor for the value **_stringified_** by `serialize`. Under the hood, the edited value will be parsed using `deserialize` and the result will be passed to `onChange` callback.
+To enable editing for a data type, you need to provide `serialize` and `deserialize` functions to convert the value to and from a string representation. You can then use the `Editor` component to provide a custom editor for the stringified value. When the user edits the value, it will be parsed using `deserialize`, and the result will be passed to the `onChange` callback.
 
 ## Examples
 
 ### Adding support for image
 
-Let's say you have an object that looks like this:
+Suppose you have a JSON object that includes an image URL:
 
 ```json
 {
@@ -77,50 +48,21 @@ Let's say you have an object that looks like this:
 }
 ```
 
-You might want to preview images in your JSON.\
-We can define a data type for it like this:
+If you want to preview images directly in your JSON, you can define a data type for images:
 
 <Tabs items={['JS', 'TS']}>
   <Tab>
+
 ```jsx
 import { defineDataType } from '@textea/json-viewer'
 
 const imageType = defineDataType({
-is: (value) => {
-if (typeof value !== 'string') return false
-try {
-const url = new URL(value)
-return url.pathname.endsWith('.jpg')
-} catch (\_) {
-return false
-}
-},
-Component: (props) => {
-return (
-<img
-height={48}
-width={48}
-src={props.value}
-alt={props.value}
-style={{ display: 'inline-block' }}
-/>
-)
-}
-})
-
-````
-  </Tab>
-  <Tab>
-```tsx
-import { defineDataType } from '@textea/json-viewer'
-
-const imageType = defineDataType<string>({
   is: (value) => {
     if (typeof value !== 'string') return false
     try {
       const url = new URL(value)
       return url.pathname.endsWith('.jpg')
-    } catch (_) {
+    } catch {
       return false
     }
   },
@@ -136,12 +78,42 @@ const imageType = defineDataType<string>({
     )
   }
 })
-````
+```
+
+  </Tab>
+
+  <Tab>
+```tsx
+import { defineDataType } from '@textea/json-viewer'
+
+const imageType = defineDataType<string>({
+  is: (value) => {
+    if (typeof value !== 'string') return false
+    try {
+      const url = new URL(value)
+      return url.pathname.endsWith('.jpg')
+    } catch {
+      return false
+    }
+  },
+  Component: (props) => {
+    return (
+      <img
+        height={48}
+        width={48}
+        src={props.value}
+        alt={props.value}
+        style={{ display: 'inline-block' }}
+      />
+    )
+  }
+})
+```
 
   </Tab>
 </Tabs>
 
-And then you can use it like this:
+And then use it like this:
 
 ```jsx {3,5}
 <JsonViewer
@@ -165,27 +137,28 @@ Let's add support for the [`URL`](https://developer.mozilla.org/en-US/docs/Web/A
 import { defineDataType } from '@textea/json-viewer'
 
 const urlType = defineDataType({
-is: (value) => value instanceof URL,
-Component: (props) => {
-const url = props.value.toString()
-return (
-<a
-href={url}
-target='\_blank'
-rel='noopener noreferrer'
-style={{
+  is: (value) => value instanceof URL,
+  Component: (props) => {
+    const url = props.value.toString()
+    return (
+      <a
+        href={url}
+        target='_blank'
+        rel='noopener noreferrer'
+        style={{
           cursor: 'pointer',
           color: '#1976d2',
           textDecoration: 'underline'
-        }} >
-{url}
-</a>
-)
-}
+        }}
+      >
+        {url}
+      </a>
+    )
+  }
 })
-
-````
+```
   </Tab>
+
   <Tab>
 ```tsx
 import { defineDataType } from '@textea/json-viewer'
@@ -210,12 +183,11 @@ const urlType = defineDataType<URL>({
     )
   }
 })
-````
-
+```
   </Tab>
 </Tabs>
 
-And then you can use it like this:
+And then use it like this:
 
 ```jsx {4,6}
 <JsonViewer
@@ -227,7 +199,7 @@ And then you can use it like this:
 />
 ```
 
-Which will give you the following result 🎉
+It should looks like this 🎉
 
 <br />
 <JsonViewerWithURL />
@@ -247,29 +219,30 @@ import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
 import { Button } from '@mui/material'
 
 const linkType = defineDataType({
-...stringType,
-is (value) {
-return typeof value === 'string' && value.startsWith('http')
-},
-PostComponent: (props) => (
-<Button
-variant='contained'
-size='small'
-href={props.value}
-target='\_blank'
-rel='noopener noreferrer'
-sx={{
+  ...stringType,
+  is (value) {
+    return typeof value === 'string' && value.startsWith('http')
+  },
+  PostComponent: (props) => (
+    <Button
+      variant='contained'
+      size='small'
+      href={props.value}
+      target='_blank'
+      rel='noopener noreferrer'
+      sx={{
         display: 'inline-block',
         marginLeft: 1
-      }} >
-Open
-<LinkIcon sx={{ strokeWidth: 2 }} />
-</Button>
-)
+      }}
+    >
+      Open
+      <LinkIcon sx={{ strokeWidth: 2 }} />
+    </Button>
+  )
 })
-
-````
+```
   </Tab>
+
   <Tab>
 ```tsx
 import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
@@ -297,7 +270,6 @@ const linkType = defineDataType<string>({
     </Button>
   )
 })
-````
-
+```
   </Tab>
 </Tabs>
