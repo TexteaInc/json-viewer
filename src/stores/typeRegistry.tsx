@@ -59,17 +59,13 @@ function matchTypeComponents<Value> (
   for (const T of registry) {
     if (T.is(value, path)) {
       potential = T
-      if (typeof value === 'object') {
-        // early return for case like `null`
-        return T
-      }
     }
   }
   if (potential === undefined) {
     if (typeof value === 'object') {
       return objectType as unknown as DataType<Value>
     }
-    throw new Error('this is not possible')
+    throw new Error(`No type matched for value: ${value}`)
   }
   return potential
 }
