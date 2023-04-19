@@ -1,7 +1,7 @@
 
-import { createEasyType } from './createEasyType'
+import { defineEasyType } from './defineEasyType'
 
-export const booleanType = createEasyType<boolean>({
+export const booleanType = defineEasyType<boolean>({
   is: (value) => typeof value === 'boolean',
   type: 'bool',
   colorKey: 'base0E',

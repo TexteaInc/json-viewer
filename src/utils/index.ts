@@ -142,6 +142,9 @@ export function createDataType<ValueType = unknown> (
   }
 }
 
+/**
+ * Define custom data types for any data structure
+ */
 export function defineDataType<ValueType = unknown> ({
   is,
   serialize,
