@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.17.0...json-viewer-v2.17.1) (2023-04-20)
+
+
+### Bug Fixes
+
+* disable `externalHelpers` ([aaa31a5](https://github.com/TexteaInc/json-viewer/commit/aaa31a53b4debdf4728f388c70d413c791c2266c))
+
 ## [2.17.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.16.2...json-viewer-v2.17.0) (2023-04-19)
 
 
