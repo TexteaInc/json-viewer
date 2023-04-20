@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.17.1...json-viewer-v2.17.2) (2023-04-20)
+
+
+### Bug Fixes
+
+* use swc in the right way ([4b437fb](https://github.com/TexteaInc/json-viewer/commit/4b437fb842462add8a16de649748d739b30307a9))
+
 ## [2.17.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.17.0...json-viewer-v2.17.1) (2023-04-20)
 
 
