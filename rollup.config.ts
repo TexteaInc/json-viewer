@@ -89,7 +89,7 @@ const buildMatrix = (input: string, output: string, config: {
       nodeResolve(),
       swc(defineRollupSwcOption({
         jsc: {
-          externalHelpers: false,
+          externalHelpers: true,
           parser: {
             syntax: 'typescript',
             tsx: true
