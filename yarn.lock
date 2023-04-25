@@ -1409,9 +1409,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-alias@npm:^4.0.3":
-  version: 4.0.4
-  resolution: "@rollup/plugin-alias@npm:4.0.4"
+"@rollup/plugin-alias@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@rollup/plugin-alias@npm:5.0.0"
   dependencies:
     slash: ^4.0.0
   peerDependencies:
@@ -1419,7 +1419,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: d7474883fdcb8c168b4ad73ffc2a108b9b54782a669fde9e36c0ce96afd0afb77c876a8bb4e514b29b3cc9198fd3c32267dc87ae200e4378fe33d7e85aeaf369
+  checksum: 2810bdbcaa61381998858379e353d573f266f952d7f6974366336ae0587acfdee12b992fe25c9b740f14e25092d6bf73b04bcbf71fc543d76d1a214547bc27c9
   languageName: node
   linkType: hard
 
@@ -1691,7 +1691,7 @@ __metadata:
     "@emotion/react": ^11.10.6
     "@emotion/styled": ^11.10.6
     "@mui/material": ^5.12.0
-    "@rollup/plugin-alias": ^4.0.3
+    "@rollup/plugin-alias": ^5.0.0
     "@rollup/plugin-commonjs": ^24.1.0
     "@rollup/plugin-node-resolve": ^15.0.1
     "@rollup/plugin-replace": ^5.0.2
