@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.0.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.17.2...json-viewer-v3.0.0) (2023-04-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* dropping `createDataType` and change the signature of EditorComponent to only accept string
+
+### Features
+
+* expose `defineEasyType` for easier customization ([d727adb](https://github.com/TexteaInc/json-viewer/commit/d727adb5e013001edca339b9a9a5e4f68b77e89f))
+* expose built-in type ([ed64769](https://github.com/TexteaInc/json-viewer/commit/ed64769d23029af59def63a1e2121b59de94c17a))
+* rename `displayObjectSize` to `displaySize` ([2e5739c](https://github.com/TexteaInc/json-viewer/commit/2e5739ce581b2e99b7babbacd9c059a67d9ba039))
+
+
+### Bug Fixes
+
+* fix editing on any datatype ([69a359f](https://github.com/TexteaInc/json-viewer/commit/69a359fe2d999a97fe6a32a02d30afc43aa3b492))
+* improve deprecation message ([5e73886](https://github.com/TexteaInc/json-viewer/commit/5e73886861572e373cf34715669f651586ab8c70))
+* move emotion to peer dependency ([5616257](https://github.com/TexteaInc/json-viewer/commit/5616257944f4caf2f1603d1757400e544188b335))
+* move mui to peerDependencies ([9c45b90](https://github.com/TexteaInc/json-viewer/commit/9c45b905e7f50e18576919bd9427b74ac92b2b1f))
+* remove `@emotion/*` from jsx importSource ([658fddb](https://github.com/TexteaInc/json-viewer/commit/658fddbe72fcd84423e9ebb0e463a06dc742a5a3))
+* type matching should not early return when value is object ([0c9ef70](https://github.com/TexteaInc/json-viewer/commit/0c9ef704cb3a6e275d1ed7909fa0c195b5feb979))
+
+
+### Miscellaneous Chores
+
+* bump to 3.0.0 ([0eb2e02](https://github.com/TexteaInc/json-viewer/commit/0eb2e02b51f42dbd9e3412fbceccc54523b44bfe))
+
 ## [2.17.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.17.1...json-viewer-v2.17.2) (2023-04-20)
 
 
