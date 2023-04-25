@@ -5,6 +5,7 @@
     "rootDir": "./src/",
     "jsx": "react-jsx",
     "strict": true,
+    "noEmit": true,
     "incremental": false,
     "declaration": true,
     "moduleResolution": "node",
