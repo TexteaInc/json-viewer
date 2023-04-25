@@ -1,7 +1,7 @@
 {
   "name": "@textea/json-viewer",
   "description": "Interactive Json Viewer, but not only a json viewer",
-  "version": "2.17.2",
+  "version": "3.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
