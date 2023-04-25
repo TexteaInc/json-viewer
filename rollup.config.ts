@@ -79,6 +79,11 @@ const buildMatrix = (input: string, output: string, config: {
               runtime: 'automatic'
             }
           }
+        },
+        env: {
+          // we have to copy this configuration because swc is not handling `.browserslistrc` properly
+          // see https://github.com/swc-project/swc/issues/3365
+          targets: 'and_chr 91,and_ff 89,and_qq 10.4,and_uc 12.12,android 91,baidu 7.12,chrome 90,edge 91,firefox 78,ios_saf 12.2,kaios 2.5,op_mini all,op_mob 76'
         }
       }))
     ]

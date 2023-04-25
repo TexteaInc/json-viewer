@@ -21,6 +21,11 @@ npm install @mui/material @emotion/react @emotion/styled
 
 ### Handling breaking changes
 
+#### Check browser compatibility
+
+This package was set to support `ES5` by default, but it's no longer the case.\
+Since V3, as this package is using `Material-UI`, we have adjusted the browser compatibility to match the [Material-UI's one](https://mui.com/getting-started/supported-platforms/).
+
 #### Use `defineDataType` instead of `createDataType`
 
 `serialize` and `deserialize` have been added to datatype to support editing feature on any data type.
