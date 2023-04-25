@@ -3,7 +3,9 @@ and_chr 91
 and_ff 89
 and_qq 10.4
 and_uc 12.12
-android 91
+# > I recommend removing android from the list because from polyfill side it is very close to and_chr or chrome
+# https://github.com/browserslist/browserslist/issues/753
+# android 91
 baidu 7.12
 chrome 90
 edge 91
@@ -13,4 +15,5 @@ firefox 78
 ios_saf 12.2
 kaios 2.5
 op_mini all
-op_mob 76
+# 76 -> 73 as caniuse database doesn't have 76 :/
+op_mob 73
