@@ -6,41 +6,54 @@
 [![codecov](https://codecov.io/gh/TexteaInc/json-viewer/branch/main/graph/badge.svg?token=r32mzVhrRl)](https://codecov.io/gh/TexteaInc/json-viewer)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4fab3ed5-7084-449d-9fc9-12df09108301/deploy-status)](https://viewer.textea.io)
 
-This is a React component for JSON viewer, but not only a JSON viewer.
+`@textea/json-viewer` is a React component that can be used to view and display any kind of data, not just JSON.
 
 ~~Json Viewer?~~
 **ANY Data Viewer** ✅
 
-> This is v2 branch with fancy features like 100% TypeScript, lightly code and customizable component support.
->
-> If you are looking for v1 version based on [mac-s-g/react-json-view](https://github.com/mac-s-g/react-json-view),
-> Please see [v1.x](https://github.com/TexteaInc/json-viewer/tree/v1.x).
-
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/textea-json-viewer-v2-afaey9?file=pages%2Findex.js)
 
-## Usage
+## Features 🚀
+
+- 🦾 100% TypeScript
+- 🎨 Customizable: Key, value, editable, copy, select... Anything you can think of!
+- 🌈 Theme support: light or dark, or use [Base16](https://github.com/chriskempson/base16) themes.
+- ⚛️ SSR Ready
+- 📋 Copy to Clipboard
+- 🔍 Inspect anything: `Object`, `Array`, primitive types, and even `Map` and `Set`.
+- 📊 Metadata preview: Total items, length of string...
+- ✏️ Editor: Comes with an editor for basic types, which you can also customize to fit your use case.
+
+## Installation
 
 `@textea/json-viewer` is using [Material-UI](https://mui.com/) as the base component library, so you need to install it and its peer dependencies first.
 
-### NPM
-
-```shell
+```sh
 npm install @textea/json-viewer @mui/material @emotion/react @emotion/styled
 ```
 
-### Yarn
+### CDN
 
-```shell
-yarn add @textea/json-viewer
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="json-viewer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer@3"></script>
+    <script>
+      new JsonViewer({
+        value: {
+          /* ... */
+        }
+      }).render('#json-viewer')
+    </script>
+  </body>
+</html>
 ```
 
-### PNPM
+## Usage
 
-```shell
-pnpm add @textea/json-viewer
-```
-
-### Basic Example
+Here is a basic example:
 
 ```jsx
 import { JsonViewer } from '@textea/json-viewer'
@@ -51,97 +64,36 @@ const object = {
 const Component = () => <JsonViewer value={object} />
 ```
 
-### Customizable data type
+### Customization
+
+You can define custom data types to handle data that is not supported out of the box. Here is an example of how to display an image:
 
 ```jsx
 import { JsonViewer, defineDataType } from '@textea/json-viewer'
 
 const object = {
-  // what if I want to inspect a image?
   image: 'https://i.imgur.com/1bX5QH6.jpg'
   // ... other values
 }
-const Component = () => (
-  <JsonViewer
-    value={object}
-    // just define it
-    valueTypes={[
-      defineDataType({
-        is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
-        Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
-      })
-    ]}
-  />
-)
+
+// Let's define a data type for image
+const imageDataType = defineDataType({
+  is: (value) => typeof value === 'string' && value.startsWith('https://i.imgur.com'),
+  Component: (props) => <Image height={50} width={50} src={props.value} alt={props.value} />
+})
+
+const Component = () => <JsonViewer value={object} valueTypes={[imageDataType]} />
 ```
 
 ![Avatar Preview](public/avatar-preview.png)
 
 [see the full code](docs/pages/full/index.tsx)
 
-### Base 16 Theme Support
+## Theme
 
-```tsx
-export const ocean: NamedColorspace = {
-  scheme: 'Ocean',
-  author: 'Chris Kempson (http://chriskempson.com)',
-  base00: '#2b303b',
-  base01: '#343d46',
-  base02: '#4f5b66',
-  base03: '#65737e',
-  base04: '#a7adba',
-  base05: '#c0c5ce',
-  base06: '#dfe1e8',
-  base07: '#eff1f5',
-  base08: '#bf616a',
-  base09: '#d08770',
-  base0A: '#ebcb8b',
-  base0B: '#a3be8c',
-  base0C: '#96b5b4',
-  base0D: '#8fa1b3',
-  base0E: '#b48ead',
-  base0F: '#ab7967'
-}
-
-const Component = () => <JsonViewer value={object} theme={ocean} />
-```
+Please refer to [Styling and Theming](https://viewer.textea.io/how-to/styling)
 
 ![Ocean Theme Preview](public/ocean-theme.png)
-
-### Browser
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <body>
-    <div id="json-viewer"></div>
-    <script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer"></script>
-    <script>
-      new JsonViewer({
-        value: {
-          /* ... */
-        }
-      }).render()
-    </script>
-  </body>
-</html>
-```
-
-## Features
-
-- [x] 100% TypeScript
-- [x] Customizable
-  - [x] `keyRenderer` for customize key renderer
-  - [x] `valueTypes` for customize any value types you want
-  - [x] `light | dark | base16` Theme support
-  - [ ] custom metadata
-- [x] Support `Next.js` SSR
-- [x] `onChange` props allow users to edit value
-- [x] Inspect `object`, `Array`, primitive type, even `Map` and `Set` by default.
-- [x] Metadata preview, like total items, length of string...
-- [x] `Copy to Clipboard` on Click
-- [ ] Editor for basic types
-- [ ] Fully Test Coverage
 
 ## Contributors
 
