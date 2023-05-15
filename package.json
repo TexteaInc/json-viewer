@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",
-    "@commitlint/config-angular": "^17.4.4",
+    "@commitlint/config-angular": "^17.6.3",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.12.0",
