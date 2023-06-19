@@ -238,10 +238,10 @@ describe('render <JsonViewer/> with props', () => {
     })
   })
 
-  it('render with displayObjectSize', async () => {
+  it('render with displaySize', async () => {
     const selection = [true, false]
-    selection.forEach(displayObjectSize => {
-      render(<JsonViewer value={['string1', 'string2']} displayObjectSize={displayObjectSize} />)
+    selection.forEach(displaySize => {
+      render(<JsonViewer value={['string1', 'string2']} displaySize={displaySize} />)
     })
   })
 
