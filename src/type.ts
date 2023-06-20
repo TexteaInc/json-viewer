@@ -176,6 +176,12 @@ export type JsonViewerProps<T = unknown> = {
    */
   defaultInspectDepth?: number
   /**
+   * Default inspect control for nested objects.
+   *
+   * Provide a function to customize which fields should be expanded by default.
+   */
+  defaultInspectControl?: (path: Path, value: unknown) => boolean
+  /**
    * Hide items after reaching the count.
    * `Array` and `Object` will be affected.
    *

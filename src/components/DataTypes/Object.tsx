@@ -203,11 +203,10 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
       const prevElements = Array.isArray(props.prevValue) ? segmentArray(props.prevValue, groupArraysAfterLength) : undefined
 
       return elements.map((list, index) => {
-        const path = [...props.path]
         return (
           <DataKeyPair
             key={index}
-            path={path}
+            path={props.path}
             value={list}
             nestedIndex={index}
             prevValue={prevElements?.[index]}

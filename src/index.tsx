@@ -100,6 +100,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
 
   const value = useJsonViewerStore(store => store.value)
   const prevValue = useJsonViewerStore(store => store.prevValue)
+  const emptyPath = useMemo(() => [], [])
   const setHover = useJsonViewerStore(store => store.setHover)
   const onMouseLeave = useCallback(() => setHover(null), [setHover])
   return (
@@ -118,7 +119,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
       <DataKeyPair
         value={value}
         prevValue={prevValue}
-        path={useMemo(() => [], [])}
+        path={emptyPath}
       />
     </Paper>
   )

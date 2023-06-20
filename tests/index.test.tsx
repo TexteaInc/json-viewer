@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { expectTypeOf } from 'expect-type'
 import { describe, expect, it } from 'vitest'
 
+import type { Path } from '../src'
 import { defineDataType, JsonViewer } from '../src'
 
 function aPlusB (a: number, b: number) {
@@ -243,6 +244,34 @@ describe('render <JsonViewer/> with props', () => {
     selection.forEach(displaySize => {
       render(<JsonViewer value={['string1', 'string2']} displaySize={displaySize} />)
     })
+  })
+
+  it('render with defaultInspectControl', async () => {
+    const defaultInspectControl = (path: Path, _data: unknown) => {
+      if (path.length === 0) return true
+      return path.at(-1)?.toString().endsWith('On')
+    }
+    const data = {
+      foo: {
+        bar: 'bar'
+      },
+      fooOn: {
+        barOn: 'barOn'
+      }
+    }
+    const { container } = render(
+      <>
+        <JsonViewer
+          value={data}
+          rootName={false}
+          displaySize={false}
+          displayDataTypes={false}
+          defaultInspectControl={defaultInspectControl}
+        />
+      </>
+    )
+    expect(container.children.length).eq(1)
+    expect(container.children.item(0)!.textContent).eq('{"foo":{…}"fooOn":{"barOn":"barOn"}}')
   })
 
   it('render with dataTypes', async () => {

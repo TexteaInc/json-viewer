@@ -26,6 +26,7 @@ export type JsonViewerState<T = unknown> = {
   highlightUpdates: boolean
   maxDisplayLength: number
   defaultInspectDepth: number
+  defaultInspectControl?: (path: Path, value: unknown) => boolean
   collapseStringsAfterLength: number
   objectSortKeys: boolean | ((a: string, b: string) => number)
   quotesOnKeys: boolean
@@ -42,8 +43,7 @@ export type JsonViewerState<T = unknown> = {
   displaySize: boolean | ((path: Path, value: unknown) => boolean)
 
   getInspectCache: (path: Path, nestedIndex?: number) => boolean
-  setInspectCache: (
-    path: Path, action: SetStateAction<boolean>, nestedIndex?: number) => void
+  setInspectCache: (path: Path, action: SetStateAction<boolean>, nestedIndex?: number) => void
   setHover: (path: Path | null, nestedIndex?: number) => void
 }
 
@@ -66,6 +66,7 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
     keyRenderer: props.keyRenderer ?? DefaultKeyRenderer,
     editable: props.editable ?? false,
     defaultInspectDepth: props.defaultInspectDepth ?? 5,
+    defaultInspectControl: props.defaultInspectControl ?? undefined,
     objectSortKeys: props.objectSortKeys ?? false,
     quotesOnKeys: props.quotesOnKeys ?? true,
     displayDataTypes: props.displayDataTypes ?? true,
@@ -79,15 +80,13 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
 
     getInspectCache: (path, nestedIndex) => {
       const target = nestedIndex !== undefined
-        ? path.join('.') +
-            `[${nestedIndex}]nt`
+        ? path.join('.') + `[${nestedIndex}]nt`
         : path.join('.')
       return get().inspectCache[target]
     },
     setInspectCache: (path, action, nestedIndex) => {
       const target = nestedIndex !== undefined
-        ? path.join('.') +
-            `[${nestedIndex}]nt`
+        ? path.join('.') + `[${nestedIndex}]nt`
         : path.join('.')
       set(state => ({
         inspectCache: {

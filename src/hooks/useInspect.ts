@@ -8,9 +8,7 @@ import {
   useState
 } from 'react'
 
-import {
-  useJsonViewerStore
-} from '../stores/JsonViewerStore'
+import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useIsCycleReference } from './useIsCycleReference'
 
 export function useInspect (path: (string | number)[], value: any, nestedIndex?: number) {
@@ -19,21 +17,28 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
   const getInspectCache = useJsonViewerStore(store => store.getInspectCache)
   const setInspectCache = useJsonViewerStore(store => store.setInspectCache)
   const defaultInspectDepth = useJsonViewerStore(store => store.defaultInspectDepth)
+  const defaultInspectControl = useJsonViewerStore(store => store.defaultInspectControl)
   useEffect(() => {
     const inspect = getInspectCache(path, nestedIndex)
     if (inspect !== undefined) {
       return
     }
+
+    // item with nestedIndex should not be inspected
     if (nestedIndex !== undefined) {
       setInspectCache(path, false, nestedIndex)
-    } else {
-      // do not inspect when it is a cycle reference, otherwise there will have a loop
-      const inspect = isTrap
-        ? false
-        : depth < defaultInspectDepth
-      setInspectCache(path, inspect)
+      return
     }
-  }, [defaultInspectDepth, depth, getInspectCache, isTrap, nestedIndex, path, setInspectCache])
+
+    // do not inspect when it is a cycle reference, otherwise there will have a loop
+    const shouldInspect = isTrap
+      ? false
+      : typeof defaultInspectControl === 'function'
+        ? defaultInspectControl(path, value)
+        : depth < defaultInspectDepth
+    setInspectCache(path, shouldInspect)
+  }, [defaultInspectDepth, defaultInspectControl, depth, getInspectCache, isTrap, nestedIndex, path, value, setInspectCache])
+
   const [inspect, set] = useState<boolean>(() => {
     const shouldInspect = getInspectCache(path, nestedIndex)
     if (shouldInspect !== undefined) {
@@ -44,7 +49,9 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
     }
     return isTrap
       ? false
-      : depth < defaultInspectDepth
+      : typeof defaultInspectControl === 'function'
+        ? defaultInspectControl(path, value)
+        : depth < defaultInspectDepth
   })
   const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
     set((oldState) => {
