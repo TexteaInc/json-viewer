@@ -1,4 +1,3 @@
-
 import { defineEasyType } from './defineEasyType'
 
 export const booleanType = defineEasyType<boolean>({
