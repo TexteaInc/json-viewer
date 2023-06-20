@@ -1,4 +1,3 @@
-
 import { defineEasyType } from './defineEasyType'
 
 const displayOptions: Intl.DateTimeFormatOptions = {
