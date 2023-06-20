@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.0.0...json-viewer-v3.1.0) (2023-06-20)
+
+
+### Features
+
+* support default inspect state with `defaultInspectControl` ([7982300](https://github.com/TexteaInc/json-viewer/commit/7982300b18e4202fc71f7c7226ca377edff80334))
+
 ## [3.0.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v2.17.2...json-viewer-v3.0.0) (2023-04-25)
 
 For the detail and migration guide, check out the [Migrating from v2 to v3](https://viewer.textea.io/migration/migration-v3)
