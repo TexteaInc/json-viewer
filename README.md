@@ -11,7 +11,7 @@
 ~~Json Viewer?~~
 **ANY Data Viewer** ✅
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/textea-json-viewer-v2-afaey9?file=pages%2Findex.js)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/textea-json-viewer-v3-b4wgxq?file=pages%2Findex.js)
 
 ## Features 🚀
 
