@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.1.0...json-viewer-v3.1.1) (2023-06-20)
+
+
+### Bug Fixes
+
+* trigger release ([35760ac](https://github.com/TexteaInc/json-viewer/commit/35760ac866b2eb665b27e9f0bd9bf27b65a96698))
+
 ## [3.1.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.0.0...json-viewer-v3.1.0) (2023-06-20)
 
 
