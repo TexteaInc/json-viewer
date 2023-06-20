@@ -12,6 +12,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
+          release-type: node
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
   publish-json-viewer:
@@ -49,8 +50,9 @@ jobs:
         run: npm pkg delete scripts
       - name: Delete Workspaces
         run: npm pkg delete workspaces
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v2
         name: Publish to npm
         with:
           access: 'public'
           token: ${{ secrets.NPM_TOKEN }}
+          ignore-scripts: false
