@@ -1660,7 +1660,7 @@ __metadata:
   resolution: "@textea/json-viewer-docs@workspace:docs"
   dependencies:
     "@textea/json-viewer": "workspace:^"
-    "@types/node": ^18.15.3
+    "@types/node": ^20.3.1
     "@types/react": ^18.2.13
     "@types/react-dom": ^18.0.11
     gray-matter: ^4.0.3
@@ -1689,7 +1689,7 @@ __metadata:
     "@swc/core": ^1.3.66
     "@swc/helpers": ^0.5.1
     "@testing-library/react": ^14.0.0
-    "@types/node": ^18.15.3
+    "@types/node": ^20.3.1
     "@types/react": ^18.2.13
     "@types/react-dom": ^18.2.6
     "@typescript-eslint/eslint-plugin": ^5.60.0
@@ -1918,10 +1918,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.15.3":
+"@types/node@npm:*":
   version: 18.15.12
   resolution: "@types/node@npm:18.15.12"
   checksum: dff7596db8d0a18bcd8da542dc62ed4377cba39546ff53baaa06d106f1482bc3e4e5e03644f5d1e3cef0904ffbe8ebbc244b2b0851f8025ab2a3959ee0ace58f
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.3.1":
+  version: 20.3.1
+  resolution: "@types/node@npm:20.3.1"
+  checksum: 63a393ab6d947be17320817b35d7277ef03728e231558166ed07ee30b09fd7c08861be4d746f10fdc63ca7912e8cd023939d4eab887ff6580ff704ff24ed810c
   languageName: node
   linkType: hard
 
