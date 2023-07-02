@@ -99,7 +99,7 @@
     "eslint": "^8.43.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-cypress": "^2.13.3",
-    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-import": "npm:eslint-plugin-i@^2.27.5-3",
     "eslint-plugin-n": "^16.0.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
