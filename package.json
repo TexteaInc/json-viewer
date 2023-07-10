@@ -81,7 +81,7 @@
     "@commitlint/config-angular": "^17.6.6",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.13.5",
+    "@mui/material": "^5.13.7",
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-commonjs": "^25.0.2",
     "@rollup/plugin-node-resolve": "^15.1.0",
