@@ -61,7 +61,7 @@
     "build": "tsc && rollup -c rollup.config.ts --configPlugin swc3"
   },
   "dependencies": {
-    "clsx": "^1.2.1",
+    "clsx": "^2.0.0",
     "copy-to-clipboard": "^3.3.3",
     "zustand": "^4.3.9"
   },
