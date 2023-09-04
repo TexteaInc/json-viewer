@@ -1708,7 +1708,7 @@ __metadata:
   dependencies:
     "@textea/json-viewer": "workspace:^"
     "@types/node": ^20.4.1
-    "@types/react": ^18.2.13
+    "@types/react": ^18.2.21
     "@types/react-dom": ^18.0.11
     gray-matter: ^4.0.3
     next: ^13.4.13
@@ -1737,7 +1737,7 @@ __metadata:
     "@swc/helpers": ^0.5.1
     "@testing-library/react": ^14.0.0
     "@types/node": ^20.4.1
-    "@types/react": ^18.2.13
+    "@types/react": ^18.2.21
     "@types/react-dom": ^18.2.6
     "@typescript-eslint/eslint-plugin": ^6.5.0
     "@typescript-eslint/parser": ^6.2.1
@@ -2020,7 +2020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16, @types/react@npm:^18.2.13":
+"@types/react@npm:*, @types/react@npm:>=16":
   version: 18.2.13
   resolution: "@types/react@npm:18.2.13"
   dependencies:
@@ -2028,6 +2028,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: f7c15f19c164a29262993ea2aae2085fa38cddd9b8359fd8fefabfced91010b515a3abe2042b2b7f2f86e6b38a25b191415aa9313a9027175e3a000883c858cc
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.21":
+  version: 18.2.21
+  resolution: "@types/react@npm:18.2.21"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: ffed203bfe7aad772b8286f7953305c9181ac3a8f27d3f5400fbbc2a8e27ca8e5bbff818ee014f39ca0d19d2b3bb154e5bdbec7e232c6f80b59069375aa78349
   languageName: node
   linkType: hard
 
