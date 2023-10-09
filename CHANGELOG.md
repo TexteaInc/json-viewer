@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.2.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.1.1...json-viewer-v3.2.0) (2023-10-09)
+
+
+### Features
+
+* improve built-in editor with autoFocus and better keyboard control ([1a757e8](https://github.com/TexteaInc/json-viewer/commit/1a757e878e264315bf76387ac07f635ae4446ef7))
+
+
+### Bug Fixes
+
+* super long string can be partially selected without collapsing ([c2282dd](https://github.com/TexteaInc/json-viewer/commit/c2282ddfd9eaa585450710d4547810cf02ef3e2a))
+
 ## [3.1.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.1.0...json-viewer-v3.1.1) (2023-06-20)
 
 
