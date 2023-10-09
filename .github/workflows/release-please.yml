@@ -20,13 +20,16 @@ jobs:
     needs: release-please
     if: ${{ needs.release-please.outputs.releases_created }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Use Node.js LTS
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version: 18
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
       - name: Get yarn cache directory path
@@ -40,8 +43,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-release
       - name: Install Dependencies
-        run: |
-          yarn install
+        run: yarn install
       - name: Prepack
         run: yarn run prepack
       - name: Build
@@ -50,9 +52,7 @@ jobs:
         run: npm pkg delete scripts
       - name: Delete Workspaces
         run: npm pkg delete workspaces
-      - uses: JS-DevTools/npm-publish@v2
-        name: Publish to npm
-        with:
-          access: 'public'
-          token: ${{ secrets.NPM_TOKEN }}
-          ignore-scripts: false
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
