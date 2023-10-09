@@ -330,12 +330,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-angular@npm:^17.6.6":
-  version: 17.6.6
-  resolution: "@commitlint/config-angular@npm:17.6.6"
+"@commitlint/config-angular@npm:^17.7.0":
+  version: 17.7.0
+  resolution: "@commitlint/config-angular@npm:17.7.0"
   dependencies:
     "@commitlint/config-angular-type-enum": ^17.4.0
-  checksum: a650d1d93fd594da25af479fdc1b5e95f33b3d7526db5faf2a9ea670052c214ac41a7a5cc96817e5f732561fd3b1aedbe58023aecf077d99df5f0110523962bc
+  checksum: 8809c3acf008d1c530fb021f2534d234b0405b08befe07079d95b069e370e88fe0eda7ce708936446f28c6f7e3b6bc4c9337643aaaa3d440420ebb6837753466
   languageName: node
   linkType: hard
 
@@ -1725,7 +1725,7 @@ __metadata:
   resolution: "@textea/json-viewer@workspace:."
   dependencies:
     "@commitlint/cli": ^17.6.5
-    "@commitlint/config-angular": ^17.6.6
+    "@commitlint/config-angular": ^17.7.0
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@mui/material": ^5.14.2
