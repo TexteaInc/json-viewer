@@ -134,33 +134,42 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     }
   }, [highlightColor, isHighlight, prevValue, value])
 
+  const startEditing = useCallback((event: MouseEvent) => {
+    event.preventDefault()
+    if (serialize) setTempValue(serialize(value))
+    setEditing(true)
+  }, [serialize, value])
+
+  const abortEditing = useCallback(() => {
+    setEditing(false)
+    setTempValue('')
+  }, [setEditing, setTempValue])
+
+  const commitEditing = useCallback((newValue: string) => {
+    setEditing(false)
+    if (!deserialize) return
+
+    try {
+      onChange(path, value, deserialize(newValue))
+    } catch (e) {
+      // do nothing when deserialize failed
+    }
+  }, [setEditing, deserialize, onChange, path, value])
+
   const actionIcons = useMemo(() => {
-    if (editing && deserialize) {
+    if (editing) {
       return (
         <>
           <IconBox>
             <CloseIcon
               sx={{ fontSize: '.8rem' }}
-              onClick={() => {
-                // abort editing
-                setEditing(false)
-                setTempValue('')
-              }}
+              onClick={abortEditing}
             />
           </IconBox>
           <IconBox>
             <CheckIcon
               sx={{ fontSize: '.8rem' }}
-              onClick={() => {
-                // finish editing, save data
-                setEditing(false)
-                try {
-                  const newValue = deserialize(tempValue)
-                  onChange(path, value, newValue)
-                } catch (e) {
-                  // do nothing when deserialize failed
-                }
-              }}
+              onClick={() => commitEditing(tempValue)}
             />
           </IconBox>
         </>
@@ -191,11 +200,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
         {(Editor && editable && serialize && deserialize) &&
             (
               <IconBox
-                onClick={event => {
-                  event.preventDefault()
-                  setTempValue(serialize(value))
-                  setEditing(true)
-                }}
+                onClick={startEditing}
               >
                 <EditIcon sx={{ fontSize: '.8rem' }} />
               </IconBox>
@@ -212,10 +217,12 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     editable,
     editing,
     enableClipboard,
-    onChange,
-    path,
     tempValue,
-    value
+    path,
+    value,
+    startEditing,
+    abortEditing,
+    commitEditing
   ])
 
   const isEmptyValue = useMemo(() => getValueSize(value) === 0, [value])
@@ -310,7 +317,14 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
       </DataBox>
       {
         (editing && editable)
-          ? (Editor && <Editor value={tempValue} setValue={setTempValue} />)
+          ? (Editor && (
+            <Editor
+              value={tempValue}
+              setValue={setTempValue}
+              abortEditing={abortEditing}
+              commitEditing={commitEditing}
+            />
+            ))
           : (Component)
               ? <Component {...downstreamProps} />
               : (
@@ -322,6 +336,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
       {PostComponent && <PostComponent {...downstreamProps} />}
       {(isHover && expandable && !inspect) && actionIcons}
       {(isHover && !expandable) && actionIcons}
+      {(!isHover && editing) && actionIcons}
     </Box>
   )
 }
