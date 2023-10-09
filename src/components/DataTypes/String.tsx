@@ -25,6 +25,10 @@ export const stringType = defineEasyType<string>({
           cursor: hasRest ? 'pointer' : 'inherit'
         }}
         onClick={() => {
+          if (window.getSelection()?.type === 'Range') {
+            return
+          }
+
           if (hasRest) {
             setShowRest(value => !value)
           }
