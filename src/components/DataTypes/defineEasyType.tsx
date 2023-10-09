@@ -1,5 +1,5 @@
 import { InputBase } from '@mui/material'
-import type { ChangeEventHandler, ComponentType, FC } from 'react'
+import type { ChangeEventHandler, ComponentType, FC, KeyboardEvent } from 'react'
 import { memo, useCallback } from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
@@ -64,18 +64,31 @@ export function defineEasyType<Value> ({
     }
   }
 
-  const EasyTypeEditor: FC<EditorProps<string>> = ({ value, setValue }) => {
+  const EasyTypeEditor: FC<EditorProps<string>> = ({ value, setValue, abortEditing, commitEditing }) => {
     const color = useJsonViewerStore(store => store.colorspace[colorKey])
+
+    const handleKeyDown = useCallback((event: KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        event.preventDefault()
+        commitEditing(value)
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        abortEditing()
+      }
+    }, [abortEditing, commitEditing, value])
+
+    const handleChange = useCallback<ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>((event) => {
+      setValue(event.target.value)
+    }, [setValue])
+
     return (
       <InputBase
+        autoFocus
         value={value}
-        onChange={
-          useCallback<ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>(
-            (event) => {
-              setValue(event.target.value)
-            }, [setValue]
-          )
-        }
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
         size='small'
         multiline
         sx={{

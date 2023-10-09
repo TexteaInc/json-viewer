@@ -48,6 +48,8 @@ export interface DataItemProps<ValueType = unknown> {
 export type EditorProps<ValueType = unknown> = {
   value: ValueType
   setValue: Dispatch<ValueType>
+  abortEditing: () => void
+  commitEditing: (newValue: string) => void
 }
 
 /**
