@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.2.1...json-viewer-v3.2.2) (2023-10-09)
+
+
+### Bug Fixes
+
+* fix publishing script and add provenance statements ([f644caf](https://github.com/TexteaInc/json-viewer/commit/f644caf3ac4507f95cd8fe26c4046f5a36b4efbf))
+
 ## [3.2.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.1.1...json-viewer-v3.2.0) (2023-10-09)
 
 
