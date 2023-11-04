@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { expectTypeOf } from 'expect-type'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { Path } from '../src'
 import { defineDataType, JsonViewer } from '../src'
@@ -693,5 +693,54 @@ describe('Show three dots after string collapsing', () => {
     expect(elements.length).eq(1)
     expect(elements[0].children.length).eq(1)
     expect(elements[0].textContent).eq('"string…"')
+  })
+})
+
+describe('Nested long array', () => {
+  it('use correct key in nested long array', () => {
+    const longArray: any[] = Array.from({ length: 100 }).map((_, i) => i)
+    longArray.push(Array.from({ length: 50 }).map(() => Array.from({ length: 50 }).map((_, i) => i)))
+
+    const onSelect = vi.fn()
+    const Component = () => (
+      <JsonViewer
+        rootName={false}
+        value={longArray}
+        onSelect={onSelect}
+        groupArraysAfterLength={20}
+      />
+    )
+    const { container, rerender } = render(<Component />)
+
+    const lastGroup = container.querySelector('[data-testid="data-key-pair"] > .data-object > .data-key-pair:last-child')
+    const threeDot = lastGroup.querySelector('.data-object-body')
+    fireEvent.click(threeDot) // expand last group
+
+    rerender(<Component />)
+    const lastGroupBody = lastGroup.querySelector('.data-key-pair')
+    const key = lastGroupBody.querySelector('.data-key')
+    expect(key.textContent).eq('100:[50 Items')
+
+    const lastLastGroup = lastGroupBody.querySelector('.data-object > .data-key-pair:last-child')
+    const lastThreeDot = lastLastGroup.querySelector('.data-object-body')
+    fireEvent.click(lastThreeDot) // expand last last group
+
+    rerender(<Component />)
+    const lastLastSecondGroup = lastLastGroup.children.item(1).children.item(1)
+    const lastLastKey = lastLastSecondGroup.querySelector('.data-key')
+    expect(lastLastKey.textContent).eq('41:[50 Items')
+
+    const targetContainer = lastLastSecondGroup.children.item(1).children.item(1)
+    const targetThreeDot = targetContainer.querySelector('.data-object-body')
+    fireEvent.click(targetThreeDot) // expand target group
+
+    rerender(<Component />)
+    const targetArray = targetContainer.children.item(1)
+    const targetKV = targetArray.children.item(1)
+    expect(targetKV.textContent).eq('21:int21')
+
+    const targetValue = targetKV.children.item(1)
+    fireEvent.click(targetValue)
+    expect(onSelect).toBeCalledWith([100, 41, 21], 21)
   })
 })

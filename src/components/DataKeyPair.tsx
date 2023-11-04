@@ -233,8 +233,9 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     inspect,
     setInspect,
     value,
-    prevValue
-  }), [inspect, path, setInspect, value, prevValue])
+    prevValue,
+    nestedIndex
+  }), [inspect, path, setInspect, value, prevValue, nestedIndex])
   return (
     <Box
       className='data-key-pair'
