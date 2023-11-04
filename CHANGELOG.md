@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.2.2...json-viewer-v3.2.3) (2023-11-04)
+
+
+### Bug Fixes
+
+* should handle key and path of nested grouped array with nestedIndex ([6efeac6](https://github.com/TexteaInc/json-viewer/commit/6efeac6332ff1364c778694746e7545cad045774))
+
 ## [3.2.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.2.1...json-viewer-v3.2.2) (2023-10-09)
 
 
