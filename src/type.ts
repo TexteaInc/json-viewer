@@ -43,6 +43,7 @@ export interface DataItemProps<ValueType = unknown> {
   value: ValueType
   prevValue: ValueType | undefined
   path: Path
+  nestedIndex?: number
 }
 
 export type EditorProps<ValueType = unknown> = {

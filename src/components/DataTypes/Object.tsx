@@ -166,7 +166,8 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
     if (Array.isArray(value)) {
       // unknown[]
       if (value.length <= groupArraysAfterLength) {
-        const elements = value.slice(0, displayLength).map((value, index) => {
+        const elements = value.slice(0, displayLength).map((value, _index) => {
+          const index = props.nestedIndex ? (props.nestedIndex * groupArraysAfterLength) + _index : _index
           const path = [...props.path, index]
           return (
             <DataKeyPair
@@ -252,6 +253,7 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
     props.value,
     props.prevValue,
     props.path,
+    props.nestedIndex,
     groupArraysAfterLength,
     displayLength,
     keyColor,
