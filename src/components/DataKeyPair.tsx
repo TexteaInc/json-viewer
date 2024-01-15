@@ -8,12 +8,14 @@ import { useInspect } from '../hooks/useInspect'
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import { useTypeComponents } from '../stores/typeRegistry'
 import type { DataItemProps } from '../type'
-import { copyString, getValueSize } from '../utils'
+import { copyString, getValueSize, isPlainObject } from '../utils'
 import {
+  AddBoxIcon,
   CheckIcon,
   ChevronRightIcon,
   CloseIcon,
   ContentCopyIcon,
+  DeleteIcon,
   EditIcon,
   ExpandMoreIcon
 } from './Icons'
@@ -81,6 +83,51 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
   const rootName = useJsonViewerStore(store => store.rootName)
   const isRoot = root === value
   const isNumberKey = Number.isInteger(Number(key))
+
+  const storeEnableAdd = useJsonViewerStore(store => store.enableAdd)
+  const onAdd = useJsonViewerStore(store => store.onAdd)
+  const enableAdd = useMemo(() => {
+    if (!onAdd || nestedIndex !== undefined) return false
+
+    if (storeEnableAdd === false) {
+      return false
+    }
+    if (propsEditable === false) {
+      // props.editable is false which means we cannot provide the suitable way to edit it
+      return false
+    }
+    if (typeof storeEnableAdd === 'function') {
+      return !!storeEnableAdd(path, value)
+    }
+
+    if (Array.isArray(value) || isPlainObject(value)) {
+      return true
+    }
+
+    return false
+  }, [onAdd, nestedIndex, path, storeEnableAdd, propsEditable, value])
+
+  const storeEnableDelete = useJsonViewerStore(store => store.enableDelete)
+  const onDelete = useJsonViewerStore(store => store.onDelete)
+  const enableDelete = useMemo(() => {
+    if (!onDelete || nestedIndex !== undefined) return false
+
+    if (isRoot) {
+      // don't allow delete root
+      return false
+    }
+    if (storeEnableDelete === false) {
+      return false
+    }
+    if (propsEditable === false) {
+      // props.editable is false which means we cannot provide the suitable way to edit it
+      return false
+    }
+    if (typeof storeEnableDelete === 'function') {
+      return !!storeEnableDelete(path, value)
+    }
+    return storeEnableDelete
+  }, [onDelete, nestedIndex, isRoot, path, storeEnableDelete, propsEditable, value])
 
   const enableClipboard = useJsonViewerStore(store => store.enableClipboard)
   const { copy, copied } = useClipboard()
@@ -205,6 +252,26 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
                 <EditIcon sx={{ fontSize: '.8rem' }} />
               </IconBox>
             )}
+        {enableAdd && (
+          <IconBox
+            onClick={event => {
+              event.preventDefault()
+              onAdd?.(path)
+            }}
+          >
+            <AddBoxIcon sx={{ fontSize: '.8rem' }} />
+          </IconBox>
+        )}
+        {enableDelete && (
+          <IconBox
+            onClick={event => {
+              event.preventDefault()
+              onDelete?.(path, value)
+            }}
+          >
+            <DeleteIcon sx={{ fontSize: '.9rem' }} />
+          </IconBox>
+        )}
       </>
     )
   },
@@ -217,9 +284,13 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     editable,
     editing,
     enableClipboard,
+    enableAdd,
+    enableDelete,
     tempValue,
     path,
     value,
+    onAdd,
+    onDelete,
     startEditing,
     abortEditing,
     commitEditing

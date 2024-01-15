@@ -19,7 +19,7 @@ export type JsonViewerOnChange = <U = unknown>(
 
 /**
  * @param path path to the target value
- * @param value
+ * @param value the value to be copied
  * @param copy the function to copy the value to clipboard
  */
 export type JsonViewerOnCopy = <U = unknown>(
@@ -30,9 +30,25 @@ export type JsonViewerOnCopy = <U = unknown>(
 
 /**
  * @param path path to the target value
- * @param value
+ * @param value the value to be selected
  */
 export type JsonViewerOnSelect = <U = unknown>(
+  path: Path,
+  value: U,
+) => void
+
+/**
+ * @param path path to the parent target where the value will be added
+ */
+export type JsonViewerOnAdd = (
+  path: Path,
+) => void
+
+/**
+ * @param path path to the target value
+ * @param value the value to be deleted
+ */
+export type JsonViewerOnDelete = <U = unknown>(
   path: Path,
   value: U,
 ) => void
@@ -151,18 +167,28 @@ export type JsonViewerProps<T = unknown> = {
    * @see https://viewer.textea.io/how-to/data-types
    */
   valueTypes?: DataType<any>[]
-  /** Callback when value changed. */
-  onChange?: JsonViewerOnChange
-  /** Callback when value copied, you can use it to customize the copy behavior.<br />\*Note: you will have to write the data to the clipboard by yourself. */
-  onCopy?: JsonViewerOnCopy
-  /** Callback when value selected. */
-  onSelect?: JsonViewerOnSelect
+
+  /**
+   * Whether enable add feature.
+   *
+   * @default false
+   * */
+  enableAdd?: boolean | (<U = unknown>(path: Path, currentValue: U) => boolean)
+
+  /**
+   * Whether enable delete feature.
+   *
+   * @default false
+   * */
+  enableDelete?: boolean | (<U = unknown>(path: Path, currentValue: U) => boolean)
+
   /**
    * Whether enable clipboard feature.
    *
    * @default true
    */
   enableClipboard?: boolean
+
   /**
    * Whether this value can be edited.
    *
@@ -171,6 +197,18 @@ export type JsonViewerProps<T = unknown> = {
    * @default false
    */
   editable?: boolean | (<U = unknown>(path: Path, currentValue: U) => boolean)
+
+  /** Callback when value changed. */
+  onChange?: JsonViewerOnChange
+  /** Callback when value copied, you can use it to customize the copy behavior.<br />\*Note: you will have to write the data to the clipboard by yourself. */
+  onCopy?: JsonViewerOnCopy
+  /** Callback when value selected. */
+  onSelect?: JsonViewerOnSelect
+  /** Callback when the add button is clicked. This is the function which implements the add feature. Please see the official demo for more details. */
+  onAdd?: JsonViewerOnAdd
+  /** Callback when the delete button is clicked. This is the function which implements the delete feature. Please see the official demo for more details. */
+  onDelete?: JsonViewerOnDelete
+
   /**
    * Default inspect depth for nested objects.
    * _If the number is set too large, it could result in performance issues._
@@ -178,12 +216,14 @@ export type JsonViewerProps<T = unknown> = {
    * @default 5
    */
   defaultInspectDepth?: number
+
   /**
    * Default inspect control for nested objects.
    *
    * Provide a function to customize which fields should be expanded by default.
    */
   defaultInspectControl?: (path: Path, value: unknown) => boolean
+
   /**
    * Hide items after reaching the count.
    * `Array` and `Object` will be affected.
@@ -193,6 +233,7 @@ export type JsonViewerProps<T = unknown> = {
    * @default 30
    */
   maxDisplayLength?: number
+
   /**
    * When an integer value is assigned, arrays will be displayed in groups by count of the value.
    * Groups are displayed with bracket notation and can be expanded and collapsed by clicking on the brackets.
@@ -200,6 +241,7 @@ export type JsonViewerProps<T = unknown> = {
    * @default 100
    */
   groupArraysAfterLength?: number
+
   /**
    * Cut off the string after reaching the count.
    * Collapsed strings are followed by an ellipsis.
