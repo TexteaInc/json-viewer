@@ -82,6 +82,9 @@ export function deleteValue (input: any, path: (string | number)[], value: any) 
 
   const [key, ...restPath] = path
   if (key !== undefined) {
+    if (key === '__proto__') {
+      throw new TypeError('Modification of prototype is not allowed')
+    }
     if (restPath.length > 0) {
       input[key] = deleteValue(input[key], restPath, value)
     } else {

@@ -17,6 +17,13 @@ describe('function applyValue', () => {
     }).toThrow()
   })
 
+  test('prototype polluting', () => {
+    const original = {}
+    expect(() => {
+      applyValue(original, ['__proto__', 'polluted'], 1)
+    }).toThrow()
+  })
+
   test('undefined', () => {
     patches.forEach(patch => {
       const newValue = applyValue(undefined, [], patch)
@@ -98,6 +105,13 @@ describe('function deleteValue', () => {
     }).toThrow()
     expect(() => {
       deleteValue(1, ['not', 'exist'], 1)
+    }).toThrow()
+  })
+
+  test('prototype polluting', () => {
+    const original = {}
+    expect(() => {
+      deleteValue(original, ['__proto__', 'polluted'], 1)
     }).toThrow()
   })
 
