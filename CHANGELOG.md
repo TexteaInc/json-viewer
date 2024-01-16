@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.2.3...json-viewer-v3.3.0) (2024-01-16)
+
+
+### Features
+
+* support add and delete feature ([#438](https://github.com/TexteaInc/json-viewer/issues/438)) ([1709001](https://github.com/TexteaInc/json-viewer/commit/1709001e778a73abd17aabf73f80947ff911573b))
+
 ## [3.2.3](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.2.2...json-viewer-v3.2.3) (2023-11-04)
 
 
