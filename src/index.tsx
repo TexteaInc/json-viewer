@@ -50,19 +50,23 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
       value: props.value
     }))
   }, [props.value, setState])
-  useSetIfNotUndefinedEffect('editable', props.editable)
-  useSetIfNotUndefinedEffect('indentWidth', props.indentWidth)
-  useSetIfNotUndefinedEffect('onChange', props.onChange)
-  useSetIfNotUndefinedEffect('groupArraysAfterLength', props.groupArraysAfterLength)
-  useSetIfNotUndefinedEffect('keyRenderer', props.keyRenderer)
-  useSetIfNotUndefinedEffect('maxDisplayLength', props.maxDisplayLength)
-  useSetIfNotUndefinedEffect('enableClipboard', props.enableClipboard)
-  useSetIfNotUndefinedEffect('highlightUpdates', props.highlightUpdates)
   useSetIfNotUndefinedEffect('rootName', props.rootName)
-  useSetIfNotUndefinedEffect('displayDataTypes', props.displayDataTypes)
-  useSetIfNotUndefinedEffect('displaySize', props.displaySize)
+  useSetIfNotUndefinedEffect('indentWidth', props.indentWidth)
+  useSetIfNotUndefinedEffect('keyRenderer', props.keyRenderer)
+  useSetIfNotUndefinedEffect('enableAdd', props.enableAdd)
+  useSetIfNotUndefinedEffect('enableDelete', props.enableDelete)
+  useSetIfNotUndefinedEffect('enableClipboard', props.enableClipboard)
+  useSetIfNotUndefinedEffect('editable', props.editable)
+  useSetIfNotUndefinedEffect('onChange', props.onChange)
   useSetIfNotUndefinedEffect('onCopy', props.onCopy)
   useSetIfNotUndefinedEffect('onSelect', props.onSelect)
+  useSetIfNotUndefinedEffect('onAdd', props.onAdd)
+  useSetIfNotUndefinedEffect('onDelete', props.onDelete)
+  useSetIfNotUndefinedEffect('maxDisplayLength', props.maxDisplayLength)
+  useSetIfNotUndefinedEffect('groupArraysAfterLength', props.groupArraysAfterLength)
+  useSetIfNotUndefinedEffect('displayDataTypes', props.displayDataTypes)
+  useSetIfNotUndefinedEffect('displaySize', props.displaySize)
+  useSetIfNotUndefinedEffect('highlightUpdates', props.highlightUpdates)
   useEffect(() => {
     if (props.theme === 'light') {
       setState({
@@ -179,4 +183,4 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
 export * from './components/DataTypes'
 export * from './theme/base16'
 export * from './type'
-export { applyValue, createDataType, defineDataType, isCycleReference, safeStringify } from './utils'
+export { applyValue, createDataType, defineDataType, deleteValue, isCycleReference, safeStringify } from './utils'

@@ -16,12 +16,15 @@ import {
 import type {
   DataType,
   JsonViewerKeyRenderer,
+  JsonViewerOnAdd,
   JsonViewerOnChange,
+  JsonViewerOnDelete,
   JsonViewerTheme
 } from '@textea/json-viewer'
 import {
   applyValue,
   defineDataType,
+  deleteValue,
   JsonViewer,
   stringType
 } from '@textea/json-viewer'
@@ -336,6 +339,8 @@ const IndexPage: FC = () => {
         highlightUpdates={highlightUpdates}
         indentWidth={indent}
         theme={theme}
+        enableAdd={true}
+        enableDelete={true}
         displayDataTypes={displayDataTypes}
         displaySize={displaySize}
         groupArraysAfterLength={groupArraysAfterLength}
@@ -345,10 +350,28 @@ const IndexPage: FC = () => {
           linkType,
           imageDataType
         ]}
+        onAdd={
+          useCallback<JsonViewerOnAdd>(
+            (path) => {
+              const key = prompt('Key:')
+              if (key === null) return
+              const value = prompt('Value:')
+              if (value === null) return
+              setSrc(src => applyValue(src, [...path, key], value))
+            }, []
+          )
+        }
         onChange={
           useCallback<JsonViewerOnChange>(
             (path, oldValue, newValue) => {
               setSrc(src => applyValue(src, path, newValue))
+            }, []
+          )
+        }
+        onDelete={
+          useCallback<JsonViewerOnDelete>(
+            (path, value) => {
+              setSrc(src => deleteValue(src, path, value))
             }, []
           )
         }

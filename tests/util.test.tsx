@@ -3,7 +3,7 @@ import type { ComponentType } from 'react'
 import { describe, expect, test } from 'vitest'
 
 import type { DataItemProps, Path } from '../src'
-import { applyValue, createDataType, isCycleReference } from '../src'
+import { applyValue, createDataType, deleteValue, isCycleReference } from '../src'
 import { safeStringify, segmentArray } from '../src/utils'
 
 describe('function applyValue', () => {
@@ -14,6 +14,13 @@ describe('function applyValue', () => {
     }).toThrow()
     expect(() => {
       applyValue(1, ['not', 'exist'], 1)
+    }).toThrow()
+  })
+
+  test('prototype polluting', () => {
+    const original = {}
+    expect(() => {
+      applyValue(original, ['__proto__', 'polluted'], 1)
     }).toThrow()
   })
 
@@ -87,6 +94,99 @@ describe('function applyValue', () => {
     const original = [1, [2, [3, 4]]]
     const newValue = applyValue(original, [1, 1, 1], 5)
     expect(newValue).is.deep.eq([1, [2, [3, 5]]])
+  })
+})
+
+describe('function deleteValue', () => {
+  const patches: any[] = [{}, undefined, 1, '2', 3n, 0.4]
+  test('incorrect arguments', () => {
+    expect(() => {
+      deleteValue({}, ['not', 'exist'], 1)
+    }).toThrow()
+    expect(() => {
+      deleteValue(1, ['not', 'exist'], 1)
+    }).toThrow()
+  })
+
+  test('prototype polluting', () => {
+    const original = {}
+    expect(() => {
+      deleteValue(original, ['__proto__', 'polluted'], 1)
+    }).toThrow()
+  })
+
+  test('undefined', () => {
+    patches.forEach(patch => {
+      const newValue = deleteValue(undefined, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('null', () => {
+    patches.forEach(patch => {
+      const newValue = deleteValue(null, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('number', () => {
+    patches.forEach(patch => {
+      const newValue = deleteValue(1, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+    patches.forEach(patch => {
+      const newValue = deleteValue(114514, [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('string', () => {
+    patches.forEach(patch => {
+      const newValue = deleteValue('', [], patch)
+      expect(newValue).is.eq(patch)
+    })
+  })
+
+  test('object', () => {
+    const original = {
+      foo: 1,
+      bar: 2
+    }
+    const newValue = deleteValue(original, ['foo'], 1)
+    expect(newValue).is.deep.eq({
+      bar: 2
+    })
+  })
+
+  test('object nested', () => {
+    const original = {
+      foo: {
+        bar: {
+          baz: 1,
+          qux: 2
+        }
+      }
+    }
+    const newValue = deleteValue(original, ['foo', 'bar', 'qux'], 2)
+    expect(newValue).is.deep.eq({
+      foo: {
+        bar: {
+          baz: 1
+        }
+      }
+    })
+  })
+
+  test('array', () => {
+    const original = [1, 2, 3]
+    const newValue = deleteValue(original, [1], 2)
+    expect(newValue).is.deep.eq([1, 3])
+  })
+
+  test('array nested', () => {
+    const original = [1, [2, [3, 4]]]
+    const newValue = deleteValue(original, [1, 1, 1], 4)
+    expect(newValue).is.deep.eq([1, [2, [3]]])
   })
 })
 

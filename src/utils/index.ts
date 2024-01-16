@@ -5,7 +5,7 @@ import type { DataItemProps, DataType, EditorProps, Path } from '../type'
 
 // reference: https://github.com/immerjs/immer/blob/main/src/utils/common.ts
 const objectCtorString = Object.prototype.constructor.toString()
-function isPlainObject (value: any): boolean {
+export function isPlainObject (value: any): boolean {
   if (!value || typeof value !== 'object') return false
 
   const proto = Object.getPrototypeOf(value)
@@ -38,6 +38,9 @@ function shallowCopy (value: any) {
   return value
 }
 
+/**
+ * Apply a value to a given path of an object.
+ */
 export function applyValue (input: any, path: (string | number)[], value: any) {
   if (typeof input !== 'object' || input === null) {
     if (path.length !== 0) {
@@ -58,6 +61,38 @@ export function applyValue (input: any, path: (string | number)[], value: any) {
       input[key] = applyValue(input[key], restPath, value)
     } else {
       input[key] = value
+    }
+  }
+  return input
+}
+
+/**
+ * Delete a value from a given path of an object.
+ */
+export function deleteValue (input: any, path: (string | number)[], value: any) {
+  if (typeof input !== 'object' || input === null) {
+    if (path.length !== 0) {
+      throw new Error('path is incorrect')
+    }
+    return value
+  }
+
+  const shouldCopy = shouldShallowCopy(input)
+  if (shouldCopy) input = shallowCopy(input)
+
+  const [key, ...restPath] = path
+  if (key !== undefined) {
+    if (key === '__proto__') {
+      throw new TypeError('Modification of prototype is not allowed')
+    }
+    if (restPath.length > 0) {
+      input[key] = deleteValue(input[key], restPath, value)
+    } else {
+      if (Array.isArray(input)) {
+        input.splice(Number(key), 1)
+      } else {
+        delete input[key]
+      }
     }
   }
   return input
