@@ -79,6 +79,7 @@ const PreObjectType: FC<DataItemProps<object>> = (props) => {
 
 const PostObjectType: FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
+  const textColor = useTextColor()
   const isArray = useMemo(() => Array.isArray(props.value), [props.value])
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
@@ -86,7 +87,16 @@ const PostObjectType: FC<DataItemProps<object>> = (props) => {
   const shouldDisplaySize = useMemo(() => typeof displaySize === 'function' ? displaySize(props.path, props.value) : displaySize, [displaySize, props.path, props.value])
 
   return (
-    <Box component='span' className='data-object-end'>
+    <Box
+      component='span'
+      className='data-object-end'
+      sx={{
+        lineHeight: 1.5,
+        color: textColor,
+        letterSpacing: 0.5,
+        opacity: 0.8
+      }}
+    >
       {isArray ? arrayRb : objectRb}
       {shouldDisplaySize && (isEmptyValue || !props.inspect)
         ? (
