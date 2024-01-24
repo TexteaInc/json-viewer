@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.3.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.3.0...json-viewer-v3.3.1) (2024-01-24)
+
+
+### Bug Fixes
+
+* improve part of ui not covered by theme color ([867c791](https://github.com/TexteaInc/json-viewer/commit/867c7911316d553ad32ddeba49faf9887791da34))
+* remove `browser` from package.json ([a173bd0](https://github.com/TexteaInc/json-viewer/commit/a173bd0d2646a95aa32113adf2e07f89913783e3))
+
 ## [3.3.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.2.3...json-viewer-v3.3.0) (2024-01-16)
 
 
