@@ -145,12 +145,18 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
       : themeType === 'dark'
         ? darkColorspace.base00
         : lightColorspace.base00
+    const foregroundColor = typeof themeType === 'object'
+      ? themeType.base07
+      : themeType === 'dark'
+        ? darkColorspace.base07
+        : lightColorspace.base07
     return createTheme({
       components: {
         MuiPaper: {
           styleOverrides: {
             root: {
-              backgroundColor
+              backgroundColor,
+              color: foregroundColor
             }
           }
         }
