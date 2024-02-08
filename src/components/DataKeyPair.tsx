@@ -361,7 +361,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
         }
         <Box ref={highlightContainer} component='span'>
           {
-            (isRoot
+            (isRoot && depth === 0
               ? rootName !== false
                 ? (quotesOnKeys ? <>&quot;{rootName}&quot;</> : <>{rootName}</>)
                 : null
