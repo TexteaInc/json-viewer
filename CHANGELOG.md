@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.3.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.3.1...json-viewer-v3.3.2) (2024-02-09)
+
+
+### Bug Fixes
+
+* missing key for self referential object ([95ee8ca](https://github.com/TexteaInc/json-viewer/commit/95ee8cadf35d24b0a7c7c985ec456c1fcf46816c))
+* typo in doc ([925456a](https://github.com/TexteaInc/json-viewer/commit/925456aeaed49cc8178633d5d664a4724af7bc3f))
+
 ## [3.3.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.3.0...json-viewer-v3.3.1) (2024-01-24)
 
 
