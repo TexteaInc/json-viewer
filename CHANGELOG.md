@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.3.2...json-viewer-v3.4.0) (2024-02-15)
+
+
+### Features
+
+* expose dataTypes, themes and utils in browser build ([922065f](https://github.com/TexteaInc/json-viewer/commit/922065f67515ea503384f4d0f8596f72e0b8fe93))
+
 ## [3.3.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.3.1...json-viewer-v3.3.2) (2024-02-09)
 
 
