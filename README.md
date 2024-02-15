@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/dm/@textea/json-viewer.svg)](https://www.npmjs.com/package/@textea/json-viewer)
 [![npm](https://img.shields.io/npm/l/@textea/json-viewer)](https://github.com/TexteaInc/json-viewer/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/TexteaInc/json-viewer/branch/main/graph/badge.svg?token=r32mzVhrRl)](https://codecov.io/gh/TexteaInc/json-viewer)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4fab3ed5-7084-449d-9fc9-12df09108301/deploy-status)](https://viewer.textea.io)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c2aa0ee1-979b-4512-85d2-f27e63897df0/deploy-status)](https://viewer.textea.io)
 
 `@textea/json-viewer` is a React component that can be used to view and display any kind of data, not just JSON.
 
@@ -35,7 +35,7 @@ npm install @textea/json-viewer @mui/material @emotion/react @emotion/styled
 ### CDN
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <body>
     <div id="json-viewer"></div>
