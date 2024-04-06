@@ -137,7 +137,7 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
   }
   const isAutoDarkTheme = useThemeDetector()
   const themeType = useMemo(() => props.theme === 'auto'
-    ? (isAutoDarkTheme ? 'light' : 'dark')
+    ? (isAutoDarkTheme ? 'dark' : 'light')
     : props.theme ?? 'light', [isAutoDarkTheme, props.theme])
   const theme = useMemo(() => {
     const backgroundColor = typeof themeType === 'object'
