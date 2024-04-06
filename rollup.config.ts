@@ -84,9 +84,23 @@ const buildMatrix = (input: string, output: string, config: {
           // we have to copy this configuration because swc is not handling `.browserslistrc` properly
           // see https://github.com/swc-project/swc/issues/3365
           targets: 'and_chr 91,and_ff 89,and_qq 10.4,and_uc 12.12,android 91,baidu 7.12,chrome 90,edge 91,firefox 78,ios_saf 12.2,kaios 2.5,op_mini all,op_mob 76'
-        }
+        },
+        tsconfig: false
       }))
-    ]
+    ],
+    /**
+     * Ignore "use client" waning
+     * @see {@link https://github.com/TanStack/query/pull/5161#issuecomment-1477389761 Preserve 'use client' directives}
+     */
+    onwarn (warning, warn) {
+      if (
+        warning.code === 'MODULE_LEVEL_DIRECTIVE' &&
+        warning.message.includes('"use client"')
+      ) {
+        return
+      }
+      warn(warning)
+    }
   }
 }
 
