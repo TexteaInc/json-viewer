@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.4.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.4.0...json-viewer-v3.4.1) (2024-04-06)
+
+
+### Bug Fixes
+
+* fix type register error on server ([a952c53](https://github.com/TexteaInc/json-viewer/commit/a952c53325a3e104b197da628c28653f445da12d))
+* update theme logic ([7fbb50b](https://github.com/TexteaInc/json-viewer/commit/7fbb50b7e301043009ca30e1b063b77babd49577))
+
 ## [3.4.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.3.2...json-viewer-v3.4.0) (2024-02-15)
 
 
