@@ -38,10 +38,7 @@ function shallowCopy (value: any) {
   return value
 }
 
-/**
- * Apply a value to a given path of an object.
- */
-export function applyValue (input: any, path: (string | number)[], value: any) {
+function _applyValue (input: any, path: (string | number)[], value: any, visitedMapping = new Map<any, any>()) {
   if (typeof input !== 'object' || input === null) {
     if (path.length !== 0) {
       throw new Error('path is incorrect')
@@ -50,7 +47,14 @@ export function applyValue (input: any, path: (string | number)[], value: any) {
   }
 
   const shouldCopy = shouldShallowCopy(input)
-  if (shouldCopy) input = shallowCopy(input)
+  if (shouldCopy) {
+    let copiedInput = visitedMapping.get(input)
+    if (!copiedInput) {
+      copiedInput = shallowCopy(input)
+      visitedMapping.set(input, copiedInput)
+    }
+    input = copiedInput
+  }
 
   const [key, ...restPath] = path
   if (key !== undefined) {
@@ -58,12 +62,19 @@ export function applyValue (input: any, path: (string | number)[], value: any) {
       throw new TypeError('Modification of prototype is not allowed')
     }
     if (restPath.length > 0) {
-      input[key] = applyValue(input[key], restPath, value)
+      input[key] = _applyValue(input[key], restPath, value, visitedMapping)
     } else {
       input[key] = value
     }
   }
   return input
+}
+
+/**
+ * Apply a value to a given path of an object.
+ */
+export function applyValue (input: any, path: (string | number)[], value: any) {
+  return _applyValue(input, path, value)
 }
 
 /**

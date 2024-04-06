@@ -12,16 +12,16 @@
   "dependencies": {
     "@textea/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
-    "next": "^13.5.0",
-    "nextra": "^2.13.2",
-    "nextra-theme-docs": "^2.3.0",
+    "next": "^13.5.6",
+    "nextra": "^2.13.3",
+    "nextra-theme-docs": "^2.13.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.8.6",
-    "@types/react": "^18.2.13",
-    "@types/react-dom": "^18.2.14",
-    "typescript": "^5.0.3"
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.57",
+    "@types/react-dom": "^18.2.19",
+    "typescript": "^5.3.3"
   }
 }
