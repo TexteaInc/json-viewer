@@ -18,6 +18,42 @@ import {
 } from '../components/DataTypes'
 import type { DataItemProps, DataType, Path } from '../type'
 
+function memorizeDataType<Type> (dataType: DataType<Type>): DataType<Type> {
+  function compare (prevProps: Readonly<DataItemProps<Type>>, nextProps: Readonly<DataItemProps<Type>>) {
+    return (
+      Object.is(prevProps.value, nextProps.value) &&
+      prevProps.inspect && nextProps.inspect &&
+      prevProps.path?.join('.') === nextProps.path?.join('.')
+    )
+  }
+  dataType.Component = memo(dataType.Component, compare)
+  if (dataType.Editor) {
+    dataType.Editor = memo(dataType.Editor, function compare (prevProps, nextProps) {
+      return Object.is(prevProps.value, nextProps.value)
+    })
+  }
+  if (dataType.PreComponent) {
+    dataType.PreComponent = memo(dataType.PreComponent, compare)
+  }
+  if (dataType.PostComponent) {
+    dataType.PostComponent = memo(dataType.PostComponent, compare)
+  }
+  return dataType
+}
+
+export const predefinedTypes :DataType<any>[] = [
+  memorizeDataType(booleanType),
+  memorizeDataType(dateType),
+  memorizeDataType(nullType),
+  memorizeDataType(undefinedType),
+  memorizeDataType(stringType),
+  memorizeDataType(functionType),
+  memorizeDataType(nanType),
+  memorizeDataType(intType),
+  memorizeDataType(floatType),
+  memorizeDataType(bigIntType)
+]
+
 type TypeRegistryState = {
   registry: DataType<any>[]
 
@@ -26,14 +62,14 @@ type TypeRegistryState = {
 
 export const createTypeRegistryStore = () => {
   return createStore<TypeRegistryState>()((set) => ({
-    registry: [],
+    registry: predefinedTypes,
 
     registerTypes: (setState) => {
       set(state => ({
         registry:
-          typeof setState === 'function'
-            ? setState(state.registry)
-            : setState
+            typeof setState === 'function'
+              ? setState(state.registry)
+              : setState
       }))
     }
   }))
@@ -74,39 +110,3 @@ export function useTypeComponents (value: unknown, path: Path) {
   const registry = useTypeRegistryStore(store => store.registry)
   return useMemo(() => matchTypeComponents(value, path, registry), [value, path, registry])
 }
-
-function memorizeDataType<Type> (dataType: DataType<Type>): DataType<Type> {
-  function compare (prevProps: Readonly<DataItemProps<Type>>, nextProps: Readonly<DataItemProps<Type>>) {
-    return (
-      Object.is(prevProps.value, nextProps.value) &&
-      prevProps.inspect && nextProps.inspect &&
-      prevProps.path?.join('.') === nextProps.path?.join('.')
-    )
-  }
-  dataType.Component = memo(dataType.Component, compare)
-  if (dataType.Editor) {
-    dataType.Editor = memo(dataType.Editor, function compare (prevProps, nextProps) {
-      return Object.is(prevProps.value, nextProps.value)
-    })
-  }
-  if (dataType.PreComponent) {
-    dataType.PreComponent = memo(dataType.PreComponent, compare)
-  }
-  if (dataType.PostComponent) {
-    dataType.PostComponent = memo(dataType.PostComponent, compare)
-  }
-  return dataType
-}
-
-export const predefinedTypes :DataType<any>[] = [
-  memorizeDataType(booleanType),
-  memorizeDataType(dateType),
-  memorizeDataType(nullType),
-  memorizeDataType(undefinedType),
-  memorizeDataType(stringType),
-  memorizeDataType(functionType),
-  memorizeDataType(nanType),
-  memorizeDataType(intType),
-  memorizeDataType(floatType),
-  memorizeDataType(bigIntType)
-]
