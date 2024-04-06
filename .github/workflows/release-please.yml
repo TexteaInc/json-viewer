@@ -12,7 +12,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         id: release
         with:
-          release-type: node
           token: ${{secrets.GITHUB_TOKEN}}
   publish-json-viewer:
     name: 'Publish @textea/json-viewer'

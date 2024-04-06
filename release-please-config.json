@@ -2,10 +2,9 @@
   "bootstrap-sha": "419cf32454d972d1a0802974bb5d8b9bf9c5704e",
   "release_type": "node",
   "group-pull-request-title-pattern": "chore: release ${version}",
+  "monorepo-tags": true,
   "include-component-in-tag": true,
   "packages": {
-    ".": {
-      "component": "json-viewer"
-    }
+    ".": {}
   }
 }
