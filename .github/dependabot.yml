@@ -5,4 +5,8 @@ updates:
   schedule:
     interval: weekly
   versioning-strategy: increase # Update package.json too
-  open-pull-requests-limit: 3
+  groups:
+    patterns:
+     update-types: 
+        - "minor"
+        - "patch"
