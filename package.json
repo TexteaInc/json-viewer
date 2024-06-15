@@ -81,7 +81,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.15",
     "@rollup/plugin-alias": "^5.1.0",
-    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",
     "@swc/core": "^1.4.12",
