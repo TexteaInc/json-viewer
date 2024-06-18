@@ -12,7 +12,7 @@
   "dependencies": {
     "@textea/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
-    "next": "^13.5.6",
+    "next": "^14.2.4",
     "nextra": "^2.13.3",
     "nextra-theme-docs": "^2.13.3",
     "react": "^18.2.0",
