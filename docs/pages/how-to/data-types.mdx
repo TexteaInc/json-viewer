@@ -37,7 +37,7 @@ For advanced use cases, you can provide `PreComponent` and `PostComponent` to re
 #### `Editor`
 
 To enable editing for a data type, you need to provide `serialize` and `deserialize` functions to convert the value to and from a string representation. You can then use the `Editor` component to provide a custom editor for the stringified value. When the user edits the value, it will be parsed using `deserialize`, and the result will be passed to the `onChange` callback.
-
+- `props.path` - The path to the value.
 - `props.value` - The value to edit.
 - `props.setValue` - A function that can be used to update the value.
 - `props.abortEditing` - A function that can be used to abort editing.
