@@ -391,6 +391,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
         (editing && editable)
           ? (Editor && (
             <Editor
+              path={path}
               value={tempValue}
               setValue={setTempValue}
               abortEditing={abortEditing}

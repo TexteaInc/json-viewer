@@ -63,6 +63,7 @@ export interface DataItemProps<ValueType = unknown> {
 }
 
 export type EditorProps<ValueType = unknown> = {
+  path: Path
   value: ValueType
   setValue: Dispatch<ValueType>
   abortEditing: () => void
