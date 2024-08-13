@@ -359,7 +359,11 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
               )
             : null
         }
-        <Box ref={highlightContainer} component='span'>
+        <Box
+          ref={highlightContainer}
+          className='data-key-key'
+          component='span'
+        >
           {
             (isRoot && depth === 0
               ? rootName !== false
@@ -380,7 +384,13 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
             isRoot
               ? (rootName !== false && <DataBox sx={{ mr: 0.5 }}>:</DataBox>)
               : nestedIndex === undefined && (
-                <DataBox sx={{ mr: 0.5 }}>:</DataBox>
+                <DataBox
+                  className='data-key-colon'
+                  sx={{
+                    mr: 0.5,
+                    '.data-key-key:empty + &': { display: 'none' }
+                  }}
+                >:</DataBox>
               )
           )
         }
