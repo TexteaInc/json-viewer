@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest'
 
 import type { DataItemProps, Path } from '../src'
 import { applyValue, createDataType, deleteValue, isCycleReference } from '../src'
-import { safeStringify, segmentArray } from '../src/utils'
+import { getPathValue, pathValueDefaultGetter, safeStringify, segmentArray } from '../src/utils'
 
 describe('function applyValue', () => {
   const patches: any[] = [{}, undefined, 1, '2', 3n, 0.4]
@@ -437,5 +437,96 @@ describe('function circularStringify', () => {
     set.add(1)
     set.add(set)
     expect(safeStringify(set)).to.eq('[1,"[Circular]"]')
+  })
+})
+
+describe('function pathValueDefaultGetter', () => {
+  test('should works with object', () => {
+    const obj = {
+      foo: 1
+    }
+    expect(pathValueDefaultGetter(obj, 'foo')).to.eq(1)
+  })
+
+  test('should works with array', () => {
+    const array = [1, 2, 3, 4, 5]
+    expect(pathValueDefaultGetter(array, 2)).to.eq(3)
+  })
+
+  test('should works with Map', () => {
+    const map = new Map()
+    map.set('foo', 1)
+    map.set('bar', 2)
+    expect(pathValueDefaultGetter(map, 'foo')).to.eq(1)
+    expect(pathValueDefaultGetter(map, 'not exist')).to.eq(undefined)
+  })
+
+  test('should works with WeakMap', () => {
+    const map = new WeakMap()
+    const key = {}
+    map.set(key, 1)
+    expect(pathValueDefaultGetter(map, key)).to.eq(1)
+  })
+
+  test('should works with Set', () => {
+    const set = new Set()
+    set.add(1)
+    set.add(2)
+    expect(pathValueDefaultGetter(set, 1)).to.eq(2)
+  })
+
+  test('should not works with WeakSet', () => {
+    const set = new WeakSet()
+    set.add({})
+    expect(() => {
+      pathValueDefaultGetter(set, [0])
+    }).toThrow()
+  })
+})
+
+describe('function getPathValue', () => {
+  test('should works with object', () => {
+    const obj = {
+      foo: {
+        bar: {
+          baz: 1
+        }
+      }
+    }
+    expect(getPathValue(obj, ['foo', 'bar', 'baz'])).to.eq(1)
+  })
+
+  test('should works with array', () => {
+    const array = [1, [2, [3, 4]]]
+    expect(getPathValue(array, [1, 1, 1])).to.eq(4)
+  })
+
+  test('should works with Map', () => {
+    const map = new Map()
+    map.set('foo', 1)
+    map.set('bar', 2)
+    expect(getPathValue(map, ['foo'])).to.eq(1)
+    expect(getPathValue(map, ['not exist'])).to.eq(undefined)
+  })
+
+  test('should works with WeakMap', () => {
+    const map = new WeakMap()
+    const key = {}
+    map.set(key, 1)
+    // @ts-ignore
+    expect(getPathValue(map, [key])).to.eq(1)
+  })
+
+  test('should works with Set', () => {
+    const set = new Set()
+    set.add(1)
+    set.add(2)
+    expect(getPathValue(set, [1])).to.eq(2)
+  })
+
+  test('should not works with WeakSet', () => {
+    const set = new WeakSet()
+    set.add({})
+    expect(getPathValue(set, [0])).to.eq(null)
   })
 })

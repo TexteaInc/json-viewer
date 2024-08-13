@@ -189,4 +189,14 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
 export * from './components/DataTypes'
 export * from './theme/base16'
 export * from './type'
-export { applyValue, createDataType, defineDataType, deleteValue, isCycleReference, safeStringify } from './utils'
+export type { PathValueCustomGetter } from './utils'
+export {
+  applyValue,
+  createDataType,
+  defineDataType,
+  deleteValue,
+  getPathValue,
+  isCycleReference,
+  pathValueDefaultGetter,
+  safeStringify
+} from './utils'
