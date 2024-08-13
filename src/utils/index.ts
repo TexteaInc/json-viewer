@@ -385,3 +385,80 @@ export async function copyString (value: string) {
   // fallback to copy-to-clipboard when navigator.clipboard is not available
   copyToClipboard(value)
 }
+
+/**
+ * Allows handling custom data structures when retrieving values from objects at specific paths.
+ */
+export interface PathValueCustomGetter {
+  /**
+   * Determines if the custom getter should be applied based on the current value and path.
+   *
+   * @param {unknown} value - The current value in the object at the given path.
+   * @param {Path} path - The current path being evaluated.
+   * @returns {boolean} - True if the custom handler should be used for this value and path.
+   */
+  is: (value: unknown, path: Path) => boolean
+
+  /**
+   * Custom handler to retrieve a value from a specific key in the current value.
+   *
+   * @param {unknown} value - The current value in the object at the given path.
+   * @param {unknown} key - The key used to retrieve the value from the current value.
+   * @returns {unknown} - The value retrieved using the custom handler.
+   */
+  handler: (value: unknown, key: unknown) => unknown
+}
+
+export function pathValueDefaultGetter (value: any, key: any): unknown {
+  if (value === null || value === undefined) {
+    return null
+  }
+  if (value instanceof Map || value instanceof WeakMap) {
+    return value.get(key)
+  }
+  if (value instanceof Set) {
+    return Array.from(value)[key]
+  }
+  if (value instanceof WeakSet) {
+    throw new Error('WeakSet is not supported')
+  }
+  if (Array.isArray(value)) {
+    return value[Number(key)]
+  }
+  if (typeof value === 'object') {
+    return value[key]
+  }
+  return null
+}
+
+/**
+ * Get the value at a given path in an object.
+ * Passing custom getters allows you to handle custom data structures.
+ * @experimental This function is not yet stable and may change in the future.
+ */
+export function getPathValue<T = unknown, R = unknown> (
+  obj: T,
+  path: Path,
+  customGetters: PathValueCustomGetter[] = []
+): R | null {
+  try {
+    // @ts-ignore
+    return path.reduce((acc, key, index) => {
+      if (acc === null || acc === undefined) {
+        console.error('Invalid path or value encountered at path', path.slice(0, index))
+        throw new Error('Invalid path or value encountered')
+      }
+
+      for (const handler of customGetters) {
+        const currentPath = path.slice(0, index + 1)
+        if (handler.is(acc, currentPath)) {
+          return handler.handler(acc, key)
+        }
+      }
+      return pathValueDefaultGetter(acc, key)
+    }, obj) as R
+  } catch (error) {
+    console.error(error)
+    return null // or throw error?
+  }
+}
