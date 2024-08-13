@@ -225,7 +225,7 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => value is string
+      is:(value: unknown, path: Path) => boolean
       Component: ComponentType<DataItemProps<string>>
     }>()
     expectTypeOf(dataType.is).returns.toBeBoolean()
@@ -248,7 +248,7 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => value is string
+      is:(value: unknown, path: Path) => boolean
       Component: ComponentType<DataItemProps<string>>
       Editor: ComponentType<DataItemProps<string>>
     }>()
@@ -278,7 +278,7 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => value is string
+      is:(value: unknown, path: Path) => boolean
       Component: ComponentType<DataItemProps<string>>
       PreComponent: ComponentType<DataItemProps<string>>
       PostComponent: ComponentType<DataItemProps<string>>
@@ -314,7 +314,7 @@ describe('function createDataType', () => {
       }
     )
     expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => value is string
+      is:(value: unknown, path: Path) => boolean
       Component: ComponentType<DataItemProps<string>>
       Editor: ComponentType<DataItemProps<string>>
       PreComponent: ComponentType<DataItemProps<string>>
