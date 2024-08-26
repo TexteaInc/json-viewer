@@ -32,7 +32,7 @@ function inspectMetadata (value: object) {
 const PreObjectType: FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()
-  const isArray = useMemo(() => Array.isArray(props.value), [props.value])
+  const isArrayLike = useMemo(() => Array.isArray(props.value) || (props.value instanceof Set), [props.value])
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
   const displaySize = useJsonViewerStore(store => store.displaySize)
@@ -46,7 +46,7 @@ const PreObjectType: FC<DataItemProps<object>> = (props) => {
         letterSpacing: 0.5
       }}
     >
-      {isArray ? arrayLb : objectLb}
+      {isArrayLike ? arrayLb : objectLb}
       {shouldDisplaySize && props.inspect && !isEmptyValue && (
         <Box
           component='span'
@@ -70,7 +70,14 @@ const PreObjectType: FC<DataItemProps<object>> = (props) => {
               mx: 0.5
             }}
           />
-          {isTrap}
+          <DataBox
+            sx={{
+              cursor: 'pointer',
+              userSelect: 'none'
+            }}
+          >
+            {isTrap}
+          </DataBox>
         </>
       )}
     </Box>
@@ -80,7 +87,7 @@ const PreObjectType: FC<DataItemProps<object>> = (props) => {
 const PostObjectType: FC<DataItemProps<object>> = (props) => {
   const metadataColor = useJsonViewerStore(store => store.colorspace.base04)
   const textColor = useTextColor()
-  const isArray = useMemo(() => Array.isArray(props.value), [props.value])
+  const isArrayLike = useMemo(() => Array.isArray(props.value) || (props.value instanceof Set), [props.value])
   const isEmptyValue = useMemo(() => getValueSize(props.value) === 0, [props.value])
   const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
   const displaySize = useJsonViewerStore(store => store.displaySize)
@@ -97,7 +104,7 @@ const PostObjectType: FC<DataItemProps<object>> = (props) => {
         opacity: 0.8
       }}
     >
-      {isArray ? arrayRb : objectRb}
+      {isArrayLike ? arrayRb : objectRb}
       {shouldDisplaySize && (isEmptyValue || !props.inspect)
         ? (
           <Box
@@ -138,6 +145,8 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
     if (iterator && !Array.isArray(value)) {
       const elements = []
       if (value instanceof Map) {
+        const lastIndex = value.size - 1
+        let index = 0
         value.forEach((value, k) => {
           // fixme: key might be a object, array, or any value for the `Map<any, any>`
           const key = k.toString()
@@ -149,15 +158,18 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
               value={value}
               prevValue={props.prevValue instanceof Map ? props.prevValue.get(k) : undefined}
               editable={false}
+              last={index === lastIndex}
             />
           )
+          index++
         })
       } else {
         // iterate with iterator func
         const iterator = value[Symbol.iterator]()
         let result = iterator.next()
         let count = 0
-        while (!result.done) {
+        while (true) {
+          const nextResult = iterator.next()
           elements.push(
             <DataKeyPair
               key={count}
@@ -165,15 +177,22 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
               value={result.value}
               nestedIndex={count}
               editable={false}
+              last={nextResult.done ?? false}
             />
           )
+
+          if (nextResult.done) {
+            break
+          }
+
           count++
-          result = iterator.next()
+          result = nextResult
         }
       }
       return elements
     }
     if (Array.isArray(value)) {
+      const lastIndex = value.length - 1
       // unknown[]
       if (value.length <= groupArraysAfterLength) {
         const elements = value.slice(0, displayLength).map((value, _index) => {
@@ -185,6 +204,7 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
               path={path}
               value={value}
               prevValue={Array.isArray(props.prevValue) ? props.prevValue[index] : undefined}
+              last={_index === lastIndex}
             />
           )
         })
@@ -213,6 +233,7 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
       const elements: unknown[][] = segmentArray(value, groupArraysAfterLength)
       const prevElements = Array.isArray(props.prevValue) ? segmentArray(props.prevValue, groupArraysAfterLength) : undefined
 
+      const elementsLastIndex = elements.length - 1
       return elements.map((list, index) => {
         return (
           <DataKeyPair
@@ -221,6 +242,7 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
             value={list}
             nestedIndex={index}
             prevValue={prevElements?.[index]}
+            last={index === elementsLastIndex}
           />
         )
       })
@@ -232,10 +254,17 @@ const ObjectType: FC<DataItemProps<object>> = (props) => {
         ? entries.sort(([a], [b]) => a.localeCompare(b))
         : entries.sort(([a], [b]) => objectSortKeys(a, b))
     }
-    const elements = entries.slice(0, displayLength).map(([key, value]) => {
+    const lastIndex = entries.length - 1
+    const elements = entries.slice(0, displayLength).map(([key, value], index) => {
       const path = [...props.path, key]
       return (
-        <DataKeyPair key={key} path={path} value={value} prevValue={(props.prevValue as any)?.[key]} />
+        <DataKeyPair
+          key={key}
+          path={path}
+          value={value}
+          prevValue={(props.prevValue as any)?.[key]}
+          last={index === lastIndex}
+        />
       )
     })
     if (entries.length > displayLength) {

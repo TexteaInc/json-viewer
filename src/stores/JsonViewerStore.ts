@@ -39,6 +39,7 @@ export type JsonViewerState<T = unknown> = {
   quotesOnKeys: boolean
   displayDataTypes: boolean
   displaySize: boolean | ((path: Path, value: unknown) => boolean)
+  displayComma: boolean
   highlightUpdates: boolean
 
   inspectCache: Record<string, boolean>
@@ -79,6 +80,7 @@ export const createJsonViewerStore = <T = unknown> (props: JsonViewerProps<T>) =
     quotesOnKeys: props.quotesOnKeys ?? true,
     displayDataTypes: props.displayDataTypes ?? true,
     displaySize: props.displaySize ?? true,
+    displayComma: props.displayComma ?? false,
     highlightUpdates: props.highlightUpdates ?? false,
 
     // internal state
