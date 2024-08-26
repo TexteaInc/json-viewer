@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.5.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.4.1...json-viewer-v3.5.0) (2024-08-26)
+
+
+### Features
+
+* add `data-key-toggle-*` class name for customization ([c1e605a](https://github.com/TexteaInc/json-viewer/commit/c1e605a5647be5821392bf74a396bb5ff95d7e4a))
+* add utils `getPathValue` ([194ac43](https://github.com/TexteaInc/json-viewer/commit/194ac430170ce2e9ad21ebbc0b83008981054e26))
+* hide colon when key is empty ([c1ce6ed](https://github.com/TexteaInc/json-viewer/commit/c1ce6ed7ea5b5ce9512a100cd6ad5ef1bf5ee4d1))
+* passing `path` to `Editor` for better customizability ([f03ab10](https://github.com/TexteaInc/json-viewer/commit/f03ab1051fd1d0320ad6f5c482325f151b6065da))
+* support `displayComma` for showing comma ([2c85bdb](https://github.com/TexteaInc/json-viewer/commit/2c85bdbccab0e2844d8a0f445f9d0a9f48434e68))
+
 ## [3.4.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.4.0...json-viewer-v3.4.1) (2024-04-06)
 
 
