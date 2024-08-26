@@ -4,19 +4,18 @@ on:
     branches:
       - main
 jobs:
-  release-please:
+  release:
+    name: 'Release Please'
     runs-on: ubuntu-latest
-    outputs:
-      releases_created: ${{ steps.release.outputs.releases_created }}
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-  publish-json-viewer:
+  publish:
     name: 'Publish @textea/json-viewer'
-    needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created }}
+    needs: release
+    if: needs.release.outputs.release_created
     runs-on: ubuntu-latest
     permissions:
       contents: read
