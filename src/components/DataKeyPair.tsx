@@ -344,6 +344,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
             ? (inspect
                 ? (
                   <ExpandMoreIcon
+                    className='data-key-toggle-expanded'
                     sx={{
                       fontSize: '.8rem',
                       '&:hover': { cursor: 'pointer' }
@@ -352,6 +353,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
                   )
                 : (
                   <ChevronRightIcon
+                    className='data-key-toggle-collapsed'
                     sx={{
                       fontSize: '.8rem',
                       '&:hover': { cursor: 'pointer' }
