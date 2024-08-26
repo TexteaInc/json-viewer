@@ -284,6 +284,13 @@ export type JsonViewerProps<T = unknown> = {
   displaySize?: boolean | ((path: Path, value: unknown) => boolean)
 
   /**
+   * Whether display comma at the end of items. Just like valid JSON.
+   *
+   * @default false
+   */
+  displayComma?: boolean
+
+  /**
    * Whether to highlight updates.
    *
    * @default false

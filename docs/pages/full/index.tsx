@@ -206,6 +206,7 @@ const IndexPage: FC = () => {
   const [src, setSrc] = useState(() => example)
   const [displayDataTypes, setDisplayDataTypes] = useState(true)
   const [displaySize, setDisplaySize] = useState(true)
+  const [displayComma, setDisplayComma] = useState(false)
   const [editable, setEditable] = useState(true)
   const [highlightUpdates, setHighlightUpdates] = useState(true)
   useEffect(() => {
@@ -281,6 +282,15 @@ const IndexPage: FC = () => {
           )}
           label='DisplayObjectSize'
         />
+        <FormControlLabel
+          control={(
+            <Switch
+              checked={displayComma}
+              onChange={event => setDisplayComma(event.target.checked)}
+            />
+          )}
+          label='DisplayComma'
+        />
         <TextField
           label='indentWidth'
           value={indent}
@@ -343,6 +353,7 @@ const IndexPage: FC = () => {
         enableDelete={true}
         displayDataTypes={displayDataTypes}
         displaySize={displaySize}
+        displayComma={displayComma}
         groupArraysAfterLength={groupArraysAfterLength}
         keyRenderer={KeyRenderer}
         valueTypes={[
@@ -376,7 +387,7 @@ const IndexPage: FC = () => {
           )
         }
         sx={{
-          paddingLeft: 2
+          paddingX: 2
         }}
       />
     </div>
