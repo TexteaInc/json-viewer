@@ -200,7 +200,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
 
     try {
       onChange(path, value, deserialize(newValue))
-    } catch (e) {
+    } catch {
       // do nothing when deserialize failed
     }
   }, [setEditing, deserialize, onChange, path, value])

@@ -9,7 +9,7 @@ const imageType = defineDataType<string>({
     try {
       const url = new URL(value)
       return url.pathname.endsWith('.jpg')
-    } catch (_) {
+    } catch {
       return false
     }
   },

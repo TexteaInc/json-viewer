@@ -127,7 +127,7 @@ const imageDataType = defineDataType<string>({
       try {
         const url = new URL(value)
         return allowedDomains.includes(url.host) && url.pathname.endsWith('.jpg')
-      } catch (_) {
+      } catch {
         return false
       }
     }

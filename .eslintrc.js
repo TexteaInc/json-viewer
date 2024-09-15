@@ -118,15 +118,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
-    '@typescript-eslint/member-delimiter-style': [
-      'error', {
-        multiline: {
-          delimiter: 'none', requireLast: true
-        },
-        singleline: {
-          delimiter: 'semi', requireLast: false
-        }
-      }],
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react-hooks/rules-of-hooks': 'error',
