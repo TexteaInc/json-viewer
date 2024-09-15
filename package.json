@@ -1,6 +1,7 @@
 {
   "name": "@textea/json-viewer",
   "description": "Interactive Json Viewer, but not only a json viewer",
+  "packageManager": "pnpm@9.10.0",
   "version": "3.5.0",
   "license": "MIT",
   "repository": {
@@ -49,7 +50,7 @@
   "scripts": {
     "test": "vitest",
     "test:run": "vitest run",
-    "dev": "yarn workspace @textea/json-viewer-docs dev",
+    "dev": "pnpm --filter \"@textea/json-viewer-docs\" run dev",
     "coverage": "vitest run --coverage",
     "postinstall": "husky install",
     "prepack": "pinst --disable",
@@ -120,12 +121,8 @@
     "vite": "^5.4.5",
     "vitest": "^2.1.1"
   },
-  "resolutions": {
+  "overrides": {
     "browserslist": "4.23.3",
     "caniuse-lite": "1.0.30001660"
-  },
-  "packageManager": "yarn@3.2.4",
-  "workspaces": [
-    "docs"
-  ]
+  }
 }
