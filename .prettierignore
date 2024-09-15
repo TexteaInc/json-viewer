@@ -1,8 +1,7 @@
 .github/
 .husky/
 package.json
-yarn-error.log
-yarn.lock
+pnpm-lock.yaml
 
 *generated*
 storybook-static
@@ -150,10 +149,3 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
