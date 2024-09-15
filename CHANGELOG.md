@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.0.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.5.0...json-viewer-v4.0.0) (2024-09-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove deprecated `createDataType` and `displayObjectSize`
+* migrate to MUI v6
+
+### Features
+
+* migrate to MUI v6 ([5ed7245](https://github.com/TexteaInc/json-viewer/commit/5ed7245fee96239e5a09dda22531795cc3121eb2))
+* remove deprecated `createDataType` and `displayObjectSize` ([2923478](https://github.com/TexteaInc/json-viewer/commit/2923478feaa6685f4afccffe31ad54faab290a0c))
+
 ## [3.5.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.4.1...json-viewer-v3.5.0) (2024-08-26)
 
 
