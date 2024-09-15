@@ -1,0 +1,41 @@
+# Migrating from v3 to v4
+
+### Updating your dependencies
+
+- Update `@mui/material` to `^6.0.0`
+
+For `MUI` users, you can also check the [MUI v6 migration guide](https://mui.com/material-ui/migration/upgrade-to-v6/).
+
+#### Update version
+
+```bash
+npm install @textea/json-viewer@^4.0.0
+```
+
+#### Install peer dependencies
+
+This package is using [Material-UI](https://mui.com/) as the base component library, so you need to install it and its peer dependencies.
+Starting from v3, these dependencies are no longer included in the package's dependencies.
+
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+```
+
+### Handling breaking changes
+
+#### Check browser compatibility
+
+This package was set to support `ES5` by default, but it's no longer the case.\
+Since V3 and V4, as this package is using `Material-UI`, we have adjusted the browser compatibility to match the [Material-UI's one](https://mui.com/getting-started/supported-platforms/).
+
+MUI 6 also removed support for IE 11, so this package will no longer support IE 11. If you need to support IE 11, you can stay on v3. Note that it will not receive updates or bug fixes in the future.
+
+#### Minimum TypeScript version
+
+The minimum supported version of TypeScript has been increased from `v3.5` to `v4.7`.
+
+#### Use `defineDataType` instead of `createDataType`
+
+`createDataType` has been deprecated in v3 and removed in v4. Use `defineDataType` instead.
+
+For more information, please refer to [V3 migration guide](/migration/migration-v3#use-definedatatype-instead-of-createdatatype).
