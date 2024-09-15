@@ -1,9 +1,6 @@
-import { expectTypeOf } from 'expect-type'
-import type { ComponentType } from 'react'
 import { describe, expect, test } from 'vitest'
 
-import type { DataItemProps, Path } from '../src'
-import { applyValue, createDataType, deleteValue, isCycleReference } from '../src'
+import { applyValue, deleteValue, isCycleReference } from '../src'
 import { getPathValue, pathValueDefaultGetter, safeStringify, segmentArray } from '../src/utils'
 
 describe('function applyValue', () => {
@@ -209,123 +206,6 @@ describe('function isCycleReference', () => {
     }
     root.a.b.c = root.a.b
     expect(isCycleReference(root, ['a', 'b', 'c'], root.a.b.c)).to.eq('a.b')
-  })
-})
-
-describe('function createDataType', () => {
-  test('case 1', () => {
-    const dataType = createDataType<string>(
-      (value) => {
-        expectTypeOf(value).toBeUnknown()
-        return true
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      }
-    )
-    expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => boolean
-      Component: ComponentType<DataItemProps<string>>
-    }>()
-    expectTypeOf(dataType.is).returns.toBeBoolean()
-    expect(dataType.is).toBeTypeOf('function')
-    expect(dataType.Component).toBeTypeOf('function')
-  })
-  test('case 2', () => {
-    const dataType = createDataType<string>(
-      (value) => {
-        expectTypeOf(value).toBeUnknown()
-        return true
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      }
-    )
-    expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => boolean
-      Component: ComponentType<DataItemProps<string>>
-      Editor: ComponentType<DataItemProps<string>>
-    }>()
-    expectTypeOf(dataType.is).returns.toBeBoolean()
-    expect(dataType.is).toBeTypeOf('function')
-    expect(dataType.Component).toBeTypeOf('function')
-    expect(dataType.Editor).toBeTypeOf('function')
-  })
-  test('case 3', () => {
-    const dataType = createDataType<string>(
-      (value) => {
-        expectTypeOf(value).toBeUnknown()
-        return true
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      },
-      undefined,
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      }
-    )
-    expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => boolean
-      Component: ComponentType<DataItemProps<string>>
-      PreComponent: ComponentType<DataItemProps<string>>
-      PostComponent: ComponentType<DataItemProps<string>>
-    }>()
-    expectTypeOf(dataType.is).returns.toBeBoolean()
-    expect(dataType.is).toBeTypeOf('function')
-    expect(dataType.Component).toBeTypeOf('function')
-    expect(dataType.PreComponent).toBeTypeOf('function')
-    expect(dataType.PostComponent).toBeTypeOf('function')
-  })
-
-  test('case 4', () => {
-    const dataType = createDataType<string>(
-      (value) => {
-        expectTypeOf(value).toBeUnknown()
-        return true
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      },
-      (props) => {
-        expectTypeOf(props.value).toBeString()
-        return null
-      }
-    )
-    expectTypeOf(dataType).toEqualTypeOf<{
-      is:(value: unknown, path: Path) => boolean
-      Component: ComponentType<DataItemProps<string>>
-      Editor: ComponentType<DataItemProps<string>>
-      PreComponent: ComponentType<DataItemProps<string>>
-      PostComponent: ComponentType<DataItemProps<string>>
-    }>()
-    expectTypeOf(dataType.is).returns.toBeBoolean()
-    expect(dataType.is).toBeTypeOf('function')
-    expect(dataType.Component).toBeTypeOf('function')
-    expect(dataType.Editor).toBeTypeOf('function')
-    expect(dataType.PreComponent).toBeTypeOf('function')
-    expect(dataType.PostComponent).toBeTypeOf('function')
   })
 })
 
