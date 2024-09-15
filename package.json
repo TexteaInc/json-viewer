@@ -48,9 +48,9 @@
     "dist"
   ],
   "scripts": {
-    "test": "vitest",
-    "test:run": "vitest run",
     "dev": "pnpm --filter \"@textea/json-viewer-docs\" run dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "coverage": "vitest run --coverage",
     "postinstall": "husky install",
     "prepack": "pinst --disable",
