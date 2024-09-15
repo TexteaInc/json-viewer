@@ -133,11 +133,6 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
 }
 
 export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Value>): ReactElement {
-  if (process.env.NODE_ENV !== 'production') {
-    if ('displayObjectSize' in props) {
-      console.error('`displayObjectSize` is deprecated. Use `displaySize` instead.\nSee https://viewer.textea.io/migration/migration-v3#raname-displayobjectsize-to-displaysize for more information.')
-    }
-  }
   const isAutoDarkTheme = useThemeDetector()
   const themeType = useMemo(() => props.theme === 'auto'
     ? (isAutoDarkTheme ? 'dark' : 'light')
@@ -195,7 +190,6 @@ export * from './type'
 export type { PathValueCustomGetter } from './utils'
 export {
   applyValue,
-  createDataType,
   defineDataType,
   deleteValue,
   getPathValue,
