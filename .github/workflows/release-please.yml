@@ -23,32 +23,36 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Use Node.js LTS
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v4
-        id: yarn-release-cache
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-release-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-release
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
       - name: Install Dependencies
-        run: yarn install
+        run: pnpm install
+
       - name: Prepack
-        run: yarn run prepack
+        run: pnpm run prepack
+
       - name: Build
         run: npm run build
-      - name: Delete Scripts
-        run: npm pkg delete scripts
-      - name: Delete Workspaces
-        run: npm pkg delete workspaces
+
+      - name: Clean package.json
+        run: |
+          npm pkg delete scripts
+          npm pkg delete lint-staged
+
       - name: Publish to npm
         run: npm publish --provenance --access public
         env:
