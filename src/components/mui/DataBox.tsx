@@ -1,7 +1,9 @@
 import { Box } from '@mui/material'
-import type { ComponentProps, FC } from 'react'
+import type { ComponentProps, ElementType, FC } from 'react'
 
-type DataBoxProps = ComponentProps<typeof Box>
+type DataBoxProps = ComponentProps<typeof Box> & {
+  component?: ElementType
+}
 
 export const DataBox: FC<DataBoxProps> = props => (
   <Box
