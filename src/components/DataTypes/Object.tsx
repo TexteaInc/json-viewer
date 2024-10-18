@@ -26,7 +26,8 @@ function inspectMetadata (value: object) {
   if (Object.prototype.hasOwnProperty.call(value, Symbol.toStringTag)) {
     name = (value as any)[Symbol.toStringTag]
   }
-  return `${length} Items${name ? ` (${name})` : ''}`
+  const itemsPluralized = length === 1 ? "Item" : "Items";
+  return `${length} ${itemsPluralized}${name ? ` (${name})` : ''}`
 }
 
 const PreObjectType: FC<DataItemProps<object>> = (props) => {
