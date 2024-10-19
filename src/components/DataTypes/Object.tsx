@@ -26,7 +26,7 @@ function inspectMetadata (value: object) {
   if (Object.prototype.hasOwnProperty.call(value, Symbol.toStringTag)) {
     name = (value as any)[Symbol.toStringTag]
   }
-  const itemsPluralized = length === 1 ? "Item" : "Items";
+  const itemsPluralized = length === 1 ? 'Item' : 'Items'
   return `${length} ${itemsPluralized}${name ? ` (${name})` : ''}`
 }
 
