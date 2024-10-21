@@ -105,7 +105,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "expect-type": "^0.20.0",
+    "expect-type": "^1.1.0",
     "husky": "9.1.6",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.10",
