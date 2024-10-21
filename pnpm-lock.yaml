@@ -106,8 +106,8 @@ importers:
         specifier: ^4.1.4
         version: 4.1.4(@typescript-eslint/eslint-plugin@8.10.0(@typescript-eslint/parser@8.10.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)
       expect-type:
-        specifier: ^0.20.0
-        version: 0.20.0
+        specifier: ^1.1.0
+        version: 1.1.0
       husky:
         specifier: 9.1.6
         version: 9.1.6
@@ -2214,8 +2214,8 @@ packages:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
     engines: {node: '>=16.17'}
 
-  expect-type@0.20.0:
-    resolution: {integrity: sha512-uHaC9LYNv6BcW+8SvXcwUUDCrrUxt3GSa61DFvTHj8JC+M0hekMFBwMlCarLQDk5bbpZ2vStpnQPIwRuV98YMw==}
+  expect-type@1.1.0:
+    resolution: {integrity: sha512-bFi65yM+xZgk+u/KRIpekdSYkTB5W1pEf0Lt8Q8Msh7b+eQ7LXVtIB1Bkm4fvclDEL1b2CZkMhv2mOeF8tMdkA==}
     engines: {node: '>=12.0.0'}
 
   extend-shallow@2.0.1:
@@ -6554,7 +6554,7 @@ snapshots:
       signal-exit: 4.1.0
       strip-final-newline: 3.0.0
 
-  expect-type@0.20.0: {}
+  expect-type@1.1.0: {}
 
   extend-shallow@2.0.1:
     dependencies:
