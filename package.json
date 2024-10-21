@@ -2,7 +2,7 @@
   "name": "@textea/json-viewer",
   "description": "Interactive Json Viewer, but not only a json viewer",
   "packageManager": "pnpm@9.10.0",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
