@@ -62,7 +62,7 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "copy-to-clipboard": "^3.3.3",
-    "zustand": "^4.5.5"
+    "zustand": "^5.0.0"
   },
   "lint-staged": {
     "!*.{ts,tsx,js,jsx}": "prettier --write --ignore-unknown",
