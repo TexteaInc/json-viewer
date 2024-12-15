@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v4.0.0...json-viewer-v4.0.1) (2024-12-15)
+
+
+### Bug Fixes
+
+* update Object datatype for correct pluralization of Items ([#531](https://github.com/TexteaInc/json-viewer/issues/531)) ([004e5c0](https://github.com/TexteaInc/json-viewer/commit/004e5c09c20a7afe4434f210b1ac98f7116ba8a7))
+
 ## [4.0.0](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v3.5.0...json-viewer-v4.0.0) (2024-09-15)
 
 
