@@ -167,7 +167,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
 
     return false
   }, [highlightUpdates, prevValue, value])
-  const highlightContainer = useRef<HTMLElement>()
+  const highlightContainer = useRef<HTMLElement>(undefined)
   useEffect(() => {
     if (highlightContainer.current && isHighlight && 'animate' in highlightContainer.current) {
       highlightContainer.current.animate(
@@ -247,13 +247,13 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
           </IconBox>
         )}
         {(Editor && editable && serialize && deserialize) &&
-            (
-              <IconBox
-                onClick={startEditing}
-              >
-                <EditIcon sx={{ fontSize: '.8rem' }} />
-              </IconBox>
-            )}
+          (
+            <IconBox
+              onClick={startEditing}
+            >
+              <EditIcon sx={{ fontSize: '.8rem' }} />
+            </IconBox>
+          )}
         {enableAdd && (
           <IconBox
             onClick={event => {

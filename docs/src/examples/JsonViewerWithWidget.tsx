@@ -1,3 +1,5 @@
+'use client'
+
 import type { SvgIconProps } from '@mui/material'
 import { Button, SvgIcon } from '@mui/material'
 import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
