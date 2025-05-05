@@ -42,7 +42,7 @@ const allowedDomains = ['i.imgur.com']
 // this url is copied from: https://beta.reactjs.org/learn/passing-props-to-a-component
 const avatar = 'https://i.imgur.com/1bX5QH6.jpg'
 
-function aPlusB (a: number, b: number) {
+const aPlusB = function (a: number, b: number) {
   return a + b
 }
 const aPlusBConst = function (a: number, b: number) {
@@ -160,7 +160,7 @@ const LinkIcon = (props: SvgIconProps) => (
 
 const linkType: DataType<string> = {
   ...stringType,
-  is (value) {
+  is: (value) => {
     return typeof value === 'string' && value.startsWith('http')
   },
   PostComponent: (props) => (
