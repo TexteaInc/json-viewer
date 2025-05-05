@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Button from '@mui/material/Button'
-import { Tab, Tabs } from 'nextra-theme-docs'
+import { Tab, Tabs } from 'nextra/components'
 import { JsonViewerPreview } from '../examples/JsonViewerPreview'
 
 # @textea/json-viewer
@@ -18,9 +18,9 @@ import { JsonViewerPreview } from '../examples/JsonViewerPreview'
 `@textea/json-viewer` is using [Material-UI](https://mui.com/) as the base component library, so you need to install it and its peer dependencies first.
 
 <Tabs items={['npm', 'yarn', 'pnpm']}>
-  <Tab label="npm">``` npm install @textea/json-viewer @mui/material @emotion/react @emotion/styled ```</Tab>
-  <Tab label="yarn">``` yarn add @textea/json-viewer @mui/material @emotion/react @emotion/styled ```</Tab>
-  <Tab label="pnpm">``` pnpm add @textea/json-viewer @mui/material @emotion/react @emotion/styled ```</Tab>
+  <Tabs.Tab label="npm">``` npm install @textea/json-viewer @mui/material @emotion/react @emotion/styled ```</Tabs.Tab>
+  <Tabs.Tab label="yarn">``` yarn add @textea/json-viewer @mui/material @emotion/react @emotion/styled ```</Tabs.Tab>
+  <Tabs.Tab label="pnpm">``` pnpm add @textea/json-viewer @mui/material @emotion/react @emotion/styled ```</Tabs.Tab>
 </Tabs>
 
 You can also use it directly from a CDN:

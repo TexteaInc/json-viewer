@@ -1,3 +1,5 @@
+'use client'
+
 import type { SvgIconProps } from '@mui/material'
 import {
   AppBar,

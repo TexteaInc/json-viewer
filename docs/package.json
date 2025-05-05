@@ -12,9 +12,9 @@
   "dependencies": {
     "@textea/json-viewer": "workspace:^",
     "gray-matter": "^4.0.3",
-    "next": "^13.5.7",
-    "nextra": "2.13.3",
-    "nextra-theme-docs": "2.13.3",
+    "next": "^15.3.1",
+    "nextra": "^4.2.17",
+    "nextra-theme-docs": "^4.2.17",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
