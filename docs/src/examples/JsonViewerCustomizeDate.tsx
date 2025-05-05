@@ -1,3 +1,5 @@
+'use client'
+
 import { defineEasyType, JsonViewer } from '@textea/json-viewer'
 import type { FC } from 'react'
 
