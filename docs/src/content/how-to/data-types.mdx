@@ -1,4 +1,4 @@
-import { Tab, Tabs } from 'nextra-theme-docs'
+import { Tab, Tabs } from 'nextra/components'
 import JsonViewerWithURL from '../../examples/JsonViewerWithURL'
 import JsonViewerWithImage from '../../examples/JsonViewerWithImage'
 import JsonViewerWithWidget from '../../examples/JsonViewerWithWidget'
@@ -58,7 +58,7 @@ Suppose you have a JSON object that includes an image URL:
 If you want to preview images directly in your JSON, you can define a data type for images:
 
 <Tabs items={['JS', 'TS']}>
-  <Tab>
+  <Tabs.Tab>
 
 ```jsx
 import { defineDataType } from '@textea/json-viewer'
@@ -87,9 +87,9 @@ const imageType = defineDataType({
 })
 ```
 
-  </Tab>
+  </Tabs.Tab>
 
-  <Tab>
+  <Tabs.Tab>
 ```tsx
 import { defineDataType } from '@textea/json-viewer'
 
@@ -117,7 +117,7 @@ const imageType = defineDataType<string>({
 })
 ```
 
-  </Tab>
+  </Tabs.Tab>
 </Tabs>
 
 And then use it like this:
@@ -139,7 +139,7 @@ And then use it like this:
 Let's add support for the [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) API.
 
 <Tabs items={['JS', 'TS']}>
-  <Tab>
+  <Tabs.Tab>
 ```jsx
 import { defineDataType } from '@textea/json-viewer'
 
@@ -164,9 +164,9 @@ const urlType = defineDataType({
   }
 })
 ```
-  </Tab>
+  </Tabs.Tab>
 
-  <Tab>
+  <Tabs.Tab>
 ```tsx
 import { defineDataType } from '@textea/json-viewer'
 
@@ -191,7 +191,7 @@ const urlType = defineDataType<URL>({
   }
 })
 ```
-  </Tab>
+  </Tabs.Tab>
 </Tabs>
 
 And then use it like this:
@@ -220,7 +220,7 @@ Sometimes you might want to add a button to the value.
 In this example, we will **extend the built-in `stringType`** and add a button to open the link in a new tab.
 
 <Tabs items={['JS', 'TS']}>
-  <Tab>
+  <Tabs.Tab>
 ```jsx
 import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
 import { Button } from '@mui/material'
@@ -248,9 +248,9 @@ const linkType = defineDataType({
   )
 })
 ```
-  </Tab>
+  </Tabs.Tab>
 
-  <Tab>
+  <Tabs.Tab>
 ```tsx
 import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
 import { Button } from '@mui/material'
@@ -278,7 +278,7 @@ const linkType = defineDataType<string>({
   )
 })
 ```
-  </Tab>
+  </Tabs.Tab>
 </Tabs>
 
 ### Customize the `Date` format
@@ -286,7 +286,7 @@ const linkType = defineDataType<string>({
 By default, `Date` values are displayed using the `toLocaleString` method. You will learn how to create a custom data type for `Date` and display it in a different format. We will use the enhanced `defineEasyType` function to simplify the process.
 
 <Tabs items={['JS', 'TS']}>
-  <Tab>
+  <Tabs.Tab>
 ```jsx
 import { defineEasyType } from '@textea/json-viewer'
 
@@ -297,9 +297,9 @@ const myDateType = defineEasyType({
   Renderer: ({ value }) => <>{value.toISOString().split('T')[0]}</>
 })
 ```
-  </Tab>
+  </Tabs.Tab>
 
-  <Tab>
+  <Tabs.Tab>
 ```tsx
 import { defineEasyType } from '@textea/json-viewer'
 
@@ -310,7 +310,7 @@ const myDateType = defineEasyType<Date>({
   Renderer: ({ value }) => <>{value.toISOString().split('T')[0]}</>
 })
 ```
-  </Tab>
+  </Tabs.Tab>
 </Tabs>
 
 <JsonViewerCustomizeDate />
