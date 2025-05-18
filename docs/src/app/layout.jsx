@@ -34,9 +34,8 @@ export default async function RootLayout ({ children }) {
       <body>
         <Layout
           feedback={{
-            content: <a href='https://github.com/TexteaInc/json-viewer/issues/new?title=Feedback%20for%20%E2%80%9C%40textea%2Fjson-viewer%E2%80%9D&labels=feedback' target='_blank' rel='noreferrer'>
-              Question? Give us feedback →
-            </a>
+            labels: 'feedback',
+            content: 'Feedback'
           }}
           docsRepositoryBase='https://github.com/TexteaInc/json-viewer/tree/main/docs'
           editLink='Edit this page on GitHub'
