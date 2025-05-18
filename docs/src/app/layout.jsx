@@ -39,13 +39,12 @@ export default async function RootLayout ({ children }) {
             </a>
           }}
           docsRepositoryBase='https://github.com/TexteaInc/json-viewer/tree/main/docs'
-          editLink={<a href='https://github.com/TexteaInc/json-viewer/docs'>Edit This site on Github</a>}
-          footer={`MIT ${new Date().getFullYear()} © Textea, Inc.`}
+          editLink='Edit this page on GitHub'
+          footer={<Footer>MIT {new Date().getFullYear()} © Textea, Inc.</Footer>}
           navbar={navbar}
           pageMap={await getPageMap()}
         >
           {children}
-          <Footer />
         </Layout>
       </body>
     </html>
