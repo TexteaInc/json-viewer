@@ -222,7 +222,7 @@ const IndexPage: FC = () => {
     return () => clearInterval(id)
   }, [])
   return (
-    <div>
+    <div style={{ backgroundColor: 'white' }}>
       <AppBar>
         <Toolbar>
           <Typography
@@ -237,15 +237,16 @@ const IndexPage: FC = () => {
       </AppBar>
       <Box
         sx={{
+          color: 'text.primary',
           display: 'flex',
           alignItems: 'center',
           flexWrap: 'wrap',
           width: '100%',
           gap: '10px',
-          paddingX: '5px',
-          paddingY: '10px',
           minHeight: '64px',
-          marginTop: '64px'
+          paddingX: '5px',
+          pb: '10px',
+          pt: '12px'
         }}
       >
         <FormControlLabel
