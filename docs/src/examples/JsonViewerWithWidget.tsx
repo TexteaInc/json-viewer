@@ -5,8 +5,6 @@ import { Button, SvgIcon } from '@mui/material'
 import { defineDataType, JsonViewer, stringType } from '@textea/json-viewer'
 import type { FC } from 'react'
 
-import { useNextraTheme } from '../hooks/useTheme'
-
 const LinkIcon = (props: SvgIconProps) => (
   // <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
   <SvgIcon {...props}>
@@ -45,12 +43,10 @@ const value = {
 }
 
 const Example: FC = () => {
-  const theme = useNextraTheme()
   return (
     <JsonViewer
       rootName={false}
       displaySize={false}
-      theme={theme}
       value={value}
       valueTypes={[linkType]}
     />

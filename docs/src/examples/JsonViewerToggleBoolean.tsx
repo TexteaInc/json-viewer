@@ -5,8 +5,6 @@ import { applyValue, booleanType, defineDataType, defineEasyType, JsonViewer } f
 import type { FC } from 'react'
 import { useCallback, useMemo, useState } from 'react'
 
-import { useNextraTheme } from '../hooks/useTheme'
-
 const value = {
   agree: true,
   disagree: false,
@@ -14,7 +12,6 @@ const value = {
 }
 
 export const JsonViewerToggleBoolean1: FC = () => {
-  const theme = useNextraTheme()
   const [src, setSrc] = useState(value)
   const onChange = useCallback<JsonViewerOnChange>(
     (path, oldValue, newValue) => {
@@ -36,7 +33,6 @@ export const JsonViewerToggleBoolean1: FC = () => {
     <JsonViewer
       rootName={false}
       displaySize={false}
-      theme={theme}
       value={src}
       onChange={onChange}
       valueTypes={[toggleBoolType]}
@@ -45,7 +41,6 @@ export const JsonViewerToggleBoolean1: FC = () => {
 }
 
 export const JsonViewerToggleBoolean2: FC = () => {
-  const theme = useNextraTheme()
   const [src, setSrc] = useState(value)
   const onChange = useCallback<JsonViewerOnChange>(
     (path, oldValue, newValue) => {
@@ -69,7 +64,6 @@ export const JsonViewerToggleBoolean2: FC = () => {
     <JsonViewer
       rootName={false}
       displaySize={false}
-      theme={theme}
       value={src}
       onChange={onChange}
       valueTypes={[toggleBoolType]}
