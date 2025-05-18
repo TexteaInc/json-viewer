@@ -246,7 +246,7 @@ const IndexPage: FC = () => {
           minHeight: '64px',
           paddingX: '5px',
           pb: '10px',
-          pt: '12px'
+          mt: '64px'
         }}
       >
         <FormControlLabel
