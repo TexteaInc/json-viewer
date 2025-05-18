@@ -1,7 +1,7 @@
+'use client'
+
 import { defineEasyType, JsonViewer } from '@textea/json-viewer'
 import type { FC } from 'react'
-
-import { useNextraTheme } from '../hooks/useTheme'
 
 const myDateType = defineEasyType<Date>({
   is: (value) => value instanceof Date,
@@ -15,12 +15,10 @@ const value = {
 }
 
 const Example: FC = () => {
-  const theme = useNextraTheme()
   return (
     <JsonViewer
       rootName={false}
       displaySize={false}
-      theme={theme}
       value={value}
       valueTypes={[myDateType]}
     />

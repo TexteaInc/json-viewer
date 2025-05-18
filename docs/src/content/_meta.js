@@ -1,0 +1,6 @@
+export default {
+  index: 'Introduction',
+  apis: 'API Reference',
+  'how-to': 'How-to guides',
+  migration: 'Migration'
+}

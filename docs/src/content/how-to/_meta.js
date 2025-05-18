@@ -1,0 +1,5 @@
+export default {
+  'data-types': 'Defining Data Types',
+  'built-in-types': 'Extend Built-in Data Types',
+  styling: 'Styling and Theming'
+}

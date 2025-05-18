@@ -1,3 +1,5 @@
+'use client'
+
 import type { SvgIconProps } from '@mui/material'
 import {
   AppBar,
@@ -40,7 +42,7 @@ const allowedDomains = ['i.imgur.com']
 // this url is copied from: https://beta.reactjs.org/learn/passing-props-to-a-component
 const avatar = 'https://i.imgur.com/1bX5QH6.jpg'
 
-function aPlusB (a: number, b: number) {
+const aPlusB = function (a: number, b: number) {
   return a + b
 }
 const aPlusBConst = function (a: number, b: number) {
@@ -158,7 +160,7 @@ const LinkIcon = (props: SvgIconProps) => (
 
 const linkType: DataType<string> = {
   ...stringType,
-  is (value) {
+  is: (value) => {
     return typeof value === 'string' && value.startsWith('http')
   },
   PostComponent: (props) => (
@@ -220,7 +222,7 @@ const IndexPage: FC = () => {
     return () => clearInterval(id)
   }, [])
   return (
-    <div>
+    <div style={{ backgroundColor: 'white' }}>
       <AppBar>
         <Toolbar>
           <Typography
@@ -235,15 +237,16 @@ const IndexPage: FC = () => {
       </AppBar>
       <Box
         sx={{
+          color: 'text.primary',
           display: 'flex',
           alignItems: 'center',
           flexWrap: 'wrap',
           width: '100%',
           gap: '10px',
-          paddingX: '5px',
-          paddingY: '10px',
           minHeight: '64px',
-          marginTop: '64px'
+          paddingX: '5px',
+          pb: '10px',
+          mt: '64px'
         }}
       >
         <FormControlLabel

@@ -1,7 +1,7 @@
+'use client'
+
 import { defineDataType, JsonViewer } from '@textea/json-viewer'
 import type { FC } from 'react'
-
-import { useNextraTheme } from '../hooks/useTheme'
 
 const urlType = defineDataType<URL>({
   is: (value) => value instanceof URL,
@@ -30,12 +30,10 @@ const value = {
 }
 
 const Example: FC = () => {
-  const theme = useNextraTheme()
   return (
     <JsonViewer
       rootName={false}
       displaySize={false}
-      theme={theme}
       value={value}
       valueTypes={[urlType]}
     />

@@ -1,7 +1,7 @@
+'use client'
+
 import { defineDataType, JsonViewer } from '@textea/json-viewer'
 import type { FC } from 'react'
-
-import { useNextraTheme } from '../hooks/useTheme'
 
 const imageType = defineDataType<string>({
   is: (value) => {
@@ -31,12 +31,10 @@ const value = {
 }
 
 const Example: FC = () => {
-  const theme = useNextraTheme()
   return (
     <JsonViewer
       rootName={false}
       displaySize={false}
-      theme={theme}
       value={value}
       valueTypes={[imageType]}
     />
