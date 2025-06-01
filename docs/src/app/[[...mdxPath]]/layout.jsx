@@ -20,7 +20,12 @@ const navbar = (
   />
 )
 
+const EXCLUDED_PAGES = [
+  '/full'
+]
+
 export default async function RootLayout ({ children }) {
+  const pageMap = (await getPageMap()).filter(page => !EXCLUDED_PAGES.includes(page.route))
   return (
     <html
       // Not required, but good for SEO
@@ -43,7 +48,7 @@ export default async function RootLayout ({ children }) {
           editLink='Edit this page on GitHub'
           footer={<Footer>MIT {year} © Textea, Inc.</Footer>}
           navbar={navbar}
-          pageMap={await getPageMap()}
+          pageMap={pageMap}
         >
           {children}
         </Layout>
