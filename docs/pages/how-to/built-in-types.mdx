@@ -56,7 +56,7 @@ const toggleBoolType = defineDataType<boolean>({
 ```tsx
 import { defineEasyType, booleanType } from '@textea/json-viewer'
 
-const booleanType = defineEasyType<boolean>({
+const toggleBoolType = defineEasyType<boolean>({
   ...booleanType,
   type: 'bool',
   colorKey: 'base0E',
@@ -70,7 +70,7 @@ const booleanType = defineEasyType<boolean>({
     agree: true,
     disagree: false,
   }}
-  valueTypes={[booleanType]}
+  valueTypes={[toggleBoolType]}
 />
 ```
 [[Source Code]](https://github.com/TexteaInc/json-viewer/blob/main/docs/examples/JsonViewerToggleBoolean.tsx)
