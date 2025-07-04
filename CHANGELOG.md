@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.2](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v4.0.1...json-viewer-v4.0.2) (2025-07-04)
+
+
+### Bug Fixes
+
+* Update built-in-types.mdx to reference correct type ([6f1d590](https://github.com/TexteaInc/json-viewer/commit/6f1d590a71e9f3248e33fef2e8f7485aaf882009))
+
 ## [4.0.1](https://github.com/TexteaInc/json-viewer/compare/json-viewer-v4.0.0...json-viewer-v4.0.1) (2024-12-15)
 
 
